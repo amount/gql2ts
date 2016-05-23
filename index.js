@@ -11,7 +11,7 @@ const interfaceUtils = require('./util/interface');
 const moduleUtils = require('./util/module')
 
 program
-  .version('0.0.1')
+  .version('0.0.2')
   .usage('[options] <schema.json>')
   .option('-o --output-file [outputFile]', 'name for ouput file, defaults to graphqlInterfaces.d.ts', 'graphqlInterfaces.d.ts')
   .option('-m --module-name [moduleName]', 'name for the export module, defaults to "GQL"', 'GQL')
