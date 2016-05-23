@@ -18,8 +18,16 @@ Options:
 ```
 
 ### Examples
+
+#### With Default Options
 ```shell
-gql2ts -m Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts testSchema.json
+gql2ts schema.json
+```
+
+
+#### With Optional Options
+```shell
+gql2ts -m Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
 ```
 
 
