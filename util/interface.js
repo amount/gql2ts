@@ -1,4 +1,5 @@
 'use strict';
+require('./polyfill');
 const generateInterfaceName = name => `I${name}`;
 
 const generateTypeName = name => `${name}`;
