@@ -3,12 +3,16 @@ const generateInterfaceName = name => `I${name}`;
 
 const generateTypeName = name => `${name}`;
 
-const generateTypeDeclaration = (description, name, possibleTypes) => `  //description: ${description}
+const generateTypeDeclaration = (description, name, possibleTypes) => `  /*
+    description: ${description}
+  */
   export type ${name} = ${possibleTypes};
 
 `;
 
-const generateInterfaceDeclaration = (description, declaration, fields, additionalInfo) => `${additionalInfo}  // description: ${description}
+const generateInterfaceDeclaration = (description, declaration, fields, additionalInfo) => `${additionalInfo}  /*
+    description: ${description}
+  */
   export interface ${declaration} {
 ${fields}
   }`;
@@ -72,6 +76,17 @@ const fieldToDefinition = (field, isInput) => {
   return `    ${fieldDef};`;
 }
 
+const findRootType = (type) => {
+  if (!type.ofType) { return type; }
+
+  return findRootType(type.ofType);
+}
+
+const filterField = (field, ignoredTypes) => {
+  let nestedType = findRootType(field.type);
+  return !ignoredTypes.includes(nestedType.name);
+}
+
 const typeToInterface = (type, ignoredTypes) => {
   if (type.kind === 'SCALAR' || type.kind === 'ENUM') {
     return null;
@@ -81,7 +96,7 @@ const typeToInterface = (type, ignoredTypes) => {
   let f = isInput ? type.inputFields : type.fields;
 
   let fields = f
-                .filter(field => !ignoredTypes.includes(field.type.name))
+                .filter(field => filterField(field, ignoredTypes))
                 .map(field => fieldToDefinition(field, isInput))
                 .filter(field => field)
                 .join('\n');
@@ -103,7 +118,21 @@ const typeToInterface = (type, ignoredTypes) => {
   return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo);
 };
 
+const typesToInterfaces = (types, options) => {
+  return types
+          .filter(type => !type.name.startsWith('__'))  // remove introspection types
+          .filter(type =>                               // remove ignored types
+            !options.ignoredTypes.includes(type.name)
+          )
+          .map(type =>                                  // convert to interface
+            typeToInterface(type, options.ignoredTypes)
+          )
+          .filter(type => type)                         // remove empty ones
+          .join('\n\n');                                // put whitespace between them
+}
+
+const schemaToInterfaces = (schema, options) => typesToInterfaces(schema.data.__schema.types, options);
 
 module.exports = {
-  typeToInterface
+  schemaToInterfaces
 }
