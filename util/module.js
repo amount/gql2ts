@@ -1,5 +1,5 @@
 // file I/O helpers
-
+'use strict';
 const fileIO = require('./fileIO');
 
 const generateModule = (moduleName, interfaces) => {
@@ -14,9 +14,7 @@ export default ${moduleName};
 };
 
 const writeModuleToFile = (outputFile, module) => {
-  ouputFile = outputFile;
-
-  fileIO.writeToFile(ouputFile, module);
+  fileIO.writeToFile(outputFile, module);
 }
 
 module.exports = {
