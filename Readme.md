@@ -1,5 +1,7 @@
 ### GQL2TS
 
+[![Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=refactor_with_tests)](https://travis-ci.org/avantcredit/gql2ts)
+
 ```shell
 npm install -g gql2ts
 ```
@@ -41,4 +43,6 @@ gql2ts -m Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
   }
   ```
   
-- [ ] Add a comprehensive test suite
+- [ ] Add a more comprehensive test suite
+
+- [ ] Remove unreachable interfaces (i.e. ignore one type and get rid of types only accessible from that one)
