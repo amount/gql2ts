@@ -12,25 +12,15 @@ const interfaceUtils = require('./util/interface');
 const moduleUtils = require('./util/module')
 
 program
-  .version('0.0.2')
+  .version('0.0.5')
   .usage('[options] <schema.json>')
   .option('-o --output-file [outputFile]', 'name for ouput file, defaults to graphqlInterfaces.d.ts', 'graphqlInterfaces.d.ts')
   .option('-m --module-name [moduleName]', 'name for the export module, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .action((fileName, options) => {
     let schema = fileIO.readFile(fileName);
-    let types = schema.data.__schema.types;
 
-    let interfaces = types
-                      .filter(type => !type.name.startsWith('__'))  // remove introspection types
-                      .filter(type =>                               // remove ignored types
-                        !options.ignoredTypes.includes(type.name)
-                      )
-                      .map(type =>                                  // convert to interface
-                        interfaceUtils.typeToInterface(type, options.ignoredTypes)
-                      )
-                      .filter(type => type)                         // remove empty ones
-                      .join('\n\n');                                // put whitespace between them
+    let interfaces = interfaceUtils.schemaToInterfaces(schema, options);
 
     let module = moduleUtils.generateModule(options.moduleName, interfaces);
 

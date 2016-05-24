@@ -1,6 +1,6 @@
 {
   "name": "gql2ts",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "index.js",
   "dependencies": {
@@ -11,7 +11,7 @@
     "mocha": "^2.4.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "typescript",
