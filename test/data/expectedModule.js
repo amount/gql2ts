@@ -2,13 +2,13 @@ module.exports = `// graphql typescript definitions
 
 declare module GQL {
   export interface IGraphQLResponseRoot {
-    data?: IRoot
-    errors?: Array<IGraphQLResponseError>
+    data?: IRoot;
+    errors?: Array<IGraphQLResponseError>;
   }
 
   export interface IGraphQLResponseError {
     message: string;              // Required for all errors
-    locations?: Array<IGraphQLResponseErrorLocation>
+    locations?: Array<IGraphQLResponseErrorLocation>;
     [propName: string]: string;   // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 

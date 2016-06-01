@@ -2,13 +2,13 @@
 require('./polyfill');
 
 const generateRootTypes = rootName => `  export interface IGraphQLResponseRoot {
-    data?: ${generateInterfaceName(rootName)}
-    errors?: Array<IGraphQLResponseError>
+    data?: ${generateInterfaceName(rootName)};
+    errors?: Array<IGraphQLResponseError>;
   }
 
   export interface IGraphQLResponseError {
     message: string;              // Required for all errors
-    locations?: Array<IGraphQLResponseErrorLocation>
+    locations?: Array<IGraphQLResponseErrorLocation>;
     [propName: string]: string;   // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
