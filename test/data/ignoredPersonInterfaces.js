@@ -1,7 +1,24 @@
-module.exports = `  /*
+module.exports = `  export interface IGraphQLResponseRoot {
+    data?: IRoot
+    errors?: Array<IGraphQLResponseError>
+  }
+
+  export interface IGraphQLResponseError {
+    message: string;              // Required for all errors
+    locations?: Array<IGraphQLResponseErrorLocation>
+    [propName: string]: string;   // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+  }
+
+  export interface IGraphQLResponseErrorLocation {
+    line: number;
+    column: number;
+  }
+
+  /*
     description: null
   */
   export interface IRoot {
+    __typename: string;
     allFilms: IFilmsConnection;
     film: IFilm;
     allPeople: IPeopleConnection;
@@ -20,6 +37,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IFilmsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge>;
     totalCount: any;
@@ -30,6 +48,7 @@ module.exports = `  /*
     description: Information about pagination in a connection.
   */
   export interface IPageInfo {
+    __typename: string;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string;
@@ -40,6 +59,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IFilmsEdge {
+    __typename: string;
     node: IFilm;
     cursor: string;
   }
@@ -48,6 +68,7 @@ module.exports = `  /*
     description: A single film.
   */
   export interface IFilm {
+    __typename: string;
     title: string;
     episodeID: any;
     openingCrawl: string;
@@ -73,6 +94,7 @@ module.exports = `  /*
     description: An object with an ID
   */
   export interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IFilm {
+    __typename: string;
     id: string;
   }
 
@@ -81,6 +103,7 @@ module.exports = `  /*
 0 ABY.
   */
   export interface IPlanet {
+    __typename: string;
     name: string;
     diameter: any;
     rotationPeriod: any;
@@ -101,6 +124,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPlanetResidentsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge>;
     totalCount: any;
@@ -110,6 +134,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPlanetResidentsEdge {
+    __typename: string;
     cursor: string;
   }
 
@@ -117,6 +142,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPersonFilmsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge>;
     totalCount: any;
@@ -127,6 +153,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPersonFilmsEdge {
+    __typename: string;
     node: IFilm;
     cursor: string;
   }
@@ -135,6 +162,7 @@ module.exports = `  /*
     description: A type of person or character within the Star Wars Universe.
   */
   export interface ISpecies {
+    __typename: string;
     name: string;
     classification: string;
     designation: string;
@@ -156,6 +184,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface ISpeciesPeopleConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge>;
     totalCount: any;
@@ -165,6 +194,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface ISpeciesPeopleEdge {
+    __typename: string;
     cursor: string;
   }
 
@@ -172,6 +202,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface ISpeciesFilmsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge>;
     totalCount: any;
@@ -182,6 +213,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface ISpeciesFilmsEdge {
+    __typename: string;
     node: IFilm;
     cursor: string;
   }
@@ -190,6 +222,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPersonStarshipsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge>;
     totalCount: any;
@@ -200,6 +233,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPersonStarshipsEdge {
+    __typename: string;
     node: IStarship;
     cursor: string;
   }
@@ -208,6 +242,7 @@ module.exports = `  /*
     description: A single transport craft that has hyperdrive capability.
   */
   export interface IStarship {
+    __typename: string;
     name: string;
     model: string;
     starshipClass: string;
@@ -232,6 +267,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IStarshipPilotsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge>;
     totalCount: any;
@@ -241,6 +277,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IStarshipPilotsEdge {
+    __typename: string;
     cursor: string;
   }
 
@@ -248,6 +285,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IStarshipFilmsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge>;
     totalCount: any;
@@ -258,6 +296,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IStarshipFilmsEdge {
+    __typename: string;
     node: IFilm;
     cursor: string;
   }
@@ -266,6 +305,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPersonVehiclesConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge>;
     totalCount: any;
@@ -276,6 +316,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPersonVehiclesEdge {
+    __typename: string;
     node: IVehicle;
     cursor: string;
   }
@@ -284,6 +325,7 @@ module.exports = `  /*
     description: A single transport craft that does not have hyperdrive capability
   */
   export interface IVehicle {
+    __typename: string;
     name: string;
     model: string;
     vehicleClass: string;
@@ -306,6 +348,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IVehiclePilotsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge>;
     totalCount: any;
@@ -315,6 +358,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IVehiclePilotsEdge {
+    __typename: string;
     cursor: string;
   }
 
@@ -322,6 +366,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IVehicleFilmsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge>;
     totalCount: any;
@@ -332,6 +377,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IVehicleFilmsEdge {
+    __typename: string;
     node: IFilm;
     cursor: string;
   }
@@ -340,6 +386,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPlanetFilmsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge>;
     totalCount: any;
@@ -350,6 +397,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPlanetFilmsEdge {
+    __typename: string;
     node: IFilm;
     cursor: string;
   }
@@ -358,6 +406,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IFilmSpeciesConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge>;
     totalCount: any;
@@ -368,6 +417,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IFilmSpeciesEdge {
+    __typename: string;
     node: ISpecies;
     cursor: string;
   }
@@ -376,6 +426,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IFilmStarshipsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge>;
     totalCount: any;
@@ -386,6 +437,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IFilmStarshipsEdge {
+    __typename: string;
     node: IStarship;
     cursor: string;
   }
@@ -394,6 +446,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IFilmVehiclesConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge>;
     totalCount: any;
@@ -404,6 +457,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IFilmVehiclesEdge {
+    __typename: string;
     node: IVehicle;
     cursor: string;
   }
@@ -412,6 +466,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IFilmCharactersConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge>;
     totalCount: any;
@@ -421,6 +476,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IFilmCharactersEdge {
+    __typename: string;
     cursor: string;
   }
 
@@ -428,6 +484,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IFilmPlanetsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge>;
     totalCount: any;
@@ -438,6 +495,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IFilmPlanetsEdge {
+    __typename: string;
     node: IPlanet;
     cursor: string;
   }
@@ -446,6 +504,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPeopleConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge>;
     totalCount: any;
@@ -455,6 +514,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPeopleEdge {
+    __typename: string;
     cursor: string;
   }
 
@@ -462,6 +522,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IPlanetsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge>;
     totalCount: any;
@@ -472,6 +533,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IPlanetsEdge {
+    __typename: string;
     node: IPlanet;
     cursor: string;
   }
@@ -480,6 +542,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface ISpeciesConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge>;
     totalCount: any;
@@ -490,6 +553,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface ISpeciesEdge {
+    __typename: string;
     node: ISpecies;
     cursor: string;
   }
@@ -498,6 +562,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IStarshipsConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge>;
     totalCount: any;
@@ -508,6 +573,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IStarshipsEdge {
+    __typename: string;
     node: IStarship;
     cursor: string;
   }
@@ -516,6 +582,7 @@ module.exports = `  /*
     description: A connection to a list of items.
   */
   export interface IVehiclesConnection {
+    __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge>;
     totalCount: any;
@@ -526,6 +593,7 @@ module.exports = `  /*
     description: An edge in a connection.
   */
   export interface IVehiclesEdge {
+    __typename: string;
     node: IVehicle;
     cursor: string;
   }`
