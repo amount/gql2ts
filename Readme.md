@@ -34,15 +34,6 @@ gql2ts -m Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
 
 
 ### Todo
-- [ ] Make an interface for a response from GraphQL, something like:
-
-  ```typescript
-  interface IGraphQLResponse {
-    data: IQuery | IMutation;
-    errors: Array<IGraphQLError>;
-  }
-  ```
-  
-- [ ] Add a more comprehensive test suite
+  - [ ] Add a more comprehensive test suite
 
 - [ ] Remove unreachable interfaces (i.e. ignore one type and get rid of types only accessible from that one)
