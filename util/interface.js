@@ -154,9 +154,11 @@ const typeToInterface = (type, ignoredTypes) => {
 };
 
 const typesToInterfaces = (schema, options) => {
-  return [
-    generateRootTypes(schema),                      // add root entry point & errors
-    ...schema.types
+  let interfaces = [];
+  interfaces.push(generateRootTypes(schema));       // add root entry point & errors
+
+  let typeInterfaces =
+    schema.types
       .filter(type => !type.name.startsWith('__'))  // remove introspection types
       .filter(type =>                               // remove ignored types
         !options.ignoredTypes.includes(type.name)
@@ -164,8 +166,11 @@ const typesToInterfaces = (schema, options) => {
       .map(type =>                                  // convert to interface
         typeToInterface(type, options.ignoredTypes)
       )
-      .filter(type => type)                         // remove empty ones
-  ].join('\n\n');                                   // put whitespace between them
+      .filter(type => type);                        // remove empty ones
+
+  return interfaces
+          .concat(typeInterfaces)                   // add typeInterfaces to return object
+          .join('\n\n');                            // add newlines between interfaces
 }
 
 const schemaToInterfaces = (schema, options) => typesToInterfaces(schema.data.__schema, options);
