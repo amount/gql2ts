@@ -1,8 +1,23 @@
 'use strict';
 require('./polyfill');
 
-const generateRootTypes = rootName => `  export interface IGraphQLResponseRoot {
-    data?: ${generateInterfaceName(rootName)};
+// @TODO subscriptions?
+const generateRootDataName = schema => {
+  let rootNamespaces = [];
+
+  if (schema.queryType) {
+    rootNamespaces.push(generateInterfaceName(schema.queryType.name));
+  }
+
+  if (schema.mutationType) {
+    rootNamespaces.push(generateInterfaceName(schema.mutationType.name));
+  }
+
+  return rootNamespaces.join(' | ');
+}
+
+const generateRootTypes = schema => `  export interface IGraphQLResponseRoot {
+    data?: ${generateRootDataName(schema)};
     errors?: Array<IGraphQLResponseError>;
   }
 
@@ -28,12 +43,13 @@ const generateTypeDeclaration = (description, name, possibleTypes) => `  /*
 
 `;
 
-const generateInterfaceDeclaration = (description, declaration, fields, additionalInfo) => `${additionalInfo}  /*
+const typeNameDeclaration = '    __typename: string;\n'
+
+const generateInterfaceDeclaration = (description, declaration, fields, additionalInfo, isInput) => `${additionalInfo}  /*
     description: ${description}
   */
   export interface ${declaration} {
-    __typename: string;
-${fields}
+${isInput ? '' : typeNameDeclaration}${fields}
   }`;
 
 /**
@@ -134,12 +150,12 @@ const typeToInterface = (type, ignoredTypes) => {
     }
   }
 
-  return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo);
+  return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo, isInput);
 };
 
 const typesToInterfaces = (schema, options) => {
   return [
-    generateRootTypes(schema.queryType.name),       // add root entry point & errors
+    generateRootTypes(schema),                      // add root entry point & errors
     ...schema.types
       .filter(type => !type.name.startsWith('__'))  // remove introspection types
       .filter(type =>                               // remove ignored types
