@@ -1,6 +1,6 @@
 {
   "name": "gql2ts",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "index.js",
   "dependencies": {
@@ -22,5 +22,9 @@
   "repository": "avantcredit/gql2ts",
   "bin": {
     "gql2ts": "./index.js"
-  }
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "perferGlobal": true
 }

@@ -1,5 +1,37 @@
 'use strict';
 require('./polyfill');
+
+// @TODO subscriptions?
+const generateRootDataName = schema => {
+  let rootNamespaces = [];
+
+  if (schema.queryType) {
+    rootNamespaces.push(generateInterfaceName(schema.queryType.name));
+  }
+
+  if (schema.mutationType) {
+    rootNamespaces.push(generateInterfaceName(schema.mutationType.name));
+  }
+
+  return rootNamespaces.join(' | ');
+}
+
+const generateRootTypes = schema => `  export interface IGraphQLResponseRoot {
+    data?: ${generateRootDataName(schema)};
+    errors?: Array<IGraphQLResponseError>;
+  }
+
+  export interface IGraphQLResponseError {
+    message: string;            // Required for all errors
+    locations?: Array<IGraphQLResponseErrorLocation>;
+    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+  }
+
+  export interface IGraphQLResponseErrorLocation {
+    line: number;
+    column: number;
+  }`
+
 const generateInterfaceName = name => `I${name}`;
 
 const generateTypeName = name => `${name}`;
@@ -11,11 +43,13 @@ const generateTypeDeclaration = (description, name, possibleTypes) => `  /*
 
 `;
 
-const generateInterfaceDeclaration = (description, declaration, fields, additionalInfo) => `${additionalInfo}  /*
+const typeNameDeclaration = '    __typename: string;\n'
+
+const generateInterfaceDeclaration = (description, declaration, fields, additionalInfo, isInput) => `${additionalInfo}  /*
     description: ${description}
   */
   export interface ${declaration} {
-${fields}
+${isInput ? '' : typeNameDeclaration}${fields}
   }`;
 
 /**
@@ -116,23 +150,30 @@ const typeToInterface = (type, ignoredTypes) => {
     }
   }
 
-  return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo);
+  return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo, isInput);
 };
 
-const typesToInterfaces = (types, options) => {
-  return types
-          .filter(type => !type.name.startsWith('__'))  // remove introspection types
-          .filter(type =>                               // remove ignored types
-            !options.ignoredTypes.includes(type.name)
-          )
-          .map(type =>                                  // convert to interface
-            typeToInterface(type, options.ignoredTypes)
-          )
-          .filter(type => type)                         // remove empty ones
-          .join('\n\n');                                // put whitespace between them
+const typesToInterfaces = (schema, options) => {
+  let interfaces = [];
+  interfaces.push(generateRootTypes(schema));       // add root entry point & errors
+
+  let typeInterfaces =
+    schema.types
+      .filter(type => !type.name.startsWith('__'))  // remove introspection types
+      .filter(type =>                               // remove ignored types
+        !options.ignoredTypes.includes(type.name)
+      )
+      .map(type =>                                  // convert to interface
+        typeToInterface(type, options.ignoredTypes)
+      )
+      .filter(type => type);                        // remove empty ones
+
+  return interfaces
+          .concat(typeInterfaces)                   // add typeInterfaces to return object
+          .join('\n\n');                            // add newlines between interfaces
 }
 
-const schemaToInterfaces = (schema, options) => typesToInterfaces(schema.data.__schema.types, options);
+const schemaToInterfaces = (schema, options) => typesToInterfaces(schema.data.__schema, options);
 
 module.exports = {
   schemaToInterfaces
