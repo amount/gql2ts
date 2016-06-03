@@ -8,7 +8,7 @@ npm install -g gql2ts
 
 
 ```
-Usage: index [options] <schema.json>
+Usage: gql2ts [options] <schema.json>
 
 Options:
 
@@ -36,4 +36,4 @@ gql2ts -m Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
 ### Todo
   - [ ] Add a more comprehensive test suite
 
-- [ ] Remove unreachable interfaces (i.e. ignore one type and get rid of types only accessible from that one)
+- [ ] Remove unreachable interfaces (i.e. ignore one 
