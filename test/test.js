@@ -4,6 +4,7 @@ let interfaceUtils = require('../util/interface');
 let moduleUtils    = require('../util/module');
 let expectedModule = require('./data/expectedModule');
 let schema         = require('./data/starWarsSchema');
+let enumSchema     = require('./data/enumSchema');
 let expectedInterfaces = require('./data/expectedInterfaces');
 
 describe('gql2ts', () => {
@@ -19,7 +20,14 @@ describe('gql2ts', () => {
       let ignoredPerson = require('./data/ignoredPersonInterfaces');
       expect(actual).to.equal(ignoredPerson);
     });
+
+    it('correctly translates enums', () => {
+      let actual = interfaceUtils.schemaToInterfaces(enumSchema, { ignoredTypes: [] });
+      let enumInterfaces = require('./data/expectedEnumInterfaces');
+      expect(actual).to.equal(enumInterfaces);
+    });
   });
+
 
   describe('modules', () => {
     it('correctly generates Modules', () => {
@@ -44,6 +52,15 @@ describe('gql2ts', () => {
       let swModule = require('./data/ignoredPerson');
 
       expect(module).to.equal(swModule);
-    })
+    });
+
+    it('correctly translates enums', () => {
+      let interfaces = interfaceUtils.schemaToInterfaces(enumSchema, { ignoredTypes: [] });
+      let module = moduleUtils.generateModule('GQL', interfaces);
+
+      let enumModule = require('./data/expectedEnum');
+
+      expect(module).to.equal(enumModule);
+    });
   });
 });

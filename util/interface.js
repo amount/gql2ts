@@ -52,6 +52,13 @@ const generateInterfaceDeclaration = (description, declaration, fields, addition
 ${isInput ? '' : typeNameDeclaration}${fields}
   }`;
 
+const generateEnumName = name => `I${name}Enum`;
+
+const generateEnumDeclaration = (description, name, enumValues) => `  /*
+    description: ${description}
+  */
+  export type ${generateEnumName(name)} = ${enumValues.join(' | ')};`;
+
 /**
   * TODO
   * - add support for custom types (via optional json file or something)
@@ -83,6 +90,9 @@ const resolveInterfaceName = type => {
   case 'INTERFACE':
     return generateTypeName(type.name);
 
+  case 'ENUM':
+    return generateEnumName(type.name);
+
   default:
     return generateInterfaceName(type.name);
   }
@@ -111,7 +121,7 @@ const fieldToDefinition = (field, isInput) => {
   return `    ${fieldDef};`;
 }
 
-const findRootType = (type) => {
+const findRootType = type => {
   if (!type.ofType) { return type; }
 
   return findRootType(type.ofType);
@@ -123,8 +133,12 @@ const filterField = (field, ignoredTypes) => {
 }
 
 const typeToInterface = (type, ignoredTypes) => {
-  if (type.kind === 'SCALAR' || type.kind === 'ENUM') {
+  if (type.kind === 'SCALAR') {
     return null;
+  }
+
+  if (type.kind === 'ENUM') {
+    return generateEnumDeclaration(type.description, type.name, type.enumValues.map(v => `"${v.name}"`))
   }
 
   let isInput = type.kind === 'INPUT_OBJECT';
