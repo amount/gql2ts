@@ -1,3 +1,6 @@
+## 0.2.0
+- Add support for Enums
+
 ## 0.1.0
 - Add Root Entry Points & Error Map
 - Add `__typename` to the generated interfaces

@@ -1,6 +1,6 @@
 {
   "name": "gql2ts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "index.js",
   "dependencies": {
@@ -19,6 +19,10 @@
   "keywords": [
     "typescript",
     "graphql"
+  ],
+  "files": [
+    "index.js",
+    "util"
   ],
   "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
   "license": "MIT",
