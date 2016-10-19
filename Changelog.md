@@ -1,3 +1,6 @@
+## 0.2.1
+- Fix Version number in command line
+
 ## 0.2.0
 - Add support for Enums
 
