@@ -81,6 +81,7 @@ const resolveInterfaceName = type => {
 
     case 'Float':
     case 'Integer':
+	case 'Int':
       return 'number';
 
     default:
