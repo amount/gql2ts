@@ -1,15 +1,15 @@
-module.exports = `  export interface IGraphQLResponseRoot {
+module.exports = `  interface IGraphQLResponseRoot {
     data?: IQuery;
     errors?: Array<IGraphQLResponseError>;
   }
 
-  export interface IGraphQLResponseError {
+  interface IGraphQLResponseError {
     message: string;            // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
     [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
-  export interface IGraphQLResponseErrorLocation {
+  interface IGraphQLResponseErrorLocation {
     line: number;
     column: number;
   }
@@ -17,7 +17,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: null
   */
-  export interface IQuery {
+  interface IQuery {
     __typename: string;
     colorEnum: IColorEnum;
   }
@@ -25,4 +25,4 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: null
   */
-  export type IColorEnum = "RED" | "GREEN" | "BLUE";`
+  type IColorEnum = "RED" | "GREEN" | "BLUE";`
