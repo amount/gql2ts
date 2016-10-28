@@ -15,7 +15,7 @@ Options:
   -h, --help                         output usage information
   -V, --version                      output the version number
   -o --output-file [outputFile]      name for ouput file, defaults to graphqlInterfaces.d.ts
-  -m --module-name [moduleName]      name for the export module, defaults to "GQL"
+  -n --namespace [namespace]         name for the namespace, defaults to "GQL"
   -i --ignored-types <ignoredTypes>  names of types to ignore (comma delimited)
 ```
 
@@ -29,11 +29,5 @@ gql2ts schema.json
 
 #### With Optional Options
 ```shell
-gql2ts -m Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
+gql2ts -n Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
 ```
-
-
-### Todo
-  - [ ] Add a more comprehensive test suite
-
-- [ ] Remove unreachable interfaces (i.e. ignore one 

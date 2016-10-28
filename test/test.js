@@ -1,10 +1,10 @@
 'use strict';
 const expect       = require('chai').expect;
 let interfaceUtils = require('../util/interface');
-let moduleUtils    = require('../util/module');
-let expectedModule = require('./data/expectedModule');
+let namespaceUtils = require('../util/namespace');
 let schema         = require('./data/starWarsSchema');
 let enumSchema     = require('./data/enumSchema');
+let expectedNamespace  = require('./data/expectedNamespace');
 let expectedInterfaces = require('./data/expectedInterfaces');
 
 describe('gql2ts', () => {
@@ -29,38 +29,38 @@ describe('gql2ts', () => {
   });
 
 
-  describe('modules', () => {
-    it('correctly generates Modules', () => {
+  describe('namespace', () => {
+    it('correctly generates namespace', () => {
       let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [] });
-      let module = moduleUtils.generateModule('GQL', interfaces);
-      expect(module).to.equal(expectedModule);
+      let namespace = namespaceUtils.generateNamespace('GQL', interfaces);
+      expect(namespace).to.equal(expectedNamespace);
     });
 
     it('correctly uses a custom namespace', () => {
       let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [] });
-      let module = moduleUtils.generateModule('StarWars', interfaces);
+      let namespace = namespaceUtils.generateNamespace('StarWars', interfaces);
 
-      let swModule = require('./data/starWarsModule');
+      let swNamespace = require('./data/starWarsNamespace');
 
-      expect(module).to.equal(swModule);
+      expect(namespace).to.equal(swNamespace);
     });
 
     it('correctly uses a namespace and ignores', () => {
       let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: ['Person'] });
-      let module = moduleUtils.generateModule('StarWars', interfaces);
+      let namespace = namespaceUtils.generateNamespace('StarWars', interfaces);
 
-      let swModule = require('./data/ignoredPerson');
+      let swNamespace = require('./data/ignoredPerson');
 
-      expect(module).to.equal(swModule);
+      expect(namespace).to.equal(swNamespace);
     });
 
     it('correctly translates enums', () => {
       let interfaces = interfaceUtils.schemaToInterfaces(enumSchema, { ignoredTypes: [] });
-      let module = moduleUtils.generateModule('GQL', interfaces);
+      let namespace = namespaceUtils.generateNamespace('GQL', interfaces);
 
-      let enumModule = require('./data/expectedEnum');
+      let enumNamespace = require('./data/expectedEnum');
 
-      expect(module).to.equal(enumModule);
+      expect(namespace).to.equal(enumNamespace);
     });
   });
 });
