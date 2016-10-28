@@ -1,18 +1,18 @@
 module.exports = `// graphql typescript definitions
 
-declare module GQL {
-  export interface IGraphQLResponseRoot {
+declare namespace GQL {
+  interface IGraphQLResponseRoot {
     data?: IQuery;
     errors?: Array<IGraphQLResponseError>;
   }
 
-  export interface IGraphQLResponseError {
+  interface IGraphQLResponseError {
     message: string;            // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
     [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
-  export interface IGraphQLResponseErrorLocation {
+  interface IGraphQLResponseErrorLocation {
     line: number;
     column: number;
   }
@@ -20,7 +20,7 @@ declare module GQL {
   /*
     description: null
   */
-  export interface IQuery {
+  interface IQuery {
     __typename: string;
     colorEnum: IColorEnum;
   }
@@ -28,7 +28,7 @@ declare module GQL {
   /*
     description: null
   */
-  export type IColorEnum = "RED" | "GREEN" | "BLUE";
+  type IColorEnum = "RED" | "GREEN" | "BLUE";
 }
 
 export default GQL;

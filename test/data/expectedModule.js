@@ -1,18 +1,18 @@
 module.exports = `// graphql typescript definitions
 
-declare module GQL {
-  export interface IGraphQLResponseRoot {
+declare namespace GQL {
+  interface IGraphQLResponseRoot {
     data?: IRoot;
     errors?: Array<IGraphQLResponseError>;
   }
 
-  export interface IGraphQLResponseError {
+  interface IGraphQLResponseError {
     message: string;            // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
     [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
-  export interface IGraphQLResponseErrorLocation {
+  interface IGraphQLResponseErrorLocation {
     line: number;
     column: number;
   }
@@ -20,7 +20,7 @@ declare module GQL {
   /*
     description: null
   */
-  export interface IRoot {
+  interface IRoot {
     __typename: string;
     allFilms: IFilmsConnection;
     film: IFilm;
@@ -40,7 +40,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmsConnection {
+  interface IFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge>;
@@ -51,7 +51,7 @@ declare module GQL {
   /*
     description: Information about pagination in a connection.
   */
-  export interface IPageInfo {
+  interface IPageInfo {
     __typename: string;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
@@ -62,7 +62,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmsEdge {
+  interface IFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -71,7 +71,7 @@ declare module GQL {
   /*
     description: A single film.
   */
-  export interface IFilm {
+  interface IFilm {
     __typename: string;
     title: string;
     episodeID: any;
@@ -92,12 +92,12 @@ declare module GQL {
   /*
     description: An object with an ID
   */
-  export type Node = IPlanet | ISpecies | IStarship | IVehicle | IPerson | IFilm;
+  type Node = IPlanet | ISpecies | IStarship | IVehicle | IPerson | IFilm;
 
   /*
     description: An object with an ID
   */
-  export interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IPerson, IFilm {
+  interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IPerson, IFilm {
     __typename: string;
     id: string;
   }
@@ -106,7 +106,7 @@ declare module GQL {
     description: A large mass, planet or planetoid in the Star Wars Universe, at the time of
 0 ABY.
   */
-  export interface IPlanet {
+  interface IPlanet {
     __typename: string;
     name: string;
     diameter: any;
@@ -127,7 +127,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPlanetResidentsConnection {
+  interface IPlanetResidentsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge>;
@@ -138,7 +138,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPlanetResidentsEdge {
+  interface IPlanetResidentsEdge {
     __typename: string;
     node: IPerson;
     cursor: string;
@@ -147,7 +147,7 @@ declare module GQL {
   /*
     description: An individual person or character within the Star Wars universe.
   */
-  export interface IPerson {
+  interface IPerson {
     __typename: string;
     name: string;
     birthYear: string;
@@ -170,7 +170,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPersonFilmsConnection {
+  interface IPersonFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge>;
@@ -181,7 +181,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPersonFilmsEdge {
+  interface IPersonFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -190,7 +190,7 @@ declare module GQL {
   /*
     description: A type of person or character within the Star Wars Universe.
   */
-  export interface ISpecies {
+  interface ISpecies {
     __typename: string;
     name: string;
     classification: string;
@@ -212,7 +212,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface ISpeciesPeopleConnection {
+  interface ISpeciesPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge>;
@@ -223,7 +223,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface ISpeciesPeopleEdge {
+  interface ISpeciesPeopleEdge {
     __typename: string;
     node: IPerson;
     cursor: string;
@@ -232,7 +232,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface ISpeciesFilmsConnection {
+  interface ISpeciesFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge>;
@@ -243,7 +243,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface ISpeciesFilmsEdge {
+  interface ISpeciesFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -252,7 +252,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPersonStarshipsConnection {
+  interface IPersonStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge>;
@@ -263,7 +263,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPersonStarshipsEdge {
+  interface IPersonStarshipsEdge {
     __typename: string;
     node: IStarship;
     cursor: string;
@@ -272,7 +272,7 @@ declare module GQL {
   /*
     description: A single transport craft that has hyperdrive capability.
   */
-  export interface IStarship {
+  interface IStarship {
     __typename: string;
     name: string;
     model: string;
@@ -297,7 +297,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IStarshipPilotsConnection {
+  interface IStarshipPilotsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge>;
@@ -308,7 +308,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IStarshipPilotsEdge {
+  interface IStarshipPilotsEdge {
     __typename: string;
     node: IPerson;
     cursor: string;
@@ -317,7 +317,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IStarshipFilmsConnection {
+  interface IStarshipFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge>;
@@ -328,7 +328,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IStarshipFilmsEdge {
+  interface IStarshipFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -337,7 +337,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPersonVehiclesConnection {
+  interface IPersonVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge>;
@@ -348,7 +348,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPersonVehiclesEdge {
+  interface IPersonVehiclesEdge {
     __typename: string;
     node: IVehicle;
     cursor: string;
@@ -357,7 +357,7 @@ declare module GQL {
   /*
     description: A single transport craft that does not have hyperdrive capability
   */
-  export interface IVehicle {
+  interface IVehicle {
     __typename: string;
     name: string;
     model: string;
@@ -380,7 +380,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IVehiclePilotsConnection {
+  interface IVehiclePilotsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge>;
@@ -391,7 +391,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IVehiclePilotsEdge {
+  interface IVehiclePilotsEdge {
     __typename: string;
     node: IPerson;
     cursor: string;
@@ -400,7 +400,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IVehicleFilmsConnection {
+  interface IVehicleFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge>;
@@ -411,7 +411,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IVehicleFilmsEdge {
+  interface IVehicleFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -420,7 +420,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPlanetFilmsConnection {
+  interface IPlanetFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge>;
@@ -431,7 +431,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPlanetFilmsEdge {
+  interface IPlanetFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -440,7 +440,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmSpeciesConnection {
+  interface IFilmSpeciesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge>;
@@ -451,7 +451,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmSpeciesEdge {
+  interface IFilmSpeciesEdge {
     __typename: string;
     node: ISpecies;
     cursor: string;
@@ -460,7 +460,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmStarshipsConnection {
+  interface IFilmStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge>;
@@ -471,7 +471,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmStarshipsEdge {
+  interface IFilmStarshipsEdge {
     __typename: string;
     node: IStarship;
     cursor: string;
@@ -480,7 +480,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmVehiclesConnection {
+  interface IFilmVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge>;
@@ -491,7 +491,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmVehiclesEdge {
+  interface IFilmVehiclesEdge {
     __typename: string;
     node: IVehicle;
     cursor: string;
@@ -500,7 +500,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmCharactersConnection {
+  interface IFilmCharactersConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge>;
@@ -511,7 +511,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmCharactersEdge {
+  interface IFilmCharactersEdge {
     __typename: string;
     node: IPerson;
     cursor: string;
@@ -520,7 +520,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmPlanetsConnection {
+  interface IFilmPlanetsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge>;
@@ -531,7 +531,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmPlanetsEdge {
+  interface IFilmPlanetsEdge {
     __typename: string;
     node: IPlanet;
     cursor: string;
@@ -540,7 +540,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPeopleConnection {
+  interface IPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge>;
@@ -551,7 +551,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPeopleEdge {
+  interface IPeopleEdge {
     __typename: string;
     node: IPerson;
     cursor: string;
@@ -560,7 +560,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IPlanetsConnection {
+  interface IPlanetsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge>;
@@ -571,7 +571,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IPlanetsEdge {
+  interface IPlanetsEdge {
     __typename: string;
     node: IPlanet;
     cursor: string;
@@ -580,7 +580,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface ISpeciesConnection {
+  interface ISpeciesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge>;
@@ -591,7 +591,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface ISpeciesEdge {
+  interface ISpeciesEdge {
     __typename: string;
     node: ISpecies;
     cursor: string;
@@ -600,7 +600,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IStarshipsConnection {
+  interface IStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge>;
@@ -611,7 +611,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IStarshipsEdge {
+  interface IStarshipsEdge {
     __typename: string;
     node: IStarship;
     cursor: string;
@@ -620,7 +620,7 @@ declare module GQL {
   /*
     description: A connection to a list of items.
   */
-  export interface IVehiclesConnection {
+  interface IVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge>;
@@ -631,7 +631,7 @@ declare module GQL {
   /*
     description: An edge in a connection.
   */
-  export interface IVehiclesEdge {
+  interface IVehiclesEdge {
     __typename: string;
     node: IVehicle;
     cursor: string;

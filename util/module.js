@@ -5,7 +5,7 @@ const fileIO = require('./fileIO');
 const generateModule = (moduleName, interfaces) => {
   return `// graphql typescript definitions
 
-declare module ${moduleName} {
+declare namespace ${moduleName} {
 ${interfaces}
 }
 

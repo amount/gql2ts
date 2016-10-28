@@ -1,15 +1,15 @@
-module.exports = `  export interface IGraphQLResponseRoot {
+module.exports = `  interface IGraphQLResponseRoot {
     data?: IRoot;
     errors?: Array<IGraphQLResponseError>;
   }
 
-  export interface IGraphQLResponseError {
+  interface IGraphQLResponseError {
     message: string;            // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
     [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
-  export interface IGraphQLResponseErrorLocation {
+  interface IGraphQLResponseErrorLocation {
     line: number;
     column: number;
   }
@@ -17,7 +17,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: null
   */
-  export interface IRoot {
+  interface IRoot {
     __typename: string;
     allFilms: IFilmsConnection;
     film: IFilm;
@@ -36,7 +36,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmsConnection {
+  interface IFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge>;
@@ -47,7 +47,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: Information about pagination in a connection.
   */
-  export interface IPageInfo {
+  interface IPageInfo {
     __typename: string;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
@@ -58,7 +58,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmsEdge {
+  interface IFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -67,7 +67,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A single film.
   */
-  export interface IFilm {
+  interface IFilm {
     __typename: string;
     title: string;
     episodeID: any;
@@ -88,12 +88,12 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An object with an ID
   */
-  export type Node = IPlanet | ISpecies | IStarship | IVehicle | IFilm;
+  type Node = IPlanet | ISpecies | IStarship | IVehicle | IFilm;
 
   /*
     description: An object with an ID
   */
-  export interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IFilm {
+  interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IFilm {
     __typename: string;
     id: string;
   }
@@ -102,7 +102,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
     description: A large mass, planet or planetoid in the Star Wars Universe, at the time of
 0 ABY.
   */
-  export interface IPlanet {
+  interface IPlanet {
     __typename: string;
     name: string;
     diameter: any;
@@ -123,7 +123,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPlanetResidentsConnection {
+  interface IPlanetResidentsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge>;
@@ -133,7 +133,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPlanetResidentsEdge {
+  interface IPlanetResidentsEdge {
     __typename: string;
     cursor: string;
   }
@@ -141,7 +141,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPersonFilmsConnection {
+  interface IPersonFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge>;
@@ -152,7 +152,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPersonFilmsEdge {
+  interface IPersonFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -161,7 +161,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A type of person or character within the Star Wars Universe.
   */
-  export interface ISpecies {
+  interface ISpecies {
     __typename: string;
     name: string;
     classification: string;
@@ -183,7 +183,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface ISpeciesPeopleConnection {
+  interface ISpeciesPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge>;
@@ -193,7 +193,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface ISpeciesPeopleEdge {
+  interface ISpeciesPeopleEdge {
     __typename: string;
     cursor: string;
   }
@@ -201,7 +201,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface ISpeciesFilmsConnection {
+  interface ISpeciesFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge>;
@@ -212,7 +212,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface ISpeciesFilmsEdge {
+  interface ISpeciesFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -221,7 +221,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPersonStarshipsConnection {
+  interface IPersonStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge>;
@@ -232,7 +232,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPersonStarshipsEdge {
+  interface IPersonStarshipsEdge {
     __typename: string;
     node: IStarship;
     cursor: string;
@@ -241,7 +241,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A single transport craft that has hyperdrive capability.
   */
-  export interface IStarship {
+  interface IStarship {
     __typename: string;
     name: string;
     model: string;
@@ -266,7 +266,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IStarshipPilotsConnection {
+  interface IStarshipPilotsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge>;
@@ -276,7 +276,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IStarshipPilotsEdge {
+  interface IStarshipPilotsEdge {
     __typename: string;
     cursor: string;
   }
@@ -284,7 +284,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IStarshipFilmsConnection {
+  interface IStarshipFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge>;
@@ -295,7 +295,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IStarshipFilmsEdge {
+  interface IStarshipFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -304,7 +304,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPersonVehiclesConnection {
+  interface IPersonVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge>;
@@ -315,7 +315,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPersonVehiclesEdge {
+  interface IPersonVehiclesEdge {
     __typename: string;
     node: IVehicle;
     cursor: string;
@@ -324,7 +324,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A single transport craft that does not have hyperdrive capability
   */
-  export interface IVehicle {
+  interface IVehicle {
     __typename: string;
     name: string;
     model: string;
@@ -347,7 +347,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IVehiclePilotsConnection {
+  interface IVehiclePilotsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge>;
@@ -357,7 +357,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IVehiclePilotsEdge {
+  interface IVehiclePilotsEdge {
     __typename: string;
     cursor: string;
   }
@@ -365,7 +365,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IVehicleFilmsConnection {
+  interface IVehicleFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge>;
@@ -376,7 +376,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IVehicleFilmsEdge {
+  interface IVehicleFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -385,7 +385,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPlanetFilmsConnection {
+  interface IPlanetFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge>;
@@ -396,7 +396,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPlanetFilmsEdge {
+  interface IPlanetFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -405,7 +405,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmSpeciesConnection {
+  interface IFilmSpeciesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge>;
@@ -416,7 +416,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmSpeciesEdge {
+  interface IFilmSpeciesEdge {
     __typename: string;
     node: ISpecies;
     cursor: string;
@@ -425,7 +425,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmStarshipsConnection {
+  interface IFilmStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge>;
@@ -436,7 +436,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmStarshipsEdge {
+  interface IFilmStarshipsEdge {
     __typename: string;
     node: IStarship;
     cursor: string;
@@ -445,7 +445,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmVehiclesConnection {
+  interface IFilmVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge>;
@@ -456,7 +456,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmVehiclesEdge {
+  interface IFilmVehiclesEdge {
     __typename: string;
     node: IVehicle;
     cursor: string;
@@ -465,7 +465,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmCharactersConnection {
+  interface IFilmCharactersConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge>;
@@ -475,7 +475,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmCharactersEdge {
+  interface IFilmCharactersEdge {
     __typename: string;
     cursor: string;
   }
@@ -483,7 +483,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IFilmPlanetsConnection {
+  interface IFilmPlanetsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge>;
@@ -494,7 +494,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IFilmPlanetsEdge {
+  interface IFilmPlanetsEdge {
     __typename: string;
     node: IPlanet;
     cursor: string;
@@ -503,7 +503,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPeopleConnection {
+  interface IPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge>;
@@ -513,7 +513,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPeopleEdge {
+  interface IPeopleEdge {
     __typename: string;
     cursor: string;
   }
@@ -521,7 +521,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IPlanetsConnection {
+  interface IPlanetsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge>;
@@ -532,7 +532,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IPlanetsEdge {
+  interface IPlanetsEdge {
     __typename: string;
     node: IPlanet;
     cursor: string;
@@ -541,7 +541,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface ISpeciesConnection {
+  interface ISpeciesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge>;
@@ -552,7 +552,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface ISpeciesEdge {
+  interface ISpeciesEdge {
     __typename: string;
     node: ISpecies;
     cursor: string;
@@ -561,7 +561,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IStarshipsConnection {
+  interface IStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge>;
@@ -572,7 +572,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IStarshipsEdge {
+  interface IStarshipsEdge {
     __typename: string;
     node: IStarship;
     cursor: string;
@@ -581,7 +581,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  export interface IVehiclesConnection {
+  interface IVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge>;
@@ -592,7 +592,7 @@ module.exports = `  export interface IGraphQLResponseRoot {
   /*
     description: An edge in a connection.
   */
-  export interface IVehiclesEdge {
+  interface IVehiclesEdge {
     __typename: string;
     node: IVehicle;
     cursor: string;
