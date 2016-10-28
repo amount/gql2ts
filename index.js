@@ -8,23 +8,23 @@ const fileIO = require('./util/fileIO');
 // Interface Utils
 const interfaceUtils = require('./util/interface');
 
-// Module Utils
-const moduleUtils = require('./util/module')
+// Namespace Utils
+const namespaceUtils = require('./util/namespace')
 
 program
-  .version('0.2.1')
+  .version('0.3.0')
   .usage('[options] <schema.json>')
   .option('-o --output-file [outputFile]', 'name for ouput file, defaults to graphqlInterfaces.d.ts', 'graphqlInterfaces.d.ts')
-  .option('-m --module-name [moduleName]', 'name for the export module, defaults to "GQL"', 'GQL')
+  .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .action((fileName, options) => {
     let schema = fileIO.readFile(fileName);
 
     let interfaces = interfaceUtils.schemaToInterfaces(schema, options);
 
-    let module = moduleUtils.generateModule(options.moduleName, interfaces);
+    let namespace = namespaceUtils.generateNamespace(options.namespace, interfaces);
 
-    moduleUtils.writeModuleToFile(options.outputFile, module);
+    namespaceUtils.writeNamespaceToFile(options.outputFile, namespace);
   })
   .parse(process.argv);
 
