@@ -80,7 +80,7 @@ const resolveInterfaceName = type => {
       return 'boolean';
 
     case 'Float':
-    case 'Integer':
+    case 'Int':
       return 'number';
 
     default:

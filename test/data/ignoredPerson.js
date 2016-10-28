@@ -43,7 +43,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -73,7 +73,7 @@ declare namespace StarWars {
   interface IFilm {
     __typename: string;
     title: string;
-    episodeID: any;
+    episodeID: number;
     openingCrawl: string;
     director: string;
     producers: Array<string>;
@@ -108,11 +108,11 @@ declare namespace StarWars {
   interface IPlanet {
     __typename: string;
     name: string;
-    diameter: any;
-    rotationPeriod: any;
-    orbitalPeriod: any;
+    diameter: number;
+    rotationPeriod: number;
+    orbitalPeriod: number;
     gravity: string;
-    population: any;
+    population: number;
     climates: Array<string>;
     terrains: Array<string>;
     surfaceWater: number;
@@ -130,7 +130,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge>;
-    totalCount: any;
+    totalCount: number;
   }
 
   /*
@@ -148,7 +148,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -170,7 +170,7 @@ declare namespace StarWars {
     classification: string;
     designation: string;
     averageHeight: number;
-    averageLifespan: any;
+    averageLifespan: number;
     eyeColors: Array<string>;
     hairColors: Array<string>;
     skinColors: Array<string>;
@@ -190,7 +190,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge>;
-    totalCount: any;
+    totalCount: number;
   }
 
   /*
@@ -208,7 +208,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -228,7 +228,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge>;
-    totalCount: any;
+    totalCount: number;
     starships: Array<IStarship>;
   }
 
@@ -254,9 +254,9 @@ declare namespace StarWars {
     length: number;
     crew: string;
     passengers: string;
-    maxAtmospheringSpeed: any;
+    maxAtmospheringSpeed: number;
     hyperdriveRating: number;
-    MGLT: any;
+    MGLT: number;
     cargoCapacity: number;
     consumables: string;
     pilotConnection: IStarshipPilotsConnection;
@@ -273,7 +273,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge>;
-    totalCount: any;
+    totalCount: number;
   }
 
   /*
@@ -291,7 +291,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -311,7 +311,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge>;
-    totalCount: any;
+    totalCount: number;
     vehicles: Array<IVehicle>;
   }
 
@@ -333,12 +333,12 @@ declare namespace StarWars {
     model: string;
     vehicleClass: string;
     manufacturers: Array<string>;
-    costInCredits: any;
+    costInCredits: number;
     length: number;
     crew: string;
     passengers: string;
-    maxAtmospheringSpeed: any;
-    cargoCapacity: any;
+    maxAtmospheringSpeed: number;
+    cargoCapacity: number;
     consumables: string;
     pilotConnection: IVehiclePilotsConnection;
     filmConnection: IVehicleFilmsConnection;
@@ -354,7 +354,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge>;
-    totalCount: any;
+    totalCount: number;
   }
 
   /*
@@ -372,7 +372,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -392,7 +392,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -412,7 +412,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge>;
-    totalCount: any;
+    totalCount: number;
     species: Array<ISpecies>;
   }
 
@@ -432,7 +432,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge>;
-    totalCount: any;
+    totalCount: number;
     starships: Array<IStarship>;
   }
 
@@ -452,7 +452,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge>;
-    totalCount: any;
+    totalCount: number;
     vehicles: Array<IVehicle>;
   }
 
@@ -472,7 +472,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge>;
-    totalCount: any;
+    totalCount: number;
   }
 
   /*
@@ -490,7 +490,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge>;
-    totalCount: any;
+    totalCount: number;
     planets: Array<IPlanet>;
   }
 
@@ -510,7 +510,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge>;
-    totalCount: any;
+    totalCount: number;
   }
 
   /*
@@ -528,7 +528,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge>;
-    totalCount: any;
+    totalCount: number;
     planets: Array<IPlanet>;
   }
 
@@ -548,7 +548,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge>;
-    totalCount: any;
+    totalCount: number;
     species: Array<ISpecies>;
   }
 
@@ -568,7 +568,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge>;
-    totalCount: any;
+    totalCount: number;
     starships: Array<IStarship>;
   }
 
@@ -588,7 +588,7 @@ declare namespace StarWars {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge>;
-    totalCount: any;
+    totalCount: number;
     vehicles: Array<IVehicle>;
   }
 
