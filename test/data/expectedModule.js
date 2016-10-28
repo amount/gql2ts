@@ -637,6 +637,4 @@ declare namespace GQL {
     cursor: string;
   }
 }
-
-export default GQL;
 `

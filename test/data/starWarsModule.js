@@ -637,6 +637,4 @@ declare namespace StarWars {
     cursor: string;
   }
 }
-
-export default StarWars;
 `

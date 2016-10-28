@@ -8,8 +8,6 @@ const generateModule = (moduleName, interfaces) => {
 declare namespace ${moduleName} {
 ${interfaces}
 }
-
-export default ${moduleName};
 `
 };
 

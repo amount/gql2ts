@@ -30,6 +30,4 @@ declare namespace GQL {
   */
   type IColorEnum = "RED" | "GREEN" | "BLUE";
 }
-
-export default GQL;
 `
