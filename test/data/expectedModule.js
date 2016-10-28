@@ -44,7 +44,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -74,7 +74,7 @@ declare namespace GQL {
   interface IFilm {
     __typename: string;
     title: string;
-    episodeID: any;
+    episodeID: number;
     openingCrawl: string;
     director: string;
     producers: Array<string>;
@@ -109,11 +109,11 @@ declare namespace GQL {
   interface IPlanet {
     __typename: string;
     name: string;
-    diameter: any;
-    rotationPeriod: any;
-    orbitalPeriod: any;
+    diameter: number;
+    rotationPeriod: number;
+    orbitalPeriod: number;
     gravity: string;
-    population: any;
+    population: number;
     climates: Array<string>;
     terrains: Array<string>;
     surfaceWater: number;
@@ -131,7 +131,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge>;
-    totalCount: any;
+    totalCount: number;
     residents: Array<IPerson>;
   }
 
@@ -154,8 +154,8 @@ declare namespace GQL {
     eyeColor: string;
     gender: string;
     hairColor: string;
-    height: any;
-    mass: any;
+    height: number;
+    mass: number;
     skinColor: string;
     homeworld: IPlanet;
     filmConnection: IPersonFilmsConnection;
@@ -174,7 +174,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -196,7 +196,7 @@ declare namespace GQL {
     classification: string;
     designation: string;
     averageHeight: number;
-    averageLifespan: any;
+    averageLifespan: number;
     eyeColors: Array<string>;
     hairColors: Array<string>;
     skinColors: Array<string>;
@@ -216,7 +216,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge>;
-    totalCount: any;
+    totalCount: number;
     people: Array<IPerson>;
   }
 
@@ -236,7 +236,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -256,7 +256,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge>;
-    totalCount: any;
+    totalCount: number;
     starships: Array<IStarship>;
   }
 
@@ -282,9 +282,9 @@ declare namespace GQL {
     length: number;
     crew: string;
     passengers: string;
-    maxAtmospheringSpeed: any;
+    maxAtmospheringSpeed: number;
     hyperdriveRating: number;
-    MGLT: any;
+    MGLT: number;
     cargoCapacity: number;
     consumables: string;
     pilotConnection: IStarshipPilotsConnection;
@@ -301,7 +301,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge>;
-    totalCount: any;
+    totalCount: number;
     pilots: Array<IPerson>;
   }
 
@@ -321,7 +321,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -341,7 +341,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge>;
-    totalCount: any;
+    totalCount: number;
     vehicles: Array<IVehicle>;
   }
 
@@ -363,12 +363,12 @@ declare namespace GQL {
     model: string;
     vehicleClass: string;
     manufacturers: Array<string>;
-    costInCredits: any;
+    costInCredits: number;
     length: number;
     crew: string;
     passengers: string;
-    maxAtmospheringSpeed: any;
-    cargoCapacity: any;
+    maxAtmospheringSpeed: number;
+    cargoCapacity: number;
     consumables: string;
     pilotConnection: IVehiclePilotsConnection;
     filmConnection: IVehicleFilmsConnection;
@@ -384,7 +384,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge>;
-    totalCount: any;
+    totalCount: number;
     pilots: Array<IPerson>;
   }
 
@@ -404,7 +404,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -424,7 +424,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge>;
-    totalCount: any;
+    totalCount: number;
     films: Array<IFilm>;
   }
 
@@ -444,7 +444,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge>;
-    totalCount: any;
+    totalCount: number;
     species: Array<ISpecies>;
   }
 
@@ -464,7 +464,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge>;
-    totalCount: any;
+    totalCount: number;
     starships: Array<IStarship>;
   }
 
@@ -484,7 +484,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge>;
-    totalCount: any;
+    totalCount: number;
     vehicles: Array<IVehicle>;
   }
 
@@ -504,7 +504,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge>;
-    totalCount: any;
+    totalCount: number;
     characters: Array<IPerson>;
   }
 
@@ -524,7 +524,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge>;
-    totalCount: any;
+    totalCount: number;
     planets: Array<IPlanet>;
   }
 
@@ -544,7 +544,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge>;
-    totalCount: any;
+    totalCount: number;
     people: Array<IPerson>;
   }
 
@@ -564,7 +564,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge>;
-    totalCount: any;
+    totalCount: number;
     planets: Array<IPlanet>;
   }
 
@@ -584,7 +584,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge>;
-    totalCount: any;
+    totalCount: number;
     species: Array<ISpecies>;
   }
 
@@ -604,7 +604,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge>;
-    totalCount: any;
+    totalCount: number;
     starships: Array<IStarship>;
   }
 
@@ -624,7 +624,7 @@ declare namespace GQL {
     __typename: string;
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge>;
-    totalCount: any;
+    totalCount: number;
     vehicles: Array<IVehicle>;
   }
 
