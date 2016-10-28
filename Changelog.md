@@ -1,3 +1,10 @@
+## 0.3.0
+### Breaking Changes
+- Change from `module` to `namespace` [#14](https://github.com/avantcredit/gql2ts/pull/14)
+- Removed `-m`/`--module-name` flag in favor of `-n`/`--namespace`
+### Patches
+- Fix for `Int` Scalar Type (thanks [@valorize](https://github.com/valorize)) [#15](https://github.com/avantcredit/gql2ts/pull/15)
+
 ## 0.2.1
 - Fix Version number in command line
 
