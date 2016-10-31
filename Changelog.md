@@ -1,3 +1,6 @@
+## 0.3.1
+- Accept `__schema` at the top level [#20](https://github.com/avantcredit/gql2ts/pull/20)
+
 ## 0.3.0
 ### Breaking Changes
 - Change from `module` to `namespace` [#14](https://github.com/avantcredit/gql2ts/pull/14)
