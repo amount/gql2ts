@@ -187,7 +187,7 @@ const typesToInterfaces = (schema, options) => {
           .join('\n\n');                            // add newlines between interfaces
 }
 
-const schemaToInterfaces = (schema, options) => typesToInterfaces(schema.data.__schema, options);
+const schemaToInterfaces = (schema, options) => typesToInterfaces(schema.__schema || schema.data.__schema, options);
 
 module.exports = {
   schemaToInterfaces
