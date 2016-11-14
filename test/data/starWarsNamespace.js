@@ -97,7 +97,7 @@ declare namespace StarWars {
   /*
     description: An object with an ID
   */
-  interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IPerson, IFilm {
+  interface INode {
     __typename: string;
     id: string;
   }

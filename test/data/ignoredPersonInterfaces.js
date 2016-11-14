@@ -93,7 +93,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   /*
     description: An object with an ID
   */
-  interface INode extends IPlanet, ISpecies, IStarship, IVehicle, IFilm {
+  interface INode {
     __typename: string;
     id: string;
   }
