@@ -1,5 +1,5 @@
 ## 0.4.0
-- Stop extending `GraphQLInterface`s with their possible types. [#25](https://github.com/avantcredit/gql2ts/pull/25)
+- Stop extending `GraphQLInterface`s with their possible types. (thanks [@tomaba](https://github.com/tomaba)) [#25](https://github.com/avantcredit/gql2ts/pull/25)
   - Previously, if two possible types implement a similar field, but with a different type it will cause an error
 
 ## 0.3.1
