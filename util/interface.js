@@ -98,7 +98,7 @@ const resolveInterfaceName = type => {
   }
 };
 
-const fieldToDefinition = (field, isInput) => {
+const fieldToDefinition = (field, isInput, strictNull) => {
   let interfaceName = resolveInterfaceName(field.type);
   let fieldDef;
   let isNotNull = interfaceName.includes('!');
@@ -116,6 +116,9 @@ const fieldToDefinition = (field, isInput) => {
     fieldDef = `${field.name}?: ${interfaceName}`;
   } else {
     fieldDef = `${field.name}: ${interfaceName}`;
+    if (strictNull && !isNotNull) {
+      fieldDef += ' | null';
+    }
   }
 
   return `    ${fieldDef};`;
@@ -132,7 +135,7 @@ const filterField = (field, ignoredTypes) => {
   return !ignoredTypes.includes(nestedType.name);
 }
 
-const typeToInterface = (type, ignoredTypes) => {
+const typeToInterface = (type, ignoredTypes, strictNull) => {
   if (type.kind === 'SCALAR') {
     return null;
   }
@@ -146,7 +149,7 @@ const typeToInterface = (type, ignoredTypes) => {
 
   let fields = f
                 .filter(field => filterField(field, ignoredTypes))
-                .map(field => fieldToDefinition(field, isInput))
+                .map(field => fieldToDefinition(field, isInput, strictNull))
                 .filter(field => field)
                 .join('\n');
 
@@ -177,7 +180,7 @@ const typesToInterfaces = (schema, options) => {
         !options.ignoredTypes.includes(type.name)
       )
       .map(type =>                                  // convert to interface
-        typeToInterface(type, options.ignoredTypes)
+        typeToInterface(type, options.ignoredTypes, options.strictNull)
       )
       .filter(type => type);                        // remove empty ones
 
