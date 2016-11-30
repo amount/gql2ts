@@ -19,7 +19,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IQuery {
     __typename: string;
-    colorEnum: IColorEnum;
+    colorEnum: IColorEnum | null;
   }
 
   /*

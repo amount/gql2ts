@@ -112,10 +112,10 @@ const fieldToDefinition = (field, isInput) => {
     interfaceName = interfaceName.replace(/\!/g, '');
   }
 
-  if (isInput && !isNotNull) {
-    fieldDef = `${field.name}?: ${interfaceName}`;
+  if (isInput) {
+    fieldDef = `${field.name}${isNotNull ? '' : '?'}: ${interfaceName}`;
   } else {
-    fieldDef = `${field.name}: ${interfaceName}`;
+    fieldDef = `${field.name}: ${interfaceName}${isNotNull ? '' : ' | null'}`;
   }
 
   return `    ${fieldDef};`;

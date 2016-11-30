@@ -19,18 +19,18 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IRoot {
     __typename: string;
-    allFilms: IFilmsConnection;
-    film: IFilm;
-    allPeople: IPeopleConnection;
-    allPlanets: IPlanetsConnection;
-    planet: IPlanet;
-    allSpecies: ISpeciesConnection;
-    species: ISpecies;
-    allStarships: IStarshipsConnection;
-    starship: IStarship;
-    allVehicles: IVehiclesConnection;
-    vehicle: IVehicle;
-    node: Node;
+    allFilms: IFilmsConnection | null;
+    film: IFilm | null;
+    allPeople: IPeopleConnection | null;
+    allPlanets: IPlanetsConnection | null;
+    planet: IPlanet | null;
+    allSpecies: ISpeciesConnection | null;
+    species: ISpecies | null;
+    allStarships: IStarshipsConnection | null;
+    starship: IStarship | null;
+    allVehicles: IVehiclesConnection | null;
+    vehicle: IVehicle | null;
+    node: Node | null;
   }
 
   /*
@@ -39,9 +39,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
+    edges: Array<IFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
   }
 
   /*
@@ -51,8 +51,8 @@ module.exports = `  interface IGraphQLResponseRoot {
     __typename: string;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
-    startCursor: string;
-    endCursor: string;
+    startCursor: string | null;
+    endCursor: string | null;
   }
 
   /*
@@ -60,7 +60,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IFilmsEdge {
     __typename: string;
-    node: IFilm;
+    node: IFilm | null;
     cursor: string;
   }
 
@@ -69,19 +69,19 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IFilm {
     __typename: string;
-    title: string;
-    episodeID: number;
-    openingCrawl: string;
-    director: string;
-    producers: Array<string>;
-    releaseDate: string;
-    speciesConnection: IFilmSpeciesConnection;
-    starshipConnection: IFilmStarshipsConnection;
-    vehicleConnection: IFilmVehiclesConnection;
-    characterConnection: IFilmCharactersConnection;
-    planetConnection: IFilmPlanetsConnection;
-    created: string;
-    edited: string;
+    title: string | null;
+    episodeID: number | null;
+    openingCrawl: string | null;
+    director: string | null;
+    producers: Array<string> | null;
+    releaseDate: string | null;
+    speciesConnection: IFilmSpeciesConnection | null;
+    starshipConnection: IFilmStarshipsConnection | null;
+    vehicleConnection: IFilmVehiclesConnection | null;
+    characterConnection: IFilmCharactersConnection | null;
+    planetConnection: IFilmPlanetsConnection | null;
+    created: string | null;
+    edited: string | null;
     id: string;
   }
 
@@ -104,19 +104,19 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IPlanet {
     __typename: string;
-    name: string;
-    diameter: number;
-    rotationPeriod: number;
-    orbitalPeriod: number;
-    gravity: string;
-    population: number;
-    climates: Array<string>;
-    terrains: Array<string>;
-    surfaceWater: number;
-    residentConnection: IPlanetResidentsConnection;
-    filmConnection: IPlanetFilmsConnection;
-    created: string;
-    edited: string;
+    name: string | null;
+    diameter: number | null;
+    rotationPeriod: number | null;
+    orbitalPeriod: number | null;
+    gravity: string | null;
+    population: number | null;
+    climates: Array<string> | null;
+    terrains: Array<string> | null;
+    surfaceWater: number | null;
+    residentConnection: IPlanetResidentsConnection | null;
+    filmConnection: IPlanetFilmsConnection | null;
+    created: string | null;
+    edited: string | null;
     id: string;
   }
 
@@ -126,8 +126,8 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPlanetResidentsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPlanetResidentsEdge>;
-    totalCount: number;
+    edges: Array<IPlanetResidentsEdge> | null;
+    totalCount: number | null;
   }
 
   /*
@@ -144,9 +144,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPersonFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPersonFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
+    edges: Array<IPersonFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
   }
 
   /*
@@ -154,7 +154,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IPersonFilmsEdge {
     __typename: string;
-    node: IFilm;
+    node: IFilm | null;
     cursor: string;
   }
 
@@ -163,20 +163,20 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface ISpecies {
     __typename: string;
-    name: string;
-    classification: string;
-    designation: string;
-    averageHeight: number;
-    averageLifespan: number;
-    eyeColors: Array<string>;
-    hairColors: Array<string>;
-    skinColors: Array<string>;
-    language: string;
-    homeworld: IPlanet;
-    personConnection: ISpeciesPeopleConnection;
-    filmConnection: ISpeciesFilmsConnection;
-    created: string;
-    edited: string;
+    name: string | null;
+    classification: string | null;
+    designation: string | null;
+    averageHeight: number | null;
+    averageLifespan: number | null;
+    eyeColors: Array<string> | null;
+    hairColors: Array<string> | null;
+    skinColors: Array<string> | null;
+    language: string | null;
+    homeworld: IPlanet | null;
+    personConnection: ISpeciesPeopleConnection | null;
+    filmConnection: ISpeciesFilmsConnection | null;
+    created: string | null;
+    edited: string | null;
     id: string;
   }
 
@@ -186,8 +186,8 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface ISpeciesPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<ISpeciesPeopleEdge>;
-    totalCount: number;
+    edges: Array<ISpeciesPeopleEdge> | null;
+    totalCount: number | null;
   }
 
   /*
@@ -204,9 +204,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface ISpeciesFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<ISpeciesFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
+    edges: Array<ISpeciesFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
   }
 
   /*
@@ -214,7 +214,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface ISpeciesFilmsEdge {
     __typename: string;
-    node: IFilm;
+    node: IFilm | null;
     cursor: string;
   }
 
@@ -224,9 +224,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPersonStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPersonStarshipsEdge>;
-    totalCount: number;
-    starships: Array<IStarship>;
+    edges: Array<IPersonStarshipsEdge> | null;
+    totalCount: number | null;
+    starships: Array<IStarship> | null;
   }
 
   /*
@@ -234,7 +234,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IPersonStarshipsEdge {
     __typename: string;
-    node: IStarship;
+    node: IStarship | null;
     cursor: string;
   }
 
@@ -243,23 +243,23 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IStarship {
     __typename: string;
-    name: string;
-    model: string;
-    starshipClass: string;
-    manufacturers: Array<string>;
-    costInCredits: number;
-    length: number;
-    crew: string;
-    passengers: string;
-    maxAtmospheringSpeed: number;
-    hyperdriveRating: number;
-    MGLT: number;
-    cargoCapacity: number;
-    consumables: string;
-    pilotConnection: IStarshipPilotsConnection;
-    filmConnection: IStarshipFilmsConnection;
-    created: string;
-    edited: string;
+    name: string | null;
+    model: string | null;
+    starshipClass: string | null;
+    manufacturers: Array<string> | null;
+    costInCredits: number | null;
+    length: number | null;
+    crew: string | null;
+    passengers: string | null;
+    maxAtmospheringSpeed: number | null;
+    hyperdriveRating: number | null;
+    MGLT: number | null;
+    cargoCapacity: number | null;
+    consumables: string | null;
+    pilotConnection: IStarshipPilotsConnection | null;
+    filmConnection: IStarshipFilmsConnection | null;
+    created: string | null;
+    edited: string | null;
     id: string;
   }
 
@@ -269,8 +269,8 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IStarshipPilotsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IStarshipPilotsEdge>;
-    totalCount: number;
+    edges: Array<IStarshipPilotsEdge> | null;
+    totalCount: number | null;
   }
 
   /*
@@ -287,9 +287,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IStarshipFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IStarshipFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
+    edges: Array<IStarshipFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
   }
 
   /*
@@ -297,7 +297,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IStarshipFilmsEdge {
     __typename: string;
-    node: IFilm;
+    node: IFilm | null;
     cursor: string;
   }
 
@@ -307,9 +307,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPersonVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPersonVehiclesEdge>;
-    totalCount: number;
-    vehicles: Array<IVehicle>;
+    edges: Array<IPersonVehiclesEdge> | null;
+    totalCount: number | null;
+    vehicles: Array<IVehicle> | null;
   }
 
   /*
@@ -317,7 +317,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IPersonVehiclesEdge {
     __typename: string;
-    node: IVehicle;
+    node: IVehicle | null;
     cursor: string;
   }
 
@@ -326,21 +326,21 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IVehicle {
     __typename: string;
-    name: string;
-    model: string;
-    vehicleClass: string;
-    manufacturers: Array<string>;
-    costInCredits: number;
-    length: number;
-    crew: string;
-    passengers: string;
-    maxAtmospheringSpeed: number;
-    cargoCapacity: number;
-    consumables: string;
-    pilotConnection: IVehiclePilotsConnection;
-    filmConnection: IVehicleFilmsConnection;
-    created: string;
-    edited: string;
+    name: string | null;
+    model: string | null;
+    vehicleClass: string | null;
+    manufacturers: Array<string> | null;
+    costInCredits: number | null;
+    length: number | null;
+    crew: string | null;
+    passengers: string | null;
+    maxAtmospheringSpeed: number | null;
+    cargoCapacity: number | null;
+    consumables: string | null;
+    pilotConnection: IVehiclePilotsConnection | null;
+    filmConnection: IVehicleFilmsConnection | null;
+    created: string | null;
+    edited: string | null;
     id: string;
   }
 
@@ -350,8 +350,8 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IVehiclePilotsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IVehiclePilotsEdge>;
-    totalCount: number;
+    edges: Array<IVehiclePilotsEdge> | null;
+    totalCount: number | null;
   }
 
   /*
@@ -368,9 +368,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IVehicleFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IVehicleFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
+    edges: Array<IVehicleFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
   }
 
   /*
@@ -378,7 +378,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IVehicleFilmsEdge {
     __typename: string;
-    node: IFilm;
+    node: IFilm | null;
     cursor: string;
   }
 
@@ -388,9 +388,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPlanetFilmsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPlanetFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
+    edges: Array<IPlanetFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
   }
 
   /*
@@ -398,7 +398,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IPlanetFilmsEdge {
     __typename: string;
-    node: IFilm;
+    node: IFilm | null;
     cursor: string;
   }
 
@@ -408,9 +408,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IFilmSpeciesConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmSpeciesEdge>;
-    totalCount: number;
-    species: Array<ISpecies>;
+    edges: Array<IFilmSpeciesEdge> | null;
+    totalCount: number | null;
+    species: Array<ISpecies> | null;
   }
 
   /*
@@ -418,7 +418,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IFilmSpeciesEdge {
     __typename: string;
-    node: ISpecies;
+    node: ISpecies | null;
     cursor: string;
   }
 
@@ -428,9 +428,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IFilmStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmStarshipsEdge>;
-    totalCount: number;
-    starships: Array<IStarship>;
+    edges: Array<IFilmStarshipsEdge> | null;
+    totalCount: number | null;
+    starships: Array<IStarship> | null;
   }
 
   /*
@@ -438,7 +438,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IFilmStarshipsEdge {
     __typename: string;
-    node: IStarship;
+    node: IStarship | null;
     cursor: string;
   }
 
@@ -448,9 +448,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IFilmVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmVehiclesEdge>;
-    totalCount: number;
-    vehicles: Array<IVehicle>;
+    edges: Array<IFilmVehiclesEdge> | null;
+    totalCount: number | null;
+    vehicles: Array<IVehicle> | null;
   }
 
   /*
@@ -458,7 +458,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IFilmVehiclesEdge {
     __typename: string;
-    node: IVehicle;
+    node: IVehicle | null;
     cursor: string;
   }
 
@@ -468,8 +468,8 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IFilmCharactersConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmCharactersEdge>;
-    totalCount: number;
+    edges: Array<IFilmCharactersEdge> | null;
+    totalCount: number | null;
   }
 
   /*
@@ -486,9 +486,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IFilmPlanetsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmPlanetsEdge>;
-    totalCount: number;
-    planets: Array<IPlanet>;
+    edges: Array<IFilmPlanetsEdge> | null;
+    totalCount: number | null;
+    planets: Array<IPlanet> | null;
   }
 
   /*
@@ -496,7 +496,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IFilmPlanetsEdge {
     __typename: string;
-    node: IPlanet;
+    node: IPlanet | null;
     cursor: string;
   }
 
@@ -506,8 +506,8 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPeopleEdge>;
-    totalCount: number;
+    edges: Array<IPeopleEdge> | null;
+    totalCount: number | null;
   }
 
   /*
@@ -524,9 +524,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IPlanetsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IPlanetsEdge>;
-    totalCount: number;
-    planets: Array<IPlanet>;
+    edges: Array<IPlanetsEdge> | null;
+    totalCount: number | null;
+    planets: Array<IPlanet> | null;
   }
 
   /*
@@ -534,7 +534,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IPlanetsEdge {
     __typename: string;
-    node: IPlanet;
+    node: IPlanet | null;
     cursor: string;
   }
 
@@ -544,9 +544,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface ISpeciesConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<ISpeciesEdge>;
-    totalCount: number;
-    species: Array<ISpecies>;
+    edges: Array<ISpeciesEdge> | null;
+    totalCount: number | null;
+    species: Array<ISpecies> | null;
   }
 
   /*
@@ -554,7 +554,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface ISpeciesEdge {
     __typename: string;
-    node: ISpecies;
+    node: ISpecies | null;
     cursor: string;
   }
 
@@ -564,9 +564,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IStarshipsConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IStarshipsEdge>;
-    totalCount: number;
-    starships: Array<IStarship>;
+    edges: Array<IStarshipsEdge> | null;
+    totalCount: number | null;
+    starships: Array<IStarship> | null;
   }
 
   /*
@@ -574,7 +574,7 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IStarshipsEdge {
     __typename: string;
-    node: IStarship;
+    node: IStarship | null;
     cursor: string;
   }
 
@@ -584,9 +584,9 @@ module.exports = `  interface IGraphQLResponseRoot {
   interface IVehiclesConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IVehiclesEdge>;
-    totalCount: number;
-    vehicles: Array<IVehicle>;
+    edges: Array<IVehiclesEdge> | null;
+    totalCount: number | null;
+    vehicles: Array<IVehicle> | null;
   }
 
   /*
@@ -594,6 +594,6 @@ module.exports = `  interface IGraphQLResponseRoot {
   */
   interface IVehiclesEdge {
     __typename: string;
-    node: IVehicle;
+    node: IVehicle | null;
     cursor: string;
   }`
