@@ -17,6 +17,7 @@ Options:
   -o --output-file [outputFile]      name for ouput file, defaults to graphqlInterfaces.d.ts
   -n --namespace [namespace]         name for the namespace, defaults to "GQL"
   -i --ignored-types <ignoredTypes>  names of types to ignore (comma delimited)
+  -l --legacy                        Use TypeScript 1.x annotation
 ```
 
 ### Examples
