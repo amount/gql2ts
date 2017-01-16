@@ -144,6 +144,7 @@ const typeToInterface = (type, ignoredTypes, supportsNullability) => {
 
   let isInput = type.kind === 'INPUT_OBJECT';
   let f = isInput ? type.inputFields : type.fields;
+  f = f || []
 
   let fields = f
                 .filter(field => filterField(field, ignoredTypes))
