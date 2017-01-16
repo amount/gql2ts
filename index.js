@@ -17,6 +17,7 @@ program
   .option('-o --output-file [outputFile]', 'name for ouput file, defaults to graphqlInterfaces.d.ts', 'graphqlInterfaces.d.ts')
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
+  .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
   .action((fileName, options) => {
     let schema = fileIO.readFile(fileName);
 

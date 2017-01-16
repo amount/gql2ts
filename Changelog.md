@@ -1,3 +1,9 @@
+## Master
+
+Adds support for nullability attributes inside derived interfaces - [@neelance](https://github.com/neelance) [@orta](https://github.com/orta) [#34](https://github.com/avantcredit/gql2ts/pull/34).
+Note that for older versions of TypeScript, you can use the CLI flag `--legacy` to get output without nullability references.
+
+
 ## 0.4.0
 - Stop extending `GraphQLInterface`s with their possible types. (thanks [@tomaba](https://github.com/tomaba)) [#25](https://github.com/avantcredit/gql2ts/pull/25)
   - Previously, if two possible types implement a similar field, but with a different type it will cause an error

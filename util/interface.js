@@ -98,10 +98,11 @@ const resolveInterfaceName = type => {
   }
 };
 
-const fieldToDefinition = (field, isInput) => {
+const fieldToDefinition = (field, isInput, supportsNullability) => {
   let interfaceName = resolveInterfaceName(field.type);
   let fieldDef;
   let isNotNull = interfaceName.includes('!');
+  let showNullabiltyAttribute = !isNotNull && supportsNullability
 
   if (isNotNull) {
     /**
@@ -112,10 +113,10 @@ const fieldToDefinition = (field, isInput) => {
     interfaceName = interfaceName.replace(/\!/g, '');
   }
 
-  if (isInput && !isNotNull) {
-    fieldDef = `${field.name}?: ${interfaceName}`;
+  if (isInput) {
+    fieldDef = `${field.name}${showNullabiltyAttribute ? '?' : ''}: ${interfaceName}`;
   } else {
-    fieldDef = `${field.name}: ${interfaceName}`;
+    fieldDef = `${field.name}: ${interfaceName}${showNullabiltyAttribute ? ' | null' : ''}`;
   }
 
   return `    ${fieldDef};`;
@@ -132,7 +133,7 @@ const filterField = (field, ignoredTypes) => {
   return !ignoredTypes.includes(nestedType.name);
 }
 
-const typeToInterface = (type, ignoredTypes) => {
+const typeToInterface = (type, ignoredTypes, supportsNullability) => {
   if (type.kind === 'SCALAR') {
     return null;
   }
@@ -146,7 +147,7 @@ const typeToInterface = (type, ignoredTypes) => {
 
   let fields = f
                 .filter(field => filterField(field, ignoredTypes))
-                .map(field => fieldToDefinition(field, isInput))
+                .map(field => fieldToDefinition(field, isInput, supportsNullability))
                 .filter(field => field)
                 .join('\n');
 
@@ -169,6 +170,7 @@ const typeToInterface = (type, ignoredTypes) => {
 const typesToInterfaces = (schema, options) => {
   let interfaces = [];
   interfaces.push(generateRootTypes(schema));       // add root entry point & errors
+  let supportsNullability = options.legacy !== true
 
   let typeInterfaces =
     schema.types
@@ -177,7 +179,7 @@ const typesToInterfaces = (schema, options) => {
         !options.ignoredTypes.includes(type.name)
       )
       .map(type =>                                  // convert to interface
-        typeToInterface(type, options.ignoredTypes)
+        typeToInterface(type, options.ignoredTypes, supportsNullability)
       )
       .filter(type => type);                        // remove empty ones
 
