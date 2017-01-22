@@ -1,4 +1,5 @@
 module.exports = `// graphql typescript definitions
+/* tslint:disable */
 
 declare namespace GQL {
   interface IGraphQLResponseRoot {
@@ -637,4 +638,5 @@ declare namespace GQL {
     cursor: string;
   }
 }
+/* tslint:enable */
 `

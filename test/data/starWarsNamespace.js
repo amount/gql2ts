@@ -1,4 +1,5 @@
 module.exports = `// graphql typescript definitions
+/* tslint:disable */
 
 declare namespace StarWars {
   interface IGraphQLResponseRoot {
@@ -637,4 +638,5 @@ declare namespace StarWars {
     cursor: string;
   }
 }
+/* tslint:enable */
 `
