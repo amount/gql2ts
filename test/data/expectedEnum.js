@@ -32,4 +32,5 @@ declare namespace GQL {
   type IColorEnum = "RED" | "GREEN" | "BLUE";
 }
 /* tslint:enable */
+
 `

@@ -9,6 +9,7 @@ declare namespace ${namespaceName} {
 ${interfaces}
 }
 /* tslint:enable */
+
 `;
 
 const writeNamespaceToFile = (outputFile, namespace) => fileIO.writeToFile(outputFile, namespace);

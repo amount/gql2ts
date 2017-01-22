@@ -639,4 +639,5 @@ declare namespace GQL {
   }
 }
 /* tslint:enable */
+
 `

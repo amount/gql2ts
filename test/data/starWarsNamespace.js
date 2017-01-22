@@ -639,4 +639,5 @@ declare namespace StarWars {
   }
 }
 /* tslint:enable */
+
 `
