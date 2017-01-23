@@ -1,5 +1,8 @@
-## 0.5.0
+## 0.5.1
+- Add `tslint:disable` to generated files - [@AdirAmsalem](https://github.com/AdirAmsalem) [#38](https://github.com/avantcredit/gql2ts/pull/38)
+- Update `graphql` dependency [#29](https://github.com/avantcredit/gql2ts/pull/29)
 
+## 0.5.0
 - Adds support for nullability attributes inside derived interfaces - [@neelance](https://github.com/neelance) [@orta](https://github.com/orta) [#34](https://github.com/avantcredit/gql2ts/pull/34).
   - Note that for older versions of TypeScript, you can use the CLI flag `--legacy` to get output without nullability references.
 
