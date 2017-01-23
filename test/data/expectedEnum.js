@@ -1,5 +1,5 @@
-module.exports = `// graphql typescript definitions
-/* tslint:disable */
+module.exports = `// tslint:disable
+// graphql typescript definitions
 
 declare namespace GQL {
   interface IGraphQLResponseRoot {
@@ -31,6 +31,6 @@ declare namespace GQL {
   */
   type IColorEnum = "RED" | "GREEN" | "BLUE";
 }
-/* tslint:enable */
 
+// tslint:enable
 `
