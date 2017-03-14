@@ -14,20 +14,41 @@ const namespaceUtils = require('./util/namespace')
 program
   .version('0.4.0')
   .usage('[options] <schema.json>')
-  .option('-o --output-file [outputFile]', 'name for ouput file, defaults to graphqlInterfaces.d.ts', 'graphqlInterfaces.d.ts')
+  .option('-o --output-file [outputFile]', 'name for output file, will use stdout if not specified')
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
-  .action((fileName, options) => {
-    let schema = fileIO.readFile(fileName);
-
-    let interfaces = interfaceUtils.schemaToInterfaces(schema, options);
-
-    let namespace = namespaceUtils.generateNamespace(options.namespace, interfaces);
-
-    namespaceUtils.writeNamespaceToFile(options.outputFile, namespace);
-  })
+  .option('-s --stdin', 'Accept stdin instead of a filename', false)
   .parse(process.argv);
+
+const run = (schema, options) => {
+  let interfaces = interfaceUtils.schemaToInterfaces(schema, options);
+
+  let namespace = namespaceUtils.generateNamespace(options.namespace, interfaces);
+
+  if (options.outputFile) {
+    namespaceUtils.writeNamespaceToFile(options.outputFile, namespace);
+  } else {
+    console.log(namespace);
+  }
+}
+
+const fileName = program.args[0];
+
+if (program.stdin) {
+  let input = '';
+  process.stdin.resume();
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', (data) => {
+    input += data;
+  });
+  process.stdin.on('end', () => run(JSON.parse(input), program))
+} else if (fileName) {
+  const schema = fileIO.readFile(fileName);
+  run(schema, program);
+} else {
+  console.error('No input specified. Please use stdin or a file name.');
+}
 
 if (!process.argv.slice(2).length) {
   program.outputHelp();
