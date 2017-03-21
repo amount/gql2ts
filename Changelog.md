@@ -1,4 +1,4 @@
-## Master
+## 0.6.0
 - Can now accept input from `stdin`
 - Can now write to `stdout`
 
