@@ -18,7 +18,6 @@ program
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
-  .option('-s --stdin', 'Accept stdin instead of a filename', false)
   .parse(process.argv);
 
 const run = (schema, options) => {
@@ -35,7 +34,7 @@ const run = (schema, options) => {
 
 const fileName = program.args[0];
 
-if (program.stdin) {
+if (!process.stdin.isTTY) {
   let input = '';
   process.stdin.resume();
   process.stdin.setEncoding('utf8');

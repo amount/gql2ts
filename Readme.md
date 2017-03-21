@@ -17,7 +17,6 @@ Options:
   -n --namespace [namespace]         name for the namespace, defaults to "GQL"
   -i --ignored-types <ignoredTypes>  names of types to ignore (comma delimited)
   -l --legacy                        Use TypeScript 1.x annotation
-  -s --stdin                         Accept stdin
 ```
 
 ## Examples
@@ -44,5 +43,5 @@ gql2ts -n Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
 ### With stdin
 
 ```shell
-cat schema.json | gql2ts -s
+cat schema.json | gql2ts
 ```

@@ -1,3 +1,10 @@
+## Master
+- Can now accept input from `stdin`
+- Can now write to `stdout`
+
+### Breaking Changes
+- Output will now default to `stdout`, must specify `-o` to write to a file
+
 ## 0.5.1
 - Add `tslint:disable` to generated files - [@AdirAmsalem](https://github.com/AdirAmsalem) [#38](https://github.com/avantcredit/gql2ts/pull/38)
 - Update `graphql` dependency [#29](https://github.com/avantcredit/gql2ts/pull/29)
