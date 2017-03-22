@@ -90,6 +90,17 @@ const enumResponse = {
 }`
 }
 
+const customScalarQuery = `
+query CustomScalarQuery($test: TestScalar) {
+  test (test: $test)
+}
+`;
+
+const expectedCustomScalarResponse = {
+  variables: 'export interface CustomScalarQueryInput {\n  test?: string | null;\n}',
+  interface: 'export interface CustomScalarQuery {\n  test: string | null;\n}',
+}
+
 describe('simple examples', () => {
   it ('does a very simple query', () => {
     const response = runProgram(schema, simplestQuery)
@@ -113,5 +124,11 @@ describe('simple examples', () => {
     const response = runProgram(schema, enumQuery);
     expect(response[0].interface).to.equal(enumResponse.interface);
     expect(response[0].variables).to.equal(enumResponse.variables);
+  })
+
+  it ('supports custom scalars', () => {
+    const response = runProgram(schema, customScalarQuery, { TestScalar: 'string' });
+    expect(response[0].interface).to.equal(expectedCustomScalarResponse.interface);
+    expect(response[0].variables).to.equal(expectedCustomScalarResponse.variables);
   })
 });

@@ -36,10 +36,13 @@ module.exports = `
     arrNonNullContents: [Character!]!
   }
 
+  scalar TestScalar
+
   type Query {
     heroNoParam: Character
     hero(episode: Episode): Character
     human(id: String!): Human
     droid(id: String!): Droid
+    test(test: TestScalar): TestScalar
   }
 `

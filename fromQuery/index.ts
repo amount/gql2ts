@@ -116,7 +116,6 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         let childType = '{\n';
         childType += selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  parent)).join('\n');
         childType += '\n' + indentation + '}'
-        // console.error(convertTest(field.type, false, childType));
 
         str += convertToType(field.type, false, childType) + ';';
       } else {
