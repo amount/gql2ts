@@ -106,29 +106,109 @@ describe('simple examples', () => {
     const response = runProgram(schema, simplestQuery)
     expect(response[0].interface).to.equal(simplestQueryResponse[0].interface);
     expect(response[0].variables).to.equal(simplestQueryResponse[0].variables);
+    expect(response.length).to.equal(1);
   });
 
   it ('supports variables', () => {
     const response = runProgram(schema, variableQuery)
     expect(response[0].interface).to.equal(variableExpectedResponse[0].interface);
     expect(response[0].variables).to.equal(variableExpectedResponse[0].variables);
+    expect(response.length).to.equal(1);
   });
 
   it ('supports arrays', () => {
     const response = runProgram(schema, arrTest);
     expect(response[0].interface).to.equal(arrInterface);
     expect(response[0].variables).to.equal('');
+    expect(response.length).to.equal(1);
   });
 
   it ('supports enums', () => {
     const response = runProgram(schema, enumQuery);
     expect(response[0].interface).to.equal(enumResponse.interface);
     expect(response[0].variables).to.equal(enumResponse.variables);
+    expect(response.length).to.equal(1);
   })
 
   it ('supports custom scalars', () => {
     const response = runProgram(schema, customScalarQuery, { TestScalar: 'string' });
     expect(response[0].interface).to.equal(expectedCustomScalarResponse.interface);
     expect(response[0].variables).to.equal(expectedCustomScalarResponse.variables);
+    expect(response.length).to.equal(1);
   })
 });
+
+const fragmentQuery = `
+query FragmentTest {
+  heroNoParam {
+    ...CharacterFields
+  }
+}
+
+fragment CharacterFields on Character {
+  id
+}
+`
+
+const fragmentInterface0 = `export interface FragmentTest {\n  heroNoParam: {} & IFragmentCharacterFields | null;\n}`;
+const fragmentInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n}'
+
+const inlineFragmentQuery = `
+query FragmentTest {
+  heroNoParam {
+    ... on Droid {
+    	primaryFunction
+      primaryFunctionNonNull
+    }
+  }
+}`;
+
+const inlineFragmentExpected = `export interface FragmentTest {
+  heroNoParam: {
+    primaryFunction?: string | null;
+    primaryFunctionNonNull?: string;
+  } | null;
+}`;
+
+const anonInlineFragmentQuery = `
+query FragmentTest {
+  heroNoParam {
+    ... {
+    	id
+      name
+    }
+  }
+}`;
+
+const anonInlineFragmentExpected = `export interface FragmentTest {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}`;
+
+
+describe('fragments', () => {
+  it ('does simple fragments', () => {
+    const response = runProgram(schema, fragmentQuery)
+    expect(response[0].interface).to.equal(fragmentInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[1].interface).to.equal(fragmentInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response.length).to.equal(2);
+  })
+
+  it ('does inline fragments on type', () => {
+    const response = runProgram(schema, inlineFragmentQuery)
+    expect(response[0].interface).to.equal(inlineFragmentExpected);
+    expect(response[0].variables).to.equal('');
+    expect(response.length).to.equal(1);
+  })
+
+  it ('does anonymous inline fragments', () => {
+    const response = runProgram(schema, anonInlineFragmentQuery)
+    expect(response[0].interface).to.equal(anonInlineFragmentExpected);
+    expect(response[0].variables).to.equal('');
+    expect(response.length).to.equal(1);
+  })
+})

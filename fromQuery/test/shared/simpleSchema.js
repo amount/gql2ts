@@ -31,6 +31,8 @@ module.exports = `
     appearsIn: [Episode]
     primaryFunction: String
 
+    primaryFunctionNonNull: String!
+
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
     arrNonNullContents: [Character!]!

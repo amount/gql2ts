@@ -75,7 +75,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     }
   }
 
-  const getChildSelections = (operation: OperationTypeNode, selection: SelectionNode, indentation: string = '', parent?: GraphQLCompositeType) => {
+  const getChildSelections = (operation: OperationTypeNode, selection: SelectionNode, indentation: string = '', parent?: GraphQLType, isUndefined?: boolean= false) => {
     let str: string = '';
     let field: GraphQLField<any, any>;
 
@@ -105,6 +105,10 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         selectionName = selection.alias.value;
       }
 
+      if (isUndefined) {
+        selectionName += '?';
+      }
+
       str += indentation + selectionName + ': ';
 
       if (!!selection.selectionSet) {
@@ -113,14 +117,35 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         if (isCompositeType(fieldType)) {
           parent = fieldType;
         }
-        let childType = '{\n';
-        childType += selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  parent)).join('\n');
-        childType += '\n' + indentation + '}'
+        let childType = '{';
+        const selections: string[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  parent));
+        const fragments: string[] = selections.filter(s => !s.trim().startsWith('IFragment'));
+        const nonfragments: string [] = selections.filter(s => s.trim().startsWith('IFragment'));
+        if (fragments.length) {
+          childType += '\n';
+          childType += fragments.join('\n');
+          childType += '\n' + indentation;
+        }
+        childType += '}';
+        if (nonfragments.length) {
+          childType += ' & ' + nonfragments.join(' & ');
+        }
 
         str += convertToType(field.type, false, childType) + ';';
       } else {
+        if (!field) { console.log(selection); }
         str += convertToType(field.type) + ';';
       }
+    } else if (selection.kind === 'FragmentSpread') {
+      str = `IFragment${selection.name.value}`
+    } else if (selection.kind === 'InlineFragment') {
+      const anon: boolean = !selection.typeCondition;
+      if (!anon) {
+        const typeName = selection.typeCondition!.name.value;
+        parent = parsedSchema.getType(typeName);
+      }
+      const selections: string[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
+      return selections.join('\n');
     } else {
       console.error('unsupported');
     }
@@ -153,6 +178,17 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
       return {
         variables: variableInterface,
         interface: iface,
+      }
+    } else if (def.kind === 'FragmentDefinition') {
+      const onType: string = def.typeCondition.name.value;
+      const foundType: GraphQLType = parsedSchema.getType(onType);
+      let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+      let iface = `export interface IFragment${def.name.value} {
+${str}
+}`;
+      return {
+        interface: iface,
+        variables: ''
       }
     } else {
       console.error('unsupported definition');
