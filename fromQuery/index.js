@@ -28,6 +28,13 @@ const doIt = (schema, selection, typeMap = {}) => {
             return convertVariable(type.type, true, replacement);
         }
         else {
+            if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
+                const newType = parsedSchema.getType(type.name.value);
+                if (newType instanceof graphql_1.GraphQLEnumType) {
+                    const decl = newType.getValues().map(en => `'${en.value}'`).join(' | ');
+                    return isNonNull ? decl : `${decl} | null`;
+                }
+            }
             const showValue = replacement ? replacement : type.name.value;
             const show = TypeMap[showValue] || (replacement ? showValue : 'any');
             return isNonNull ? show : `${show} | null`;
@@ -39,6 +46,10 @@ const doIt = (schema, selection, typeMap = {}) => {
         }
         else if (isNonNullable(type)) {
             return convertToType(type.ofType, true, replacement);
+        }
+        else if (type instanceof graphql_1.GraphQLEnumType) {
+            const types = type.getValues().map(en => `'${en.value}'`).join(' | ');
+            return isNonNull ? types : `${types} | null`;
         }
         else {
             const showValue = replacement ? replacement : type.toString();
@@ -85,7 +96,7 @@ const doIt = (schema, selection, typeMap = {}) => {
                 childType += selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ', parent)).join('\n');
                 childType += '\n' + indentation + '}';
                 // console.error(convertTest(field.type, false, childType));
-                str += convertToType(field.type, false, childType);
+                str += convertToType(field.type, false, childType) + ';';
             }
             else {
                 str += convertToType(field.type) + ';';

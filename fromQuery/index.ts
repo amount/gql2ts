@@ -16,6 +16,7 @@ import {
   TypeNode,
   OperationTypeNode,
   GraphQLObjectType,
+  GraphQLEnumType,
 } from 'graphql';
 
 const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object = {}) => {
@@ -46,6 +47,13 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     } else if (type.kind === 'NonNullType') {
       return convertVariable(type.type, true, replacement)
     } else {
+      if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
+        const newType: GraphQLType = parsedSchema.getType(type.name.value)
+        if (newType instanceof GraphQLEnumType) {
+          const decl: string = newType.getValues().map(en => `'${en.value}'`).join(' | ');
+          return isNonNull ? decl : `${decl} | null`;
+        }
+      }
       const showValue: string = replacement ? replacement : type.name.value;
       const show: string = TypeMap[showValue] || (replacement ? showValue : 'any');
       return isNonNull ? show : `${show} | null`;
@@ -57,6 +65,9 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
       return wrapList(convertToType(type.ofType, false, replacement)) + (isNonNull ? '' : ' | null');
     } else if (isNonNullable(type)) {
       return convertToType(type.ofType, true, replacement)
+    } else if (type instanceof GraphQLEnumType) {
+      const types: string = type.getValues().map(en => `'${en.value}'`).join(' | ');
+      return isNonNull ? types : `${types} | null`;
     } else {
       const showValue: string = replacement ? replacement : type.toString();
       const show: string = TypeMap[showValue] || (replacement ? showValue : 'any');
@@ -107,7 +118,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         childType += '\n' + indentation + '}'
         // console.error(convertTest(field.type, false, childType));
 
-        str += convertToType(field.type, false, childType);
+        str += convertToType(field.type, false, childType) + ';';
       } else {
         str += convertToType(field.type) + ';';
       }
