@@ -325,7 +325,6 @@ const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => 
       let ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(' & ');
       let opt: string = ext ? ` extends ${ext}` : '';
       let str: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
-      // let str: string[] = ret.map(x => x.iface);
       let iface: string = `export interface IFragment${def.name.value}${opt} {
 ${str.join('\n')}
 }`;

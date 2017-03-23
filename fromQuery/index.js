@@ -244,7 +244,6 @@ const doIt = (schema, query, typeMap = {}) => {
             let ext = ret.filter(x => x.isFragment).map(x => x.iface).join(' & ');
             let opt = ext ? ` extends ${ext}` : '';
             let str = ret.filter(x => !x.isFragment).map(x => x.iface);
-            // let str: string[] = ret.map(x => x.iface);
             let iface = `export interface IFragment${def.name.value}${opt} {
 ${str.join('\n')}
 }`;
