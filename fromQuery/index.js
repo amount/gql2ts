@@ -34,6 +34,11 @@ const doIt = (schema, selection, typeMap = {}) => {
                     const decl = newType.getValues().map(en => `'${en.value}'`).join(' | ');
                     return isNonNull ? decl : `${decl} | null`;
                 }
+                else if (newType instanceof graphql_1.GraphQLInputObjectType) {
+                    const variables = Object.keys(newType.getFields()).map(k => newType.getFields()[k]);
+                    const builder = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
+                    return isNonNull ? builder : `${builder} | null`;
+                }
             }
             const showValue = replacement ? replacement : type.name.value;
             const show = TypeMap[showValue] || (replacement ? showValue : 'any');

@@ -18,6 +18,9 @@ import {
   GraphQLObjectType,
   GraphQLEnumType,
   DirectiveNode,
+  GraphQLInputObjectType,
+  GraphQLInputField,
+  GraphQLInputType,
 } from 'graphql';
 
 const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object = {}) => {
@@ -53,6 +56,10 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         if (newType instanceof GraphQLEnumType) {
           const decl: string = newType.getValues().map(en => `'${en.value}'`).join(' | ');
           return isNonNull ? decl : `${decl} | null`;
+        } else if (newType instanceof GraphQLInputObjectType) {
+          const variables: GraphQLInputField[] = Object.keys(newType.getFields()).map(k => newType.getFields()[k])
+          const builder: string = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
+          return isNonNull ? builder : `${builder} | null`;
         }
       }
       const showValue: string = replacement ? replacement : type.name.value;
@@ -61,7 +68,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     }
   }
 
-  const convertToType = (type: GraphQLOutputType, isNonNull: boolean= false, replacement: string | null= null): string => {
+  const convertToType = (type: GraphQLOutputType | GraphQLInputType, isNonNull: boolean= false, replacement: string | null= null): string => {
     if (isList(type)) {
       return wrapList(convertToType(type.ofType, false, replacement)) + (isNonNull ? '' : ' | null');
     } else if (isNonNullable(type)) {

@@ -47,4 +47,4 @@ module.exports = `
     droid(id: String!): Droid
     test(test: TestScalar): TestScalar
   }
-`
+`;
