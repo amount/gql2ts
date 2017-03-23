@@ -93,6 +93,8 @@ const doIt = (schema, selection, typeMap = {}) => {
         let field;
         let isFragment = false;
         let isPartial = false;
+        let generatedTypeCount = 0;
+        let complexTypes = [];
         if (selection.kind === 'Field') {
             if (parent && graphql_1.isCompositeType(parent)) {
                 if (parent instanceof graphql_1.GraphQLUnionType) {
@@ -140,6 +142,7 @@ const doIt = (schema, selection, typeMap = {}) => {
                 const nonFragments = selections.filter(s => !s.isFragment);
                 const fragments = selections.filter(s => s.isFragment);
                 const andOps = [];
+                complexTypes.push(...selections.map(sel => sel.complexTypes).reduce((acc, arr) => { acc.push(...arr); return acc; }, []));
                 if (nonFragments.length) {
                     const nonPartialNonFragments = nonFragments.filter(nf => !nf.isPartial);
                     const partialNonFragments = nonFragments.filter(nf => nf.isPartial);
@@ -149,6 +152,9 @@ const doIt = (schema, selection, typeMap = {}) => {
                         builder += nonPartialNonFragments.map(f => f.iface).join('\n');
                         builder += `\n${indentation}}`;
                         andOps.push(builder);
+                        const newInterfaceName = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+                        generatedTypeCount += 1;
+                        complexTypes.push({ iface: builder, isPartial: false, name: newInterfaceName });
                     }
                     if (partialNonFragments.length) {
                         let builder = '';
@@ -156,6 +162,9 @@ const doIt = (schema, selection, typeMap = {}) => {
                         builder += partialNonFragments.map(f => f.iface).join('\n');
                         builder += `\n${indentation}}>`;
                         andOps.push(builder);
+                        const newInterfaceName = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+                        generatedTypeCount += 1;
+                        complexTypes.push({ iface: builder, isPartial: true, name: newInterfaceName });
                     }
                 }
                 if (fragments.length) {
@@ -192,7 +201,8 @@ const doIt = (schema, selection, typeMap = {}) => {
             return {
                 iface: joinSelections,
                 isFragment,
-                isPartial
+                isPartial,
+                complexTypes,
             };
         }
         else {
@@ -201,7 +211,8 @@ const doIt = (schema, selection, typeMap = {}) => {
         return {
             iface: str,
             isFragment,
-            isPartial
+            isPartial,
+            complexTypes,
         };
     };
     const getVariables = (variables) => {
@@ -222,7 +233,8 @@ const doIt = (schema, selection, typeMap = {}) => {
 }`;
             }
             iface += `export interface ${name} {\n`;
-            let str = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  ')).map(x => x.iface);
+            let ret = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+            let str = ret.map(x => x.iface);
             iface += str.join('\n');
             iface += `\n}`;
             return {
@@ -233,9 +245,10 @@ const doIt = (schema, selection, typeMap = {}) => {
         else if (def.kind === 'FragmentDefinition') {
             const onType = def.typeCondition.name.value;
             const foundType = parsedSchema.getType(onType);
-            let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType)).map(x => x.iface);
+            let ret = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+            let str = ret.map(x => x.iface);
             let iface = `export interface IFragment${def.name.value} {
-${str}
+${str.join('\n')}
 }`;
             return {
                 interface: iface,

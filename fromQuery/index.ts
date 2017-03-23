@@ -104,10 +104,16 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     }
   }
 
+  interface ComplexTypeSignature {
+    iface: string;
+    isPartial: boolean;
+    name: string;
+  }
   interface IReturnType {
     isFragment: boolean;
     isPartial: boolean;
     iface: string;
+    complexTypes: ComplexTypeSignature[];
   }
 
   const wrapPartial = (possiblePartial: IReturnType) => {
@@ -123,6 +129,9 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     let field: GraphQLField<any, any>;
     let isFragment: boolean = false;
     let isPartial: boolean = false;
+    let generatedTypeCount: number = 0;
+    let complexTypes: ComplexTypeSignature[] = [];
+
     if (selection.kind === 'Field') {
       if (parent && isCompositeType(parent)) {
         if (parent instanceof GraphQLUnionType) {
@@ -171,6 +180,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         const nonFragments: IReturnType[] = selections.filter(s => !s.isFragment);
         const fragments: IReturnType[] = selections.filter(s => s.isFragment);
         const andOps: string[] = [];
+        complexTypes.push(...selections.map(sel => sel.complexTypes).reduce((acc, arr) => { acc.push(...arr); return acc; }, []));
 
         if (nonFragments.length) {
           const nonPartialNonFragments = nonFragments.filter(nf => !nf.isPartial);
@@ -182,6 +192,9 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
             builder += nonPartialNonFragments.map(f => f.iface).join('\n');
             builder += `\n${indentation}}`;
             andOps.push(builder);
+            const newInterfaceName: string = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+            generatedTypeCount += 1;
+            complexTypes.push({ iface: builder, isPartial: false, name: newInterfaceName });
           }
 
           if (partialNonFragments.length) {
@@ -190,6 +203,9 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
             builder += partialNonFragments.map(f => f.iface).join('\n');
             builder += `\n${indentation}}>`;
             andOps.push(builder);
+            const newInterfaceName: string = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+            generatedTypeCount += 1;
+            complexTypes.push({ iface: builder, isPartial: true, name: newInterfaceName });
           }
         }
 
@@ -225,7 +241,8 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
       return {
         iface: joinSelections,
         isFragment,
-        isPartial
+        isPartial,
+        complexTypes,
       };
 
     } else {
@@ -234,7 +251,8 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     return {
       iface: str,
       isFragment,
-      isPartial
+      isPartial,
+      complexTypes,
     };
   }
 
@@ -257,7 +275,8 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
 }`;
       }
       iface += `export interface ${name} {\n`;
-      let str = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  ')).map(x => x.iface);
+      let ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+      let str: string[] = ret.map(x => x.iface)
       iface += str.join('\n');
       iface += `\n}`;
 
@@ -268,9 +287,10 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     } else if (def.kind === 'FragmentDefinition') {
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
-      let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType)).map(x => x.iface);
+      let ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType))
+      let str: string[] = ret.map(x => x.iface);
       let iface = `export interface IFragment${def.name.value} {
-${str}
+${str.join('\n')}
 }`;
       return {
         interface: iface,
