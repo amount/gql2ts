@@ -133,11 +133,50 @@ const expectedUnionWithFragmentResponse = {
   variables: 'export interface UnionQueryInput {\n  id: string;\n}',
 }
 
+const anonQuery = `
+  query {
+    heroNoParam {
+      id
+      name
+    }
+  }
+`;
+
+const nakedQuery = `
+  query {
+    heroNoParam {
+      id
+      name
+    }
+  }
+`;
+
+const anonAndNakedResponse = `export interface Anonymous {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}`;
+
 describe('simple examples', () => {
   it ('does a very simple query', () => {
     const response = runProgram(schema, simplestQuery)
     expect(response[0].interface).to.equal(simplestQueryResponse[0].interface);
     expect(response[0].variables).to.equal(simplestQueryResponse[0].variables);
+    expect(response.length).to.equal(1);
+  });
+
+  it ('does unnamed queries', () => {
+    const response = runProgram(schema, anonQuery)
+    expect(response[0].interface).to.equal(anonAndNakedResponse);
+    expect(response[0].variables).to.equal('');
+    expect(response.length).to.equal(1);
+  });
+
+  it ('does "naked" queries', () => {
+    const response = runProgram(schema, nakedQuery)
+    expect(response[0].interface).to.equal(anonAndNakedResponse);
+    expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   });
 

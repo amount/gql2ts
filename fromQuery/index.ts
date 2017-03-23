@@ -26,7 +26,12 @@ import {
   GraphQLNamedType,
 } from 'graphql';
 
-const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => any = (schema, query, typeMap = {}) => {
+interface IReturn {
+  variables: string;
+  interface: string;
+}
+
+const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => IReturn[] = (schema, query, typeMap = {}) => {
   const parsedSchema: GraphQLSchema = (schema instanceof GraphQLSchema) ? schema : buildSchema(schema);
   const parsedSelection: DocumentNode = parse(query);
 
@@ -327,6 +332,7 @@ ${str.join('\n')}
       };
     } else {
       console.error('unsupported definition');
+      throw new Error(`Unsupported Definition ${def.kind}`);
     }
   });
 };
