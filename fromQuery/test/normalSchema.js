@@ -153,6 +153,22 @@ fragment CharacterFields on Character {
 const fragmentInterface0 = `export interface FragmentTest {\n  heroNoParam: IFragmentCharacterFields | null;\n}`;
 const fragmentInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n}'
 
+const fragmentWithOtherSelectionQuery = `
+query FragmentTest {
+  heroNoParam {
+    name
+    ...CharacterFields
+  }
+}
+
+fragment CharacterFields on Character {
+  id
+}
+`
+
+const fragmentWithOtherSelectionInterface0 = `export interface FragmentTest {\n  heroNoParam: {\n    name: string | null;\n  } & IFragmentCharacterFields | null;\n}`;
+const fragmentWithOtherSelectionInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n}'
+
 const fragmentWithAliasQuery = `
 query FragmentTest {
   a: heroNoParam {
@@ -167,6 +183,22 @@ fragment CharacterFields on Character {
 
 const fragmentWithAliasInterface0 = `export interface FragmentTest {\n  a: IFragmentCharacterFields | null;\n}`;
 const fragmentWithAliasInterface1 = 'export interface IFragmentCharacterFields {\n  b: string;\n}'
+
+const fragmentWithOtherSelectionAndAliasQuery = `
+query FragmentTest {
+  a: heroNoParam {
+    b: name
+    ...CharacterFields
+  }
+}
+
+fragment CharacterFields on Character {
+  c: id
+}
+`
+
+const fragmentWithOtherSelectionAndAliasInterface0 = `export interface FragmentTest {\n  a: {\n    b: string | null;\n  } & IFragmentCharacterFields | null;\n}`;
+const fragmentWithOtherSelectionAndAliasInterface1 = 'export interface IFragmentCharacterFields {\n  c: string;\n}'
 
 const inlineFragmentQuery = `
 query FragmentTest {
@@ -246,11 +278,29 @@ describe('fragments', () => {
     expect(response.length).to.equal(2);
   })
 
+  it ('does simple fragments with other selections', () => {
+    const response = runProgram(schema, fragmentWithOtherSelectionQuery);
+    expect(response[0].interface).to.equal(fragmentWithOtherSelectionInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[1].interface).to.equal(fragmentWithOtherSelectionInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response.length).to.equal(2);
+  })
+
   it ('does simple fragments with aliases', () => {
     const response = runProgram(schema, fragmentWithAliasQuery);
     expect(response[0].interface).to.equal(fragmentWithAliasInterface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(fragmentWithAliasInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response.length).to.equal(2);
+  })
+
+  it ('does simple fragments with other selections and aliases', () => {
+    const response = runProgram(schema, fragmentWithOtherSelectionAndAliasQuery);
+    expect(response[0].interface).to.equal(fragmentWithOtherSelectionAndAliasInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[1].interface).to.equal(fragmentWithOtherSelectionAndAliasInterface1);
     expect(response[1].variables).to.equal('');
     expect(response.length).to.equal(2);
   })
