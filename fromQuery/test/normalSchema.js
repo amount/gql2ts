@@ -157,66 +157,66 @@ const anonAndNakedResponse = `export interface Anonymous {
     name: string | null;
   } | null;
 }`;
-
+const generateSubTypeInterfaceName = () => null;
 describe('simple examples', () => {
   it ('does a very simple query', () => {
-    const response = runProgram(schema, simplestQuery)
+    const response = runProgram(schema, simplestQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(simplestQueryResponse[0].interface);
     expect(response[0].variables).to.equal(simplestQueryResponse[0].variables);
     expect(response.length).to.equal(1);
   });
 
   it ('does unnamed queries', () => {
-    const response = runProgram(schema, anonQuery)
+    const response = runProgram(schema, anonQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(anonAndNakedResponse);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   });
 
   it ('does "naked" queries', () => {
-    const response = runProgram(schema, nakedQuery)
+    const response = runProgram(schema, nakedQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(anonAndNakedResponse);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   });
 
   it ('supports variables', () => {
-    const response = runProgram(schema, variableQuery)
+    const response = runProgram(schema, variableQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(variableExpectedResponse[0].interface);
     expect(response[0].variables).to.equal(variableExpectedResponse[0].variables);
     expect(response.length).to.equal(1);
   });
 
   it ('supports arrays', () => {
-    const response = runProgram(schema, arrTest);
+    const response = runProgram(schema, arrTest, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(arrInterface);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   });
 
   it ('supports enums', () => {
-    const response = runProgram(schema, enumQuery);
+    const response = runProgram(schema, enumQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(enumResponse.interface);
     expect(response[0].variables).to.equal(enumResponse.variables);
     expect(response.length).to.equal(1);
   })
 
   it ('supports custom scalars', () => {
-    const response = runProgram(schema, customScalarQuery, { TestScalar: 'string' });
+    const response = runProgram(schema, customScalarQuery, { TestScalar: 'string' }, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(expectedCustomScalarResponse.interface);
     expect(response[0].variables).to.equal(expectedCustomScalarResponse.variables);
     expect(response.length).to.equal(1);
   })
 
   it ('supports unions', () => {
-    const response = runProgram(schema, UnionQuery);
+    const response = runProgram(schema, UnionQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(expectedUnionResponse.interface);
     expect(response[0].variables).to.equal(expectedUnionResponse.variables);
     expect(response.length).to.equal(1);
   })
 
   it ('supports unions with inline fragment', () => {
-    const response = runProgram(schema, UnionQueryWithFragment);
+    const response = runProgram(schema, UnionQueryWithFragment, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(expectedUnionWithFragmentResponse.interface);
     expect(response[0].variables).to.equal(expectedUnionWithFragmentResponse.variables);
     expect(response.length).to.equal(1);
@@ -428,7 +428,7 @@ const anonInlineFragmentWithAliasExpected = `export interface FragmentTest {
 
 describe('fragments', () => {
   it ('does simple fragments', () => {
-    const response = runProgram(schema, fragmentQuery);
+    const response = runProgram(schema, fragmentQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(fragmentInterface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(fragmentInterface1);
@@ -437,7 +437,7 @@ describe('fragments', () => {
   })
 
   it ('does simple fragments with other selections', () => {
-    const response = runProgram(schema, fragmentWithOtherSelectionQuery);
+    const response = runProgram(schema, fragmentWithOtherSelectionQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(fragmentWithOtherSelectionInterface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(fragmentWithOtherSelectionInterface1);
@@ -446,7 +446,7 @@ describe('fragments', () => {
   })
 
   it ('does simple fragments with aliases', () => {
-    const response = runProgram(schema, fragmentWithAliasQuery);
+    const response = runProgram(schema, fragmentWithAliasQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(fragmentWithAliasInterface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(fragmentWithAliasInterface1);
@@ -455,7 +455,7 @@ describe('fragments', () => {
   })
 
   it ('does simple fragments with other selections and aliases', () => {
-    const response = runProgram(schema, fragmentWithOtherSelectionAndAliasQuery);
+    const response = runProgram(schema, fragmentWithOtherSelectionAndAliasQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(fragmentWithOtherSelectionAndAliasInterface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(fragmentWithOtherSelectionAndAliasInterface1);
@@ -464,7 +464,7 @@ describe('fragments', () => {
   })
 
   it ('does nested fragments', () => {
-    const response = runProgram(schema, nestedFragmentQuery);
+    const response = runProgram(schema, nestedFragmentQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(nestedFragmentInterface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(nestedFragmentInterface1);
@@ -475,7 +475,7 @@ describe('fragments', () => {
   })
 
   it ('does nested fragments 2', () => {
-    const response = runProgram(schema, nestedFragment2Query);
+    const response = runProgram(schema, nestedFragment2Query, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(nestedFragment2Interface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(nestedFragment2Interface1);
@@ -486,7 +486,7 @@ describe('fragments', () => {
   })
 
   it ('does nested fragments 3', () => {
-    const response = runProgram(schema, nestedFragment3Query);
+    const response = runProgram(schema, nestedFragment3Query, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(nestedFragment3Interface0);
     expect(response[0].variables).to.equal('');
     expect(response[1].interface).to.equal(nestedFragment3Interface1);
@@ -499,28 +499,28 @@ describe('fragments', () => {
   })
 
   it ('does inline fragments on type', () => {
-    const response = runProgram(schema, inlineFragmentQuery)
+    const response = runProgram(schema, inlineFragmentQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(inlineFragmentExpected);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   })
 
   it ('does inline fragments on type with aliases', () => {
-    const response = runProgram(schema, inlineFragmentWithAliasQuery)
+    const response = runProgram(schema, inlineFragmentWithAliasQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(inlineFragmentWithAliasExpected);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   })
 
   it ('does anonymous inline fragments', () => {
-    const response = runProgram(schema, anonInlineFragmentQuery)
+    const response = runProgram(schema, anonInlineFragmentQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(anonInlineFragmentExpected);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   })
 
   it ('does anonymous inline fragments with aliases', () => {
-    const response = runProgram(schema, anonInlineFragmentWithAliasQuery)
+    const response = runProgram(schema, anonInlineFragmentWithAliasQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(anonInlineFragmentWithAliasExpected);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
@@ -644,7 +644,7 @@ const anonInlineFragmentWithDirectiveWithAliasExpected = `export interface Fragm
 describe('directives', () => {
   describe('on fields', () => {
     it ('works with simple fields', () => {
-      const response = runProgram(schema, simplestQueryWithDirectives);
+      const response = runProgram(schema, simplestQueryWithDirectives, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(simplestQueryWithDirectivesExpected);
       expect(response[0].variables).to.equal('');
       expect(response.length).to.equal(1);
@@ -653,7 +653,7 @@ describe('directives', () => {
 
   describe('fragments', () => {
     it ('works with fragment spread', () => {
-      const response = runProgram(schema, fragmentWithDirectivesQuery);
+      const response = runProgram(schema, fragmentWithDirectivesQuery, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(fragmentWithDirectivesInterface0);
       expect(response[0].variables).to.equal('');
       expect(response[1].interface).to.equal(fragmentWithDirectivesInterface1);
@@ -662,7 +662,7 @@ describe('directives', () => {
     })
 
     it ('works with aliases on fragment spread', () => {
-      const response = runProgram(schema, fragmentWithDirectiveWithAliasQuery);
+      const response = runProgram(schema, fragmentWithDirectiveWithAliasQuery, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(fragmentWithDirectiveWithAliasInterface0);
       expect(response[0].variables).to.equal('');
       expect(response[1].interface).to.equal(fragmentWithDirectiveWithAliasInterface1);
@@ -671,31 +671,48 @@ describe('directives', () => {
     })
 
     it ('works with inline fragments on type', () => {
-      const response = runProgram(schema, inlineFragmentWithDirectiveQuery)
+      const response = runProgram(schema, inlineFragmentWithDirectiveQuery, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(inlineFragmentWithDirectiveExpected);
       expect(response[0].variables).to.equal('');
       expect(response.length).to.equal(1);
     })
 
     it ('works with inline fragments on type with aliases', () => {
-      const response = runProgram(schema, inlineFragmentWithDirectiveWithAliasQuery)
+      const response = runProgram(schema, inlineFragmentWithDirectiveWithAliasQuery, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(inlineFragmentWithDirectiveWithAliasExpected);
       expect(response[0].variables).to.equal('');
       expect(response.length).to.equal(1);
     })
 
     it ('does anonymous inline fragments', () => {
-      const response = runProgram(schema, anonInlineFragmentWithDirectiveQuery)
+      const response = runProgram(schema, anonInlineFragmentWithDirectiveQuery, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(anonInlineFragmentWithDirectiveExpected);
       expect(response[0].variables).to.equal('');
       expect(response.length).to.equal(1);
     })
 
     it ('does anonymous inline fragments with aliases', () => {
-      const response = runProgram(schema, anonInlineFragmentWithDirectiveWithAliasQuery)
+      const response = runProgram(schema, anonInlineFragmentWithDirectiveWithAliasQuery, undefined, { generateSubTypeInterfaceName });
       expect(response[0].interface).to.equal(anonInlineFragmentWithDirectiveWithAliasExpected);
       expect(response[0].variables).to.equal('');
       expect(response.length).to.equal(1);
     })
   })
+})
+
+const simpleQueryWithSubTypesResponse = {
+  interface: 'export interface TestQuery {\n  heroNoParam: SelectionOnheroNoParam | null;\n}',
+  variables: '',
+  additionalTypes: [`export interface SelectionOnheroNoParam {\n    id: string;\n    name: string | null;\n  }`]
+}
+
+describe('with subtypes', () => {
+  it ('does a very simple query', () => {
+    const response = runProgram(schema, simplestQuery, undefined);
+    expect(response[0].interface).to.equal(simpleQueryWithSubTypesResponse.interface);
+    expect(response[0].variables).to.equal(simpleQueryWithSubTypesResponse.variables);
+    expect(response[0].additionalTypes[0]).to.equal(simpleQueryWithSubTypesResponse.additionalTypes[0]);
+    expect(response[0].additionalTypes.length).to.equal(1);
+    expect(response.length).to.equal(1);
+  });
 })

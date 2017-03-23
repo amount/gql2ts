@@ -37,6 +37,8 @@ const DEFAULT_WRAP_PARTIAL = possiblePartial => {
         return possiblePartial.iface;
     }
 };
+const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME = (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;
+;
 const DEFAULT_OPTIONS = {
     buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
     formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
@@ -44,12 +46,13 @@ const DEFAULT_OPTIONS = {
     formatFragmentInterface: DEFAULT_FORMAT_FRAGMENT,
     wrapList: DEFAULT_WRAP_LIST,
     wrapPartial: DEFAULT_WRAP_PARTIAL,
+    generateSubTypeInterfaceName: DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME,
 };
 ;
 const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
     const TypeMap = Object.assign({}, DEFAULT_TYPE_MAP, typeMap);
     const options = Object.assign({}, DEFAULT_OPTIONS, providedOptions);
-    const { buildRootInterfaceName, formatFragmentInterface, formatInterface, formatVariableInterface, wrapList, wrapPartial } = options;
+    const { buildRootInterfaceName, formatFragmentInterface, formatInterface, formatVariableInterface, wrapList, wrapPartial, generateSubTypeInterfaceName, } = options;
     const parsedSchema = (schema instanceof graphql_1.GraphQLSchema) ? schema : graphql_1.buildSchema(schema);
     const parsedSelection = graphql_1.parse(query);
     function isNonNullable(type) {
@@ -190,8 +193,13 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
                         builder += '{\n';
                         builder += nonPartialNonFragments.map(f => f.iface).join('\n');
                         builder += `\n${indentation}}`;
-                        andOps.push(builder);
-                        const newInterfaceName = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+                        const newInterfaceName = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
+                        if (!newInterfaceName) {
+                            andOps.push(builder);
+                        }
+                        else {
+                            andOps.push(newInterfaceName);
+                        }
                         generatedTypeCount += 1;
                         complexTypes.push({ iface: builder, isPartial: false, name: newInterfaceName });
                     }
@@ -201,7 +209,7 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
                         builder += partialNonFragments.map(f => f.iface).join('\n');
                         builder += `\n${indentation}}>`;
                         andOps.push(builder);
-                        const newInterfaceName = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+                        const newInterfaceName = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
                         generatedTypeCount += 1;
                         complexTypes.push({ iface: builder, isPartial: true, name: newInterfaceName });
                     }
@@ -261,6 +269,17 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
         const variableTypeDefs = getVariables(variables);
         return formatVariableInterface(opName, variableTypeDefs);
     };
+    const buildAdditionalTypes = children => {
+        const subTypes = children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, []);
+        return subTypes.map(subtype => {
+            if (subtype.isPartial) {
+                return `export type ${subtype.name} = ${subtype.iface};`;
+            }
+            else {
+                return `export interface ${subtype.name} ${subtype.iface}`;
+            }
+        });
+    };
     return parsedSelection.definitions.map(def => {
         const ifaceName = buildRootInterfaceName(def);
         if (def.kind === 'OperationDefinition') {
@@ -268,9 +287,11 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
             const ret = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
             const fields = ret.map(x => x.iface);
             const iface = formatInterface(ifaceName, fields);
+            const additionalTypes = buildAdditionalTypes(ret);
             return {
                 variables: variableInterface,
                 interface: iface,
+                additionalTypes,
             };
         }
         else if (def.kind === 'FragmentDefinition') {
@@ -282,9 +303,11 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
             const extensions = ext ? ` extends ${ext}` : '';
             const fields = ret.filter(x => !x.isFragment).map(x => x.iface);
             const iface = formatFragmentInterface(ifaceName, fields, extensions);
+            const additionalTypes = buildAdditionalTypes(ret);
             return {
                 interface: iface,
-                variables: ''
+                variables: '',
+                additionalTypes,
             };
         }
         else {

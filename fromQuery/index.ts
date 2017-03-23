@@ -30,6 +30,7 @@ import {
 interface IReturn {
   variables: string;
   interface: string;
+  additionalTypes: string[];
 }
 
 type BuildRootInterfaceName = (definition: DefinitionNode) => string;
@@ -78,6 +79,10 @@ const DEFAULT_WRAP_PARTIAL: WrapPartial = possiblePartial => {
   }
 };
 
+type GenerateSubTypeInterface = (selectionName: string, generatedCount: number) => string;
+const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
+  (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;
+
 export interface IOptions {
   buildRootInterfaceName: BuildRootInterfaceName;
   formatVariableInterface: InterfaceFormatters;
@@ -85,7 +90,8 @@ export interface IOptions {
   formatFragmentInterface: FragmentInterfaceFormatter;
   wrapList: WrapList;
   wrapPartial: WrapPartial;
-}
+  generateSubTypeInterfaceName: GenerateSubTypeInterface;
+};
 
 const DEFAULT_OPTIONS: IOptions = {
   buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
@@ -94,6 +100,7 @@ const DEFAULT_OPTIONS: IOptions = {
   formatFragmentInterface: DEFAULT_FORMAT_FRAGMENT,
   wrapList: DEFAULT_WRAP_LIST,
   wrapPartial: DEFAULT_WRAP_PARTIAL,
+  generateSubTypeInterfaceName: DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME,
 };
 
 export interface IProvidedOptions extends Partial<IOptions> {};
@@ -129,7 +136,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     formatInterface,
     formatVariableInterface,
     wrapList,
-    wrapPartial
+    wrapPartial,
+    generateSubTypeInterfaceName,
   }: IOptions = options;
 
   const parsedSchema: GraphQLSchema = (schema instanceof GraphQLSchema) ? schema : buildSchema(schema);
@@ -295,8 +303,12 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
             builder += '{\n';
             builder += nonPartialNonFragments.map(f => f.iface).join('\n');
             builder += `\n${indentation}}`;
-            andOps.push(builder);
-            const newInterfaceName: string = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+            const newInterfaceName: string | null = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
+            if (!newInterfaceName) {
+              andOps.push(builder);
+            } else {
+              andOps.push(newInterfaceName);
+            }
             generatedTypeCount += 1;
             complexTypes.push({ iface: builder, isPartial: false, name: newInterfaceName });
           }
@@ -307,7 +319,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
             builder += partialNonFragments.map(f => f.iface).join('\n');
             builder += `\n${indentation}}>`;
             andOps.push(builder);
-            const newInterfaceName: string = `SelectionOn${selection.name.value}${!!generatedTypeCount ? generatedTypeCount : ''}`;
+            const newInterfaceName: string = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
             generatedTypeCount += 1;
             complexTypes.push({ iface: builder, isPartial: true, name: newInterfaceName });
           }
@@ -372,6 +384,19 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     return formatVariableInterface(opName, variableTypeDefs);
   };
 
+  const buildAdditionalTypes: (children: IChildren[]) => string[] = children => {
+    const subTypes: IComplexTypeSignature[] =
+      children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[]);
+
+    return subTypes.map(subtype => {
+      if (subtype.isPartial) {
+        return `export type ${subtype.name} = ${subtype.iface};`;
+      } else {
+        return `export interface ${subtype.name} ${subtype.iface}`;
+      }
+    });
+  }
+
   return parsedSelection.definitions.map(def => {
     const ifaceName: string = buildRootInterfaceName(def);
     if (def.kind === 'OperationDefinition') {
@@ -380,9 +405,12 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const fields: string[] = ret.map(x => x.iface);
       const iface: string = formatInterface(ifaceName, fields);
 
+      const additionalTypes: string[] = buildAdditionalTypes(ret);
+
       return {
         variables: variableInterface,
         interface: iface,
+        additionalTypes,
       };
     } else if (def.kind === 'FragmentDefinition') {
       // get the correct type
@@ -394,10 +422,11 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const extensions: string = ext ? ` extends ${ext}` : '';
       const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
       const iface: string = formatFragmentInterface(ifaceName, fields, extensions);
-
+      const additionalTypes: string[] = buildAdditionalTypes(ret);
       return {
         interface: iface,
-        variables: ''
+        variables: '',
+        additionalTypes,
       };
     } else {
       throw new Error(`Unsupported Definition ${def.kind}`);

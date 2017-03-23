@@ -64,31 +64,32 @@ const mutationInputArgumentNonNullVariables = `export interface CreateMessageInp
     author?: string | null;
   };
 }`;
+const generateSubTypeInterfaceName = () => null;
 
 describe('Mutations', () => {
   it ('works with no arguments', () => {
-    const response = runProgram(schema, mutationNoArguments);
+    const response = runProgram(schema, mutationNoArguments, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(mutationReturnExpected);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   })
 
   it ('works with multiple arguments', () => {
-    const response = runProgram(schema, mutationMultipleArguments);
+    const response = runProgram(schema, mutationMultipleArguments, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(mutationReturnExpected);
     expect(response[0].variables).to.equal(mutationMultipleArgumentsVariables);
     expect(response.length).to.equal(1);
   })
 
   it ('works with one input argument', () => {
-    const response = runProgram(schema, mutationInputArgument);
+    const response = runProgram(schema, mutationInputArgument, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(mutationReturnExpected);
     expect(response[0].variables).to.equal(mutationInputArgumentVariables);
     expect(response.length).to.equal(1);
   })
 
   it ('works with one input argument (non-null)', () => {
-    const response = runProgram(schema, mutationInputArgumentNonNull);
+    const response = runProgram(schema, mutationInputArgumentNonNull, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(mutationReturnExpected);
     expect(response[0].variables).to.equal(mutationInputArgumentNonNullVariables);
     expect(response.length).to.equal(1);
