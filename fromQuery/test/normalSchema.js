@@ -283,6 +283,34 @@ const nestedFragment2Interface0 = `export interface FragmentTest {\n  heroNoPara
 const nestedFragment2Interface1 = 'export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested {\n  friends: Array<IFragmentCharacterFieldsNested | null> | null;\n}'
 const nestedFragment2Interface2 = 'export interface IFragmentCharacterFieldsNested {\n  id: string;\n}'
 
+const nestedFragment3Query = `
+query FragmentTest {
+  heroNoParam {
+    ...CharacterFields
+  }
+}
+
+fragment CharacterFields on Character {
+  ...CharacterFieldsNested
+  ...CharacterFieldsNestedAgain
+  friends {
+    ...CharacterFieldsNested
+  }
+}
+
+fragment CharacterFieldsNested on Character {
+  id
+}
+fragment CharacterFieldsNestedAgain on Character {
+  name
+}
+`;
+
+const nestedFragment3Interface0 = `export interface FragmentTest {\n  heroNoParam: IFragmentCharacterFields | null;\n}`;
+const nestedFragment3Interface1 = 'export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested, IFragmentCharacterFieldsNestedAgain {\n  friends: Array<IFragmentCharacterFieldsNested | null> | null;\n}'
+const nestedFragment3Interface2 = 'export interface IFragmentCharacterFieldsNested {\n  id: string;\n}'
+const nestedFragment3Interface3 = 'export interface IFragmentCharacterFieldsNestedAgain {\n  name: string | null;\n}'
+
 const fragmentWithOtherSelectionQuery = `
 query FragmentTest {
   heroNoParam {
@@ -455,6 +483,19 @@ describe('fragments', () => {
     expect(response[2].interface).to.equal(nestedFragment2Interface2);
     expect(response[2].variables).to.equal('');
     expect(response.length).to.equal(3);
+  })
+
+  it ('does nested fragments 3', () => {
+    const response = runProgram(schema, nestedFragment3Query);
+    expect(response[0].interface).to.equal(nestedFragment3Interface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[1].interface).to.equal(nestedFragment3Interface1);
+    expect(response[1].variables).to.equal('');
+    expect(response[2].interface).to.equal(nestedFragment3Interface2);
+    expect(response[2].variables).to.equal('');
+    expect(response[3].interface).to.equal(nestedFragment3Interface3);
+    expect(response[3].variables).to.equal('');
+    expect(response.length).to.equal(4);
   })
 
   it ('does inline fragments on type', () => {

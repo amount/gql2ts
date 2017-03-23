@@ -1,7 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
-const doIt = (schema, query, typeMap = {}) => {
+const formatInterface = (opName, fields) => `export interface ${opName} {
+${fields.join('\n  ')}
+}`;
+const formatVariableInterface = (opName, fields) => `export interface ${opName}Input {
+  ${fields.join('\n  ')}
+}`;
+const formatFragmentInterface = (opName, fields, ext) => `export interface ${opName}${ext} {
+${fields.join('\n')}
+}`;
+const buildRootInterfaceName = def => {
+    if (def.kind === 'OperationDefinition') {
+        return def.name ? def.name.value : 'Anonymous';
+    }
+    else if (def.kind === 'FragmentDefinition') {
+        return `IFragment${def.name.value}`;
+    }
+    else {
+        throw new Error(`Unsupported Definition ${def.kind}`);
+    }
+};
+;
+const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
+    const TypeMap = Object.assign({ ID: 'string', String: 'string', Boolean: 'boolean', Float: 'number', Int: 'number' }, typeMap);
+    const options = Object.assign({ buildRootInterfaceName,
+        formatVariableInterface,
+        formatInterface,
+        formatFragmentInterface }, providedOptions);
     const parsedSchema = (schema instanceof graphql_1.GraphQLSchema) ? schema : graphql_1.buildSchema(schema);
     const parsedSelection = graphql_1.parse(query);
     function isNonNullable(type) {
@@ -11,7 +37,6 @@ const doIt = (schema, query, typeMap = {}) => {
         return type instanceof graphql_1.GraphQLList;
     }
     const wrapList = type => `Array<${type}>`;
-    const TypeMap = Object.assign({ ID: 'string', String: 'string', Boolean: 'boolean', Float: 'number', Int: 'number' }, typeMap);
     const printType = (type, isNonNull) => isNonNull ? type : `${type} | null`;
     const handleInputObject = (type, isNonNull) => {
         const variables = Object.keys(type.getFields()).map(k => type.getFields()[k]);
@@ -216,22 +241,20 @@ const doIt = (schema, query, typeMap = {}) => {
         const optional = v.type.kind !== 'NonNullType';
         return `${v.variable.name.value}${optional ? '?:' : ':'} ${convertVariable(v.type)};`;
     }));
+    const variablesToInterface = (opName, variables) => {
+        if (!variables || !variables.length) {
+            return '';
+        }
+        const variableTypeDefs = getVariables(variables);
+        return options.formatVariableInterface(opName, variableTypeDefs);
+    };
     return parsedSelection.definitions.map(def => {
+        const ifaceName = options.buildRootInterfaceName(def);
         if (def.kind === 'OperationDefinition') {
-            const name = def.name ? def.name.value : 'Anonymous';
-            let variableInterface = '';
-            let iface = '';
-            if (def.variableDefinitions && !!def.variableDefinitions.length) {
-                const variables = getVariables(def.variableDefinitions);
-                variableInterface = `export interface ${name}Input {
-  ${variables.join('\n  ')}
-}`;
-            }
-            iface += `export interface ${name} {\n`;
-            let ret = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
-            let str = ret.map(x => x.iface);
-            iface += str.join('\n');
-            iface += `\n}`;
+            const variableInterface = variablesToInterface(ifaceName, def.variableDefinitions);
+            const ret = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+            const str = ret.map(x => x.iface);
+            const iface = options.formatInterface(ifaceName, str);
             return {
                 variables: variableInterface,
                 interface: iface,
@@ -241,12 +264,10 @@ const doIt = (schema, query, typeMap = {}) => {
             const onType = def.typeCondition.name.value;
             const foundType = parsedSchema.getType(onType);
             let ret = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-            let ext = ret.filter(x => x.isFragment).map(x => x.iface).join(' & ');
+            let ext = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
             let opt = ext ? ` extends ${ext}` : '';
             let str = ret.filter(x => !x.isFragment).map(x => x.iface);
-            let iface = `export interface IFragment${def.name.value}${opt} {
-${str.join('\n')}
-}`;
+            const iface = formatFragmentInterface(ifaceName, str, opt);
             return {
                 interface: iface,
                 variables: ''

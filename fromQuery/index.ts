@@ -24,6 +24,7 @@ import {
   GraphQLUnionType,
   NamedTypeNode,
   GraphQLNamedType,
+  DefinitionNode,
 } from 'graphql';
 
 interface IReturn {
@@ -31,7 +32,61 @@ interface IReturn {
   interface: string;
 }
 
-const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => IReturn[] = (schema, query, typeMap = {}) => {
+type BuildRootInterfaceName = (definition: DefinitionNode) => string;
+type InterfaceFormatters = (operationName: string, fields: string[]) => string;
+type FragmentInterfaceFormatter = (operationName: string, fields: string[], extInterfaces: string) => string;
+
+const formatInterface: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
+${fields.join('\n  ')}
+}`;
+
+const formatVariableInterface: InterfaceFormatters = (opName, fields) => `export interface ${opName}Input {
+  ${fields.join('\n  ')}
+}`;
+
+const formatFragmentInterface: FragmentInterfaceFormatter = (opName, fields, ext) => `export interface ${opName}${ext} {
+${fields.join('\n')}
+}`;
+
+const buildRootInterfaceName: BuildRootInterfaceName = def => {
+  if (def.kind === 'OperationDefinition') {
+    return def.name ? def.name.value : 'Anonymous';
+  } else if (def.kind === 'FragmentDefinition') {
+    return `IFragment${def.name.value}`;
+  } else {
+    throw new Error(`Unsupported Definition ${def.kind}`);
+  }
+};
+
+export interface IOptions {
+  buildRootInterfaceName: BuildRootInterfaceName;
+  formatVariableInterface: InterfaceFormatters;
+  formatInterface: InterfaceFormatters;
+  formatFragmentInterface: FragmentInterfaceFormatter;
+}
+
+export interface IProvidedOptions extends Partial<IOptions> {};
+
+export type Signature = (schema: GraphQLSchema | string, query: string, typeMap?: object, options?: IProvidedOptions) => IReturn[];
+
+const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
+  const TypeMap: { [x: string]: string | undefined } = {
+    ID: 'string',
+    String: 'string',
+    Boolean: 'boolean',
+    Float: 'number',
+    Int: 'number',
+    ...typeMap
+  };
+
+  const options: IOptions = {
+    buildRootInterfaceName,
+    formatVariableInterface,
+    formatInterface,
+    formatFragmentInterface,
+    ...providedOptions
+  };
+
   const parsedSchema: GraphQLSchema = (schema instanceof GraphQLSchema) ? schema : buildSchema(schema);
   const parsedSelection: DocumentNode = parse(query);
 
@@ -44,15 +99,6 @@ const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => 
   }
 
   const wrapList: (type: string) => string = type => `Array<${type}>`;
-
-  const TypeMap: { [x: string]: string | undefined } = {
-    ID: 'string',
-    String: 'string',
-    Boolean: 'boolean',
-    Float: 'number',
-    Int: 'number',
-    ...typeMap
-  };
 
   const printType: (type: string, isNonNull: boolean) => string = (type, isNonNull) => isNonNull ? type : `${type} | null`;
 
@@ -297,22 +343,19 @@ const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => 
     })
   );
 
+  const variablesToInterface: (operationName: string, variables: VariableDefinitionNode[] | undefined) => string = (opName, variables) => {
+    if (!variables || !variables.length) { return ''; }
+    const variableTypeDefs: string[] = getVariables(variables);
+    return options.formatVariableInterface(opName, variableTypeDefs);
+  };
+
   return parsedSelection.definitions.map(def => {
+    const ifaceName: string = options.buildRootInterfaceName(def);
     if (def.kind === 'OperationDefinition') {
-      const name: string = def.name ? def.name.value : 'Anonymous';
-      let variableInterface: string = '';
-      let iface: string = '';
-      if (def.variableDefinitions && !!def.variableDefinitions.length) {
-        const variables: string[] = getVariables(def.variableDefinitions);
-        variableInterface = `export interface ${name}Input {
-  ${variables.join('\n  ')}
-}`;
-      }
-      iface += `export interface ${name} {\n`;
-      let ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
-      let str: string[] = ret.map(x => x.iface);
-      iface += str.join('\n');
-      iface += `\n}`;
+      const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
+      const ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+      const str: string[] = ret.map(x => x.iface);
+      const iface: string = options.formatInterface(ifaceName, str);
 
       return {
         variables: variableInterface,
@@ -322,12 +365,10 @@ const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => 
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
       let ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-      let ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(' & ');
+      let ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
       let opt: string = ext ? ` extends ${ext}` : '';
       let str: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
-      let iface: string = `export interface IFragment${def.name.value}${opt} {
-${str.join('\n')}
-}`;
+      const iface: string = formatFragmentInterface(ifaceName, str, opt);
       return {
         interface: iface,
         variables: ''
