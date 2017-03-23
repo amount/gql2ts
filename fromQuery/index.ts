@@ -322,8 +322,11 @@ const doIt: (schema: GraphQLSchema | string, query: string, typeMap: object) => 
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
       let ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-      let str: string[] = ret.map(x => x.iface);
-      let iface: string = `export interface IFragment${def.name.value} {
+      let ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(' & ');
+      let opt: string = ext ? ` extends ${ext}` : '';
+      let str: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
+      // let str: string[] = ret.map(x => x.iface);
+      let iface: string = `export interface IFragment${def.name.value}${opt} {
 ${str.join('\n')}
 }`;
       return {

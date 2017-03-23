@@ -1,18 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
-const doIt = (schema, selection, typeMap = {}) => {
+const doIt = (schema, query, typeMap = {}) => {
     const parsedSchema = (schema instanceof graphql_1.GraphQLSchema) ? schema : graphql_1.buildSchema(schema);
-    const parsedSelection = graphql_1.parse(selection);
+    const parsedSelection = graphql_1.parse(query);
     function isNonNullable(type) {
         return type instanceof graphql_1.GraphQLNonNull;
     }
-    ;
     function isList(type) {
         return type instanceof graphql_1.GraphQLList;
     }
-    ;
-    const wrapList = (type) => `Array<${type}>`;
+    const wrapList = type => `Array<${type}>`;
     const TypeMap = Object.assign({ ID: 'string', String: 'string', Boolean: 'boolean', Float: 'number', Int: 'number' }, typeMap);
     const printType = (type, isNonNull) => isNonNull ? type : `${type} | null`;
     const handleInputObject = (type, isNonNull) => {
@@ -67,7 +65,7 @@ const doIt = (schema, selection, typeMap = {}) => {
         }
     };
     const UndefinedDirectives = new Set(['include', 'skip']);
-    const isUndefinedFromDirective = (directives) => {
+    const isUndefinedFromDirective = directives => {
         if (!directives || !directives.length) {
             return false;
         }
@@ -84,7 +82,7 @@ const doIt = (schema, selection, typeMap = {}) => {
             return false;
         }
     };
-    const wrapPartial = (possiblePartial) => {
+    const wrapPartial = possiblePartial => {
         if (possiblePartial.isPartial) {
             return `Partial<${possiblePartial.iface}>`;
         }
@@ -92,7 +90,7 @@ const doIt = (schema, selection, typeMap = {}) => {
             return possiblePartial.iface;
         }
     };
-    const getOperationFields = (operation) => {
+    const getOperationFields = operation => {
         switch (operation) {
             case 'query':
                 return parsedSchema.getQueryType();
@@ -133,15 +131,15 @@ const doIt = (schema, selection, typeMap = {}) => {
             }
             str += indentation + selectionName + ': ';
             if (!!selection.selectionSet) {
-                let parent;
+                let newParent;
                 if (!field) {
-                    console.log(selection, parent);
+                    console.log(selection, newParent);
                 }
                 const fieldType = graphql_1.getNamedType(field.type);
                 if (graphql_1.isCompositeType(fieldType)) {
-                    parent = fieldType;
+                    newParent = fieldType;
                 }
-                const selections = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ', parent));
+                const selections = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ', newParent));
                 const nonFragments = selections.filter(s => !s.isFragment);
                 const fragments = selections.filter(s => s.isFragment);
                 const andOps = [];
@@ -214,12 +212,10 @@ const doIt = (schema, selection, typeMap = {}) => {
             complexTypes,
         };
     };
-    const getVariables = (variables) => {
-        return variables.map(v => {
-            const optional = v.type.kind !== 'NonNullType';
-            return `${v.variable.name.value}${optional ? '?:' : ':'} ${convertVariable(v.type)};`;
-        });
-    };
+    const getVariables = variables => (variables.map(v => {
+        const optional = v.type.kind !== 'NonNullType';
+        return `${v.variable.name.value}${optional ? '?:' : ':'} ${convertVariable(v.type)};`;
+    }));
     return parsedSelection.definitions.map(def => {
         if (def.kind === 'OperationDefinition') {
             const name = def.name ? def.name.value : 'Anonymous';
@@ -245,8 +241,11 @@ const doIt = (schema, selection, typeMap = {}) => {
             const onType = def.typeCondition.name.value;
             const foundType = parsedSchema.getType(onType);
             let ret = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-            let str = ret.map(x => x.iface);
-            let iface = `export interface IFragment${def.name.value} {
+            let ext = ret.filter(x => x.isFragment).map(x => x.iface).join(' & ');
+            let opt = ext ? ` extends ${ext}` : '';
+            let str = ret.filter(x => !x.isFragment).map(x => x.iface);
+            // let str: string[] = ret.map(x => x.iface);
+            let iface = `export interface IFragment${def.name.value}${opt} {
 ${str.join('\n')}
 }`;
             return {
@@ -256,6 +255,7 @@ ${str.join('\n')}
         }
         else {
             console.error('unsupported definition');
+            throw new Error(`Unsupported Definition ${def.kind}`);
         }
     });
 };
