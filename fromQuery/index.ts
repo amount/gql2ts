@@ -404,7 +404,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
       const fields: string[] = ret.map(x => x.iface);
       const iface: string = formatInterface(ifaceName, fields);
-
       const additionalTypes: string[] = buildAdditionalTypes(ret);
 
       return {
@@ -423,6 +422,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
       const iface: string = formatFragmentInterface(ifaceName, fields, extensions);
       const additionalTypes: string[] = buildAdditionalTypes(ret);
+
       return {
         interface: iface,
         variables: '',
