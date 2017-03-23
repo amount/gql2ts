@@ -36,19 +36,19 @@ type BuildRootInterfaceName = (definition: DefinitionNode) => string;
 type InterfaceFormatters = (operationName: string, fields: string[]) => string;
 type FragmentInterfaceFormatter = (operationName: string, fields: string[], extInterfaces: string) => string;
 
-const formatInterface: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
+const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
 ${fields.join('\n  ')}
 }`;
 
-const formatVariableInterface: InterfaceFormatters = (opName, fields) => `export interface ${opName}Input {
+const DEFAULT_FORMAT_VARIABLES: InterfaceFormatters = (opName, fields) => `export interface ${opName}Input {
   ${fields.join('\n  ')}
 }`;
 
-const formatFragmentInterface: FragmentInterfaceFormatter = (opName, fields, ext) => `export interface ${opName}${ext} {
+const DEFAULT_FORMAT_FRAGMENT: FragmentInterfaceFormatter = (opName, fields, ext) => `export interface ${opName}${ext} {
 ${fields.join('\n')}
 }`;
 
-const buildRootInterfaceName: BuildRootInterfaceName = def => {
+const DEFAULT_BUILD_ROOT_INTERFACE_NAME: BuildRootInterfaceName = def => {
   if (def.kind === 'OperationDefinition') {
     return def.name ? def.name.value : 'Anonymous';
   } else if (def.kind === 'FragmentDefinition') {
@@ -58,34 +58,79 @@ const buildRootInterfaceName: BuildRootInterfaceName = def => {
   }
 };
 
+const DEFAULT_TYPE_MAP: { [x: string]: string | undefined } = {
+  ID: 'string',
+  String: 'string',
+  Boolean: 'boolean',
+  Float: 'number',
+  Int: 'number',
+};
+
+type WrapList = (type: string) => string;
+const DEFAULT_WRAP_LIST: WrapList = type => `Array<${type}>`;
+
+type WrapPartial = (possiblePartial: IChildren) => string;
+const DEFAULT_WRAP_PARTIAL: WrapPartial = possiblePartial => {
+  if (possiblePartial.isPartial) {
+    return `Partial<${possiblePartial.iface}>`;
+  } else {
+    return possiblePartial.iface;
+  }
+};
+
 export interface IOptions {
   buildRootInterfaceName: BuildRootInterfaceName;
   formatVariableInterface: InterfaceFormatters;
   formatInterface: InterfaceFormatters;
   formatFragmentInterface: FragmentInterfaceFormatter;
+  wrapList: WrapList;
+  wrapPartial: WrapPartial;
 }
+
+const DEFAULT_OPTIONS: IOptions = {
+  buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
+  formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
+  formatInterface: DEFAULT_FORMAT_INTERFACE,
+  formatFragmentInterface: DEFAULT_FORMAT_FRAGMENT,
+  wrapList: DEFAULT_WRAP_LIST,
+  wrapPartial: DEFAULT_WRAP_PARTIAL,
+};
 
 export interface IProvidedOptions extends Partial<IOptions> {};
 
 export type Signature = (schema: GraphQLSchema | string, query: string, typeMap?: object, options?: IProvidedOptions) => IReturn[];
 
+export interface IComplexTypeSignature {
+  iface: string;
+  isPartial: boolean;
+  name: string;
+}
+export interface IChildren {
+  isFragment: boolean;
+  isPartial: boolean;
+  iface: string;
+  complexTypes: IComplexTypeSignature[];
+}
+
 const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const TypeMap: { [x: string]: string | undefined } = {
-    ID: 'string',
-    String: 'string',
-    Boolean: 'boolean',
-    Float: 'number',
-    Int: 'number',
+    ...DEFAULT_TYPE_MAP,
     ...typeMap
   };
 
   const options: IOptions = {
-    buildRootInterfaceName,
-    formatVariableInterface,
-    formatInterface,
-    formatFragmentInterface,
+    ...DEFAULT_OPTIONS,
     ...providedOptions
   };
+
+  const {
+    buildRootInterfaceName,
+    formatFragmentInterface,
+    formatInterface,
+    formatVariableInterface,
+    wrapList,
+    wrapPartial
+  }: IOptions = options;
 
   const parsedSchema: GraphQLSchema = (schema instanceof GraphQLSchema) ? schema : buildSchema(schema);
   const parsedSelection: DocumentNode = parse(query);
@@ -97,8 +142,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   function isList (type: GraphQLType): type is GraphQLList<any> {
     return type instanceof GraphQLList;
   }
-
-  const wrapList: (type: string) => string = type => `Array<${type}>`;
 
   const printType: (type: string, isNonNull: boolean) => string = (type, isNonNull) => isNonNull ? type : `${type} | null`;
 
@@ -179,26 +222,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  interface IComplexTypeSignature {
-    iface: string;
-    isPartial: boolean;
-    name: string;
-  }
-  interface IReturnType {
-    isFragment: boolean;
-    isPartial: boolean;
-    iface: string;
-    complexTypes: IComplexTypeSignature[];
-  }
-
-  const wrapPartial: (possiblePartial: IReturnType) => string = possiblePartial => {
-    if (possiblePartial.isPartial) {
-      return `Partial<${possiblePartial.iface}>`;
-    } else {
-      return possiblePartial.iface;
-    }
-  };
-
   const getOperationFields: (operation: OperationTypeNode) => GraphQLObjectType = operation => {
     switch (operation) {
       case 'query':
@@ -214,9 +237,9 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
   type ChildSelectionsType =
     (operation: OperationTypeNode, selection: SelectionNode, indentation: string, parent?: GraphQLType, isUndefined?: boolean)
-      => IReturnType;
+      => IChildren;
 
-  const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IReturnType => {
+  const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IChildren => {
     let str: string = '';
     let field: GraphQLField<any, any>;
     let isFragment: boolean = false;
@@ -255,17 +278,17 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           newParent = fieldType;
         }
 
-        const selections: IReturnType[] =
+        const selections: IChildren[] =
           selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  newParent));
 
-        const nonFragments: IReturnType[] = selections.filter(s => !s.isFragment);
-        const fragments: IReturnType[] = selections.filter(s => s.isFragment);
+        const nonFragments: IChildren[] = selections.filter(s => !s.isFragment);
+        const fragments: IChildren[] = selections.filter(s => s.isFragment);
         const andOps: string[] = [];
         complexTypes.push(...selections.map(sel => sel.complexTypes).reduce((acc, arr) => { acc.push(...arr); return acc; }, []));
 
         if (nonFragments.length) {
-          const nonPartialNonFragments: IReturnType[] = nonFragments.filter(nf => !nf.isPartial);
-          const partialNonFragments: IReturnType[] = nonFragments.filter(nf => nf.isPartial);
+          const nonPartialNonFragments: IChildren[] = nonFragments.filter(nf => !nf.isPartial);
+          const partialNonFragments: IChildren[] = nonFragments.filter(nf => nf.isPartial);
 
           if (nonPartialNonFragments.length) {
             let builder: string = '';
@@ -312,7 +335,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         parent = parsedSchema.getType(typeName);
       }
 
-      const selections: IReturnType[] =
+      const selections: IChildren[] =
         selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
 
       let joinSelections: string = selections.map(s => s.iface).join('\n');
@@ -346,35 +369,37 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const variablesToInterface: (operationName: string, variables: VariableDefinitionNode[] | undefined) => string = (opName, variables) => {
     if (!variables || !variables.length) { return ''; }
     const variableTypeDefs: string[] = getVariables(variables);
-    return options.formatVariableInterface(opName, variableTypeDefs);
+    return formatVariableInterface(opName, variableTypeDefs);
   };
 
   return parsedSelection.definitions.map(def => {
-    const ifaceName: string = options.buildRootInterfaceName(def);
+    const ifaceName: string = buildRootInterfaceName(def);
     if (def.kind === 'OperationDefinition') {
       const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
-      const ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
-      const str: string[] = ret.map(x => x.iface);
-      const iface: string = options.formatInterface(ifaceName, str);
+      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+      const fields: string[] = ret.map(x => x.iface);
+      const iface: string = formatInterface(ifaceName, fields);
 
       return {
         variables: variableInterface,
         interface: iface,
       };
     } else if (def.kind === 'FragmentDefinition') {
+      // get the correct type
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
-      let ret: IReturnType[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-      let ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
-      let opt: string = ext ? ` extends ${ext}` : '';
-      let str: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
-      const iface: string = formatFragmentInterface(ifaceName, str, opt);
+
+      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+      const ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
+      const extensions: string = ext ? ` extends ${ext}` : '';
+      const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
+      const iface: string = formatFragmentInterface(ifaceName, fields, extensions);
+
       return {
         interface: iface,
         variables: ''
       };
     } else {
-      console.error('unsupported definition');
       throw new Error(`Unsupported Definition ${def.kind}`);
     }
   });

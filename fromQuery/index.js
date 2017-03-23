@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
-const formatInterface = (opName, fields) => `export interface ${opName} {
+const DEFAULT_FORMAT_INTERFACE = (opName, fields) => `export interface ${opName} {
 ${fields.join('\n  ')}
 }`;
-const formatVariableInterface = (opName, fields) => `export interface ${opName}Input {
+const DEFAULT_FORMAT_VARIABLES = (opName, fields) => `export interface ${opName}Input {
   ${fields.join('\n  ')}
 }`;
-const formatFragmentInterface = (opName, fields, ext) => `export interface ${opName}${ext} {
+const DEFAULT_FORMAT_FRAGMENT = (opName, fields, ext) => `export interface ${opName}${ext} {
 ${fields.join('\n')}
 }`;
-const buildRootInterfaceName = def => {
+const DEFAULT_BUILD_ROOT_INTERFACE_NAME = def => {
     if (def.kind === 'OperationDefinition') {
         return def.name ? def.name.value : 'Anonymous';
     }
@@ -21,13 +21,35 @@ const buildRootInterfaceName = def => {
         throw new Error(`Unsupported Definition ${def.kind}`);
     }
 };
+const DEFAULT_TYPE_MAP = {
+    ID: 'string',
+    String: 'string',
+    Boolean: 'boolean',
+    Float: 'number',
+    Int: 'number',
+};
+const DEFAULT_WRAP_LIST = type => `Array<${type}>`;
+const DEFAULT_WRAP_PARTIAL = possiblePartial => {
+    if (possiblePartial.isPartial) {
+        return `Partial<${possiblePartial.iface}>`;
+    }
+    else {
+        return possiblePartial.iface;
+    }
+};
+const DEFAULT_OPTIONS = {
+    buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
+    formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
+    formatInterface: DEFAULT_FORMAT_INTERFACE,
+    formatFragmentInterface: DEFAULT_FORMAT_FRAGMENT,
+    wrapList: DEFAULT_WRAP_LIST,
+    wrapPartial: DEFAULT_WRAP_PARTIAL,
+};
 ;
 const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
-    const TypeMap = Object.assign({ ID: 'string', String: 'string', Boolean: 'boolean', Float: 'number', Int: 'number' }, typeMap);
-    const options = Object.assign({ buildRootInterfaceName,
-        formatVariableInterface,
-        formatInterface,
-        formatFragmentInterface }, providedOptions);
+    const TypeMap = Object.assign({}, DEFAULT_TYPE_MAP, typeMap);
+    const options = Object.assign({}, DEFAULT_OPTIONS, providedOptions);
+    const { buildRootInterfaceName, formatFragmentInterface, formatInterface, formatVariableInterface, wrapList, wrapPartial } = options;
     const parsedSchema = (schema instanceof graphql_1.GraphQLSchema) ? schema : graphql_1.buildSchema(schema);
     const parsedSelection = graphql_1.parse(query);
     function isNonNullable(type) {
@@ -36,7 +58,6 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
     function isList(type) {
         return type instanceof graphql_1.GraphQLList;
     }
-    const wrapList = type => `Array<${type}>`;
     const printType = (type, isNonNull) => isNonNull ? type : `${type} | null`;
     const handleInputObject = (type, isNonNull) => {
         const variables = Object.keys(type.getFields()).map(k => type.getFields()[k]);
@@ -105,14 +126,6 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
         }
         else {
             return false;
-        }
-    };
-    const wrapPartial = possiblePartial => {
-        if (possiblePartial.isPartial) {
-            return `Partial<${possiblePartial.iface}>`;
-        }
-        else {
-            return possiblePartial.iface;
         }
     };
     const getOperationFields = operation => {
@@ -246,35 +259,35 @@ const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
             return '';
         }
         const variableTypeDefs = getVariables(variables);
-        return options.formatVariableInterface(opName, variableTypeDefs);
+        return formatVariableInterface(opName, variableTypeDefs);
     };
     return parsedSelection.definitions.map(def => {
-        const ifaceName = options.buildRootInterfaceName(def);
+        const ifaceName = buildRootInterfaceName(def);
         if (def.kind === 'OperationDefinition') {
             const variableInterface = variablesToInterface(ifaceName, def.variableDefinitions);
             const ret = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
-            const str = ret.map(x => x.iface);
-            const iface = options.formatInterface(ifaceName, str);
+            const fields = ret.map(x => x.iface);
+            const iface = formatInterface(ifaceName, fields);
             return {
                 variables: variableInterface,
                 interface: iface,
             };
         }
         else if (def.kind === 'FragmentDefinition') {
+            // get the correct type
             const onType = def.typeCondition.name.value;
             const foundType = parsedSchema.getType(onType);
-            let ret = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-            let ext = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
-            let opt = ext ? ` extends ${ext}` : '';
-            let str = ret.filter(x => !x.isFragment).map(x => x.iface);
-            const iface = formatFragmentInterface(ifaceName, str, opt);
+            const ret = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+            const ext = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
+            const extensions = ext ? ` extends ${ext}` : '';
+            const fields = ret.filter(x => !x.isFragment).map(x => x.iface);
+            const iface = formatFragmentInterface(ifaceName, fields, extensions);
             return {
                 interface: iface,
                 variables: ''
             };
         }
         else {
-            console.error('unsupported definition');
             throw new Error(`Unsupported Definition ${def.kind}`);
         }
     });
