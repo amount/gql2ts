@@ -13,13 +13,7 @@ const doIt = (schema, selection, typeMap = {}) => {
     }
     ;
     const wrapList = (type) => `Array<${type}>`;
-    const TypeMap = Object.assign({
-        ID: 'string',
-        String: 'string',
-        Boolean: 'boolean',
-        Float: 'number',
-        Int: 'number',
-    }, typeMap);
+    const TypeMap = Object.assign({ ID: 'string', String: 'string', Boolean: 'boolean', Float: 'number', Int: 'number' }, typeMap);
     const convertVariable = (type, isNonNull = false, replacement = null) => {
         if (type.kind === 'ListType') {
             return wrapList(convertVariable(type.type, false, replacement)) + (isNonNull ? '' : ' | null');
@@ -183,9 +177,7 @@ const doIt = (schema, selection, typeMap = {}) => {
         else if (selection.kind === 'FragmentSpread') {
             str = `IFragment${selection.name.value}`;
             isFragment = true;
-            if (isUndefinedFromDirective(selection.directives)) {
-                isPartial = true;
-            }
+            isPartial = isUndefinedFromDirective(selection.directives);
         }
         else if (selection.kind === 'InlineFragment') {
             const anon = !selection.typeCondition;
@@ -195,9 +187,7 @@ const doIt = (schema, selection, typeMap = {}) => {
             }
             const selections = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
             let joinSelections = selections.map(s => s.iface).join('\n');
-            if (isUndefinedFromDirective(selection.directives)) {
-                isPartial = true;
-            }
+            isPartial = isUndefinedFromDirective(selection.directives);
             return {
                 iface: joinSelections,
                 isFragment,

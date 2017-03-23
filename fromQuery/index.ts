@@ -38,13 +38,14 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
 
   const wrapList = (type: string): string => `Array<${type}>`;
 
-  const TypeMap: { [x: string]: string | undefined } = Object.assign({
+  const TypeMap: { [x: string]: string | undefined } = {
     ID: 'string',
     String: 'string',
     Boolean: 'boolean',
     Float: 'number',
     Int: 'number',
-  }, typeMap);
+    ...typeMap
+  };
 
   const convertVariable = (type: TypeNode, isNonNull: boolean= false, replacement: string | null= null): string => {
     if (type.kind === 'ListType') {
@@ -223,9 +224,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     } else if (selection.kind === 'FragmentSpread') {
       str = `IFragment${selection.name.value}`
       isFragment = true;
-      if (isUndefinedFromDirective(selection.directives)) {
-        isPartial = true;
-      }
+      isPartial = isUndefinedFromDirective(selection.directives)
     } else if (selection.kind === 'InlineFragment') {
       const anon: boolean = !selection.typeCondition;
       if (!anon) {
@@ -235,9 +234,8 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
 
       const selections: IReturnType[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
       let joinSelections: string = selections.map(s => s.iface).join('\n');
-      if (isUndefinedFromDirective(selection.directives)) {
-        isPartial = true
-      }
+      isPartial = isUndefinedFromDirective(selection.directives);
+
       return {
         iface: joinSelections,
         isFragment,
