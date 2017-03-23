@@ -101,6 +101,38 @@ const expectedCustomScalarResponse = {
   interface: 'export interface CustomScalarQuery {\n  test: string | null;\n}',
 }
 
+const UnionQuery = `
+query UnionQuery($id: String!) {
+  humanOrDroid (id: $id) {
+    id
+  }
+}
+`;
+
+const expectedUnionResponse = {
+  interface: 'export interface UnionQuery {\n  humanOrDroid: {\n    id: string;\n  } | null;\n}',
+  variables: 'export interface UnionQueryInput {\n  id: string;\n}',
+}
+
+const UnionQueryWithFragment = `
+query UnionQuery($id: String!) {
+  humanOrDroid (id: $id) {
+    ... on Human {
+      id
+    }
+
+    ... on Droid {
+      name
+    }
+  }
+}
+`;
+
+const expectedUnionWithFragmentResponse = {
+  interface: 'export interface UnionQuery {\n  humanOrDroid: {\n    id?: string;\n    name?: string | null;\n  } | null;\n}',
+  variables: 'export interface UnionQueryInput {\n  id: string;\n}',
+}
+
 describe('simple examples', () => {
   it ('does a very simple query', () => {
     const response = runProgram(schema, simplestQuery)
@@ -134,6 +166,20 @@ describe('simple examples', () => {
     const response = runProgram(schema, customScalarQuery, { TestScalar: 'string' });
     expect(response[0].interface).to.equal(expectedCustomScalarResponse.interface);
     expect(response[0].variables).to.equal(expectedCustomScalarResponse.variables);
+    expect(response.length).to.equal(1);
+  })
+
+  it ('supports unions', () => {
+    const response = runProgram(schema, UnionQuery);
+    expect(response[0].interface).to.equal(expectedUnionResponse.interface);
+    expect(response[0].variables).to.equal(expectedUnionResponse.variables);
+    expect(response.length).to.equal(1);
+  })
+
+  it ('supports unions with inline fragment', () => {
+    const response = runProgram(schema, UnionQueryWithFragment);
+    expect(response[0].interface).to.equal(expectedUnionWithFragmentResponse.interface);
+    expect(response[0].variables).to.equal(expectedUnionWithFragmentResponse.variables);
     expect(response.length).to.equal(1);
   })
 });

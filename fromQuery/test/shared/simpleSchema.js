@@ -40,11 +40,14 @@ module.exports = `
 
   scalar TestScalar
 
+  union HumanOrDroid = Human | Droid
+
   type Query {
     heroNoParam: Character
     hero(episode: Episode): Character
     human(id: String!): Human
     droid(id: String!): Droid
     test(test: TestScalar): TestScalar
+    humanOrDroid(id: String!): HumanOrDroid
   }
 `;

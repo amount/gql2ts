@@ -94,8 +94,13 @@ const doIt = (schema, selection, typeMap = {}) => {
         let isFragment = false;
         let isPartial = false;
         if (selection.kind === 'Field') {
-            if (parent) {
-                field = parent.getFields()[selection.name.value];
+            if (parent && graphql_1.isCompositeType(parent)) {
+                if (parent instanceof graphql_1.GraphQLUnionType) {
+                    field = parent.getTypes().map(t => t.getFields()[selection.name.value]).find(z => !!z);
+                }
+                else {
+                    field = parent.getFields()[selection.name.value];
+                }
             }
             else {
                 let operationFields;
@@ -161,7 +166,7 @@ const doIt = (schema, selection, typeMap = {}) => {
             }
             else {
                 if (!field) {
-                    console.debug(selection);
+                    console.log(selection);
                 }
                 str += convertToType(field.type) + ';';
             }

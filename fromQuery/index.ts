@@ -21,6 +21,7 @@ import {
   GraphQLInputObjectType,
   GraphQLInputField,
   GraphQLInputType,
+  GraphQLUnionType,
 } from 'graphql';
 
 const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object = {}) => {
@@ -123,8 +124,12 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     let isFragment: boolean = false;
     let isPartial: boolean = false;
     if (selection.kind === 'Field') {
-      if (parent) {
-        field = (parent as any).getFields()[selection.name.value];
+      if (parent && isCompositeType(parent)) {
+        if (parent instanceof GraphQLUnionType) {
+          field = parent.getTypes().map(t => t.getFields()[selection.name.value]).find(z => !!z)!;
+        } else {
+          field = parent.getFields()[selection.name.value];
+        }
       } else {
         let operationFields: GraphQLObjectType | undefined;
         switch (operation) {
@@ -196,7 +201,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
 
         str += convertToType(field.type, false, childType) + ';';
       } else {
-        if (!field) { console.debug(selection); }
+        if (!field) { console.log(selection); }
         str += convertToType(field.type) + ';';
       }
     } else if (selection.kind === 'FragmentSpread') {
