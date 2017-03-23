@@ -236,7 +236,6 @@ const anonInlineFragmentWithAliasExpected = `export interface FragmentTest {
   } | null;
 }`;
 
-
 describe('fragments', () => {
   it ('does simple fragments', () => {
     const response = runProgram(schema, fragmentQuery);
@@ -282,5 +281,178 @@ describe('fragments', () => {
     expect(response[0].interface).to.equal(anonInlineFragmentWithAliasExpected);
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
+  })
+})
+
+const simplestQueryWithDirectives = `
+  query TestQuery {
+    heroNoParam {
+      id @include(if: true)
+      name @skip(if: true)
+    }
+  }
+`;
+const simplestQueryWithDirectivesExpected = `export interface TestQuery {
+  heroNoParam: {
+    id?: string;
+    name?: string | null;
+  } | null;
+}`;
+
+const fragmentWithDirectivesQuery = `
+query FragmentTest {
+  heroNoParam {
+    ...CharacterFields @skip(if: true)
+  }
+}
+
+fragment CharacterFields on Character {
+  id
+}
+`
+
+const fragmentWithDirectivesInterface0 = `export interface FragmentTest {\n  heroNoParam: {} & Partial<IFragmentCharacterFields> | null;\n}`;
+const fragmentWithDirectivesInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n}'
+
+const fragmentWithDirectiveWithAliasQuery = `
+query FragmentTest {
+  a: heroNoParam {
+    ...CharacterFields @include(if: true)
+  }
+}
+
+fragment CharacterFields on Character {
+  b: id
+}
+`
+
+const fragmentWithDirectiveWithAliasInterface0 = `export interface FragmentTest {\n  a: {} & Partial<IFragmentCharacterFields> | null;\n}`;
+const fragmentWithDirectiveWithAliasInterface1 = 'export interface IFragmentCharacterFields {\n  b: string;\n}'
+
+
+const inlineFragmentWithDirectiveQuery = `
+query FragmentTest {
+  heroNoParam {
+    ... on Droid @include(if: true) {
+    	primaryFunction
+      primaryFunctionNonNull
+    }
+  }
+}`;
+
+const inlineFragmentWithDirectiveExpected = `export interface FragmentTest {
+  heroNoParam: Partial<{
+    primaryFunction?: string | null;
+    primaryFunctionNonNull?: string;
+  }> | null;
+}`;
+
+const inlineFragmentWithDirectiveWithAliasQuery = `
+query FragmentTest {
+  a: heroNoParam {
+    ... on Droid @include(if: true) {
+    	b: primaryFunction
+      c: primaryFunctionNonNull
+    }
+  }
+}`;
+
+const inlineFragmentWithDirectiveWithAliasExpected = `export interface FragmentTest {
+  a: Partial<{
+    b?: string | null;
+    c?: string;
+  }> | null;
+}`;
+
+const anonInlineFragmentWithDirectiveQuery = `
+query FragmentTest {
+  heroNoParam {
+    ... @include(if: true) {
+    	id
+      name
+    }
+  }
+}`;
+
+const anonInlineFragmentWithDirectiveExpected = `export interface FragmentTest {
+  heroNoParam: Partial<{
+    id: string;
+    name: string | null;
+  }> | null;
+}`;
+
+const anonInlineFragmentWithDirectiveWithAliasQuery = `
+query FragmentTest {
+  a: heroNoParam {
+    ... @include(if: true) {
+    	b: id
+      c: name
+    }
+  }
+}`;
+
+const anonInlineFragmentWithDirectiveWithAliasExpected = `export interface FragmentTest {
+  a: Partial<{
+    b: string;
+    c: string | null;
+  }> | null;
+}`;
+
+describe('directives', () => {
+  describe('on fields', () => {
+    it ('works with simple fields', () => {
+      const response = runProgram(schema, simplestQueryWithDirectives);
+      expect(response[0].interface).to.equal(simplestQueryWithDirectivesExpected);
+      expect(response[0].variables).to.equal('');
+      expect(response.length).to.equal(1);
+    });
+  });
+
+  describe('fragments', () => {
+    it ('works with fragment spread', () => {
+      const response = runProgram(schema, fragmentWithDirectivesQuery);
+      expect(response[0].interface).to.equal(fragmentWithDirectivesInterface0);
+      expect(response[0].variables).to.equal('');
+      expect(response[1].interface).to.equal(fragmentWithDirectivesInterface1);
+      expect(response[1].variables).to.equal('');
+      expect(response.length).to.equal(2);
+    })
+
+    it ('works with aliases on fragment spread', () => {
+      const response = runProgram(schema, fragmentWithDirectiveWithAliasQuery);
+      expect(response[0].interface).to.equal(fragmentWithDirectiveWithAliasInterface0);
+      expect(response[0].variables).to.equal('');
+      expect(response[1].interface).to.equal(fragmentWithDirectiveWithAliasInterface1);
+      expect(response[1].variables).to.equal('');
+      expect(response.length).to.equal(2);
+    })
+
+    it ('works with inline fragments on type', () => {
+      const response = runProgram(schema, inlineFragmentWithDirectiveQuery)
+      expect(response[0].interface).to.equal(inlineFragmentWithDirectiveExpected);
+      expect(response[0].variables).to.equal('');
+      expect(response.length).to.equal(1);
+    })
+
+    it ('works with inline fragments on type with aliases', () => {
+      const response = runProgram(schema, inlineFragmentWithDirectiveWithAliasQuery)
+      expect(response[0].interface).to.equal(inlineFragmentWithDirectiveWithAliasExpected);
+      expect(response[0].variables).to.equal('');
+      expect(response.length).to.equal(1);
+    })
+
+    it ('does anonymous inline fragments', () => {
+      const response = runProgram(schema, anonInlineFragmentWithDirectiveQuery)
+      expect(response[0].interface).to.equal(anonInlineFragmentWithDirectiveExpected);
+      expect(response[0].variables).to.equal('');
+      expect(response.length).to.equal(1);
+    })
+
+    it ('does anonymous inline fragments with aliases', () => {
+      const response = runProgram(schema, anonInlineFragmentWithDirectiveWithAliasQuery)
+      expect(response[0].interface).to.equal(anonInlineFragmentWithDirectiveWithAliasExpected);
+      expect(response[0].variables).to.equal('');
+      expect(response.length).to.equal(1);
+    })
   })
 })

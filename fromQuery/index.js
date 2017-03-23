@@ -57,9 +57,37 @@ const doIt = (schema, selection, typeMap = {}) => {
             return isNonNull ? show : `${show} | null`;
         }
     };
+    const UndefinedDirectives = new Set(['include', 'skip']);
+    const isUndefinedFromDirective = (directives) => {
+        if (!directives || !directives.length) {
+            return false;
+        }
+        const badDirectives = directives.filter(d => !UndefinedDirectives.has(d.name.value));
+        const hasDirectives = directives.some(d => UndefinedDirectives.has(d.name.value));
+        if (badDirectives.length) {
+            console.error('Found some unknown directives:');
+            badDirectives.forEach(d => console.error(d.name.value));
+        }
+        if (hasDirectives) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    const wrapPartial = (possiblePartial) => {
+        if (possiblePartial.isPartial) {
+            return `Partial<${possiblePartial.iface}>`;
+        }
+        else {
+            return possiblePartial.iface;
+        }
+    };
     const getChildSelections = (operation, selection, indentation = '', parent, isUndefined = false) => {
         let str = '';
         let field;
+        let isFragment = false;
+        let isPartial = false;
         if (selection.kind === 'Field') {
             if (parent) {
                 field = parent.getFields()[selection.name.value];
@@ -85,40 +113,61 @@ const doIt = (schema, selection, typeMap = {}) => {
             if (selection.alias) {
                 selectionName = selection.alias.value;
             }
-            if (isUndefined) {
+            if (isUndefined || isUndefinedFromDirective(selection.directives)) {
                 selectionName += '?';
             }
             str += indentation + selectionName + ': ';
             if (!!selection.selectionSet) {
                 let parent;
+                if (!field) {
+                    console.log(selection, parent);
+                }
                 const fieldType = graphql_1.getNamedType(field.type);
                 if (graphql_1.isCompositeType(fieldType)) {
                     parent = fieldType;
                 }
-                let childType = '{';
+                let childType = '';
                 const selections = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ', parent));
-                const fragments = selections.filter(s => !s.trim().startsWith('IFragment'));
-                const nonfragments = selections.filter(s => s.trim().startsWith('IFragment'));
-                if (fragments.length) {
-                    childType += '\n';
-                    childType += fragments.join('\n');
-                    childType += '\n' + indentation;
+                const nonFragments = selections.filter(s => !s.isFragment);
+                const fragments = selections.filter(s => s.isFragment);
+                if (nonFragments.length) {
+                    const nonPartialNonFragments = nonFragments.filter(nf => !nf.isPartial);
+                    const partialNonFragments = nonFragments.filter(nf => nf.isPartial);
+                    if (nonPartialNonFragments.length) {
+                        childType += '{\n';
+                        childType += nonPartialNonFragments.map(f => f.iface).join('\n');
+                        childType += `\n${indentation}}`;
+                    }
+                    if (partialNonFragments.length) {
+                        if (childType.endsWith('}')) {
+                            childType += ' & ';
+                        }
+                        childType += 'Partial<{\n';
+                        childType += partialNonFragments.map(f => f.iface).join('\n');
+                        childType += `\n${indentation}}>`;
+                    }
                 }
-                childType += '}';
-                if (nonfragments.length) {
-                    childType += ' & ' + nonfragments.join(' & ');
+                else {
+                    childType = '{}';
+                }
+                if (fragments.length) {
+                    childType += ' & ' + fragments.map(wrapPartial).join(' & ');
                 }
                 str += convertToType(field.type, false, childType) + ';';
             }
             else {
                 if (!field) {
-                    console.log(selection);
+                    console.debug(selection);
                 }
                 str += convertToType(field.type) + ';';
             }
         }
         else if (selection.kind === 'FragmentSpread') {
             str = `IFragment${selection.name.value}`;
+            isFragment = true;
+            if (isUndefinedFromDirective(selection.directives)) {
+                isPartial = true;
+            }
         }
         else if (selection.kind === 'InlineFragment') {
             const anon = !selection.typeCondition;
@@ -127,12 +176,24 @@ const doIt = (schema, selection, typeMap = {}) => {
                 parent = parsedSchema.getType(typeName);
             }
             const selections = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
-            return selections.join('\n');
+            let joinSelections = selections.map(s => s.iface).join('\n');
+            if (isUndefinedFromDirective(selection.directives)) {
+                isPartial = true;
+            }
+            return {
+                iface: joinSelections,
+                isFragment,
+                isPartial
+            };
         }
         else {
-            console.error('unsupported');
+            console.error('Unsupported SelectionNode');
         }
-        return str;
+        return {
+            iface: str,
+            isFragment,
+            isPartial
+        };
     };
     const getVariables = (variables) => {
         return variables.map(v => {
@@ -152,7 +213,7 @@ const doIt = (schema, selection, typeMap = {}) => {
 }`;
             }
             iface += `export interface ${name} {\n`;
-            let str = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+            let str = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  ')).map(x => x.iface);
             iface += str.join('\n');
             iface += `\n}`;
             return {
@@ -163,7 +224,7 @@ const doIt = (schema, selection, typeMap = {}) => {
         else if (def.kind === 'FragmentDefinition') {
             const onType = def.typeCondition.name.value;
             const foundType = parsedSchema.getType(onType);
-            let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+            let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType)).map(x => x.iface);
             let iface = `export interface IFragment${def.name.value} {
 ${str}
 }`;

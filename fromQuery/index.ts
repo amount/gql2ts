@@ -17,6 +17,7 @@ import {
   OperationTypeNode,
   GraphQLObjectType,
   GraphQLEnumType,
+  DirectiveNode,
 } from 'graphql';
 
 const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object = {}) => {
@@ -75,10 +76,44 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     }
   }
 
-  const getChildSelections = (operation: OperationTypeNode, selection: SelectionNode, indentation: string = '', parent?: GraphQLType, isUndefined?: boolean= false) => {
+  const UndefinedDirectives: Set<string> = new Set(['include', 'skip']);
+
+  const isUndefinedFromDirective = (directives: DirectiveNode[] | undefined): boolean => {
+    if (!directives || !directives.length) { return false; }
+
+    const badDirectives: DirectiveNode[] = directives.filter(d => !UndefinedDirectives.has(d.name.value));
+    const hasDirectives: boolean = directives.some(d => UndefinedDirectives.has(d.name.value));
+
+    if (badDirectives.length) {
+      console.error('Found some unknown directives:');
+      badDirectives.forEach(d => console.error(d.name.value))
+    }
+
+    if (hasDirectives) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  interface IReturnType {
+    isFragment: boolean;
+    isPartial: boolean;
+    iface: string;
+  }
+
+  const wrapPartial = (possiblePartial: IReturnType) => {
+    if (possiblePartial.isPartial) {
+      return `Partial<${possiblePartial.iface}>`;
+    } else {
+      return possiblePartial.iface;
+    }
+  }
+
+  const getChildSelections = (operation: OperationTypeNode, selection: SelectionNode, indentation: string = '', parent?: GraphQLType, isUndefined: boolean= false): IReturnType => {
     let str: string = '';
     let field: GraphQLField<any, any>;
-
+    let isFragment: boolean = false;
+    let isPartial: boolean = false;
     if (selection.kind === 'Field') {
       if (parent) {
         field = (parent as any).getFields()[selection.name.value];
@@ -105,7 +140,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
         selectionName = selection.alias.value;
       }
 
-      if (isUndefined) {
+      if (isUndefined || isUndefinedFromDirective(selection.directives)) {
         selectionName += '?';
       }
 
@@ -113,43 +148,79 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
 
       if (!!selection.selectionSet) {
         let parent: GraphQLCompositeType | undefined;
+        if (!field) { console.log(selection, parent); }
         const fieldType = getNamedType(field.type);
         if (isCompositeType(fieldType)) {
           parent = fieldType;
         }
-        let childType = '{';
-        const selections: string[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  parent));
-        const fragments: string[] = selections.filter(s => !s.trim().startsWith('IFragment'));
-        const nonfragments: string [] = selections.filter(s => s.trim().startsWith('IFragment'));
-        if (fragments.length) {
-          childType += '\n';
-          childType += fragments.join('\n');
-          childType += '\n' + indentation;
+
+        let childType = '';
+        const selections: IReturnType[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  parent));
+        const nonFragments: IReturnType[] = selections.filter(s => !s.isFragment);
+        const fragments: IReturnType[] = selections.filter(s => s.isFragment);
+
+        if (nonFragments.length) {
+          const nonPartialNonFragments = nonFragments.filter(nf => !nf.isPartial);
+          const partialNonFragments = nonFragments.filter(nf => nf.isPartial);
+          if (nonPartialNonFragments.length) {
+            childType += '{\n';
+            childType += nonPartialNonFragments.map(f => f.iface).join('\n');
+            childType += `\n${indentation}}`;
+          }
+
+          if (partialNonFragments.length) {
+            if (childType.endsWith('}')) {
+              childType += ' & ';
+            }
+            childType += 'Partial<{\n';
+            childType += partialNonFragments.map(f => f.iface).join('\n');
+            childType += `\n${indentation}}>`;
+          }
+        } else {
+          childType = '{}';
         }
-        childType += '}';
-        if (nonfragments.length) {
-          childType += ' & ' + nonfragments.join(' & ');
+
+        if (fragments.length) {
+          childType += ' & ' + fragments.map(wrapPartial).join(' & ');
         }
 
         str += convertToType(field.type, false, childType) + ';';
       } else {
-        if (!field) { console.log(selection); }
+        if (!field) { console.debug(selection); }
         str += convertToType(field.type) + ';';
       }
     } else if (selection.kind === 'FragmentSpread') {
       str = `IFragment${selection.name.value}`
+      isFragment = true;
+      if (isUndefinedFromDirective(selection.directives)) {
+        isPartial = true;
+      }
     } else if (selection.kind === 'InlineFragment') {
       const anon: boolean = !selection.typeCondition;
       if (!anon) {
         const typeName = selection.typeCondition!.name.value;
         parent = parsedSchema.getType(typeName);
       }
-      const selections: string[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
-      return selections.join('\n');
+
+      const selections: IReturnType[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation, parent, !anon));
+      let joinSelections: string = selections.map(s => s.iface).join('\n');
+      if (isUndefinedFromDirective(selection.directives)) {
+        isPartial = true
+      }
+      return {
+        iface: joinSelections,
+        isFragment,
+        isPartial
+      };
+
     } else {
-      console.error('unsupported');
+      console.error('Unsupported SelectionNode');
     }
-    return str;
+    return {
+      iface: str,
+      isFragment,
+      isPartial
+    };
   }
 
   const getVariables = (variables: VariableDefinitionNode[]) => {
@@ -171,7 +242,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
 }`;
       }
       iface += `export interface ${name} {\n`;
-      let str = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+      let str = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  ')).map(x => x.iface);
       iface += str.join('\n');
       iface += `\n}`;
 
@@ -182,7 +253,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     } else if (def.kind === 'FragmentDefinition') {
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
-      let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+      let str = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType)).map(x => x.iface);
       let iface = `export interface IFragment${def.name.value} {
 ${str}
 }`;
