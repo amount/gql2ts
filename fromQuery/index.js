@@ -14,46 +14,56 @@ const doIt = (schema, selection, typeMap = {}) => {
     ;
     const wrapList = (type) => `Array<${type}>`;
     const TypeMap = Object.assign({ ID: 'string', String: 'string', Boolean: 'boolean', Float: 'number', Int: 'number' }, typeMap);
+    const printType = (type, isNonNull) => isNonNull ? type : `${type} | null`;
+    const handleInputObject = (type, isNonNull) => {
+        const variables = Object.keys(type.getFields()).map(k => type.getFields()[k]);
+        const builder = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
+        return printType(builder, isNonNull);
+    };
+    const handleEnum = (type, isNonNull) => {
+        const decl = type.getValues().map(en => `'${en.value}'`).join(' | ');
+        return printType(decl, isNonNull);
+    };
+    const handleNamedTypeInput = (type, isNonNull) => {
+        if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
+            const newType = parsedSchema.getType(type.name.value);
+            if (newType instanceof graphql_1.GraphQLEnumType) {
+                return handleEnum(newType, isNonNull);
+            }
+            else if (newType instanceof graphql_1.GraphQLInputObjectType) {
+                return handleInputObject(newType, isNonNull);
+            }
+        }
+    };
+    const handleRegularType = (type, isNonNull, replacement) => {
+        const typeValue = (typeof type.name === 'string') ? type.toString() : type.name.value;
+        const showValue = replacement ? replacement : typeValue;
+        const show = TypeMap[showValue] || (replacement ? showValue : 'any');
+        return printType(show, isNonNull);
+    };
     const convertVariable = (type, isNonNull = false, replacement = null) => {
         if (type.kind === 'ListType') {
-            return wrapList(convertVariable(type.type, false, replacement)) + (isNonNull ? '' : ' | null');
+            return wrapList(convertVariable(type.type, false, replacement)) + printType('', isNonNull);
         }
         else if (type.kind === 'NonNullType') {
             return convertVariable(type.type, true, replacement);
         }
         else {
-            if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
-                const newType = parsedSchema.getType(type.name.value);
-                if (newType instanceof graphql_1.GraphQLEnumType) {
-                    const decl = newType.getValues().map(en => `'${en.value}'`).join(' | ');
-                    return isNonNull ? decl : `${decl} | null`;
-                }
-                else if (newType instanceof graphql_1.GraphQLInputObjectType) {
-                    const variables = Object.keys(newType.getFields()).map(k => newType.getFields()[k]);
-                    const builder = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
-                    return isNonNull ? builder : `${builder} | null`;
-                }
-            }
-            const showValue = replacement ? replacement : type.name.value;
-            const show = TypeMap[showValue] || (replacement ? showValue : 'any');
-            return isNonNull ? show : `${show} | null`;
+            return handleNamedTypeInput(type, isNonNull) || handleRegularType(type, isNonNull, replacement);
         }
     };
     const convertToType = (type, isNonNull = false, replacement = null) => {
         if (isList(type)) {
-            return wrapList(convertToType(type.ofType, false, replacement)) + (isNonNull ? '' : ' | null');
+            return wrapList(convertToType(type.ofType, false, replacement)) + printType('', isNonNull);
         }
         else if (isNonNullable(type)) {
             return convertToType(type.ofType, true, replacement);
         }
         else if (type instanceof graphql_1.GraphQLEnumType) {
-            const types = type.getValues().map(en => `'${en.value}'`).join(' | ');
-            return isNonNull ? types : `${types} | null`;
+            return handleEnum(type, isNonNull);
         }
         else {
-            const showValue = replacement ? replacement : type.toString();
-            const show = TypeMap[showValue] || (replacement ? showValue : 'any');
-            return isNonNull ? show : `${show} | null`;
+            return handleRegularType(type, isNonNull, replacement);
         }
     };
     const UndefinedDirectives = new Set(['include', 'skip']);
@@ -82,6 +92,18 @@ const doIt = (schema, selection, typeMap = {}) => {
             return possiblePartial.iface;
         }
     };
+    const getOperationFields = (operation) => {
+        switch (operation) {
+            case 'query':
+                return parsedSchema.getQueryType();
+            case 'mutation':
+                return parsedSchema.getMutationType();
+            case 'subscription':
+                return parsedSchema.getSubscriptionType();
+            default:
+                throw new Error('Unsupported Operation');
+        }
+    };
     const getChildSelections = (operation, selection, indentation = '', parent, isUndefined = false) => {
         let str = '';
         let field;
@@ -99,20 +121,7 @@ const doIt = (schema, selection, typeMap = {}) => {
                 }
             }
             else {
-                let operationFields;
-                switch (operation) {
-                    case 'query':
-                        operationFields = parsedSchema.getQueryType();
-                        break;
-                    case 'mutation':
-                        operationFields = parsedSchema.getMutationType();
-                        break;
-                    case 'subscription':
-                        operationFields = parsedSchema.getSubscriptionType();
-                        break;
-                    default:
-                        throw new Error('Unsupported Operation');
-                }
+                const operationFields = getOperationFields(operation);
                 field = operationFields.getFields()[selection.name.value];
             }
             let selectionName = selection.name.value;
@@ -196,7 +205,7 @@ const doIt = (schema, selection, typeMap = {}) => {
             };
         }
         else {
-            console.error('Unsupported SelectionNode');
+            throw new Error('Unsupported SelectionNode');
         }
         return {
             iface: str,

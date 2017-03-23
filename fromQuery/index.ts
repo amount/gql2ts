@@ -22,6 +22,8 @@ import {
   GraphQLInputField,
   GraphQLInputType,
   GraphQLUnionType,
+  NamedTypeNode,
+  GraphQLNamedType,
 } from 'graphql';
 
 const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object = {}) => {
@@ -47,41 +49,56 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     ...typeMap
   };
 
+  const printType = (type: string, isNonNull: boolean) => isNonNull ? type : `${type} | null`;
+
+  const handleInputObject = (type: GraphQLInputObjectType, isNonNull: boolean) => {
+    const variables: GraphQLInputField[] = Object.keys(type.getFields()).map(k => type.getFields()[k])
+    const builder: string = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
+    return printType(builder, isNonNull);
+  }
+
+  const handleEnum = (type: GraphQLEnumType, isNonNull) => {
+    const decl: string = type.getValues().map(en => `'${en.value}'`).join(' | ');
+    return printType(decl, isNonNull);
+  }
+
+  const handleNamedTypeInput = (type: TypeNode, isNonNull: boolean) => {
+    if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
+      const newType: GraphQLType = parsedSchema.getType(type.name.value)
+      if (newType instanceof GraphQLEnumType) {
+        return handleEnum(newType, isNonNull);
+      } else if (newType instanceof GraphQLInputObjectType) {
+        return handleInputObject(newType, isNonNull);
+      }
+    }
+  }
+
+  const handleRegularType = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => {
+    const typeValue: string = (typeof type.name === 'string') ? type.toString() : type.name.value;
+    const showValue: string = replacement ? replacement : typeValue;
+    const show: string = TypeMap[showValue] || (replacement ? showValue : 'any');
+    return printType(show, isNonNull);
+  }
+
   const convertVariable = (type: TypeNode, isNonNull: boolean= false, replacement: string | null= null): string => {
     if (type.kind === 'ListType') {
-      return wrapList(convertVariable(type.type, false, replacement)) + (isNonNull ? '' : ' | null');
+      return wrapList(convertVariable(type.type, false, replacement)) + printType('', isNonNull);
     } else if (type.kind === 'NonNullType') {
       return convertVariable(type.type, true, replacement)
     } else {
-      if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
-        const newType: GraphQLType = parsedSchema.getType(type.name.value)
-        if (newType instanceof GraphQLEnumType) {
-          const decl: string = newType.getValues().map(en => `'${en.value}'`).join(' | ');
-          return isNonNull ? decl : `${decl} | null`;
-        } else if (newType instanceof GraphQLInputObjectType) {
-          const variables: GraphQLInputField[] = Object.keys(newType.getFields()).map(k => newType.getFields()[k])
-          const builder: string = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
-          return isNonNull ? builder : `${builder} | null`;
-        }
-      }
-      const showValue: string = replacement ? replacement : type.name.value;
-      const show: string = TypeMap[showValue] || (replacement ? showValue : 'any');
-      return isNonNull ? show : `${show} | null`;
+      return handleNamedTypeInput(type, isNonNull) || handleRegularType(type, isNonNull, replacement);
     }
   }
 
   const convertToType = (type: GraphQLOutputType | GraphQLInputType, isNonNull: boolean= false, replacement: string | null= null): string => {
     if (isList(type)) {
-      return wrapList(convertToType(type.ofType, false, replacement)) + (isNonNull ? '' : ' | null');
+      return wrapList(convertToType(type.ofType, false, replacement)) + printType('', isNonNull);
     } else if (isNonNullable(type)) {
       return convertToType(type.ofType, true, replacement)
     } else if (type instanceof GraphQLEnumType) {
-      const types: string = type.getValues().map(en => `'${en.value}'`).join(' | ');
-      return isNonNull ? types : `${types} | null`;
+      return handleEnum(type, isNonNull);
     } else {
-      const showValue: string = replacement ? replacement : type.toString();
-      const show: string = TypeMap[showValue] || (replacement ? showValue : 'any');
-      return isNonNull ? show : `${show} | null`;
+      return handleRegularType(type, isNonNull, replacement);
     }
   }
 
@@ -125,6 +142,19 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
     }
   }
 
+  const getOperationFields = (operation: OperationTypeNode) => {
+    switch (operation) {
+      case 'query':
+        return parsedSchema.getQueryType();
+      case 'mutation':
+        return parsedSchema.getMutationType();
+      case 'subscription':
+        return parsedSchema.getSubscriptionType();
+      default:
+        throw new Error('Unsupported Operation');
+    }
+  }
+
   const getChildSelections = (operation: OperationTypeNode, selection: SelectionNode, indentation: string = '', parent?: GraphQLType, isUndefined: boolean= false): IReturnType => {
     let str: string = '';
     let field: GraphQLField<any, any>;
@@ -141,20 +171,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
           field = parent.getFields()[selection.name.value];
         }
       } else {
-        let operationFields: GraphQLObjectType | undefined;
-        switch (operation) {
-          case 'query':
-            operationFields = parsedSchema.getQueryType();
-            break;
-          case 'mutation':
-            operationFields = parsedSchema.getMutationType();
-            break;
-          case 'subscription':
-            operationFields = parsedSchema.getSubscriptionType();
-            break;
-          default:
-            throw new Error('Unsupported Operation');
-        }
+        const operationFields: GraphQLObjectType = getOperationFields(operation);
         field = operationFields.getFields()[selection.name.value];
       }
 
@@ -244,7 +261,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
       };
 
     } else {
-      console.error('Unsupported SelectionNode');
+      throw new Error('Unsupported SelectionNode');
     }
     return {
       iface: str,
