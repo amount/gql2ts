@@ -9,7 +9,7 @@ module.exports = `
 
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
-    arrNonNullContents: [Character!]!
+    nullArrNonNullContents: [Character!]
   }
 
   type Human implements Character {
@@ -21,7 +21,7 @@ module.exports = `
 
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
-    arrNonNullContents: [Character!]!
+    nullArrNonNullContents: [Character!]
   }
 
   type Droid implements Character {
@@ -35,7 +35,7 @@ module.exports = `
 
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
-    arrNonNullContents: [Character!]!
+    nullArrNonNullContents: [Character!]
   }
 
   scalar TestScalar

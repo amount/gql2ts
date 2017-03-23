@@ -48,7 +48,7 @@ query Test {
       id
       name
     }
-    arrNonNullContents {
+    nullArrNonNullContents {
       id
       name
     }
@@ -66,10 +66,10 @@ const arrInterface = `export interface Test {
       id: string;
       name: string | null;
     }>;
-    arrNonNullContents: Array<{
+    nullArrNonNullContents: Array<{
       id: string;
       name: string | null;
-    }>;
+    }> | null;
   } | null;
 }`
 
@@ -283,5 +283,4 @@ describe('fragments', () => {
     expect(response[0].variables).to.equal('');
     expect(response.length).to.equal(1);
   })
-
 })
