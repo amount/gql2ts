@@ -150,7 +150,7 @@ fragment CharacterFields on Character {
 }
 `
 
-const fragmentInterface0 = `export interface FragmentTest {\n  heroNoParam: {} & IFragmentCharacterFields | null;\n}`;
+const fragmentInterface0 = `export interface FragmentTest {\n  heroNoParam: IFragmentCharacterFields | null;\n}`;
 const fragmentInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n}'
 
 const fragmentWithAliasQuery = `
@@ -165,7 +165,7 @@ fragment CharacterFields on Character {
 }
 `
 
-const fragmentWithAliasInterface0 = `export interface FragmentTest {\n  a: {} & IFragmentCharacterFields | null;\n}`;
+const fragmentWithAliasInterface0 = `export interface FragmentTest {\n  a: IFragmentCharacterFields | null;\n}`;
 const fragmentWithAliasInterface1 = 'export interface IFragmentCharacterFields {\n  b: string;\n}'
 
 const inlineFragmentQuery = `
@@ -311,7 +311,7 @@ fragment CharacterFields on Character {
 }
 `
 
-const fragmentWithDirectivesInterface0 = `export interface FragmentTest {\n  heroNoParam: {} & Partial<IFragmentCharacterFields> | null;\n}`;
+const fragmentWithDirectivesInterface0 = `export interface FragmentTest {\n  heroNoParam: Partial<IFragmentCharacterFields> | null;\n}`;
 const fragmentWithDirectivesInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n}'
 
 const fragmentWithDirectiveWithAliasQuery = `
@@ -326,7 +326,7 @@ fragment CharacterFields on Character {
 }
 `
 
-const fragmentWithDirectiveWithAliasInterface0 = `export interface FragmentTest {\n  a: {} & Partial<IFragmentCharacterFields> | null;\n}`;
+const fragmentWithDirectiveWithAliasInterface0 = `export interface FragmentTest {\n  a: Partial<IFragmentCharacterFields> | null;\n}`;
 const fragmentWithDirectiveWithAliasInterface1 = 'export interface IFragmentCharacterFields {\n  b: string;\n}'
 
 

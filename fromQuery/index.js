@@ -126,33 +126,32 @@ const doIt = (schema, selection, typeMap = {}) => {
                 if (graphql_1.isCompositeType(fieldType)) {
                     parent = fieldType;
                 }
-                let childType = '';
                 const selections = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ', parent));
                 const nonFragments = selections.filter(s => !s.isFragment);
                 const fragments = selections.filter(s => s.isFragment);
+                const andOps = [];
                 if (nonFragments.length) {
                     const nonPartialNonFragments = nonFragments.filter(nf => !nf.isPartial);
                     const partialNonFragments = nonFragments.filter(nf => nf.isPartial);
                     if (nonPartialNonFragments.length) {
-                        childType += '{\n';
-                        childType += nonPartialNonFragments.map(f => f.iface).join('\n');
-                        childType += `\n${indentation}}`;
+                        let builder = '';
+                        builder += '{\n';
+                        builder += nonPartialNonFragments.map(f => f.iface).join('\n');
+                        builder += `\n${indentation}}`;
+                        andOps.push(builder);
                     }
                     if (partialNonFragments.length) {
-                        if (childType.endsWith('}')) {
-                            childType += ' & ';
-                        }
-                        childType += 'Partial<{\n';
-                        childType += partialNonFragments.map(f => f.iface).join('\n');
-                        childType += `\n${indentation}}>`;
+                        let builder = '';
+                        builder += 'Partial<{\n';
+                        builder += partialNonFragments.map(f => f.iface).join('\n');
+                        builder += `\n${indentation}}>`;
+                        andOps.push(builder);
                     }
                 }
-                else {
-                    childType = '{}';
-                }
                 if (fragments.length) {
-                    childType += ' & ' + fragments.map(wrapPartial).join(' & ');
+                    andOps.push(...fragments.map(wrapPartial));
                 }
+                const childType = andOps.join(' & ');
                 str += convertToType(field.type, false, childType) + ';';
             }
             else {

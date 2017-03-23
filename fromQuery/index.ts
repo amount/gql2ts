@@ -95,6 +95,7 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
       return false;
     }
   }
+
   interface IReturnType {
     isFragment: boolean;
     isPartial: boolean;
@@ -154,35 +155,37 @@ const doIt = (schema: GraphQLSchema | string, selection: string, typeMap: object
           parent = fieldType;
         }
 
-        let childType = '';
         const selections: IReturnType[] = selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  parent));
         const nonFragments: IReturnType[] = selections.filter(s => !s.isFragment);
         const fragments: IReturnType[] = selections.filter(s => s.isFragment);
+        const andOps: string[] = [];
 
         if (nonFragments.length) {
           const nonPartialNonFragments = nonFragments.filter(nf => !nf.isPartial);
           const partialNonFragments = nonFragments.filter(nf => nf.isPartial);
+
           if (nonPartialNonFragments.length) {
-            childType += '{\n';
-            childType += nonPartialNonFragments.map(f => f.iface).join('\n');
-            childType += `\n${indentation}}`;
+            let builder: string = '';
+            builder += '{\n';
+            builder += nonPartialNonFragments.map(f => f.iface).join('\n');
+            builder += `\n${indentation}}`;
+            andOps.push(builder);
           }
 
           if (partialNonFragments.length) {
-            if (childType.endsWith('}')) {
-              childType += ' & ';
-            }
-            childType += 'Partial<{\n';
-            childType += partialNonFragments.map(f => f.iface).join('\n');
-            childType += `\n${indentation}}>`;
+            let builder: string = '';
+            builder += 'Partial<{\n';
+            builder += partialNonFragments.map(f => f.iface).join('\n');
+            builder += `\n${indentation}}>`;
+            andOps.push(builder);
           }
-        } else {
-          childType = '{}';
         }
 
         if (fragments.length) {
-          childType += ' & ' + fragments.map(wrapPartial).join(' & ');
+          andOps.push(...fragments.map(wrapPartial));
         }
+
+        const childType = andOps.join(' & ');
 
         str += convertToType(field.type, false, childType) + ';';
       } else {
