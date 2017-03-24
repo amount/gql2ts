@@ -49,11 +49,31 @@ const DEFAULT_OPTIONS = {
     generateSubTypeInterfaceName: DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME,
 };
 ;
+function isIntrospectionResult(schema) {
+    return ('__schema' in schema);
+}
+const schemaFromInputs = schema => {
+    if (schema instanceof graphql_1.GraphQLSchema) {
+        return schema;
+    }
+    else if (typeof schema === 'string') {
+        return graphql_1.buildSchema(schema);
+    }
+    else if (isIntrospectionResult(schema)) {
+        return graphql_1.buildClientSchema(schema);
+    }
+    else if (isIntrospectionResult(schema.data)) {
+        return graphql_1.buildClientSchema(schema.data);
+    }
+    else {
+        throw new Error('Invalid Schema Input');
+    }
+};
 const doIt = (schema, query, typeMap = {}, providedOptions = {}) => {
     const TypeMap = Object.assign({}, DEFAULT_TYPE_MAP, typeMap);
     const options = Object.assign({}, DEFAULT_OPTIONS, providedOptions);
     const { buildRootInterfaceName, formatFragmentInterface, formatInterface, formatVariableInterface, wrapList, wrapPartial, generateSubTypeInterfaceName, } = options;
-    const parsedSchema = (schema instanceof graphql_1.GraphQLSchema) ? schema : graphql_1.buildSchema(schema);
+    const parsedSchema = schemaFromInputs(schema);
     const parsedSelection = graphql_1.parse(query);
     function isNonNullable(type) {
         return type instanceof graphql_1.GraphQLNonNull;

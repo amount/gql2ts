@@ -1,5 +1,7 @@
 import {
   buildSchema,
+  buildClientSchema,
+  IntrospectionQuery,
   parse,
   GraphQLSchema,
   DocumentNode,
@@ -105,7 +107,9 @@ const DEFAULT_OPTIONS: IOptions = {
 
 export interface IProvidedOptions extends Partial<IOptions> {};
 
-export type Signature = (schema: GraphQLSchema | string, query: string, typeMap?: object, options?: IProvidedOptions) => IReturn[];
+export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | IntrospectionQuery;
+export type PossibleSchemaInput = GraphQLSchema | string | PossibleIntrospectionInputs;
+export type Signature = (schema: PossibleSchemaInput, query: string, typeMap?: object, options?: IProvidedOptions) => IReturn[];
 
 export interface IComplexTypeSignature {
   iface: string;
@@ -118,6 +122,24 @@ export interface IChildren {
   iface: string;
   complexTypes: IComplexTypeSignature[];
 }
+
+function isIntrospectionResult (schema: PossibleIntrospectionInputs): schema is IntrospectionQuery {
+  return ('__schema' in schema);
+}
+
+const schemaFromInputs: (schema: PossibleSchemaInput) => GraphQLSchema = schema => {
+  if (schema instanceof GraphQLSchema) {
+    return schema;
+  } else if (typeof schema === 'string') {
+    return buildSchema(schema);
+  } else if (isIntrospectionResult(schema)) {
+    return buildClientSchema(schema);
+  } else if (isIntrospectionResult(schema.data)) {
+    return buildClientSchema(schema.data);
+  } else {
+    throw new Error('Invalid Schema Input');
+  }
+};
 
 const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const TypeMap: { [x: string]: string | undefined } = {
@@ -140,7 +162,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     generateSubTypeInterfaceName,
   }: IOptions = options;
 
-  const parsedSchema: GraphQLSchema = (schema instanceof GraphQLSchema) ? schema : buildSchema(schema);
+  const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
   const parsedSelection: DocumentNode = parse(query);
 
   function isNonNullable (type: GraphQLType): type is GraphQLNonNull<any> {
@@ -395,7 +417,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         return `export interface ${subtype.name} ${subtype.iface}`;
       }
     });
-  }
+  };
 
   return parsedSelection.definitions.map(def => {
     const ifaceName: string = buildRootInterfaceName(def);
