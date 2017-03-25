@@ -2,15 +2,11 @@ import {
   parse,
   GraphQLSchema,
   DocumentNode,
-  SelectionNode,
   GraphQLField,
   GraphQLCompositeType,
   isCompositeType,
   getNamedType,
   GraphQLType,
-  GraphQLNonNull,
-  GraphQLList,
-  GraphQLOutputType,
   VariableDefinitionNode,
   TypeNode,
   OperationTypeNode,
@@ -19,109 +15,29 @@ import {
   DirectiveNode,
   GraphQLInputObjectType,
   GraphQLInputField,
-  GraphQLInputType,
   GraphQLUnionType,
-  NamedTypeNode,
   GraphQLNamedType,
-  DefinitionNode,
 } from 'graphql';
-import { PossibleSchemaInput, schemaFromInputs } from '@gql2ts/util';
-
-interface IReturn {
-  variables: string;
-  interface: string;
-  additionalTypes: string[];
-}
-
-type BuildRootInterfaceName = (definition: DefinitionNode) => string;
-type InterfaceFormatters = (operationName: string, fields: string[]) => string;
-type FragmentInterfaceFormatter = (operationName: string, fields: string[], extInterfaces: string) => string;
-
-const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
-${fields.join('\n  ')}
-}`;
-
-const DEFAULT_FORMAT_VARIABLES: InterfaceFormatters = (opName, fields) => `export interface ${opName}Input {
-  ${fields.join('\n  ')}
-}`;
-
-const DEFAULT_FORMAT_FRAGMENT: FragmentInterfaceFormatter = (opName, fields, ext) => `export interface ${opName}${ext} {
-${fields.join('\n')}
-}`;
-
-const DEFAULT_BUILD_ROOT_INTERFACE_NAME: BuildRootInterfaceName = def => {
-  if (def.kind === 'OperationDefinition') {
-    return def.name ? def.name.value : 'Anonymous';
-  } else if (def.kind === 'FragmentDefinition') {
-    return `IFragment${def.name.value}`;
-  } else {
-    throw new Error(`Unsupported Definition ${def.kind}`);
-  }
-};
-
-const DEFAULT_TYPE_MAP: { [x: string]: string | undefined } = {
-  ID: 'string',
-  String: 'string',
-  Boolean: 'boolean',
-  Float: 'number',
-  Int: 'number',
-};
-
-type WrapList = (type: string) => string;
-const DEFAULT_WRAP_LIST: WrapList = type => `Array<${type}>`;
-
-type WrapPartial = (possiblePartial: IChildren) => string;
-const DEFAULT_WRAP_PARTIAL: WrapPartial = possiblePartial => {
-  if (possiblePartial.isPartial) {
-    return `Partial<${possiblePartial.iface}>`;
-  } else {
-    return possiblePartial.iface;
-  }
-};
-
-type GenerateSubTypeInterface = (selectionName: string, generatedCount: number) => string;
-const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
-  (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;
-
-export interface IOptions {
-  buildRootInterfaceName: BuildRootInterfaceName;
-  formatVariableInterface: InterfaceFormatters;
-  formatInterface: InterfaceFormatters;
-  formatFragmentInterface: FragmentInterfaceFormatter;
-  wrapList: WrapList;
-  wrapPartial: WrapPartial;
-  generateSubTypeInterfaceName: GenerateSubTypeInterface;
-};
-
-const DEFAULT_OPTIONS: IOptions = {
-  buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
-  formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
-  formatInterface: DEFAULT_FORMAT_INTERFACE,
-  formatFragmentInterface: DEFAULT_FORMAT_FRAGMENT,
-  wrapList: DEFAULT_WRAP_LIST,
-  wrapPartial: DEFAULT_WRAP_PARTIAL,
-  generateSubTypeInterfaceName: DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME,
-};
-
-export interface IProvidedOptions extends Partial<IOptions> {};
-
-export type Signature = (schema: PossibleSchemaInput, query: string, typeMap?: object, options?: IProvidedOptions) => IReturn[];
-
-export interface IComplexTypeSignature {
-  iface: string;
-  isPartial: boolean;
-  name: string;
-}
-export interface IChildren {
-  isFragment: boolean;
-  isPartial: boolean;
-  iface: string;
-  complexTypes: IComplexTypeSignature[];
-}
-
+import {
+  schemaFromInputs,
+  isList,
+  isNonNullable,
+} from '@gql2ts/util';
+import {
+  ChildSelectionsType,
+  IChildren,
+  IComplexTypeSignature,
+  IOptions,
+  Signature,
+  RegularTypeSignature,
+  VariableTypeSignature,
+  convertToTypeSignature,
+  ITypeMap
+} from './types';
+import { DEFAULT_TYPE_MAP, DEFAULT_OPTIONS } from './defaults';
 
 const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
-  const TypeMap: { [x: string]: string | undefined } = {
+  const TypeMap: ITypeMap = {
     ...DEFAULT_TYPE_MAP,
     ...typeMap
   };
@@ -139,24 +55,18 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     wrapList,
     wrapPartial,
     generateSubTypeInterfaceName,
+    printType,
+    formatInput,
   }: IOptions = options;
 
   const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
   const parsedSelection: DocumentNode = parse(query);
 
-  function isNonNullable (type: GraphQLType): type is GraphQLNonNull<any> {
-    return type instanceof GraphQLNonNull;
-  }
-
-  function isList (type: GraphQLType): type is GraphQLList<any> {
-    return type instanceof GraphQLList;
-  }
-
-  const printType: (type: string, isNonNull: boolean) => string = (type, isNonNull) => isNonNull ? type : `${type} | null`;
-
   const handleInputObject: (type: GraphQLInputObjectType, isNonNull: boolean) => string = (type, isNonNull) => {
     const variables: GraphQLInputField[] = Object.keys(type.getFields()).map(k => type.getFields()[k]);
-    const builder: string = `{\n${variables.map(v => `    ${v.name}?: ${convertToType(v.type)};`).join('\n')}\n  }`;
+    // tslint:disable-next-line no-use-before-declare
+    const variableDeclarations: string = variables.map(v => `    ${formatInput(v.name, true, convertToType(v.type))}`).join('\n');
+    const builder: string = `{\n${variableDeclarations}\n  }`;
     return printType(builder, isNonNull);
   };
 
@@ -176,16 +86,12 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;
-
   const handleRegularType: RegularTypeSignature = (type, isNonNull, replacement) => {
     const typeValue: string = (typeof type.name === 'string') ? type.toString() : type.name.value;
-    const showValue: string = replacement ? replacement : typeValue;
-    const show: string = TypeMap[showValue] || (replacement ? showValue : 'any');
+    const showValue: string = replacement || typeValue;
+    const show: string = TypeMap[showValue] || (replacement ? showValue : TypeMap.__DEFAULT);
     return printType(show, isNonNull);
   };
-
-  type VariableTypeSignature = (type: TypeNode, isNonNull?: boolean, replacement?: string | null) => string;
 
   const convertVariable: VariableTypeSignature = (type, isNonNull= false, replacement= null) => {
     if (type.kind === 'ListType') {
@@ -196,8 +102,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       return handleNamedTypeInput(type, isNonNull!) || handleRegularType(type, isNonNull!, replacement!);
     }
   };
-
-  type convertToTypeSignature = (type: GraphQLOutputType | GraphQLInputType, isNonNull?: boolean, replacement?: string | null) => string;
 
   const convertToType: convertToTypeSignature = (type, isNonNull= false, replacement= null): string => {
     if (isList(type)) {
@@ -224,11 +128,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       badDirectives.forEach(d => console.error(d.name.value));
     }
 
-    if (hasDirectives) {
-      return true;
-    } else {
-      return false;
-    }
+    return hasDirectives;
   };
 
   const getOperationFields: (operation: OperationTypeNode) => GraphQLObjectType = operation => {
@@ -243,10 +143,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         throw new Error('Unsupported Operation');
     }
   };
-
-  type ChildSelectionsType =
-    (operation: OperationTypeNode, selection: SelectionNode, indentation: string, parent?: GraphQLType, isUndefined?: boolean)
-      => IChildren;
 
   const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IChildren => {
     let str: string = '';
@@ -375,7 +271,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const getVariables: (variables: VariableDefinitionNode[]) => string[] = variables => (
     variables.map(v => {
       const optional: boolean = v.type.kind !== 'NonNullType';
-      return `${v.variable.name.value}${optional ? '?:' : ':'} ${convertVariable(v.type)};`;
+      const type: string = convertVariable(v.type);
+      return formatInput(v.variable.name.value, optional, type);
     })
   );
 

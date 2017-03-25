@@ -5,5 +5,7 @@ export {
   PossibleIntrospectionInputs,
   PossibleSchemaInput,
   isIntrospectionResult,
-  schemaFromInputs
+  schemaFromInputs,
+  isList,
+  isNonNullable,
 } from './schema';

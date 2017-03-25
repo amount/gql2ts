@@ -3,6 +3,9 @@ import {
   buildClientSchema,
   IntrospectionQuery,
   GraphQLSchema,
+  GraphQLType,
+  GraphQLNonNull,
+  GraphQLList,
 } from 'graphql';
 
 export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | IntrospectionQuery;
@@ -25,3 +28,11 @@ export const schemaFromInputs: (schema: PossibleSchemaInput) => GraphQLSchema = 
     throw new Error('Invalid Schema Input');
   }
 };
+
+export function isNonNullable (type: GraphQLType): type is GraphQLNonNull<any> {
+  return type instanceof GraphQLNonNull;
+}
+
+export function isList (type: GraphQLType): type is GraphQLList<any> {
+  return type instanceof GraphQLList;
+}
