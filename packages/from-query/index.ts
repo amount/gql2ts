@@ -154,6 +154,10 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
+  const flattenComplexTypes: (children: IChildren[]) => IComplexTypeSignature[] = children => (
+    children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[])
+  );
+
   const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IChildren => {
     let str: string = '';
     let field: GraphQLField<any, any>;
@@ -174,16 +178,11 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         field = operationFields.getFields()[selection.name.value];
       }
 
-      let selectionName: string = selection.name.value;
-      if (selection.alias) {
-        selectionName = selection.alias.value;
-      }
+      const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;
+      isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
 
-      if (isUndefined || isUndefinedFromDirective(selection.directives)) {
-        selectionName += '?';
-      }
-
-      str += indentation + selectionName + ': ';
+      let resolvedType: string = '';
+      let childType: string | undefined;
 
       if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
@@ -199,7 +198,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         const nonFragments: IChildren[] = selections.filter(s => !s.isFragment);
         const fragments: IChildren[] = selections.filter(s => s.isFragment);
         const andOps: string[] = [];
-        complexTypes.push(...selections.map(sel => sel.complexTypes).reduce((acc, arr) => { acc.push(...arr); return acc; }, []));
+
+        complexTypes.push(...flattenComplexTypes(selections));
 
         if (nonFragments.length) {
           const nonPartialNonFragments: IChildren[] = nonFragments.filter(nf => !nf.isPartial);
@@ -222,9 +222,10 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
           if (partialNonFragments.length) {
             let builder: string = '';
-            builder += 'Partial<{\n';
+            builder += '{\n';
             builder += partialNonFragments.map(f => f.iface).join('\n');
-            builder += `\n${indentation}}>`;
+            builder += `\n${indentation}}`;
+            builder = wrapPartial(builder);
             andOps.push(builder);
             const newInterfaceName: string = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
             generatedTypeCount += 1;
@@ -236,13 +237,10 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           andOps.push(...fragments.map(wrapPossiblePartial));
         }
 
-        const childType: string = andOps.join(' & ');
-
-        str += convertToType(field.type, false, childType) + ';';
-      } else {
-        if (!field) { console.log(selection); }
-        str += convertToType(field.type) + ';';
+        childType = andOps.join(' & ');
       }
+      resolvedType = convertToType(field.type, false, childType);
+      str = formatInput(indentation + selectionName, isUndefined, resolvedType);
     } else if (selection.kind === 'FragmentSpread') {
       str = generateFragmentName(selection.name.value);
       isFragment = true;
@@ -293,8 +291,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   };
 
   const buildAdditionalTypes: (children: IChildren[]) => string[] = children => {
-    const subTypes: IComplexTypeSignature[] =
-      children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[]);
+    const subTypes: IComplexTypeSignature[] = flattenComplexTypes(children);
 
     return subTypes.map(subtype => {
       if (subtype.isPartial) {

@@ -705,6 +705,27 @@ const simpleQueryWithSubTypesResponse = {
   variables: '',
   additionalTypes: [`export interface SelectionOnheroNoParam {\n    id: string;\n    name: string | null;\n  }`]
 }
+const arrQueryWithSubTypesResponse = {
+  interface: `export interface Test {\n  heroNoParam: SelectionOnheroNoParam | null;\n}`,
+  variables: '',
+  additionalTypes: [`export interface SelectionOnnonNullArr {
+      id: string;
+      name: string | null;
+    }`,
+  `export interface SelectionOnnonNullArrAndContents {
+      id: string;
+      name: string | null;
+    }`,
+  `export interface SelectionOnnullArrNonNullContents {
+      id: string;
+      name: string | null;
+    }`,
+  `export interface SelectionOnheroNoParam {
+    nonNullArr: Array<SelectionOnnonNullArr | null>;
+    nonNullArrAndContents: Array<SelectionOnnonNullArrAndContents>;
+    nullArrNonNullContents: Array<SelectionOnnullArrNonNullContents> | null;
+  }`]
+}
 
 describe('with subtypes', () => {
   it ('does a very simple query', () => {
@@ -713,6 +734,18 @@ describe('with subtypes', () => {
     expect(response[0].variables).to.equal(simpleQueryWithSubTypesResponse.variables);
     expect(response[0].additionalTypes[0]).to.equal(simpleQueryWithSubTypesResponse.additionalTypes[0]);
     expect(response[0].additionalTypes.length).to.equal(1);
+    expect(response.length).to.equal(1);
+  });
+
+  it ('does array query', () => {
+    const response = runProgram(schema, arrTest, undefined);
+    expect(response[0].interface).to.equal(arrQueryWithSubTypesResponse.interface);
+    expect(response[0].variables).to.equal(arrQueryWithSubTypesResponse.variables);
+    expect(response[0].additionalTypes[0]).to.equal(arrQueryWithSubTypesResponse.additionalTypes[0]);
+    expect(response[0].additionalTypes[1]).to.equal(arrQueryWithSubTypesResponse.additionalTypes[1]);
+    expect(response[0].additionalTypes[2]).to.equal(arrQueryWithSubTypesResponse.additionalTypes[2]);
+    expect(response[0].additionalTypes[3]).to.equal(arrQueryWithSubTypesResponse.additionalTypes[3]);
+    expect(response[0].additionalTypes.length).to.equal(4);
     expect(response.length).to.equal(1);
   });
 })
