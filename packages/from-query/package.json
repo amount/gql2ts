@@ -1,0 +1,33 @@
+{
+  "name": "@gql2ts/from-query",
+  "version": "0.0.1",
+  "description": "generate typescript interfaces from a graphql schema and query",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "prepublish": "tsc -p ../../tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avantcredit/gql2ts.git"
+  },
+  "keywords": [
+    "gql2ts",
+    "graphql",
+    "typescript"
+  ],
+  "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avantcredit/gql2ts/issues"
+  },
+  "homepage": "https://github.com/avantcredit/gql2ts#readme",
+  "files": [
+    "*.js",
+    "*.ts",
+    "*.js.map"
+  ],
+  "dependencies": {
+    "@gql2ts/util": "0.0.0"
+  }
+}
