@@ -17,6 +17,7 @@ import {
   GraphQLInputField,
   GraphQLUnionType,
   GraphQLNamedType,
+  FieldNode,
 } from 'graphql';
 import {
   schemaFromInputs,
@@ -166,35 +167,37 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const flattenComplexTypes: (children: IChildren[]) => IComplexTypeSignature[] = children => (
     children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[])
   );
+  type GetField = (operation: OperationTypeNode, selection: FieldNode, parent?: GraphQLType) => GraphQLField<any, any>;
+
+  const getField: GetField = (operation, selection, parent) => {
+    if (parent && isCompositeType(parent)) {
+      if (parent instanceof GraphQLUnionType) {
+        return parent.getTypes().map(t => t.getFields()[selection.name.value]).find(z => !!z)!;
+      } else {
+        return parent.getFields()[selection.name.value];
+      }
+    } else {
+      const operationFields: GraphQLObjectType = getOperationFields(operation);
+      return operationFields.getFields()[selection.name.value];
+    }
+  };
 
   const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IChildren => {
     let str: string;
-    let field: GraphQLField<any, any>;
     let isFragment: boolean = false;
     let isPartial: boolean = false;
     let generatedTypeCount: number = 0;
     let complexTypes: IComplexTypeSignature[] = [];
 
     if (selection.kind === 'Field') {
-      if (parent && isCompositeType(parent)) {
-        if (parent instanceof GraphQLUnionType) {
-          field = parent.getTypes().map(t => t.getFields()[selection.name.value]).find(z => !!z)!;
-        } else {
-          field = parent.getFields()[selection.name.value];
-        }
-      } else {
-        const operationFields: GraphQLObjectType = getOperationFields(operation);
-        field = operationFields.getFields()[selection.name.value];
-      }
-
+      const field: GraphQLField<any, any> = getField(operation, selection, parent);
       const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;
-      isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
-
       let childType: string | undefined;
+
+      isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
 
       if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
-        if (!field) { console.log(selection, newParent); }
         const fieldType: GraphQLNamedType = getNamedType(field.type);
         if (isCompositeType(fieldType)) {
           newParent = fieldType;
@@ -214,23 +217,24 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           const partialNonFragments: IChildren[] = nonFragments.filter(nf => nf.isPartial);
 
           if (nonPartialNonFragments.length) {
-            const builder: string = generateInterfaceDeclaration(nonPartialNonFragments.map(f => f.iface), indentation);
+            const interfaceDeclaration: string = generateInterfaceDeclaration(nonPartialNonFragments.map(f => f.iface), indentation);
             const newInterfaceName: string | null = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
-            if (!newInterfaceName) {
-              andOps.push(builder);
-            } else {
-              andOps.push(newInterfaceName);
+            andOps.push(newInterfaceName || interfaceDeclaration);
+            if (newInterfaceName) {
+              generatedTypeCount += 1;
+              complexTypes.push({ iface: interfaceDeclaration, isPartial: false, name: newInterfaceName });
             }
-            generatedTypeCount += 1;
-            complexTypes.push({ iface: builder, isPartial: false, name: newInterfaceName });
           }
 
           if (partialNonFragments.length) {
-            const builder: string = wrapPartial(generateInterfaceDeclaration(partialNonFragments.map(f => f.iface), indentation));
-            andOps.push(builder);
-            const newInterfaceName: string = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
-            generatedTypeCount += 1;
-            complexTypes.push({ iface: builder, isPartial: true, name: newInterfaceName });
+            const interfaceDeclaration: string =
+              wrapPartial(generateInterfaceDeclaration(partialNonFragments.map(f => f.iface), indentation));
+            const newInterfaceName: string | null = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
+            andOps.push(newInterfaceName || interfaceDeclaration);
+            if (newInterfaceName) {
+              generatedTypeCount += 1;
+              complexTypes.push({ iface: interfaceDeclaration, isPartial: false, name: newInterfaceName });
+            }
           }
         }
 

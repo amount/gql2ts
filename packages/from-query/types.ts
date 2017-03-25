@@ -42,7 +42,7 @@ export interface IReturn {
 export type BuildRootInterfaceName = (definition: DefinitionNode, queryNamer: QueryNamer, fragmentNamer: WrapType) => string;
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;
 export type FragmentInterfaceFormatter = (operationName: string, fields: string[], interfaceExtensions: string[]) => string;
-export type GenerateSubTypeInterface = (selectionName: string, generatedCount: number) => string;
+export type GenerateSubTypeInterface = (selectionName: string, generatedCount: number) => string | null;
 export type WrapType = (type: string) => string;
 export type TypePrinter = (type: string, isNonNull: boolean) => string;
 export type InputFormatter = (name: string, isOptional: boolean, type: string) => string;
