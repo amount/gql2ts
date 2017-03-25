@@ -49,5 +49,6 @@ module.exports = `
     droid(id: String!): Droid
     test(test: TestScalar): TestScalar
     humanOrDroid(id: String!): HumanOrDroid
+    getCharacters(ids: [ID!]!): [Character]!
   }
 `;

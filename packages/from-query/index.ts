@@ -179,7 +179,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   };
 
   const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IChildren => {
-    let str: string;
+    let str: string = '';
     let isFragment: boolean = false;
     let isPartial: boolean = false;
     let generatedTypeCount: number = 0;
@@ -229,7 +229,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
             andOps.push(newInterfaceName || interfaceDeclaration);
             if (newInterfaceName) {
               generatedTypeCount += 1;
-              complexTypes.push({ iface: interfaceDeclaration, isPartial: false, name: newInterfaceName });
+              complexTypes.push({ iface: interfaceDeclaration, isPartial: true, name: newInterfaceName });
             }
           }
         }
@@ -255,17 +255,15 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
       let joinSelections: string = selections.map(s => s.iface).join('\n');
       isPartial = isUndefinedFromDirective(selection.directives);
-
+      complexTypes.push(...flattenComplexTypes(selections));
       return {
         iface: joinSelections,
         isFragment,
         isPartial,
         complexTypes,
       };
-
-    } else {
-      throw new Error('Unsupported SelectionNode');
     }
+
     return {
       iface: str,
       isFragment,

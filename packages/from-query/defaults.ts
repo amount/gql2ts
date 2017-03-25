@@ -29,7 +29,7 @@ ${fields.join('\n')}
 ${indentation}}`;
 
 export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export interface ${name} ${body}`;
-export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export type ${name} ${body}`;
+export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export type ${name} = ${body}`;
 export const DEFAULT_TYPE_JOINER: TypeJoiner = types => types.join(' & ');
 
 export const DEFAULT_INDENTATION: Indentation = '  ';

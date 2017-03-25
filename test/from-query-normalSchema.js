@@ -36,6 +36,23 @@ const variableExpectedResponse = [{
   } | null;
 }`,
 }];
+const variableArrayQuery = `
+  query TestQuery ($ids: [ID!]!) {
+    getCharacters (ids: $ids) {
+      id
+      name
+    }
+  }
+`;
+const variableArrayExpectedResponse = [{
+  variables: 'export interface TestQueryInput {\n  ids: Array<string>;\n}',
+  interface: `export interface TestQuery {
+  getCharacters: Array<{
+    id: string;
+    name: string | null;
+  } | null>;
+}`,
+}];
 
 const arrTest = `
 query Test {
@@ -184,6 +201,13 @@ describe('simple examples', () => {
     const response = runProgram(schema, variableQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(variableExpectedResponse[0].interface);
     expect(response[0].variables).to.equal(variableExpectedResponse[0].variables);
+    expect(response.length).to.equal(1);
+  });
+
+  it ('supports list variables', () => {
+    const response = runProgram(schema, variableArrayQuery, undefined, { generateSubTypeInterfaceName });
+    expect(response[0].interface).to.equal(variableArrayExpectedResponse[0].interface);
+    expect(response[0].variables).to.equal(variableArrayExpectedResponse[0].variables);
     expect(response.length).to.equal(1);
   });
 
@@ -542,6 +566,21 @@ const simplestQueryWithDirectivesExpected = `export interface TestQuery {
   } | null;
 }`;
 
+const simpleQueryBadDirectives = `
+  query TestQuery {
+    heroNoParam {
+      id @nope(if: true)
+      name @yep(if: true)
+    }
+  }
+`;
+const simpleQueryBadDirectivesExpected = `export interface TestQuery {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}`;
+
 const fragmentWithDirectivesQuery = `
 query FragmentTest {
   heroNoParam {
@@ -642,6 +681,12 @@ const anonInlineFragmentWithDirectiveWithAliasExpected = `export interface Fragm
 }`;
 
 describe('directives', () => {
+  it ('outputs bad directives', () => {
+    const response = runProgram(schema, simpleQueryBadDirectives, undefined, { generateSubTypeInterfaceName });
+    expect(response[0].interface).to.equal(simpleQueryBadDirectivesExpected);
+    expect(response[0].variables).to.equal('');
+    expect(response.length).to.equal(1);
+  })
   describe('on fields', () => {
     it ('works with simple fields', () => {
       const response = runProgram(schema, simplestQueryWithDirectives, undefined, { generateSubTypeInterfaceName });
@@ -727,6 +772,89 @@ const arrQueryWithSubTypesResponse = {
   }`]
 }
 
+const fragmentPartialQuery = `
+query FragmentTest {
+  heroNoParam {
+    ...CharacterFields
+  }
+}
+
+fragment CharacterFields on Character {
+  id
+  ... on Human {
+    name
+  }
+}
+`
+
+const fragmentPartialInterface0 = `export interface FragmentTest {\n  heroNoParam: IFragmentCharacterFields | null;\n}`;
+const fragmentPartialInterface1 = 'export interface IFragmentCharacterFields {\n  id: string;\n  name?: string | null;\n}'
+
+const fragmentPartialComplexQuery = `
+query FragmentTest {
+  heroNoParam {
+    ...CharacterFields
+  }
+}
+
+fragment CharacterFields on Character {
+  id
+  ... on Human {
+    name
+    friends {
+      id
+    }
+  }
+}
+`
+
+const fragmentPartialComplexInterface0 = `export interface FragmentTest {\n  heroNoParam: IFragmentCharacterFields | null;\n}`;
+const fragmentPartialComplexInterface1 = `export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+  friends?: Array<SelectionOnfriends | null> | null;
+}`;
+
+const fragmentPartialComplexAdditionalType = `export interface SelectionOnfriends {
+    id: string;
+  }`;
+
+const fragmentPartialComplexWithDirectiveQuery = `
+query FragmentTest {
+  heroNoParam {
+    ...CharacterFields
+    ... on Droid @skip(if: true) {
+      name
+    }
+  }
+}
+
+fragment CharacterFields on Character {
+  id
+  ... on Human {
+    name
+    friends {
+      id
+    }
+  }
+}
+`
+
+const fragmentPartialComplexWithDirectiveInterface0 = `export interface FragmentTest {\n  heroNoParam: SelectionOnheroNoParam & IFragmentCharacterFields | null;\n}`;
+const fragmentPartialComplexWithDirectiveInterface1 = `export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+  friends?: Array<SelectionOnfriends | null> | null;
+}`;
+
+const fragmentPartialComplexWithDirectiveAdditionalType0 = `export type SelectionOnheroNoParam = Partial<{
+    name?: string | null;
+  }>`;
+
+const fragmentPartialComplexWithDirectiveAdditionalType1 = `export interface SelectionOnfriends {
+    id: string;
+  }`;
+
 describe('with subtypes', () => {
   it ('does a very simple query', () => {
     const response = runProgram(schema, simplestQuery, undefined);
@@ -748,4 +876,47 @@ describe('with subtypes', () => {
     expect(response[0].additionalTypes.length).to.equal(4);
     expect(response.length).to.equal(1);
   });
+
+  it ('does fragment query', () => {
+    const response = runProgram(schema, fragmentQuery);
+    expect(response[0].interface).to.equal(fragmentInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[1].interface).to.equal(fragmentInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response.length).to.equal(2);
+  })
+
+  it ('does partial fragment query', () => {
+    const response = runProgram(schema, fragmentPartialQuery);
+    expect(response[0].interface).to.equal(fragmentPartialInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[1].interface).to.equal(fragmentPartialInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response.length).to.equal(2);
+  })
+
+  it ('does partial fragment query with complex types', () => {
+    const response = runProgram(schema, fragmentPartialComplexQuery);
+    expect(response[0].interface).to.equal(fragmentPartialComplexInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[0].additionalTypes.length).to.equal(0);
+    expect(response[1].interface).to.equal(fragmentPartialComplexInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response[1].additionalTypes.length).to.equal(1);
+    expect(response[1].additionalTypes[0]).to.equal(fragmentPartialComplexAdditionalType);
+    expect(response.length).to.equal(2);
+  })
+
+  it ('does partial fragment query with complex types and directives', () => {
+    const response = runProgram(schema, fragmentPartialComplexWithDirectiveQuery);
+    expect(response[0].interface).to.equal(fragmentPartialComplexWithDirectiveInterface0);
+    expect(response[0].variables).to.equal('');
+    expect(response[0].additionalTypes.length).to.equal(1);
+    expect(response[0].additionalTypes[0]).to.equal(fragmentPartialComplexWithDirectiveAdditionalType0);
+    expect(response[1].interface).to.equal(fragmentPartialComplexWithDirectiveInterface1);
+    expect(response[1].variables).to.equal('');
+    expect(response[1].additionalTypes.length).to.equal(1);
+    expect(response[1].additionalTypes[0]).to.equal(fragmentPartialComplexWithDirectiveAdditionalType1);
+    expect(response.length).to.equal(2);
+  })
 })

@@ -12,7 +12,7 @@ export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | Introsp
 export type PossibleSchemaInput = GraphQLSchema | string | PossibleIntrospectionInputs;
 
 export function isIntrospectionResult (schema: PossibleIntrospectionInputs): schema is IntrospectionQuery {
-  return ('__schema' in schema);
+  return ('__schema' in (schema || {}));
 }
 
 export const schemaFromInputs: (schema: PossibleSchemaInput) => GraphQLSchema = schema => {
