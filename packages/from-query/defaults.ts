@@ -11,6 +11,9 @@ import {
   EnumFormatter,
   InterfaceAndTypeBuilder,
   InterfaceDeclarationGenerator,
+  TypeJoiner,
+  Indentation,
+  TypePrinter,
 } from './types';
 
 export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
@@ -27,9 +30,9 @@ ${indentation}}`;
 
 export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export interface ${name} ${body}`;
 export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export type ${name} ${body}`;
-export const DEFAULT_TYPE_JOINER: (types: string[]) => string = types => types.join(' & ');
+export const DEFAULT_TYPE_JOINER: TypeJoiner = types => types.join(' & ');
 
-export const DEFAULT_INDENTATION: string = '  ';
+export const DEFAULT_INDENTATION: Indentation = '  ';
 
 export const interfaceExtendListToString: (extensions: string[]) => string = exts => {
   if (!exts.length) { return ''; }
@@ -68,7 +71,8 @@ export const DEFAULT_TYPE_MAP: IDefaultTypeMap = {
 export const DEFAULT_WRAP_LIST: WrapType = type => `Array<${type}>`;
 export const DEFAULT_WRAP_PARTIAL: WrapType = partial => `Partial<${partial}>`;
 
-export const DEFAULT_TYPE_PRINTER: (type: string, isNonNull: boolean) => string = (type, isNonNull) => isNonNull ? type : `${type} | null`;
+export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull ? type : `${type} | null`;
+
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
   (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;
 
