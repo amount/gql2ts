@@ -17,7 +17,7 @@
     "typescript": "^2.2.1"
   },
   "scripts": {
-    "test": "tsc && lerna bootstrap && mocha"
+    "test": "lerna bootstrap && mocha"
   },
   "keywords": [
     "typescript",
