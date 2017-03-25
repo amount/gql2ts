@@ -11,13 +11,17 @@
     "@types/graphql": "^0.8.6",
     "@types/node": "^7.0.11",
     "chai": "^3.5.0",
+    "coveralls": "^2.12.0",
     "lerna": "2.0.0-beta.38",
     "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1"
   },
   "scripts": {
-    "test": "lerna bootstrap && mocha"
+    "pretest": "lerna bootstrap",
+    "test": "nyc --reporter=html --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "typescript",
