@@ -46,11 +46,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     ...typeMap
   };
 
-  const options: IOptions = {
-    ...DEFAULT_OPTIONS,
-    ...providedOptions
-  };
-
   const {
     buildRootInterfaceName,
     formatFragmentInterface,
@@ -69,7 +64,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     typeBuilder,
     typeJoiner,
     generateInterfaceDeclaration,
-  }: IOptions = options;
+  }: IOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
 
   const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
   const parsedSelection: DocumentNode = parse(query);
@@ -167,6 +162,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const flattenComplexTypes: (children: IChildren[]) => IComplexTypeSignature[] = children => (
     children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[])
   );
+
   type GetField = (operation: OperationTypeNode, selection: FieldNode, parent?: GraphQLType) => GraphQLField<any, any>;
 
   const getField: GetField = (operation, selection, parent) => {
@@ -238,10 +234,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           }
         }
 
-        if (fragments.length) {
-          andOps.push(...fragments.map(wrapPossiblePartial));
-        }
-
+        andOps.push(...fragments.map(wrapPossiblePartial));
         childType = typeJoiner(andOps);
       }
       let resolvedType: string = convertToType(field.type, false, childType);
