@@ -279,8 +279,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const getVariables: (variables: VariableDefinitionNode[]) => string[] = variables => (
     variables.map(v => {
       const optional: boolean = v.type.kind !== 'NonNullType';
-      const type: string = convertVariable(v.type);
-      return formatInput(v.variable.name.value, optional, type);
+      return formatInput(v.variable.name.value, optional, convertVariable(v.type));
     })
   );
 
