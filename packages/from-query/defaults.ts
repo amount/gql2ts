@@ -8,6 +8,9 @@ import {
   InputFormatter,
   IDefaultTypeMap,
   QueryNamer,
+  EnumFormatter,
+  InterfaceAndTypeBuilder,
+  InterfaceDeclarationGenerator,
 } from './types';
 
 export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
@@ -17,6 +20,16 @@ ${fields.join('\n  ')}
 export const DEFAULT_FORMAT_VARIABLES: InterfaceFormatters = (opName, fields) => `export interface ${opName}Input {
   ${fields.join('\n  ')}
 }`;
+
+export const DEFAULT_INTERFACE_DECLARATION: InterfaceDeclarationGenerator = (fields, indentation= '') => `{
+${fields.join('\n')}
+${indentation}}`;
+
+export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export interface ${name} ${body}`;
+export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export type ${name} ${body}`;
+export const DEFAULT_TYPE_JOINER: (types: string[]) => string = types => types.join(' & ');
+
+export const DEFAULT_INDENTATION: string = '  ';
 
 export const interfaceExtendListToString: (extensions: string[]) => string = exts => {
   if (!exts.length) { return ''; }
@@ -59,6 +72,8 @@ export const DEFAULT_TYPE_PRINTER: (type: string, isNonNull: boolean) => string 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
   (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;
 
+export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
+
 export const DEFAULT_OPTIONS: IOptions = {
   buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
   formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
@@ -70,5 +85,11 @@ export const DEFAULT_OPTIONS: IOptions = {
   printType: DEFAULT_TYPE_PRINTER,
   formatInput: DEFAULT_FORMAT_INPUT,
   generateFragmentName: DEFAULT_NAME_FRAGMENT,
-  generateQueryName: DEFAULT_NAME_QUERY
+  generateQueryName: DEFAULT_NAME_QUERY,
+  formatEnum: DEFAULT_ENUM_FORMATTER,
+  interfaceBuilder: DEFAULT_INTERFACE_BUILDER,
+  typeBuilder: DEFAULT_TYPE_BUILDER,
+  typeJoiner: DEFAULT_TYPE_JOINER,
+  defaultIndentation: DEFAULT_INDENTATION,
+  generateInterfaceDeclaration: DEFAULT_INTERFACE_DECLARATION,
 };

@@ -32,9 +32,12 @@ import {
   RegularTypeSignature,
   VariableTypeSignature,
   convertToTypeSignature,
-  ITypeMap
+  ITypeMap,
 } from './types';
-import { DEFAULT_TYPE_MAP, DEFAULT_OPTIONS } from './defaults';
+import {
+  DEFAULT_TYPE_MAP,
+  DEFAULT_OPTIONS,
+} from './defaults';
 
 const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const TypeMap: ITypeMap = {
@@ -59,6 +62,12 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     formatInput,
     generateFragmentName,
     generateQueryName,
+    formatEnum,
+    defaultIndentation,
+    interfaceBuilder,
+    typeBuilder,
+    typeJoiner,
+    generateInterfaceDeclaration,
   }: IOptions = options;
 
   const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
@@ -67,13 +76,13 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const handleInputObject: (type: GraphQLInputObjectType, isNonNull: boolean) => string = (type, isNonNull) => {
     const variables: GraphQLInputField[] = Object.keys(type.getFields()).map(k => type.getFields()[k]);
     // tslint:disable-next-line no-use-before-declare
-    const variableDeclarations: string = variables.map(v => formatInput(v.name, true, convertToType(v.type))).join('\n    ');
-    const builder: string = `{\n    ${variableDeclarations}\n  }`;
+    const variableDeclarations: string[] = variables.map(v => formatInput(v.name, true, convertToType(v.type)));
+    const builder: string = generateInterfaceDeclaration(variableDeclarations.map(v => `    ${v}`), defaultIndentation);
     return printType(builder, isNonNull);
   };
 
   const handleEnum: (type: GraphQLEnumType, isNonNull: boolean) => string = (type, isNonNull) => {
-    const decl: string = type.getValues().map(en => `'${en.value}'`).join(' | ');
+    const decl: string = formatEnum(type.getValues());
     return printType(decl, isNonNull);
   };
 
@@ -159,7 +168,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   );
 
   const getChildSelections: ChildSelectionsType = (operation, selection, indentation= '', parent?, isUndefined= false): IChildren => {
-    let str: string = '';
+    let str: string;
     let field: GraphQLField<any, any>;
     let isFragment: boolean = false;
     let isPartial: boolean = false;
@@ -181,7 +190,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;
       isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
 
-      let resolvedType: string = '';
       let childType: string | undefined;
 
       if (!!selection.selectionSet) {
@@ -193,7 +201,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         }
 
         const selections: IChildren[] =
-          selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + '  ',  newParent));
+          selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, indentation + defaultIndentation,  newParent));
 
         const nonFragments: IChildren[] = selections.filter(s => !s.isFragment);
         const fragments: IChildren[] = selections.filter(s => s.isFragment);
@@ -206,10 +214,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           const partialNonFragments: IChildren[] = nonFragments.filter(nf => nf.isPartial);
 
           if (nonPartialNonFragments.length) {
-            let builder: string = '';
-            builder += '{\n';
-            builder += nonPartialNonFragments.map(f => f.iface).join('\n');
-            builder += `\n${indentation}}`;
+            const builder: string = generateInterfaceDeclaration(nonPartialNonFragments.map(f => f.iface), indentation);
             const newInterfaceName: string | null = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
             if (!newInterfaceName) {
               andOps.push(builder);
@@ -221,11 +226,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           }
 
           if (partialNonFragments.length) {
-            let builder: string = '';
-            builder += '{\n';
-            builder += partialNonFragments.map(f => f.iface).join('\n');
-            builder += `\n${indentation}}`;
-            builder = wrapPartial(builder);
+            const builder: string = wrapPartial(generateInterfaceDeclaration(partialNonFragments.map(f => f.iface), indentation));
             andOps.push(builder);
             const newInterfaceName: string = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
             generatedTypeCount += 1;
@@ -237,9 +238,9 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           andOps.push(...fragments.map(wrapPossiblePartial));
         }
 
-        childType = andOps.join(' & ');
+        childType = typeJoiner(andOps);
       }
-      resolvedType = convertToType(field.type, false, childType);
+      let resolvedType: string = convertToType(field.type, false, childType);
       str = formatInput(indentation + selectionName, isUndefined, resolvedType);
     } else if (selection.kind === 'FragmentSpread') {
       str = generateFragmentName(selection.name.value);
@@ -294,9 +295,9 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
     return subTypes.map(subtype => {
       if (subtype.isPartial) {
-        return `export type ${subtype.name} = ${subtype.iface};`;
+        return typeBuilder(subtype.name, subtype.iface);
       } else {
-        return `export interface ${subtype.name} ${subtype.iface}`;
+        return interfaceBuilder(subtype.name, subtype.iface);
       }
     });
   };
@@ -305,7 +306,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     const ifaceName: string = buildRootInterfaceName(def, generateQueryName, generateFragmentName);
     if (def.kind === 'OperationDefinition') {
       const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
-      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));
+      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, defaultIndentation));
       const fields: string[] = ret.map(x => x.iface);
       const iface: string = formatInterface(ifaceName, fields);
       const additionalTypes: string[] = buildAdditionalTypes(ret);
@@ -320,7 +321,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
 
-      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
+      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, defaultIndentation, foundType));
       const extensions: string[] = ret.filter(x => x.isFragment).map(x => x.iface);
       const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
       const iface: string = formatFragmentInterface(ifaceName, fields, extensions);

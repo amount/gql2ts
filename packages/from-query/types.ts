@@ -9,6 +9,7 @@ import {
   GraphQLInputType,
   TypeNode,
   OperationDefinitionNode,
+  GraphQLEnumValue,
 } from 'graphql';
 import { PossibleSchemaInput } from '@gql2ts/util';
 
@@ -46,6 +47,11 @@ export type WrapType = (type: string) => string;
 export type TypePrinter = (type: string, isNonNull: boolean) => string;
 export type InputFormatter = (name: string, isOptional: boolean, type: string) => string;
 export type QueryNamer = (def: OperationDefinitionNode) => string;
+export type EnumFormatter = (values: GraphQLEnumValue[]) => string;
+export type InterfaceAndTypeBuilder = (name: string, body: string) => string;
+export type TypeJoiner = (types: string[]) => string;
+export type InterfaceDeclarationGenerator = (fields: string[], indentation?: string) => string;
+export type Indentation = string;
 
 export interface IOptions {
   buildRootInterfaceName: BuildRootInterfaceName;
@@ -59,6 +65,12 @@ export interface IOptions {
   formatInput: InputFormatter;
   generateFragmentName: WrapType;
   generateQueryName: QueryNamer;
+  formatEnum: EnumFormatter;
+  interfaceBuilder: InterfaceAndTypeBuilder;
+  typeBuilder: InterfaceAndTypeBuilder;
+  typeJoiner: TypeJoiner;
+  defaultIndentation: Indentation;
+  generateInterfaceDeclaration: InterfaceDeclarationGenerator;
 };
 
 export type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;
