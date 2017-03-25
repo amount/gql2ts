@@ -7,6 +7,7 @@ import {
   IOptions,
   InputFormatter,
   IDefaultTypeMap,
+  QueryNamer,
 } from './types';
 
 export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
@@ -27,13 +28,16 @@ export const DEFAULT_FORMAT_FRAGMENT: FragmentInterfaceFormatter =
 ${fields.join('\n')}
 }`;
 
+export const DEFAULT_NAME_FRAGMENT: WrapType = name => `IFragment${name}`;
+export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? def.name.value : 'Anonymous';
+
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => `${name}${isOptional ? '?:' : ':' } ${type};`;
 
-export const DEFAULT_BUILD_ROOT_INTERFACE_NAME: BuildRootInterfaceName = def => {
+export const DEFAULT_BUILD_ROOT_INTERFACE_NAME: BuildRootInterfaceName = (def, queryNamer, fragmentNamer) => {
   if (def.kind === 'OperationDefinition') {
-    return def.name ? def.name.value : 'Anonymous';
+    return queryNamer(def);
   } else if (def.kind === 'FragmentDefinition') {
-    return `IFragment${def.name.value}`;
+    return fragmentNamer(def.name.value);
   } else {
     throw new Error(`Unsupported Definition ${def.kind}`);
   }
@@ -65,4 +69,6 @@ export const DEFAULT_OPTIONS: IOptions = {
   generateSubTypeInterfaceName: DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME,
   printType: DEFAULT_TYPE_PRINTER,
   formatInput: DEFAULT_FORMAT_INPUT,
+  generateFragmentName: DEFAULT_NAME_FRAGMENT,
+  generateQueryName: DEFAULT_NAME_QUERY
 };

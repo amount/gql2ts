@@ -57,6 +57,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     generateSubTypeInterfaceName,
     printType,
     formatInput,
+    generateFragmentName,
+    generateQueryName,
   }: IOptions = options;
 
   const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
@@ -242,7 +244,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         str += convertToType(field.type) + ';';
       }
     } else if (selection.kind === 'FragmentSpread') {
-      str = `IFragment${selection.name.value}`;
+      str = generateFragmentName(selection.name.value);
       isFragment = true;
       isPartial = isUndefinedFromDirective(selection.directives);
     } else if (selection.kind === 'InlineFragment') {
@@ -304,7 +306,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   };
 
   return parsedSelection.definitions.map(def => {
-    const ifaceName: string = buildRootInterfaceName(def);
+    const ifaceName: string = buildRootInterfaceName(def, generateQueryName, generateFragmentName);
     if (def.kind === 'OperationDefinition') {
       const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
       const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, '  '));

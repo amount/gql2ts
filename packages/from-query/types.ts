@@ -8,6 +8,7 @@ import {
   GraphQLOutputType,
   GraphQLInputType,
   TypeNode,
+  OperationDefinitionNode,
 } from 'graphql';
 import { PossibleSchemaInput } from '@gql2ts/util';
 
@@ -37,13 +38,14 @@ export interface IReturn {
   additionalTypes: string[];
 }
 
-export type BuildRootInterfaceName = (definition: DefinitionNode) => string;
+export type BuildRootInterfaceName = (definition: DefinitionNode, queryNamer: QueryNamer, fragmentNamer: WrapType) => string;
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;
 export type FragmentInterfaceFormatter = (operationName: string, fields: string[], interfaceExtensions: string[]) => string;
 export type GenerateSubTypeInterface = (selectionName: string, generatedCount: number) => string;
 export type WrapType = (type: string) => string;
 export type TypePrinter = (type: string, isNonNull: boolean) => string;
 export type InputFormatter = (name: string, isOptional: boolean, type: string) => string;
+export type QueryNamer = (def: OperationDefinitionNode) => string;
 
 export interface IOptions {
   buildRootInterfaceName: BuildRootInterfaceName;
@@ -55,6 +57,8 @@ export interface IOptions {
   generateSubTypeInterfaceName: GenerateSubTypeInterface;
   printType: TypePrinter;
   formatInput: InputFormatter;
+  generateFragmentName: WrapType;
+  generateQueryName: QueryNamer;
 };
 
 export type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;
