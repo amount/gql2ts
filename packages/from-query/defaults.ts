@@ -3,8 +3,7 @@ import {
   BuildRootInterfaceName,
   FragmentInterfaceFormatter,
   GenerateSubTypeInterface,
-  WrapList,
-  WrapPartial,
+  WrapType,
   IOptions,
   InputFormatter,
   IDefaultTypeMap,
@@ -18,7 +17,13 @@ export const DEFAULT_FORMAT_VARIABLES: InterfaceFormatters = (opName, fields) =>
   ${fields.join('\n  ')}
 }`;
 
-export const DEFAULT_FORMAT_FRAGMENT: FragmentInterfaceFormatter = (opName, fields, ext) => `export interface ${opName}${ext} {
+export const interfaceExtendListToString: (extensions: string[]) => string = exts => {
+  if (!exts.length) { return ''; }
+  return ` extends ${exts.join(', ')}`;
+};
+
+export const DEFAULT_FORMAT_FRAGMENT: FragmentInterfaceFormatter =
+  (opName, fields, exts) => `export interface ${opName}${interfaceExtendListToString(exts)} {
 ${fields.join('\n')}
 }`;
 
@@ -43,15 +48,9 @@ export const DEFAULT_TYPE_MAP: IDefaultTypeMap = {
   __DEFAULT: 'any',
 };
 
-export const DEFAULT_WRAP_LIST: WrapList = type => `Array<${type}>`;
+export const DEFAULT_WRAP_LIST: WrapType = type => `Array<${type}>`;
+export const DEFAULT_WRAP_PARTIAL: WrapType = partial => `Partial<${partial}>`;
 
-export const DEFAULT_WRAP_PARTIAL: WrapPartial = possiblePartial => {
-  if (possiblePartial.isPartial) {
-    return `Partial<${possiblePartial.iface}>`;
-  } else {
-    return possiblePartial.iface;
-  }
-};
 export const DEFAULT_TYPE_PRINTER: (type: string, isNonNull: boolean) => string = (type, isNonNull) => isNonNull ? type : `${type} | null`;
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
   (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;

@@ -65,8 +65,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const handleInputObject: (type: GraphQLInputObjectType, isNonNull: boolean) => string = (type, isNonNull) => {
     const variables: GraphQLInputField[] = Object.keys(type.getFields()).map(k => type.getFields()[k]);
     // tslint:disable-next-line no-use-before-declare
-    const variableDeclarations: string = variables.map(v => `    ${formatInput(v.name, true, convertToType(v.type))}`).join('\n');
-    const builder: string = `{\n${variableDeclarations}\n  }`;
+    const variableDeclarations: string = variables.map(v => formatInput(v.name, true, convertToType(v.type))).join('\n    ');
+    const builder: string = `{\n    ${variableDeclarations}\n  }`;
     return printType(builder, isNonNull);
   };
 
@@ -95,7 +95,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
   const convertVariable: VariableTypeSignature = (type, isNonNull= false, replacement= null) => {
     if (type.kind === 'ListType') {
-      return wrapList(convertVariable(type.type, false, replacement)) + printType('', isNonNull!);
+      return printType(wrapList(convertVariable(type.type, false, replacement)), isNonNull!);
     } else if (type.kind === 'NonNullType') {
       return convertVariable(type.type, true, replacement);
     } else {
@@ -105,7 +105,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
   const convertToType: convertToTypeSignature = (type, isNonNull= false, replacement= null): string => {
     if (isList(type)) {
-      return wrapList(convertToType(type.ofType, false, replacement)) + printType('', isNonNull!);
+      return printType(wrapList(convertToType(type.ofType, false, replacement)), isNonNull!);
     } else if (isNonNullable(type)) {
       return convertToType(type.ofType, true, replacement);
     } else if (type instanceof GraphQLEnumType) {
@@ -141,6 +141,14 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         return parsedSchema.getSubscriptionType();
       default:
         throw new Error('Unsupported Operation');
+    }
+  };
+
+  const wrapPossiblePartial: (possiblePartial: IChildren) => string = possiblePartial => {
+    if (possiblePartial.isPartial) {
+      return wrapPartial(possiblePartial.iface);
+    } else {
+      return possiblePartial.iface;
     }
   };
 
@@ -223,7 +231,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         }
 
         if (fragments.length) {
-          andOps.push(...fragments.map(wrapPartial));
+          andOps.push(...fragments.map(wrapPossiblePartial));
         }
 
         const childType: string = andOps.join(' & ');
@@ -315,8 +323,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const foundType: GraphQLType = parsedSchema.getType(onType);
 
       const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, '  ', foundType));
-      const ext: string = ret.filter(x => x.isFragment).map(x => x.iface).join(', ');
-      const extensions: string = ext ? ` extends ${ext}` : '';
+      const extensions: string[] = ret.filter(x => x.isFragment).map(x => x.iface);
       const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
       const iface: string = formatFragmentInterface(ifaceName, fields, extensions);
       const additionalTypes: string[] = buildAdditionalTypes(ret);

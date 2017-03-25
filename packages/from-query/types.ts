@@ -39,10 +39,9 @@ export interface IReturn {
 
 export type BuildRootInterfaceName = (definition: DefinitionNode) => string;
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;
-export type FragmentInterfaceFormatter = (operationName: string, fields: string[], extInterfaces: string) => string;
+export type FragmentInterfaceFormatter = (operationName: string, fields: string[], interfaceExtensions: string[]) => string;
 export type GenerateSubTypeInterface = (selectionName: string, generatedCount: number) => string;
-export type WrapPartial = (possiblePartial: IChildren) => string;
-export type WrapList = (type: string) => string;
+export type WrapType = (type: string) => string;
 export type TypePrinter = (type: string, isNonNull: boolean) => string;
 export type InputFormatter = (name: string, isOptional: boolean, type: string) => string;
 
@@ -51,8 +50,8 @@ export interface IOptions {
   formatVariableInterface: InterfaceFormatters;
   formatInterface: InterfaceFormatters;
   formatFragmentInterface: FragmentInterfaceFormatter;
-  wrapList: WrapList;
-  wrapPartial: WrapPartial;
+  wrapList: WrapType;
+  wrapPartial: WrapType;
   generateSubTypeInterfaceName: GenerateSubTypeInterface;
   printType: TypePrinter;
   formatInput: InputFormatter;
