@@ -1,8 +1,12 @@
-'use strict';
+import {
+  generateInterfaceName,
+  generateTypeName,
+  generateEnumName,
+} from './nameGenerators';
 
 // @TODO subscriptions?
 const generateRootDataName = schema => {
-  let rootNamespaces = [];
+  let rootNamespaces: string[] = [];
 
   if (schema.queryType) {
     rootNamespaces.push(generateInterfaceName(schema.queryType.name));
@@ -31,9 +35,6 @@ const generateRootTypes = schema => `  interface IGraphQLResponseRoot {
     column: number;
   }`
 
-const generateInterfaceName = name => `I${name}`;
-
-const generateTypeName = name => `${name}`;
 
 const generateTypeDeclaration = (description, name, possibleTypes) => `  /*
     description: ${description}
@@ -51,18 +52,16 @@ const generateInterfaceDeclaration = (description, declaration, fields, addition
 ${isInput ? '' : typeNameDeclaration}${fields}
   }`;
 
-const generateEnumName = name => `I${name}Enum`;
-
 const generateEnumDeclaration = (description, name, enumValues) => `  /*
     description: ${description}
   */
   type ${generateEnumName(name)} = ${enumValues.join(' | ')};`;
 
 /**
-  * TODO
-  * - add support for custom types (via optional json file or something)
-  * - allow this to return metadata for Non Null types
-  */
+ * TODO
+ * - add support for custom types (via optional json file or something)
+ * - allow this to return metadata for Non Null types
+ */
 const resolveInterfaceName = type => {
   switch (type.kind) {
   case 'LIST':
@@ -168,7 +167,7 @@ const typeToInterface = (type, ignoredTypes, supportsNullability) => {
 };
 
 const typesToInterfaces = (schema, options) => {
-  let interfaces = [];
+  let interfaces: string[] = [];
   interfaces.push(generateRootTypes(schema));       // add root entry point & errors
   let supportsNullability = options.legacy !== true
 

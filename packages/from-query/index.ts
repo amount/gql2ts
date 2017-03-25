@@ -1,7 +1,4 @@
 import {
-  buildSchema,
-  buildClientSchema,
-  IntrospectionQuery,
   parse,
   GraphQLSchema,
   DocumentNode,
@@ -28,6 +25,7 @@ import {
   GraphQLNamedType,
   DefinitionNode,
 } from 'graphql';
+import { PossibleSchemaInput, schemaFromInputs } from '@gql2ts/util';
 
 interface IReturn {
   variables: string;
@@ -107,8 +105,6 @@ const DEFAULT_OPTIONS: IOptions = {
 
 export interface IProvidedOptions extends Partial<IOptions> {};
 
-export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | IntrospectionQuery;
-export type PossibleSchemaInput = GraphQLSchema | string | PossibleIntrospectionInputs;
 export type Signature = (schema: PossibleSchemaInput, query: string, typeMap?: object, options?: IProvidedOptions) => IReturn[];
 
 export interface IComplexTypeSignature {
@@ -123,23 +119,6 @@ export interface IChildren {
   complexTypes: IComplexTypeSignature[];
 }
 
-function isIntrospectionResult (schema: PossibleIntrospectionInputs): schema is IntrospectionQuery {
-  return ('__schema' in schema);
-}
-
-const schemaFromInputs: (schema: PossibleSchemaInput) => GraphQLSchema = schema => {
-  if (schema instanceof GraphQLSchema) {
-    return schema;
-  } else if (typeof schema === 'string') {
-    return buildSchema(schema);
-  } else if (isIntrospectionResult(schema)) {
-    return buildClientSchema(schema);
-  } else if (isIntrospectionResult(schema.data)) {
-    return buildClientSchema(schema.data);
-  } else {
-    throw new Error('Invalid Schema Input');
-  }
-};
 
 const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const TypeMap: { [x: string]: string | undefined } = {
