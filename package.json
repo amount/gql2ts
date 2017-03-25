@@ -4,13 +4,15 @@
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "index.js",
   "dependencies": {
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "graphql": "^0.9.1"
   },
   "devDependencies": {
-    "@types/graphql": "^0.7.1",
+    "@types/graphql": "^0.8.6",
     "@types/node": "^6.0.45",
     "chai": "^3.5.0",
     "graphql": "^0.8.2",
+    "lerna": "2.0.0-beta.38",
     "mocha": "^3.2.0"
   },
   "scripts": {
