@@ -89,13 +89,55 @@ module.exports = `  interface IGraphQLResponseRoot {
   /*
     description: An object with an ID
   */
-  type Node = IPlanet | ISpecies | IStarship | IVehicle | IPerson | IFilm;
+  type Node = IFilm | ISpecies | IPlanet | IPerson | IStarship | IVehicle;
 
   /*
     description: An object with an ID
   */
   interface INode {
     __typename: string;
+    id: string;
+  }
+
+  /*
+    description: A connection to a list of items.
+  */
+  interface IFilmSpeciesConnection {
+    __typename: string;
+    pageInfo: IPageInfo;
+    edges: Array<IFilmSpeciesEdge>;
+    totalCount: number;
+    species: Array<ISpecies>;
+  }
+
+  /*
+    description: An edge in a connection.
+  */
+  interface IFilmSpeciesEdge {
+    __typename: string;
+    node: ISpecies;
+    cursor: string;
+  }
+
+  /*
+    description: A type of person or character within the Star Wars Universe.
+  */
+  interface ISpecies {
+    __typename: string;
+    name: string;
+    classification: string;
+    designation: string;
+    averageHeight: number;
+    averageLifespan: number;
+    eyeColors: Array<string>;
+    hairColors: Array<string>;
+    skinColors: Array<string>;
+    language: string;
+    homeworld: IPlanet;
+    personConnection: ISpeciesPeopleConnection;
+    filmConnection: ISpeciesFilmsConnection;
+    created: string;
+    edited: string;
     id: string;
   }
 
@@ -179,68 +221,6 @@ module.exports = `  interface IGraphQLResponseRoot {
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
-    node: IFilm;
-    cursor: string;
-  }
-
-  /*
-    description: A type of person or character within the Star Wars Universe.
-  */
-  interface ISpecies {
-    __typename: string;
-    name: string;
-    classification: string;
-    designation: string;
-    averageHeight: number;
-    averageLifespan: number;
-    eyeColors: Array<string>;
-    hairColors: Array<string>;
-    skinColors: Array<string>;
-    language: string;
-    homeworld: IPlanet;
-    personConnection: ISpeciesPeopleConnection;
-    filmConnection: ISpeciesFilmsConnection;
-    created: string;
-    edited: string;
-    id: string;
-  }
-
-  /*
-    description: A connection to a list of items.
-  */
-  interface ISpeciesPeopleConnection {
-    __typename: string;
-    pageInfo: IPageInfo;
-    edges: Array<ISpeciesPeopleEdge>;
-    totalCount: number;
-    people: Array<IPerson>;
-  }
-
-  /*
-    description: An edge in a connection.
-  */
-  interface ISpeciesPeopleEdge {
-    __typename: string;
-    node: IPerson;
-    cursor: string;
-  }
-
-  /*
-    description: A connection to a list of items.
-  */
-  interface ISpeciesFilmsConnection {
-    __typename: string;
-    pageInfo: IPageInfo;
-    edges: Array<ISpeciesFilmsEdge>;
-    totalCount: number;
-    films: Array<IFilm>;
-  }
-
-  /*
-    description: An edge in a connection.
-  */
-  interface ISpeciesFilmsEdge {
     __typename: string;
     node: IFilm;
     cursor: string;
@@ -437,20 +417,40 @@ module.exports = `  interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  interface IFilmSpeciesConnection {
+  interface ISpeciesPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmSpeciesEdge>;
+    edges: Array<ISpeciesPeopleEdge>;
     totalCount: number;
-    species: Array<ISpecies>;
+    people: Array<IPerson>;
   }
 
   /*
     description: An edge in a connection.
   */
-  interface IFilmSpeciesEdge {
+  interface ISpeciesPeopleEdge {
     __typename: string;
-    node: ISpecies;
+    node: IPerson;
+    cursor: string;
+  }
+
+  /*
+    description: A connection to a list of items.
+  */
+  interface ISpeciesFilmsConnection {
+    __typename: string;
+    pageInfo: IPageInfo;
+    edges: Array<ISpeciesFilmsEdge>;
+    totalCount: number;
+    films: Array<IFilm>;
+  }
+
+  /*
+    description: An edge in a connection.
+  */
+  interface ISpeciesFilmsEdge {
+    __typename: string;
+    node: IFilm;
     cursor: string;
   }
 

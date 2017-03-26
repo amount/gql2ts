@@ -1,7 +1,7 @@
 'use strict';
 const expect       = require('chai').expect;
-let interfaceUtils = require('../util/interface');
-let namespaceUtils = require('../util/namespace');
+let interfaceUtils = require('../packages/from-schema');
+let namespaceUtils = require('../packages/util/namespace');
 let schema         = require('./data/starWarsSchema');
 let enumSchema     = require('./data/enumSchema');
 let expectedNamespace  = require('./data/expectedNamespace');

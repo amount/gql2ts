@@ -23,6 +23,7 @@ import {
   schemaFromInputs,
   isList,
   isNonNullable,
+  isEnum,
 } from '@gql2ts/util';
 import {
   ChildSelectionsType,
@@ -115,7 +116,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       return printType(wrapList(convertToType(type.ofType, false, replacement)), isNonNull!);
     } else if (isNonNullable(type)) {
       return convertToType(type.ofType, true, replacement);
-    } else if (type instanceof GraphQLEnumType) {
+    } else if (isEnum(type)) {
       return handleEnum(type, isNonNull!);
     } else {
       return handleRegularType(type, isNonNull!, replacement!);

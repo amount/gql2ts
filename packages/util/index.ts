@@ -8,4 +8,5 @@ export {
   schemaFromInputs,
   isList,
   isNonNullable,
+  isEnum,
 } from './schema';

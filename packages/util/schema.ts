@@ -6,6 +6,7 @@ import {
   GraphQLType,
   GraphQLNonNull,
   GraphQLList,
+  GraphQLEnumType,
 } from 'graphql';
 
 export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | IntrospectionQuery;
@@ -35,4 +36,8 @@ export function isNonNullable (type: GraphQLType): type is GraphQLNonNull<any> {
 
 export function isList (type: GraphQLType): type is GraphQLList<any> {
   return type instanceof GraphQLList;
+}
+
+export function isEnum (type: GraphQLType): type is GraphQLEnumType {
+  return type instanceof GraphQLEnumType;
 }
