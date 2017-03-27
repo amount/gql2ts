@@ -207,7 +207,7 @@ const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullabilit
   return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo, isInput);
 };
 
-const typesToInterfaces: (schema: GraphQLSchema, options: IOptions) => string = (schema, options) => {
+const typesToInterfaces: (schema: GraphQLSchema, options: Partial<IOptions>) => string = (schema, options) => {
   const ignoredTypes: Set<string> = new Set(options.ignoredTypes);
   const interfaces: string[] = [];
   interfaces.push(generateRootTypes(schema));       // add root entry point & errors
@@ -243,10 +243,12 @@ const typesToInterfaces: (schema: GraphQLSchema, options: IOptions) => string = 
           .join('\n\n');                            // add newlines between interfaces
 };
 
-export const schemaToInterfaces: (schema: PossibleSchemaInput, options: IOptions) => string =
+export const schemaToInterfaces: (schema: PossibleSchemaInput, options: Partial<IOptions>) => string =
   (schema, options) => typesToInterfaces(schemaFromInputs(schema), options);
 
-interface IOptions {
+export interface IOptions {
   legacy?: boolean;
   ignoredTypes: string[];
+  namespace: string;
+  outputFile?: string;
 }
