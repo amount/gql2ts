@@ -19,6 +19,23 @@ const simplestQueryResponse = [{
   } | null;
 }`,
 }];
+const simpleQueryWithTypename = `
+  query TestQuery {
+    heroNoParam {
+      __typename
+      id
+      name
+    }
+  }
+`;
+const simpleQueryWithTypenameExpected = `export interface TestQuery {
+  heroNoParam: {
+    __typename: string;
+    id: string;
+    name: string | null;
+  } | null;
+}`;
+
 const variableQuery = `
   query TestQuery ($id: String!) {
     human (id: $id) {
@@ -182,7 +199,12 @@ describe('simple examples', () => {
     expect(response[0].variables).to.equal(simplestQueryResponse[0].variables);
     expect(response.length).to.equal(1);
   });
-
+  it ('does a very simple query', () => {
+    const response = runProgram(schema, simpleQueryWithTypename, undefined, { generateSubTypeInterfaceName });
+    expect(response[0].interface).to.equal(simpleQueryWithTypenameExpected);
+    expect(response[0].variables).to.equal('');
+    expect(response.length).to.equal(1);
+  });
   it ('does unnamed queries', () => {
     const response = runProgram(schema, anonQuery, undefined, { generateSubTypeInterfaceName });
     expect(response[0].interface).to.equal(anonAndNakedResponse);

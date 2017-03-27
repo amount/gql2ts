@@ -192,8 +192,10 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       let childType: string | undefined;
 
       isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
-
-      if (!!selection.selectionSet) {
+      let resolvedType: string;
+      if (selectionName.startsWith('__')) {
+        resolvedType = TypeMap.String;
+      } else if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
         const fieldType: GraphQLNamedType = getNamedType(field.type);
         if (isCompositeType(fieldType)) {
@@ -237,8 +239,10 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
         andOps.push(...fragments.map(wrapPossiblePartial));
         childType = typeJoiner(andOps);
+        resolvedType = convertToType(field.type, false, childType);
+      } else {
+        resolvedType = convertToType(field.type, false, childType);
       }
-      let resolvedType: string = convertToType(field.type, false, childType);
       str = formatInput(indentation + selectionName, isUndefined, resolvedType);
     } else if (selection.kind === 'FragmentSpread') {
       str = generateFragmentName(selection.name.value);
