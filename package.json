@@ -20,7 +20,7 @@
     "typescript": "^2.2.1"
   },
   "scripts": {
-    "pretest": "lerna bootstrap",
+    "pretest": "lerna bootstrap && rm -rf packages/**/node_modules/graphql",
     "test": "nyc --reporter=html --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
