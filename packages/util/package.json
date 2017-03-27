@@ -27,5 +27,8 @@
     "*.js",
     "*.ts",
     "*.js.map"
-  ]
+  ],
+  "dependencies": {
+    "graphql": "^0.9.1"
+  }
 }
