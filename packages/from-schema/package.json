@@ -1,6 +1,7 @@
 {
   "name": "@gql2ts/from-schema",
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.6.0-alpha.7c8d6c0a",
   "description": "convert a graphql schema to typescript interfaces",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -28,6 +29,6 @@
     "*.js.map"
   ],
   "dependencies": {
-    "@gql2ts/util": "0.0.0"
+    "@gql2ts/util": "^0.6.0-alpha.7c8d6c0a"
   }
 }
