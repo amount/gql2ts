@@ -29,7 +29,6 @@ describe('gql2ts', () => {
     });
   });
 
-
   describe('namespace', () => {
     it('correctly generates namespace', () => {
       let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [] });

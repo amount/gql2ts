@@ -9,12 +9,14 @@
   "devDependencies": {
     "@types/graphql": "^0.8.6",
     "@types/node": "^7.0.11",
+    "@types/sinon": "^1.16.36",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "coveralls": "^2.12.0",
     "lerna": "2.0.0-beta.38",
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
+    "sinon": "^2.1.0",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1"
   },
