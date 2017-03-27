@@ -21,7 +21,7 @@
     "typescript": "^2.2.1"
   },
   "scripts": {
-    "pretest": "lerna bootstrap --hoist",
+    "pretest": "lerna bootstrap --hoist graphql",
     "test": "nyc --reporter=html --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
