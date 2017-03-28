@@ -138,11 +138,18 @@ const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullabilit
      */
     interfaceName = interfaceName.replace(/\!/g, '');
   }
-
+  fieldDef = field.name;
   if (isInput) {
-    fieldDef = `${field.name}${showNullabiltyAttribute ? '?' : ''}: ${interfaceName}`;
-  } else {
-    fieldDef = `${field.name}: ${interfaceName}${showNullabiltyAttribute ? ' | null' : ''}`;
+    let isUndef: boolean = showNullabiltyAttribute || !isNotNull;
+    if (isUndef) {
+      fieldDef += '?';
+    }
+  }
+
+  fieldDef += `: ${interfaceName}`;
+
+  if (showNullabiltyAttribute) {
+    fieldDef += showNullabiltyAttribute ? ' | null' : '';
   }
 
   return `    ${fieldDef};`;
