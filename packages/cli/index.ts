@@ -1,24 +1,47 @@
 #!/usr/bin/env node
 'use strict';
 import * as program from 'commander';
+import * as fs from 'fs';
 import {
   generateNamespace,
   writeNamespaceToFile,
   readFile,
-  PossibleSchemaInput
+  writeToFile,
+  PossibleSchemaInput,
 } from '@gql2ts/util';
 import { schemaToInterfaces, IOptions } from '@gql2ts/from-schema';
+import fromQuery from '@gql2ts/from-query';
+import { IReturn } from '@gql2ts/from-query/types';
 
 program
   .version('1.0.0')
-  .usage('[options] <schema.json>')
+  .usage('[options] <schema.json> <query.gql>')
   .option('-o --output-file [outputFile]', 'name for output file, will use stdout if not specified')
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
   .parse(process.argv);
 
-const run: (schema: PossibleSchemaInput, options: Partial<IOptions>) => void = (schema, options) => {
+interface ICLIOptions extends Partial<IOptions> {
+  queryString: string;
+}
+
+const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void = (schema, options) => {
+  if (program.args[1]) {
+    const queryFile: string = program.args[1];
+    const query: string = fs.readFileSync(queryFile).toString();
+    const info: IReturn[] = fromQuery(schema, query);
+    const toWrite: string = info.map(inf => (
+      [inf.interface, inf.variables, inf.additionalTypes.join('\n\n')].join('\n\n')
+    )).join('\n');
+    if (options.outputFile) {
+      writeToFile(options.outputFile, toWrite);
+    } else {
+      console.log(toWrite);
+    }
+    return;
+  }
+
   let interfaces: string = schemaToInterfaces(schema, options);
 
   let namespace: string = generateNamespace(options.namespace!, interfaces);
@@ -39,10 +62,10 @@ if (!process.stdin.isTTY) {
   process.stdin.on('data', (data) => {
     input += data;
   });
-  process.stdin.on('end', () => run(JSON.parse(input), program));
+  process.stdin.on('end', () => run(JSON.parse(input), program as any));
 } else if (fileName) {
   const schema: string = readFile(fileName);
-  run(schema, program);
+  run(schema, program as any);
 } else {
   console.error('No input specified. Please use stdin or a file name.');
 }
