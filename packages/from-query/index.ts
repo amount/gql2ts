@@ -229,7 +229,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
             const subtypeInfo: ISubtypeMetadata | null = getSubtype(selection, interfaceDeclaration, generateSubTypeInterfaceName);
             const newInterfaceName: string | null = subtypeInfo ? subtypeInfo.name : null;
             andOps.push(newInterfaceName || interfaceDeclaration);
-            if (newInterfaceName && !subtypeInfo.dupe) {
+            if (newInterfaceName && subtypeInfo && !subtypeInfo.dupe) {
               complexTypes.push({ iface: fixIndentationForSubtype(interfaceDeclaration), isPartial: false, name: newInterfaceName });
             }
           }
@@ -240,7 +240,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
             const subtypeInfo: ISubtypeMetadata | null = getSubtype(selection, interfaceDeclaration, generateSubTypeInterfaceName);
             const newInterfaceName: string | null = subtypeInfo ? subtypeInfo.name : null;
             andOps.push(newInterfaceName || interfaceDeclaration);
-            if (newInterfaceName && !subtypeInfo.dupe) {
+            if (newInterfaceName && subtypeInfo && !subtypeInfo.dupe) {
               complexTypes.push({ iface: fixIndentationForSubtype(interfaceDeclaration), isPartial: true, name: newInterfaceName });
             }
           }
