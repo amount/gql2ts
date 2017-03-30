@@ -40,6 +40,11 @@ import {
   DEFAULT_TYPE_MAP,
   DEFAULT_OPTIONS,
 } from './defaults';
+import {
+  GenerateSubtypeCache,
+  SubtypeNamerAndDedupe,
+  ISubtypeMetadata,
+} from './subtype';
 
 const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const TypeMap: ITypeMap = {
@@ -66,6 +71,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     typeJoiner,
     generateInterfaceDeclaration,
   }: IOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
+
+  const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
 
   const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
   const parsedSelection: DocumentNode = parse(query);
@@ -164,8 +171,11 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[])
   );
 
-  type GetField = (operation: OperationTypeNode, selection: FieldNode, parent?: GraphQLType) => GraphQLField<any, any>;
+  // @FIXME this is pretty bad
+  const fixIndentationForSubtype: (decl: string) => string =
+    decl => decl.replace(/\n\s+/g, `\n${defaultIndentation}`).replace(defaultIndentation + '}', '}');
 
+  type GetField = (operation: OperationTypeNode, selection: FieldNode, parent?: GraphQLType) => GraphQLField<any, any>;
   const getField: GetField = (operation, selection, parent) => {
     if (parent && isCompositeType(parent)) {
       if (parent instanceof GraphQLUnionType) {
@@ -183,7 +193,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     let str: string = '';
     let isFragment: boolean = false;
     let isPartial: boolean = false;
-    let generatedTypeCount: number = 0;
     let complexTypes: IComplexTypeSignature[] = [];
 
     if (selection.kind === 'Field') {
@@ -217,22 +226,22 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
           if (nonPartialNonFragments.length) {
             const interfaceDeclaration: string = generateInterfaceDeclaration(nonPartialNonFragments.map(f => f.iface), indentation);
-            const newInterfaceName: string | null = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
+            const subtypeInfo: ISubtypeMetadata | null = getSubtype(selection, interfaceDeclaration, generateSubTypeInterfaceName);
+            const newInterfaceName: string | null = subtypeInfo ? subtypeInfo.name : null;
             andOps.push(newInterfaceName || interfaceDeclaration);
-            if (newInterfaceName) {
-              generatedTypeCount += 1;
-              complexTypes.push({ iface: interfaceDeclaration, isPartial: false, name: newInterfaceName });
+            if (newInterfaceName && !subtypeInfo.dupe) {
+              complexTypes.push({ iface: fixIndentationForSubtype(interfaceDeclaration), isPartial: false, name: newInterfaceName });
             }
           }
 
           if (partialNonFragments.length) {
             const interfaceDeclaration: string =
               wrapPartial(generateInterfaceDeclaration(partialNonFragments.map(f => f.iface), indentation));
-            const newInterfaceName: string | null = generateSubTypeInterfaceName(selection.name.value, generatedTypeCount);
+            const subtypeInfo: ISubtypeMetadata | null = getSubtype(selection, interfaceDeclaration, generateSubTypeInterfaceName);
+            const newInterfaceName: string | null = subtypeInfo ? subtypeInfo.name : null;
             andOps.push(newInterfaceName || interfaceDeclaration);
-            if (newInterfaceName) {
-              generatedTypeCount += 1;
-              complexTypes.push({ iface: interfaceDeclaration, isPartial: true, name: newInterfaceName });
+            if (newInterfaceName && !subtypeInfo.dupe) {
+              complexTypes.push({ iface: fixIndentationForSubtype(interfaceDeclaration), isPartial: true, name: newInterfaceName });
             }
           }
         }

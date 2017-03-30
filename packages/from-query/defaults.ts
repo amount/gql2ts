@@ -74,7 +74,7 @@ export const DEFAULT_WRAP_PARTIAL: WrapType = partial => `Partial<${partial}>`;
 export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull ? type : `${type} | null`;
 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
-  (selectionName, generatedCount) => `SelectionOn${selectionName}${!!generatedCount ? generatedCount : ''}`;
+  (selectionName) => `SelectionOn${selectionName}`;
 
 export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
 

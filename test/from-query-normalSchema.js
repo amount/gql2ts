@@ -770,28 +770,28 @@ describe('directives', () => {
 const simpleQueryWithSubTypesResponse = {
   interface: 'export interface TestQuery {\n  heroNoParam: SelectionOnheroNoParam | null;\n}',
   variables: '',
-  additionalTypes: [`export interface SelectionOnheroNoParam {\n    id: string;\n    name: string | null;\n  }`]
+  additionalTypes: [`export interface SelectionOnheroNoParam {\n  id: string;\n  name: string | null;\n}`]
 }
 const arrQueryWithSubTypesResponse = {
   interface: `export interface Test {\n  heroNoParam: SelectionOnheroNoParam | null;\n}`,
   variables: '',
   additionalTypes: [`export interface SelectionOnnonNullArr {
-      id: string;
-      name: string | null;
-    }`,
-  `export interface SelectionOnnonNullArrAndContents {
-      id: string;
-      name: string | null;
-    }`,
-  `export interface SelectionOnnullArrNonNullContents {
-      id: string;
-      name: string | null;
-    }`,
-  `export interface SelectionOnheroNoParam {
-    nonNullArr: Array<SelectionOnnonNullArr | null>;
-    nonNullArrAndContents: Array<SelectionOnnonNullArrAndContents>;
-    nullArrNonNullContents: Array<SelectionOnnullArrNonNullContents> | null;
-  }`]
+  id: string;
+  name: string | null;
+}`,
+`export interface SelectionOnnonNullArrAndContents {
+  id: string;
+  name: string | null;
+}`,
+`export interface SelectionOnnullArrNonNullContents {
+  id: string;
+  name: string | null;
+}`,
+`export interface SelectionOnheroNoParam {
+  nonNullArr: Array<SelectionOnnonNullArr | null>;
+  nonNullArrAndContents: Array<SelectionOnnonNullArrAndContents>;
+  nullArrNonNullContents: Array<SelectionOnnullArrNonNullContents> | null;
+}`]
 }
 
 const fragmentPartialQuery = `
@@ -838,8 +838,8 @@ const fragmentPartialComplexInterface1 = `export interface IFragmentCharacterFie
 }`;
 
 const fragmentPartialComplexAdditionalType = `export interface SelectionOnfriends {
-    id: string;
-  }`;
+  id: string;
+}`;
 
 const fragmentPartialComplexWithDirectiveQuery = `
 query FragmentTest {
@@ -870,12 +870,70 @@ const fragmentPartialComplexWithDirectiveInterface1 = `export interface IFragmen
 }`;
 
 const fragmentPartialComplexWithDirectiveAdditionalType0 = `export type SelectionOnheroNoParam = Partial<{
-    name?: string | null;
-  }>`;
+  name?: string | null;
+}>`;
 
 const fragmentPartialComplexWithDirectiveAdditionalType1 = `export interface SelectionOnfriends {
-    id: string;
-  }`;
+  id: string;
+}`;
+
+const dedupeQuery = `
+query Test {
+  hero1: heroNoParam {
+    friends {
+      id
+      name
+      friends {
+        id
+        name
+        friends {
+          id
+          name
+        }
+      }
+    }
+  }
+  hero2: heroNoParam {
+    friends {
+      id
+      name
+      friends {
+        id
+        name
+        friends {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+`
+
+const dedupeResponse = {
+  interface: `export interface Test {
+  hero1: SelectionOnheroNoParam | null;
+    hero2: SelectionOnheroNoParam | null;
+}`,
+  variables: '',
+  additionalTypes: [`export interface SelectionOnfriends {
+  id: string;
+  name: string | null;
+}`,
+  `export interface SelectionOnfriends1 {
+  id: string;
+  name: string | null;
+  friends: Array<SelectionOnfriends | null> | null;
+}`,
+  `export interface SelectionOnfriends2 {
+  id: string;
+  name: string | null;
+  friends: Array<SelectionOnfriends1 | null> | null;
+}`,
+`export interface SelectionOnheroNoParam {
+  friends: Array<SelectionOnfriends2 | null> | null;
+}`]
+}
 
 describe('with subtypes', () => {
   it ('does a very simple query', () => {
@@ -940,5 +998,17 @@ describe('with subtypes', () => {
     expect(response[1].additionalTypes.length).to.equal(1);
     expect(response[1].additionalTypes[0]).to.equal(fragmentPartialComplexWithDirectiveAdditionalType1);
     expect(response.length).to.equal(2);
+  })
+
+  it ('dedupes and enumerates', () => {
+    const response = runProgram(schema, dedupeQuery, undefined);
+    expect(response[0].interface).to.equal(dedupeResponse.interface);
+    expect(response[0].variables).to.equal(dedupeResponse.variables);
+    expect(response[0].additionalTypes[0]).to.equal(dedupeResponse.additionalTypes[0]);
+    expect(response[0].additionalTypes[1]).to.equal(dedupeResponse.additionalTypes[1]);
+    expect(response[0].additionalTypes[2]).to.equal(dedupeResponse.additionalTypes[2]);
+    expect(response[0].additionalTypes[3]).to.equal(dedupeResponse.additionalTypes[3]);
+    expect(response[0].additionalTypes.length).to.equal(4);
+    expect(response.length).to.equal(1);
   })
 })
