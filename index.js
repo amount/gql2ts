@@ -12,7 +12,7 @@ const interfaceUtils = require('./util/interface');
 const namespaceUtils = require('./util/namespace')
 
 program
-  .version('0.6.0')
+  .version('0.6.1')
   .usage('[options] <schema.json>')
   .option('-o --output-file [outputFile]', 'name for output file, will use stdout if not specified')
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
