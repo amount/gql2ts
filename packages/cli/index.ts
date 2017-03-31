@@ -20,6 +20,7 @@ program
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
+  .option('-e --external-options', 'ES Module with method overwrites')
   .parse(process.argv);
 
 interface ICLIOptions extends Partial<IOptions> {
@@ -27,10 +28,16 @@ interface ICLIOptions extends Partial<IOptions> {
 }
 
 const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void = (schema, options) => {
+  let defaultOverrides: object = {};
+  if (program.externalOptions) {
+    // tslint:disable-next-line no-require-imports no-var-requires
+    defaultOverrides = require(program.externalOptions);
+  }
+
   if (program.args[1]) {
     const queryFile: string = program.args[1];
     const query: string = fs.readFileSync(queryFile).toString();
-    const info: IReturn[] = fromQuery(schema, query);
+    const info: IReturn[] = fromQuery(schema, query, {}, defaultOverrides);
     const toWrite: string = info.map(inf => (
       [inf.interface, inf.variables, inf.additionalTypes.join('\n\n')].join('\n\n')
     )).join('\n');

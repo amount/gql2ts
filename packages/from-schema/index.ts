@@ -258,4 +258,5 @@ export interface IOptions {
   ignoredTypes: string[];
   namespace: string;
   outputFile?: string;
+  externalOptions?: string;
 }
