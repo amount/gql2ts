@@ -75,8 +75,5 @@ if (!process.stdin.isTTY) {
   run(schema, program as any);
 } else {
   console.error('No input specified. Please use stdin or a file name.');
-}
-
-if (!process.argv.slice(2).length) {
   program.outputHelp();
 }

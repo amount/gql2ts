@@ -1,7 +1,7 @@
 {
   "name": "gql2ts-base",
   "private": true,
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "dependencies": {
     "graphql": "^0.9.1"

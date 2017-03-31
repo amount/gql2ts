@@ -16,6 +16,10 @@
 
 - Drop support for node v4/v5
 
+## 0.6.1
+
+- Fix bug where the help was outputted when `stdin` and `stdout` are used with no options
+
 ## 0.6.0
 
 - Can now accept input from `stdin`
