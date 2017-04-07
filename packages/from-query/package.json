@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/from-query",
   "private": false,
-  "version": "0.6.0-alpha.7c8d6c0a",
+  "version": "0.6.0-alpha.a12f0f66",
   "description": "generate typescript interfaces from a graphql schema and query",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -29,10 +29,10 @@
     "*.js.map"
   ],
   "dependencies": {
-    "@gql2ts/language-typescript": "^0.6.0-alpha.7c8d6c0a",
-    "@gql2ts/util": "^0.6.0-alpha.7c8d6c0a"
+    "@gql2ts/language-typescript": "^0.6.0-alpha.a12f0f66",
+    "@gql2ts/util": "^0.6.0-alpha.a12f0f66"
   },
   "devDependencies": {
-    "@gql2ts/types": "^0.6.0-alpha.7c8d6c0a"
+    "@gql2ts/types": "^0.6.0-alpha.a12f0f66"
   }
 }
