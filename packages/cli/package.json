@@ -10,6 +10,7 @@
     "commander": "^2.9.0"
   },
   "devDependencies": {
+    "@gql2ts/types": "^0.6.0-alpha.a12f0f66",
     "@types/commander": "^2.3.31"
   },
   "scripts": {

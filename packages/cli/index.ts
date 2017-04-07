@@ -11,7 +11,7 @@ import {
 } from '@gql2ts/util';
 import { schemaToInterfaces, ISchemaToInterfaceOptions } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
-import { IReturn } from '@gql2ts/from-query/types';
+import { IReturn } from '@gql2ts/types';
 
 program
   .version('1.0.0')
