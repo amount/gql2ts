@@ -3,13 +3,12 @@
 import * as program from 'commander';
 import * as fs from 'fs';
 import {
-  generateNamespace,
   writeNamespaceToFile,
   readFile,
   writeToFile,
   PossibleSchemaInput,
 } from '@gql2ts/util';
-import { schemaToInterfaces, ISchemaToInterfaceOptions } from '@gql2ts/from-schema';
+import { ISchemaToInterfaceOptions, generateNamespace } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
 import { IReturn } from '@gql2ts/types';
 
@@ -49,9 +48,7 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
     return;
   }
 
-  let interfaces: string = schemaToInterfaces(schema, options, defaultOverrides);
-
-  let namespace: string = generateNamespace(options.namespace!, interfaces);
+  let namespace: string = generateNamespace(options.namespace!, schema, options, defaultOverrides);
 
   if (options.outputFile) {
     writeNamespaceToFile(options.outputFile, namespace);

@@ -52,6 +52,7 @@ export type EnumFormatter = (values: GraphQLEnumValue[]) => string;
 export type InterfaceAndTypeBuilder = (name: string, body: string) => string;
 export type TypeJoiner = (types: string[]) => string;
 export type InterfaceDeclarationGenerator = (fields: string[], indentation?: string) => string;
+export type NamespaceGenerator = (namespaceName: string, interfaces: string) => string;
 export type Indentation = string;
 
 export interface IOptions {
@@ -77,6 +78,7 @@ export interface IOptions {
   generateInterfaceName: WrapType;
   exportFunction: WrapType;
   addSemicolon: WrapType;
+  generateNamespace: NamespaceGenerator;
 };
 
 export type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;

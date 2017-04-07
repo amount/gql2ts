@@ -174,7 +174,6 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const f1: GraphQLInputFieldMap | GraphQLFieldMap<any, any> =
       (type instanceof GraphQLInputObjectType) ? type.getFields() : ((type as GraphQLObjectType).getFields)();
     let f: Array<GraphQLField<any, any> | GraphQLInputField> = Object.keys(f1).map(k => f1[k]);
-    f = f || [];
 
     let fields: string[] = f
                   .filter(field => filterField(field, ignoredTypes))
@@ -251,6 +250,11 @@ export const schemaToInterfaces: SchemaToInterfaces = (schema, options, override
   }
 );
 
+type GenerateNamespace =
+  (namespace: string, schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, overrides: Partial<IOptions>) => string;
+export const generateNamespace: GenerateNamespace = (namespace, schema, options, overrides) => (
+  (DEFAULT_OPTIONS.generateNamespace)(namespace, schemaToInterfaces(schema, options, overrides))
+);
 export interface ISchemaToInterfaceOptions {
   legacy?: boolean;
   ignoredTypes: string[];

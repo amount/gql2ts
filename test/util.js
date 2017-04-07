@@ -38,22 +38,6 @@ describe('schema', () => {
   })
 });
 
-const expectedNamespaceOutput = `// tslint:disable
-// graphql typescript definitions
-
-declare namespace Namespace {
-test
-}
-
-// tslint:enable
-`;
-
-describe('namespace', () => {
-  it ('generatesNamespace', () => {
-    expect(utils.generateNamespace('Namespace', 'test')).to.eq(expectedNamespaceOutput);
-  })
-})
-
 describe('IO stuff', () => {
   it ('writes file', () => {
     const writeFileStub = sinon.stub(fs, 'writeFile');

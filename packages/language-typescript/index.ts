@@ -14,6 +14,7 @@ import {
   TypeJoiner,
   Indentation,
   TypePrinter,
+  NamespaceGenerator,
 } from '@gql2ts/types';
 
 export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `interface ${opName} {
@@ -84,6 +85,17 @@ export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `I${name}Enum`;
 
 export const DEFAULT_EXPORT_FUNCTION: WrapType = declaration => `export ${declaration}`;
 export const ADD_SEMICOLON: WrapType = str => `${str};`;
+
+export const DEFAULT_NAMESPACE_GENERATOR: NamespaceGenerator = (namespaceName, interfaces) => `// tslint:disable
+// graphql typescript definitions
+
+declare namespace ${namespaceName} {
+${interfaces}
+}
+
+// tslint:enable
+`;
+
 export const DEFAULT_OPTIONS: IOptions = {
   buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
   formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
@@ -107,4 +119,5 @@ export const DEFAULT_OPTIONS: IOptions = {
   generateInterfaceName: DEFAULT_INTERFACE_NAMER,
   exportFunction: DEFAULT_EXPORT_FUNCTION,
   addSemicolon: ADD_SEMICOLON,
+  generateNamespace: DEFAULT_NAMESPACE_GENERATOR,
 };
