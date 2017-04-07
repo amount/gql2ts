@@ -72,6 +72,11 @@ export interface IOptions {
   typeJoiner: TypeJoiner;
   defaultIndentation: Indentation;
   generateInterfaceDeclaration: InterfaceDeclarationGenerator;
+  generateEnumName: WrapType;
+  generateTypeName: WrapType;
+  generateInterfaceName: WrapType;
+  exportFunction: WrapType;
+  addSemicolon: WrapType;
 };
 
 export type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;

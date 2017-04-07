@@ -35,11 +35,11 @@ import {
   VariableTypeSignature,
   convertToTypeSignature,
   ITypeMap,
-} from './types';
+} from '@gql2ts/types';
 import {
   DEFAULT_TYPE_MAP,
   DEFAULT_OPTIONS,
-} from './defaults';
+} from '@gql2ts/language-typescript';
 import {
   GenerateSubtypeCache,
   SubtypeNamerAndDedupe,
@@ -70,6 +70,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     typeBuilder,
     typeJoiner,
     generateInterfaceDeclaration,
+    exportFunction,
   }: IOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
 
   const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
@@ -79,7 +80,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
   const handleInputObject: (type: GraphQLInputObjectType, isNonNull: boolean) => string = (type, isNonNull) => {
     const variables: GraphQLInputField[] = Object.keys(type.getFields()).map(k => type.getFields()[k]);
-    // tslint:disable-next-line no-use-before-declare
     const variableDeclarations: string[] = variables.map(v => formatInput(v.name, true, convertToType(v.type)));
     const builder: string = generateInterfaceDeclaration(variableDeclarations.map(v => `    ${v}`), defaultIndentation);
     return printType(builder, isNonNull);
@@ -296,7 +296,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const variablesToInterface: (operationName: string, variables: VariableDefinitionNode[] | undefined) => string = (opName, variables) => {
     if (!variables || !variables.length) { return ''; }
     const variableTypeDefs: string[] = getVariables(variables);
-    return formatVariableInterface(opName, variableTypeDefs);
+    return exportFunction(formatVariableInterface(opName, variableTypeDefs));
   };
 
   const buildAdditionalTypes: (children: IChildren[]) => string[] = children => {
@@ -304,9 +304,9 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
 
     return subTypes.map(subtype => {
       if (subtype.isPartial) {
-        return typeBuilder(subtype.name, subtype.iface);
+        return exportFunction(typeBuilder(subtype.name, subtype.iface));
       } else {
-        return interfaceBuilder(subtype.name, subtype.iface);
+        return exportFunction(interfaceBuilder(subtype.name, subtype.iface));
       }
     });
   };
@@ -317,7 +317,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
       const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, defaultIndentation));
       const fields: string[] = ret.map(x => x.iface);
-      const iface: string = formatInterface(ifaceName, fields);
+      const iface: string = exportFunction(formatInterface(ifaceName, fields));
       const additionalTypes: string[] = buildAdditionalTypes(ret);
 
       return {
@@ -333,7 +333,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, defaultIndentation, foundType));
       const extensions: string[] = ret.filter(x => x.isFragment).map(x => x.iface);
       const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
-      const iface: string = formatFragmentInterface(ifaceName, fields, extensions);
+      const iface: string = exportFunction(formatFragmentInterface(ifaceName, fields, extensions));
       const additionalTypes: string[] = buildAdditionalTypes(ret);
 
       return {

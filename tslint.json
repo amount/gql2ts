@@ -103,7 +103,6 @@
         "no-unsafe-finally": true,
         "no-unused-expression": [true, "allow-fast-null-checks"],
         "no-unused-new": true,
-        "no-use-before-declare": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "object-literal-key-quotes": [true, "as-needed"],

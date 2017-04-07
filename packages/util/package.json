@@ -29,6 +29,6 @@
     "*.js.map"
   ],
   "dependencies": {
-    "graphql": "^0.9.1"
+    "graphql": "^0.9.2"
   }
 }

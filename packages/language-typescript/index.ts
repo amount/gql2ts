@@ -14,13 +14,13 @@ import {
   TypeJoiner,
   Indentation,
   TypePrinter,
-} from './types';
+} from '@gql2ts/types';
 
-export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `export interface ${opName} {
+export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `interface ${opName} {
 ${fields.join('\n  ')}
 }`;
 
-export const DEFAULT_FORMAT_VARIABLES: InterfaceFormatters = (opName, fields) => `export interface ${opName}Input {
+export const DEFAULT_FORMAT_VARIABLES: InterfaceFormatters = (opName, fields) => `interface ${opName}Input {
   ${fields.join('\n  ')}
 }`;
 
@@ -28,9 +28,11 @@ export const DEFAULT_INTERFACE_DECLARATION: InterfaceDeclarationGenerator = (fie
 ${fields.join('\n')}
 ${indentation}}`;
 
-export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export interface ${name} ${body}`;
-export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `export type ${name} = ${body}`;
+export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `interface ${name} ${body}`;
+export const DEFAULT_INTERFACE_NAMER: WrapType = name => `I${name}`;
+export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `type ${name} = ${body}`;
 export const DEFAULT_TYPE_JOINER: TypeJoiner = types => types.join(' & ');
+export const DEFAULT_TYPE_NAMER: WrapType = name => name;
 
 export const DEFAULT_INDENTATION: Indentation = '  ';
 
@@ -40,7 +42,7 @@ export const interfaceExtendListToString: (extensions: string[]) => string = ext
 };
 
 export const DEFAULT_FORMAT_FRAGMENT: FragmentInterfaceFormatter =
-  (opName, fields, exts) => `export interface ${opName}${interfaceExtendListToString(exts)} {
+  (opName, fields, exts) => `interface ${opName}${interfaceExtendListToString(exts)} {
 ${fields.join('\n')}
 }`;
 
@@ -78,6 +80,10 @@ export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
 
 export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
 
+export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `I${name}Enum`;
+
+export const DEFAULT_EXPORT_FUNCTION: WrapType = declaration => `export ${declaration}`;
+export const ADD_SEMICOLON: WrapType = str => `${str};`;
 export const DEFAULT_OPTIONS: IOptions = {
   buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
   formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
@@ -96,4 +102,9 @@ export const DEFAULT_OPTIONS: IOptions = {
   typeJoiner: DEFAULT_TYPE_JOINER,
   defaultIndentation: DEFAULT_INDENTATION,
   generateInterfaceDeclaration: DEFAULT_INTERFACE_DECLARATION,
+  generateEnumName: DEFAULT_ENUM_NAME_GENERATOR,
+  generateTypeName: DEFAULT_TYPE_NAMER,
+  generateInterfaceName: DEFAULT_INTERFACE_NAMER,
+  exportFunction: DEFAULT_EXPORT_FUNCTION,
+  addSemicolon: ADD_SEMICOLON,
 };

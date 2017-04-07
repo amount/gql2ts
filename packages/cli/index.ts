@@ -9,7 +9,7 @@ import {
   writeToFile,
   PossibleSchemaInput,
 } from '@gql2ts/util';
-import { schemaToInterfaces, IOptions } from '@gql2ts/from-schema';
+import { schemaToInterfaces, ISchemaToInterfaceOptions } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
 import { IReturn } from '@gql2ts/from-query/types';
 
@@ -23,7 +23,7 @@ program
   .option('-e --external-options', 'ES Module with method overwrites')
   .parse(process.argv);
 
-interface ICLIOptions extends Partial<IOptions> {
+interface ICLIOptions extends Partial<ISchemaToInterfaceOptions> {
   queryString: string;
 }
 
@@ -49,7 +49,7 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
     return;
   }
 
-  let interfaces: string = schemaToInterfaces(schema, options);
+  let interfaces: string = schemaToInterfaces(schema, options, defaultOverrides);
 
   let namespace: string = generateNamespace(options.namespace!, interfaces);
 

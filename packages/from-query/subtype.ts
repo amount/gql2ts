@@ -1,4 +1,4 @@
-import { GenerateSubTypeInterface } from './types';
+import { GenerateSubTypeInterface } from '@gql2ts/types';
 import { FieldNode } from 'graphql';
 
 export interface ISubtypeMetadata {
