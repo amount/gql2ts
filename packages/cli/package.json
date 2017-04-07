@@ -1,16 +1,16 @@
 {
   "name": "gql2ts",
-  "version": "0.6.0-alpha.a12f0f66",
+  "version": "0.6.0-alpha.93b48d62",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "index.js",
   "dependencies": {
-    "@gql2ts/from-query": "^0.6.0-alpha.a12f0f66",
-    "@gql2ts/from-schema": "^0.6.0-alpha.a12f0f66",
-    "@gql2ts/util": "^0.6.0-alpha.a12f0f66",
+    "@gql2ts/from-query": "^0.6.0-alpha.93b48d62",
+    "@gql2ts/from-schema": "^0.6.0-alpha.93b48d62",
+    "@gql2ts/util": "^0.6.0-alpha.93b48d62",
     "commander": "^2.9.0"
   },
   "devDependencies": {
-    "@gql2ts/types": "^0.6.0-alpha.a12f0f66",
+    "@gql2ts/types": "^0.6.0-alpha.93b48d62",
     "@types/commander": "^2.3.31"
   },
   "scripts": {
