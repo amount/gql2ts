@@ -1,6 +1,5 @@
 import {
   InterfaceFormatters,
-  BuildRootInterfaceName,
   FragmentInterfaceFormatter,
   GenerateSubTypeInterface,
   WrapType,
@@ -52,16 +51,6 @@ export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? def.name.value :
 
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => `${name}${isOptional ? '?:' : ':' } ${type};`;
 
-export const DEFAULT_BUILD_ROOT_INTERFACE_NAME: BuildRootInterfaceName = (def, queryNamer, fragmentNamer) => {
-  if (def.kind === 'OperationDefinition') {
-    return queryNamer(def);
-  } else if (def.kind === 'FragmentDefinition') {
-    return fragmentNamer(def.name.value);
-  } else {
-    throw new Error(`Unsupported Definition ${def.kind}`);
-  }
-};
-
 export const DEFAULT_TYPE_MAP: IDefaultTypeMap = {
   ID: 'string',
   String: 'string',
@@ -97,7 +86,6 @@ ${interfaces}
 `;
 
 export const DEFAULT_OPTIONS: IOptions = {
-  buildRootInterfaceName: DEFAULT_BUILD_ROOT_INTERFACE_NAME,
   formatVariableInterface: DEFAULT_FORMAT_VARIABLES,
   formatInterface: DEFAULT_FORMAT_INTERFACE,
   formatFragmentInterface: DEFAULT_FORMAT_FRAGMENT,

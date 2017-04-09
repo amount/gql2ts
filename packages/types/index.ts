@@ -2,7 +2,6 @@ import {
   OperationTypeNode,
   SelectionNode,
   GraphQLType,
-  DefinitionNode,
   NamedTypeNode,
   GraphQLNamedType,
   GraphQLOutputType,
@@ -40,7 +39,6 @@ export interface IReturn {
   additionalTypes: string[];
 }
 
-export type BuildRootInterfaceName = (definition: DefinitionNode, queryNamer: QueryNamer, fragmentNamer: WrapType) => string;
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;
 export type FragmentInterfaceFormatter = (operationName: string, fields: string[], interfaceExtensions: string[]) => string;
 export type GenerateSubTypeInterface = (selectionName: string, selection: FieldNode) => string | null;
@@ -56,7 +54,6 @@ export type NamespaceGenerator = (namespaceName: string, interfaces: string) => 
 export type Indentation = string;
 
 export interface IOptions {
-  buildRootInterfaceName: BuildRootInterfaceName;
   formatVariableInterface: InterfaceFormatters;
   formatInterface: InterfaceFormatters;
   formatFragmentInterface: FragmentInterfaceFormatter;

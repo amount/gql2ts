@@ -53,7 +53,6 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   };
 
   const {
-    buildRootInterfaceName,
     formatFragmentInterface,
     formatInterface,
     formatVariableInterface,
@@ -312,8 +311,8 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
   };
 
   return parsedSelection.definitions.map(def => {
-    const ifaceName: string = buildRootInterfaceName(def, generateQueryName, generateFragmentName);
     if (def.kind === 'OperationDefinition') {
+      const ifaceName: string = generateQueryName(def);
       const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
       const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel, defaultIndentation));
       const fields: string[] = ret.map(x => x.iface);
@@ -326,6 +325,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         additionalTypes,
       };
     } else if (def.kind === 'FragmentDefinition') {
+      const ifaceName: string = generateFragmentName(def.name.value);
       // get the correct type
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
