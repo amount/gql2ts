@@ -17,4 +17,5 @@ test_script:
   # run tests
   - npm test
 
-build: on
+# Don't actually build.
+build: off
