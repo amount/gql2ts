@@ -1,5 +1,4 @@
 import {
-  InterfaceFormatters,
   GenerateSubTypeInterface,
   WrapType,
   IOptions,
@@ -15,10 +14,6 @@ import {
   InterfaceNameWithExtensions,
 } from '@gql2ts/types';
 import prettify from './typescriptPrettify';
-
-export const DEFAULT_FORMAT_INTERFACE: InterfaceFormatters = (opName, fields) => `interface ${opName} {
-${fields.join('\n')}
-}`;
 
 export const DEFAULT_INTERFACE_DECLARATION: InterfaceDeclarationGenerator = fields => `{
 ${fields.join('\n')}
@@ -55,8 +50,7 @@ export const DEFAULT_WRAP_PARTIAL: WrapType = partial => `Partial<${partial}>`;
 
 export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull ? type : `${type} | null`;
 
-export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface =
-  (selectionName) => `SelectionOn${selectionName}`;
+export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${selectionName}`;
 
 export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
 
