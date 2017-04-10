@@ -29,7 +29,8 @@
     "*.js.map"
   ],
   "dependencies": {
-    "@gql2ts/util": "^0.6.0-alpha.93b48d62"
+    "@gql2ts/util": "^0.6.0-alpha.93b48d62",
+    "typescript": "^2.2.2"
   },
   "devDependencies": {
     "@gql2ts/types": "^0.6.0-alpha.93b48d62"
