@@ -1,7 +1,7 @@
 import {
   GenerateSubTypeInterface,
   WrapType,
-  IOptions,
+  IFromQueryOptions,
   InputFormatter,
   IDefaultTypeMap,
   QueryNamer,
@@ -69,7 +69,7 @@ ${interfaces}
 // tslint:enable
 `;
 
-export const DEFAULT_OPTIONS: IOptions = {
+export const DEFAULT_OPTIONS: IFromQueryOptions = {
   wrapList: DEFAULT_WRAP_LIST,
   wrapPartial: DEFAULT_WRAP_PARTIAL,
   generateSubTypeInterfaceName: DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME,

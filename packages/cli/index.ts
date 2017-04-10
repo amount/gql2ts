@@ -3,14 +3,13 @@
 import * as program from 'commander';
 import * as fs from 'fs';
 import {
-  writeNamespaceToFile,
   readFile,
   writeToFile,
   PossibleSchemaInput,
 } from '@gql2ts/util';
 import { ISchemaToInterfaceOptions, generateNamespace } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
-import { IReturn } from '@gql2ts/types';
+import { IFromQueryReturnValue } from '@gql2ts/types';
 
 program
   .version('1.0.0')
@@ -36,7 +35,7 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
   if (program.args[1]) {
     const queryFile: string = program.args[1];
     const query: string = fs.readFileSync(queryFile).toString();
-    const info: IReturn[] = fromQuery(schema, query, {}, defaultOverrides);
+    const info: IFromQueryReturnValue[] = fromQuery(schema, query, {}, defaultOverrides);
     const toWrite: string = info.map(inf => (
       [inf.interface, inf.variables, inf.additionalTypes.join('\n\n')].join('\n\n')
     )).join('\n');
@@ -51,7 +50,7 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
   let namespace: string = generateNamespace(options.namespace!, schema, options, defaultOverrides);
 
   if (options.outputFile) {
-    writeNamespaceToFile(options.outputFile, namespace);
+    writeToFile(options.outputFile, namespace);
   } else {
     console.log(namespace);
   }

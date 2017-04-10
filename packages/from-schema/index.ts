@@ -22,7 +22,7 @@ import {
   isList,
   isNonNullable,
 } from '@gql2ts/util';
-import { IOptions, ITypeMap } from '@gql2ts/types';
+import { IFromQueryOptions, ITypeMap } from '@gql2ts/types';
 import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
 
 const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => string = (schemaInput, optionsInput) => {
@@ -238,7 +238,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 };
 
 type SchemaToInterfaces =
-  (schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, formatters: Partial<IOptions>) => string;
+  (schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, formatters: Partial<IFromQueryOptions>) => string;
 export const schemaToInterfaces: SchemaToInterfaces = (schema, options, formatters) => run(
   schemaFromInputs(schema),
   {
@@ -251,10 +251,10 @@ export const schemaToInterfaces: SchemaToInterfaces = (schema, options, formatte
 );
 
 type GenerateNamespace =
-  (namespace: string, schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, overrides: Partial<IOptions>) => string;
+  (namespace: string, schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, overrides: Partial<IFromQueryOptions>) => string;
 
 export const generateNamespace: GenerateNamespace = (namespace, schema, options, overrides= {}) => {
-  const formatters: IOptions = { ...DEFAULT_OPTIONS, ...overrides };
+  const formatters: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...overrides };
   return formatters.postProcessor(formatters.generateNamespace(namespace, schemaToInterfaces(schema, options, formatters)));
 };
 
@@ -267,5 +267,5 @@ export interface ISchemaToInterfaceOptions {
 }
 
 export interface IInternalOptions extends Partial<ISchemaToInterfaceOptions> {
-  formats: IOptions;
+  formats: IFromQueryOptions;
 }

@@ -1,5 +1,4 @@
 export { readFile, writeToFile } from './fileIO';
-export { writeNamespaceToFile } from './namespace';
 
 export {
   PossibleIntrospectionInputs,

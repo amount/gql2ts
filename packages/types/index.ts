@@ -13,27 +13,28 @@ import {
 } from 'graphql';
 import { PossibleSchemaInput } from '@gql2ts/util';
 
-export type ChildSelectionsType =
+export type GetChildSelectionsType =
   (operation: OperationTypeNode, selection: SelectionNode, parent?: GraphQLType, isUndefined?: boolean)
-    => IChildren;
+    => IChildSelection;
 
-export interface IProvidedOptions extends Partial<IOptions> {};
+export interface IProvidedOptions extends Partial<IFromQueryOptions> {};
 
-export type Signature = (schema: PossibleSchemaInput, query: string, typeMap?: Partial<ITypeMap>, options?: IProvidedOptions) => IReturn[];
+export type FromQuerySignature =
+  (schema: PossibleSchemaInput, query: string, typeMap?: Partial<ITypeMap>, options?: IProvidedOptions) => IFromQueryReturnValue[];
 
 export interface IComplexTypeSignature {
   iface: string;
   isPartial: boolean;
   name: string;
 }
-export interface IChildren {
+export interface IChildSelection {
   isFragment: boolean;
   isPartial: boolean;
   iface: string;
   complexTypes: IComplexTypeSignature[];
 }
 
-export interface IReturn {
+export interface IFromQueryReturnValue {
   variables: string;
   interface: string;
   additionalTypes: string[];
@@ -52,7 +53,7 @@ export type TypeJoiner = (types: string[]) => string;
 export type InterfaceDeclarationGenerator = (fields: string[], indentation?: string) => string;
 export type NamespaceGenerator = (namespaceName: string, interfaces: string) => string;
 
-export interface IOptions {
+export interface IFromQueryOptions {
   wrapList: WrapType;
   wrapPartial: WrapType;
   generateSubTypeInterfaceName: GenerateSubTypeInterface;
@@ -76,9 +77,9 @@ export interface IOptions {
   addExtensionsToInterfaceName: InterfaceNameWithExtensions;
 };
 
-export type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;
-export type VariableTypeSignature = (type: TypeNode, isNonNull?: boolean, replacement?: string | null) => string;
-export type convertToTypeSignature =
+export type HandleNamedTypes = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;
+export type HandleInputTypes = (type: TypeNode, isNonNull?: boolean, replacement?: string | null) => string;
+export type ConvertToTypeSignature =
   (type: GraphQLOutputType | GraphQLInputType, isNonNull?: boolean, replacement?: string | null) => string;
 
 export interface IDefaultTypeMap {

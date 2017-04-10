@@ -26,14 +26,14 @@ import {
   isEnum,
 } from '@gql2ts/util';
 import {
-  ChildSelectionsType,
-  IChildren,
+  GetChildSelectionsType,
+  IChildSelection,
   IComplexTypeSignature,
-  IOptions,
-  Signature,
-  RegularTypeSignature,
-  VariableTypeSignature,
-  convertToTypeSignature,
+  IFromQueryOptions,
+  FromQuerySignature,
+  HandleNamedTypes,
+  HandleInputTypes,
+  ConvertToTypeSignature,
   ITypeMap,
 } from '@gql2ts/types';
 import {
@@ -46,7 +46,7 @@ import {
   ISubtypeMetadata,
 } from './subtype';
 
-const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
+const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {}) => {
   const TypeMap: ITypeMap = {
     ...DEFAULT_TYPE_MAP,
     ...typeMap
@@ -69,7 +69,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     postProcessor,
     generateInputName,
     addExtensionsToInterfaceName,
-  }: IOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
+  }: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
 
   const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
 
@@ -99,14 +99,14 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  const handleRegularType: RegularTypeSignature = (type, isNonNull, replacement) => {
+  const handleRegularType: HandleNamedTypes = (type, isNonNull, replacement) => {
     const typeValue: string = (typeof type.name === 'string') ? type.toString() : type.name.value;
     const showValue: string = replacement || typeValue;
     const show: string = TypeMap[showValue] || (replacement ? showValue : TypeMap.__DEFAULT);
     return printType(show, isNonNull);
   };
 
-  const convertVariable: VariableTypeSignature = (type, isNonNull= false, replacement= null) => {
+  const convertVariable: HandleInputTypes = (type, isNonNull= false, replacement= null) => {
     if (type.kind === 'ListType') {
       return printType(wrapList(convertVariable(type.type, false, replacement)), isNonNull!);
     } else if (type.kind === 'NonNullType') {
@@ -116,7 +116,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  const convertToType: convertToTypeSignature = (type, isNonNull= false, replacement= null): string => {
+  const convertToType: ConvertToTypeSignature = (type, isNonNull= false, replacement= null): string => {
     if (isList(type)) {
       return printType(wrapList(convertToType(type.ofType, false, replacement)), isNonNull!);
     } else if (isNonNullable(type)) {
@@ -157,7 +157,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  const wrapPossiblePartial: (possiblePartial: IChildren) => string = possiblePartial => {
+  const wrapPossiblePartial: (possiblePartial: IChildSelection) => string = possiblePartial => {
     if (possiblePartial.isPartial) {
       return wrapPartial(possiblePartial.iface);
     } else {
@@ -165,7 +165,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  const flattenComplexTypes: (children: IChildren[]) => IComplexTypeSignature[] = children => (
+  const flattenComplexTypes: (children: IChildSelection[]) => IComplexTypeSignature[] = children => (
     children.reduce((acc, child) => { acc.push(...child.complexTypes); return acc; }, [] as IComplexTypeSignature[])
   );
 
@@ -183,7 +183,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     }
   };
 
-  const getChildSelections: ChildSelectionsType = (operation, selection, parent?, isUndefined= false): IChildren => {
+  const getChildSelections: GetChildSelectionsType = (operation, selection, parent?, isUndefined= false): IChildSelection => {
     let str: string = '';
     let isFragment: boolean = false;
     let isPartial: boolean = false;
@@ -205,18 +205,18 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
           newParent = fieldType;
         }
 
-        const selections: IChildren[] =
+        const selections: IChildSelection[] =
           selection.selectionSet.selections.map(sel => getChildSelections(operation, sel,  newParent));
 
-        const nonFragments: IChildren[] = selections.filter(s => !s.isFragment);
-        const fragments: IChildren[] = selections.filter(s => s.isFragment);
+        const nonFragments: IChildSelection[] = selections.filter(s => !s.isFragment);
+        const fragments: IChildSelection[] = selections.filter(s => s.isFragment);
         const andOps: string[] = [];
 
         complexTypes.push(...flattenComplexTypes(selections));
 
         if (nonFragments.length) {
-          const nonPartialNonFragments: IChildren[] = nonFragments.filter(nf => !nf.isPartial);
-          const partialNonFragments: IChildren[] = nonFragments.filter(nf => nf.isPartial);
+          const nonPartialNonFragments: IChildSelection[] = nonFragments.filter(nf => !nf.isPartial);
+          const partialNonFragments: IChildSelection[] = nonFragments.filter(nf => nf.isPartial);
 
           if (nonPartialNonFragments.length) {
             const interfaceDeclaration: string = generateInterfaceDeclaration(nonPartialNonFragments.map(f => f.iface));
@@ -258,7 +258,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
         parent = parsedSchema.getType(typeName);
       }
 
-      const selections: IChildren[] =
+      const selections: IChildSelection[] =
         selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, parent, !anon));
 
       let joinSelections: string = selections.map(s => s.iface).join('\n');
@@ -293,7 +293,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     return postProcessor(exportFunction(interfaceBuilder(generateInputName(opName), generateInterfaceDeclaration(variableTypeDefs))));
   };
 
-  const buildAdditionalTypes: (children: IChildren[]) => string[] = children => {
+  const buildAdditionalTypes: (children: IChildSelection[]) => string[] = children => {
     const subTypes: IComplexTypeSignature[] = flattenComplexTypes(children);
 
     return subTypes.map(subtype => {
@@ -309,7 +309,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
     if (def.kind === 'OperationDefinition') {
       const ifaceName: string = generateQueryName(def);
       const variableInterface: string = variablesToInterface(ifaceName, def.variableDefinitions);
-      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel));
+      const ret: IChildSelection[] = def.selectionSet.selections.map(sel => getChildSelections(def.operation, sel));
       const fields: string[] = ret.map(x => x.iface);
       const iface: string = postProcessor(exportFunction(interfaceBuilder(ifaceName, generateInterfaceDeclaration(fields))));
       const additionalTypes: string[] = buildAdditionalTypes(ret);
@@ -325,7 +325,7 @@ const doIt: Signature = (schema, query, typeMap= {}, providedOptions= {}) => {
       const onType: string = def.typeCondition.name.value;
       const foundType: GraphQLType = parsedSchema.getType(onType);
 
-      const ret: IChildren[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, foundType));
+      const ret: IChildSelection[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, foundType));
       const extensions: string[] = ret.filter(x => x.isFragment).map(x => x.iface);
       const fields: string[] = ret.filter(x => !x.isFragment).map(x => x.iface);
       const iface: string = postProcessor(
