@@ -14,7 +14,7 @@ import {
 import { PossibleSchemaInput } from '@gql2ts/util';
 
 export type ChildSelectionsType =
-  (operation: OperationTypeNode, selection: SelectionNode, indentation: string, parent?: GraphQLType, isUndefined?: boolean)
+  (operation: OperationTypeNode, selection: SelectionNode, parent?: GraphQLType, isUndefined?: boolean)
     => IChildren;
 
 export interface IProvidedOptions extends Partial<IOptions> {};
@@ -40,7 +40,7 @@ export interface IReturn {
 }
 
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;
-export type FragmentInterfaceFormatter = (operationName: string, fields: string[], interfaceExtensions: string[]) => string;
+export type InterfaceNameWithExtensions = (operationName: string, extensions: string[]) => string;
 export type GenerateSubTypeInterface = (selectionName: string, selection: FieldNode) => string | null;
 export type WrapType = (type: string) => string;
 export type TypePrinter = (type: string, isNonNull: boolean) => string;
@@ -51,12 +51,8 @@ export type InterfaceAndTypeBuilder = (name: string, body: string) => string;
 export type TypeJoiner = (types: string[]) => string;
 export type InterfaceDeclarationGenerator = (fields: string[], indentation?: string) => string;
 export type NamespaceGenerator = (namespaceName: string, interfaces: string) => string;
-export type Indentation = string;
 
 export interface IOptions {
-  formatVariableInterface: InterfaceFormatters;
-  formatInterface: InterfaceFormatters;
-  formatFragmentInterface: FragmentInterfaceFormatter;
   wrapList: WrapType;
   wrapPartial: WrapType;
   generateSubTypeInterfaceName: GenerateSubTypeInterface;
@@ -68,7 +64,6 @@ export interface IOptions {
   interfaceBuilder: InterfaceAndTypeBuilder;
   typeBuilder: InterfaceAndTypeBuilder;
   typeJoiner: TypeJoiner;
-  defaultIndentation: Indentation;
   generateInterfaceDeclaration: InterfaceDeclarationGenerator;
   generateEnumName: WrapType;
   generateTypeName: WrapType;
@@ -76,6 +71,9 @@ export interface IOptions {
   exportFunction: WrapType;
   addSemicolon: WrapType;
   generateNamespace: NamespaceGenerator;
+  postProcessor: WrapType;
+  generateInputName: WrapType;
+  addExtensionsToInterfaceName: InterfaceNameWithExtensions;
 };
 
 export type RegularTypeSignature = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;

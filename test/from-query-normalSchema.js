@@ -913,7 +913,7 @@ query Test {
 const dedupeResponse = {
   interface: `export interface Test {
   hero1: SelectionOnheroNoParam | null;
-    hero2: SelectionOnheroNoParam | null;
+  hero2: SelectionOnheroNoParam | null;
 }`,
   variables: '',
   additionalTypes: [`export interface SelectionOnfriends {

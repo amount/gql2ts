@@ -2,6 +2,7 @@
 const expect       = require('chai').expect;
 let { schemaToInterfaces } = require('../packages/from-schema');
 let { generateNamespace } = require('../packages/from-schema');
+let { DEFAULT_OPTIONS: { postProcessor }} = require('../packages/language-typescript');
 let schema         = require('./data/starWarsSchema');
 let enumSchema     = require('./data/enumSchema');
 let expectedNamespace  = require('./data/expectedNamespace');
@@ -13,19 +14,19 @@ describe('gql2ts', () => {
     it('correctly translates the star wars schema into typescript defs', () => {
       let actual = schemaToInterfaces(schema, { ignoredTypes: [] });
 
-      expect(actual).to.equal(expectedInterfaces);
+      expect(postProcessor(actual)).to.equal(postProcessor(expectedInterfaces));
     });
 
     it('correctly ignores types', () => {
       let actual = schemaToInterfaces(schema, { ignoredTypes: ['Person'] });
       let ignoredPerson = require('./data/ignoredPersonInterfaces');
-      expect(actual).to.equal(ignoredPerson);
+      expect(postProcessor(actual)).to.equal(postProcessor(ignoredPerson));
     });
 
     it('correctly translates enums', () => {
       let actual = schemaToInterfaces(enumSchema, { ignoredTypes: [] });
       let enumInterfaces = require('./data/expectedEnumInterfaces');
-      expect(actual).to.equal(enumInterfaces);
+      expect(postProcessor(actual)).to.equal(postProcessor(enumInterfaces));
     });
   });
 
@@ -63,7 +64,7 @@ describe('gql2ts', () => {
   describe('Supports older TypeScript versions', () => {
     it('removes Nullability annotations when passed', () => {
       let interfaces = schemaToInterfaces(schema, { ignoredTypes: [], legacy: true });
-      expect(interfaces).to.equal(expectedLegacyInterfaces);
+      expect(postProcessor(interfaces)).to.equal(postProcessor(expectedLegacyInterfaces));
     });
   });
 });
