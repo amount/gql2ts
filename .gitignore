@@ -98,4 +98,4 @@ jspm_packages
 ## remove js files
 packages/**/*.js
 packages/**/*.js.map
-packages/**/*.json
+packages/**/dist

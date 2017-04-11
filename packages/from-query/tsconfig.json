@@ -4,16 +4,18 @@
     "module": "commonjs",
     "removeComments": false,
     "preserveConstEnums": true,
+    "outDir": "dist",
     "sourceMap": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "declaration": true
   },
   "include": [
-    "index.ts"
+    "src"
   ],
   "exclude": [
     "node_modules"

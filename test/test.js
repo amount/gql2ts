@@ -1,8 +1,8 @@
 'use strict';
 const expect       = require('chai').expect;
-let { schemaToInterfaces } = require('../packages/from-schema');
-let { generateNamespace } = require('../packages/from-schema');
-let { DEFAULT_OPTIONS: { postProcessor }} = require('../packages/language-typescript');
+let { schemaToInterfaces } = require('../packages/from-schema/dist');
+let { generateNamespace } = require('../packages/from-schema/dist');
+let { DEFAULT_OPTIONS: { postProcessor }} = require('../packages/language-typescript/dist');
 let schema         = require('./data/starWarsSchema');
 let enumSchema     = require('./data/enumSchema');
 let expectedNamespace  = require('./data/expectedNamespace');

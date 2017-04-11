@@ -1,4 +1,4 @@
-const runProgram = require('../packages/from-query/index.js').default;
+const runProgram = require('../packages/from-query/dist/index.js').default;
 const schema = require('./shared/mutationSchema');
 const expect = require('chai').expect;
 

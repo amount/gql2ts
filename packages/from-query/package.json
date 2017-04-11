@@ -3,8 +3,11 @@
   "private": false,
   "version": "1.0.0-alpha.1",
   "description": "generate typescript interfaces from a graphql schema and query",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "typings": "dist/index.d.ts",
   "scripts": {
     "prepublish": "tsc -p tsconfig.json"
   },
@@ -23,11 +26,6 @@
     "url": "https://github.com/avantcredit/gql2ts/issues"
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
-  "files": [
-    "*.js",
-    "*.ts",
-    "*.js.map"
-  ],
   "dependencies": {
     "@gql2ts/language-typescript": "^1.0.0-alpha.1",
     "@gql2ts/util": "^1.0.0-alpha.1"
