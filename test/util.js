@@ -6,7 +6,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 const utils = require('../packages/util');
-const { badWriteHandler } = require('../packages/util/fileIO');
+const { badWriteHandler } = require('../packages/util/dist/fileIO');
 const schemaLanguage = require('./shared/simpleSchema');
 const { GraphQLSchema, introspectionQuery, graphql } = require('graphql');
 

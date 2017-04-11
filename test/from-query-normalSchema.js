@@ -1,4 +1,4 @@
-const runProgram = require('../packages/from-query/dist/index.js').default;
+const runProgram = require('../packages/from-query').default;
 const schema = require('./shared/simpleSchema');
 const expect = require('chai').expect;
 
