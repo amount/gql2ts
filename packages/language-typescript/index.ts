@@ -14,13 +14,14 @@ import {
   InterfaceNameWithExtensions,
 } from '@gql2ts/types';
 import prettify from './typescriptPrettify';
+import { pascalize } from 'humps';
 
 export const DEFAULT_INTERFACE_DECLARATION: InterfaceDeclarationGenerator = fields => `{
 ${fields.join('\n')}
 }`;
 
 export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `interface ${name} ${body}`;
-export const DEFAULT_INTERFACE_NAMER: WrapType = name => `I${name}`;
+export const DEFAULT_INTERFACE_NAMER: WrapType = name => `I${pascalize(name)}`;
 export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `type ${name} = ${body}`;
 export const DEFAULT_TYPE_JOINER: TypeJoiner = types => types.join(' & ');
 export const DEFAULT_TYPE_NAMER: WrapType = name => name;
@@ -31,8 +32,8 @@ export const interfaceExtendListToString: (extensions: string[]) => string = ext
 };
 
 export const ADD_INTERFACE_EXTENSIONS: InterfaceNameWithExtensions = (opName, exts) => opName + interfaceExtendListToString(exts);
-export const DEFAULT_NAME_FRAGMENT: WrapType = name => `IFragment${name}`;
-export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? def.name.value : 'Anonymous';
+export const DEFAULT_NAME_FRAGMENT: WrapType = name => `IFragment${pascalize(name)}`;
+export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? pascalize(def.name.value) : 'Anonymous';
 
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => ADD_SEMICOLON(`${name}${isOptional ? '?:' : ':' } ${type}`);
 
@@ -50,12 +51,12 @@ export const DEFAULT_WRAP_PARTIAL: WrapType = partial => `Partial<${partial}>`;
 
 export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull ? type : `${type} | null`;
 
-export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${selectionName}`;
+export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${pascalize(selectionName)}`;
 
 export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
 
-export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `I${name}Enum`;
-export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${name}Input`;
+export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `I${pascalize(name)}Enum`;
+export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)}Input`;
 export const DEFAULT_EXPORT_FUNCTION: WrapType = declaration => `export ${declaration}`;
 export const ADD_SEMICOLON: WrapType = str => `${str};`;
 

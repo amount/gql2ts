@@ -768,29 +768,29 @@ describe('directives', () => {
 })
 
 const simpleQueryWithSubTypesResponse = {
-  interface: 'export interface TestQuery {\n  heroNoParam: SelectionOnheroNoParam | null;\n}',
+  interface: 'export interface TestQuery {\n  heroNoParam: SelectionOnHeroNoParam | null;\n}',
   variables: '',
-  additionalTypes: [`export interface SelectionOnheroNoParam {\n  id: string;\n  name: string | null;\n}`]
+  additionalTypes: [`export interface SelectionOnHeroNoParam {\n  id: string;\n  name: string | null;\n}`]
 }
 const arrQueryWithSubTypesResponse = {
-  interface: `export interface Test {\n  heroNoParam: SelectionOnheroNoParam | null;\n}`,
+  interface: `export interface Test {\n  heroNoParam: SelectionOnHeroNoParam | null;\n}`,
   variables: '',
-  additionalTypes: [`export interface SelectionOnnonNullArr {
+  additionalTypes: [`export interface SelectionOnNonNullArr {
   id: string;
   name: string | null;
 }`,
-`export interface SelectionOnnonNullArrAndContents {
+`export interface SelectionOnNonNullArrAndContents {
   id: string;
   name: string | null;
 }`,
-`export interface SelectionOnnullArrNonNullContents {
+`export interface SelectionOnNullArrNonNullContents {
   id: string;
   name: string | null;
 }`,
-`export interface SelectionOnheroNoParam {
-  nonNullArr: Array<SelectionOnnonNullArr | null>;
-  nonNullArrAndContents: Array<SelectionOnnonNullArrAndContents>;
-  nullArrNonNullContents: Array<SelectionOnnullArrNonNullContents> | null;
+`export interface SelectionOnHeroNoParam {
+  nonNullArr: Array<SelectionOnNonNullArr | null>;
+  nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
+  nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
 }`]
 }
 
@@ -834,10 +834,10 @@ const fragmentPartialComplexInterface0 = `export interface FragmentTest {\n  her
 const fragmentPartialComplexInterface1 = `export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
-  friends?: Array<SelectionOnfriends | null> | null;
+  friends?: Array<SelectionOnFriends | null> | null;
 }`;
 
-const fragmentPartialComplexAdditionalType = `export interface SelectionOnfriends {
+const fragmentPartialComplexAdditionalType = `export interface SelectionOnFriends {
   id: string;
 }`;
 
@@ -862,18 +862,18 @@ fragment CharacterFields on Character {
 }
 `
 
-const fragmentPartialComplexWithDirectiveInterface0 = `export interface FragmentTest {\n  heroNoParam: SelectionOnheroNoParam & IFragmentCharacterFields | null;\n}`;
+const fragmentPartialComplexWithDirectiveInterface0 = `export interface FragmentTest {\n  heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;\n}`;
 const fragmentPartialComplexWithDirectiveInterface1 = `export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
-  friends?: Array<SelectionOnfriends | null> | null;
+  friends?: Array<SelectionOnFriends | null> | null;
 }`;
 
-const fragmentPartialComplexWithDirectiveAdditionalType0 = `export type SelectionOnheroNoParam = Partial<{
+const fragmentPartialComplexWithDirectiveAdditionalType0 = `export type SelectionOnHeroNoParam = Partial<{
   name?: string | null;
 }>`;
 
-const fragmentPartialComplexWithDirectiveAdditionalType1 = `export interface SelectionOnfriends {
+const fragmentPartialComplexWithDirectiveAdditionalType1 = `export interface SelectionOnFriends {
   id: string;
 }`;
 
@@ -912,26 +912,26 @@ query Test {
 
 const dedupeResponse = {
   interface: `export interface Test {
-  hero1: SelectionOnheroNoParam | null;
-  hero2: SelectionOnheroNoParam | null;
+  hero1: SelectionOnHeroNoParam | null;
+  hero2: SelectionOnHeroNoParam | null;
 }`,
   variables: '',
-  additionalTypes: [`export interface SelectionOnfriends {
+  additionalTypes: [`export interface SelectionOnFriends {
   id: string;
   name: string | null;
 }`,
-  `export interface SelectionOnfriends1 {
+  `export interface SelectionOnFriends1 {
   id: string;
   name: string | null;
-  friends: Array<SelectionOnfriends | null> | null;
+  friends: Array<SelectionOnFriends | null> | null;
 }`,
-  `export interface SelectionOnfriends2 {
+  `export interface SelectionOnFriends2 {
   id: string;
   name: string | null;
-  friends: Array<SelectionOnfriends1 | null> | null;
+  friends: Array<SelectionOnFriends1 | null> | null;
 }`,
-`export interface SelectionOnheroNoParam {
-  friends: Array<SelectionOnfriends2 | null> | null;
+`export interface SelectionOnHeroNoParam {
+  friends: Array<SelectionOnFriends2 | null> | null;
 }`]
 }
 
