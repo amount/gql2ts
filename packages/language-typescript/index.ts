@@ -92,3 +92,4 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   generateInputName: DEFAULT_INPUT_NAME_GENERATOR,
   addExtensionsToInterfaceName: ADD_INTERFACE_EXTENSIONS
 };
+export default DEFAULT_OPTIONS;

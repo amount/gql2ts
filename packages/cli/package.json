@@ -14,7 +14,7 @@
     "@types/commander": "^2.3.31"
   },
   "scripts": {
-    "prepublish": "tsc -p ../../tsconfig.json"
+    "prepublish": "tsc -p tsconfig.json"
   },
   "keywords": [
     "typescript",

@@ -1,8 +1,8 @@
 {
-  "name": "@gql2ts/from-schema",
+  "name": "@gql2ts/language-flow",
   "private": false,
   "version": "0.6.0-alpha.93b48d62",
-  "description": "convert a graphql schema to typescript interfaces",
+  "description": "flowtype defaults for gql2ts",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
@@ -15,7 +15,9 @@
   "keywords": [
     "gql2ts",
     "graphql",
-    "typescript"
+    "typescript",
+    "flow",
+    "flowtype"
   ],
   "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
   "license": "ISC",

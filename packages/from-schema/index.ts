@@ -237,7 +237,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   return typesToInterfaces(schemaInput, optionsInput);
 };
 
-type SchemaToInterfaces =
+export type SchemaToInterfaces =
   (schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, formatters: Partial<IFromQueryOptions>) => string;
 export const schemaToInterfaces: SchemaToInterfaces = (schema, options, formatters) => run(
   schemaFromInputs(schema),
@@ -250,7 +250,7 @@ export const schemaToInterfaces: SchemaToInterfaces = (schema, options, formatte
   }
 );
 
-type GenerateNamespace =
+export type GenerateNamespace =
   (namespace: string, schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, overrides: Partial<IFromQueryOptions>) => string;
 
 export const generateNamespace: GenerateNamespace = (namespace, schema, options, overrides= {}) => {

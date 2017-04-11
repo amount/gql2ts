@@ -6,7 +6,7 @@
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "prepublish": "tsc -p ../../tsconfig.json"
+    "prepublish": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
