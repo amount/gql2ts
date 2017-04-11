@@ -9,7 +9,8 @@
   ],
   "typings": "dist/index.d.ts",
   "scripts": {
-    "prepublish": "tsc -p tsconfig.json"
+    "prepublish": "tsc -p tsconfig.json",
+    "build:watch": "tsc -w -p tsconfig.json"
   },
   "repository": {
     "type": "git",
