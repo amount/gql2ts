@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/types",
   "private": false,
-  "version": "0.6.0-alpha.93b48d62",
+  "version": "1.0.0-alpha.0",
   "description": "type definitions",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -29,6 +29,6 @@
     "*.js.map"
   ],
   "dependencies": {
-    "@gql2ts/util": "^0.6.0-alpha.93b48d62"
+    "@gql2ts/util": "^1.0.0-alpha.0"
   }
 }
