@@ -3,45 +3,22 @@
 [![Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=refactor_with_tests)](https://travis-ci.org/avantcredit/gql2ts)
 
 ```shell
+# for CLI
 npm install -g gql2ts
+
+# for programmatic use
+npm install @gql2ts/from-query
+npm install @gql2ts/from-schema
 ```
 
-```shell
-Usage: index [options] <schema.json>
+See the `packages` directory for package Readmes.
 
-Options:
-
-  -h, --help                         output usage information
-  -V, --version                      output the version number
-  -o --output-file [outputFile]      name for output file
-  -n --namespace [namespace]         name for the namespace, defaults to "GQL"
-  -i --ignored-types <ignoredTypes>  names of types to ignore (comma delimited)
-  -l --legacy                        Use TypeScript 1.x annotation
-```
-
-## Examples
-
-### With Default Options
-
-```shell
-# outputs to stdout
-gql2ts schema.json
-```
-
-```shell
-# outputs to file graphql.d.ts
-gql2ts schema.json -o graphql.d.ts
-```
-
-
-### With Optional Options
-
-```shell
-gql2ts -n Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
-```
-
-### With stdin
-
-```shell
-cat schema.json | gql2ts
+```sh
+packages/cli                  # gql2ts CLI
+pacakges/from-query           # @gql2ts/from-query
+pacakges/from-schema          # @gql2ts/from-schema
+pacakges/language-flow        # @gql2ts/language-flow
+pacakges/language-typescript  # @gql2ts/language-typescript
+pacakges/types                # @gql2ts/types
+pacakges/util                 # @gql2ts/util
 ```

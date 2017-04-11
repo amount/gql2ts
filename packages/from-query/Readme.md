@@ -1,5 +1,7 @@
 # @gql2ts/from-query
 
+This package is used to generate types/interfaces from a GraphQL Schema and a query.
+
 ## Basic Usage
 
 ```ts

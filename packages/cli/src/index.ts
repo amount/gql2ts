@@ -10,9 +10,10 @@ import {
 import { ISchemaToInterfaceOptions, generateNamespace } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
 import { IFromQueryReturnValue } from '@gql2ts/types';
+const { version } = require('../package.json');
 
 program
-  .version('1.0.0')
+  .version(version)
   .usage('[options] <schema.json> <query.gql>')
   .option('-o --output-file [outputFile]', 'name for output file, will use stdout if not specified')
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
