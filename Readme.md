@@ -1,6 +1,10 @@
 # GQL2TS
 
-[![Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=refactor_with_tests)](https://travis-ci.org/avantcredit/gql2ts)
+[![TravisCI Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=master)](https://travis-ci.org/avantcredit/gql2ts)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/kfa00svxkiqfb4yh/branch/master?svg=true)](https://ci.appveyor.com/project/brettjurgens/gql2ts/branch/master)
+[![Coveralls Coverage](https://coveralls.io/repos/github/avantcredit/gql2ts/badge.svg)](https://coveralls.io/github/avantcredit/gql2ts)
+
+## This Readme is for the upcoming 1.0.0 release, for an earlier version see a previous release
 
 ```shell
 # for CLI
