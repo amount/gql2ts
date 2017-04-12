@@ -38,6 +38,7 @@ export interface IFromQueryReturnValue {
   variables: string;
   interface: string;
   additionalTypes: string[];
+  result: string;
 }
 
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;

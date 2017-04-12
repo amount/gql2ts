@@ -35,6 +35,7 @@ import {
   HandleInputTypes,
   ConvertToTypeSignature,
   ITypeMap,
+  IFromQueryReturnValue,
 } from '@gql2ts/types';
 import {
   DEFAULT_TYPE_MAP,
@@ -305,6 +306,21 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
     });
   };
 
+  interface IOutputJoinInput {
+    variables: string;
+    interface: string;
+    additionalTypes: string[];
+  }
+
+  const joinOutputs: (output: IOutputJoinInput) => IFromQueryReturnValue = output => {
+    const { variables, additionalTypes, interface: iface } = output;
+    const result = [variables, additionalTypes, iface].join('\n\n');
+    return {
+      ...output,
+      result
+    };
+  }
+
   return parsedSelection.definitions.map(def => {
     if (def.kind === 'OperationDefinition') {
       const ifaceName: string = generateQueryName(def);
@@ -314,11 +330,11 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
       const iface: string = postProcessor(exportFunction(interfaceBuilder(ifaceName, generateInterfaceDeclaration(fields))));
       const additionalTypes: string[] = buildAdditionalTypes(ret);
 
-      return {
+      return joinOutputs({
         variables: variableInterface,
         interface: iface,
         additionalTypes,
-      };
+      });
     } else if (def.kind === 'FragmentDefinition') {
       const ifaceName: string = generateFragmentName(def.name.value);
       // get the correct type
@@ -338,11 +354,11 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
       );
       const additionalTypes: string[] = buildAdditionalTypes(ret);
 
-      return {
+      return joinOutputs({
         interface: iface,
         variables: '',
         additionalTypes,
-      };
+      });
     } else {
       throw new Error(`Unsupported Definition ${def.kind}`);
     }

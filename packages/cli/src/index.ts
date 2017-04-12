@@ -37,9 +37,7 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
     const queryFile: string = program.args[1];
     const query: string = fs.readFileSync(queryFile).toString();
     const info: IFromQueryReturnValue[] = fromQuery(schema, query, {}, defaultOverrides);
-    const toWrite: string = info.map(inf => (
-      [inf.interface, inf.variables, inf.additionalTypes.join('\n\n')].join('\n\n')
-    )).join('\n');
+    const toWrite: string = info.map(inf => inf.result).join('\n\n');
     if (options.outputFile) {
       writeToFile(options.outputFile, toWrite);
     } else {
