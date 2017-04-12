@@ -10,7 +10,7 @@
     "@types/graphql": "^0.7.1",
     "@types/node": "^6.0.45",
     "chai": "^3.5.0",
-    "graphql": "^0.8.2",
+    "graphql": "^0.9.3",
     "mocha": "^3.2.0"
   },
   "scripts": {
