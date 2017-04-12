@@ -314,7 +314,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
 
   const joinOutputs: (output: IOutputJoinInput) => IFromQueryReturnValue = output => {
     const { variables, additionalTypes, interface: iface } = output;
-    const result = [variables, additionalTypes.join('\n\n'), iface].join('\n\n');
+    const result = [variables, ...additionalTypes, iface].filter(x => !!x).join('\n\n');
     return {
       ...output,
       result
