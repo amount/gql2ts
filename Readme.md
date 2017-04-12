@@ -15,10 +15,10 @@ See the `packages` directory for package Readmes.
 
 ```sh
 packages/cli                  # gql2ts CLI
-pacakges/from-query           # @gql2ts/from-query
-pacakges/from-schema          # @gql2ts/from-schema
-pacakges/language-flow        # @gql2ts/language-flow
-pacakges/language-typescript  # @gql2ts/language-typescript
-pacakges/types                # @gql2ts/types
-pacakges/util                 # @gql2ts/util
+packages/from-query           # @gql2ts/from-query
+packages/from-schema          # @gql2ts/from-schema
+packages/language-flow        # @gql2ts/language-flow
+packages/language-typescript  # @gql2ts/language-typescript
+packages/types                # @gql2ts/types
+packages/util                 # @gql2ts/util
 ```
