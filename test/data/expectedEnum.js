@@ -29,7 +29,7 @@ declare namespace GQL {
   /*
     description: null
   */
-  type IColorEnum = "RED" | "GREEN" | "BLUE";
+  type IColorEnum = 'RED' | 'GREEN' | 'BLUE';
 }
 
 // tslint:enable

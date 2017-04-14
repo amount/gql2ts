@@ -1,0 +1,39 @@
+{
+  "name": "@gql2ts/language-typescript",
+  "private": false,
+  "version": "1.0.0-alpha.3",
+  "description": "typescript defaults",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc -p tsconfig.json",
+    "build:watch": "tsc -w -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avantcredit/gql2ts.git"
+  },
+  "keywords": [
+    "gql2ts",
+    "graphql",
+    "typescript"
+  ],
+  "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avantcredit/gql2ts/issues"
+  },
+  "homepage": "https://github.com/avantcredit/gql2ts#readme",
+  "dependencies": {
+    "@gql2ts/util": "^1.0.0-alpha.3",
+    "humps": "^2.0.0",
+    "typescript": "^2.2.2"
+  },
+  "devDependencies": {
+    "@gql2ts/types": "^1.0.0-alpha.3",
+    "@types/humps": "^1.1.2"
+  }
+}

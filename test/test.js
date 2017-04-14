@@ -1,7 +1,8 @@
 'use strict';
 const expect       = require('chai').expect;
-let interfaceUtils = require('../util/interface');
-let namespaceUtils = require('../util/namespace');
+let { schemaToInterfaces } = require('../packages/from-schema');
+let { generateNamespace } = require('../packages/from-schema');
+let { DEFAULT_OPTIONS: { postProcessor }} = require('../packages/language-typescript');
 let schema         = require('./data/starWarsSchema');
 let enumSchema     = require('./data/enumSchema');
 let expectedNamespace  = require('./data/expectedNamespace');
@@ -11,35 +12,32 @@ let expectedLegacyInterfaces = require('./data/expectedLegacyInterfaces');
 describe('gql2ts', () => {
   describe('interfaces', () => {
     it('correctly translates the star wars schema into typescript defs', () => {
-      let actual = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [] });
+      let actual = schemaToInterfaces(schema, { ignoredTypes: [] });
 
-      expect(actual).to.equal(expectedInterfaces);
+      expect(postProcessor(actual)).to.equal(postProcessor(expectedInterfaces));
     });
 
     it('correctly ignores types', () => {
-      let actual = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: ['Person'] });
+      let actual = schemaToInterfaces(schema, { ignoredTypes: ['Person'] });
       let ignoredPerson = require('./data/ignoredPersonInterfaces');
-      expect(actual).to.equal(ignoredPerson);
+      expect(postProcessor(actual)).to.equal(postProcessor(ignoredPerson));
     });
 
     it('correctly translates enums', () => {
-      let actual = interfaceUtils.schemaToInterfaces(enumSchema, { ignoredTypes: [] });
+      let actual = schemaToInterfaces(enumSchema, { ignoredTypes: [] });
       let enumInterfaces = require('./data/expectedEnumInterfaces');
-      expect(actual).to.equal(enumInterfaces);
+      expect(postProcessor(actual)).to.equal(postProcessor(enumInterfaces));
     });
   });
 
-
   describe('namespace', () => {
     it('correctly generates namespace', () => {
-      let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [] });
-      let namespace = namespaceUtils.generateNamespace('GQL', interfaces);
+      let namespace = generateNamespace('GQL', schema, { ignoredTypes: [] });
       expect(namespace).to.equal(expectedNamespace);
     });
 
     it('correctly uses a custom namespace', () => {
-      let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [] });
-      let namespace = namespaceUtils.generateNamespace('StarWars', interfaces);
+      let namespace = generateNamespace('StarWars', schema, { ignoredTypes: [] });
 
       let swNamespace = require('./data/starWarsNamespace');
 
@@ -47,8 +45,7 @@ describe('gql2ts', () => {
     });
 
     it('correctly uses a namespace and ignores', () => {
-      let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: ['Person'] });
-      let namespace = namespaceUtils.generateNamespace('StarWars', interfaces);
+      let namespace = generateNamespace('StarWars', schema, { ignoredTypes: ['Person'] });
 
       let swNamespace = require('./data/ignoredPerson');
 
@@ -56,8 +53,7 @@ describe('gql2ts', () => {
     });
 
     it('correctly translates enums', () => {
-      let interfaces = interfaceUtils.schemaToInterfaces(enumSchema, { ignoredTypes: [] });
-      let namespace = namespaceUtils.generateNamespace('GQL', interfaces);
+      let namespace = generateNamespace('GQL', enumSchema, { ignoredTypes: [] });
 
       let enumNamespace = require('./data/expectedEnum');
 
@@ -67,8 +63,8 @@ describe('gql2ts', () => {
 
   describe('Supports older TypeScript versions', () => {
     it('removes Nullability annotations when passed', () => {
-      let interfaces = interfaceUtils.schemaToInterfaces(schema, { ignoredTypes: [], legacy: true });
-      expect(interfaces).to.equal(expectedLegacyInterfaces);
+      let interfaces = schemaToInterfaces(schema, { ignoredTypes: [], legacy: true });
+      expect(postProcessor(interfaces)).to.equal(postProcessor(expectedLegacyInterfaces));
     });
   });
 });

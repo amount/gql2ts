@@ -94,3 +94,8 @@ jspm_packages
 # files i use to test output
 *.d.ts
 *.json
+
+## remove js files
+packages/**/*.js
+packages/**/*.js.map
+packages/**/dist

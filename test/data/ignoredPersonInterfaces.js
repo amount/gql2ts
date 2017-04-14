@@ -88,13 +88,55 @@ module.exports = `  interface IGraphQLResponseRoot {
   /*
     description: An object with an ID
   */
-  type Node = IPlanet | ISpecies | IStarship | IVehicle | IFilm;
+  type Node = IFilm | ISpecies | IPlanet | IStarship | IVehicle;
 
   /*
     description: An object with an ID
   */
   interface INode {
     __typename: string;
+    id: string;
+  }
+
+  /*
+    description: A connection to a list of items.
+  */
+  interface IFilmSpeciesConnection {
+    __typename: string;
+    pageInfo: IPageInfo;
+    edges: Array<IFilmSpeciesEdge> | null;
+    totalCount: number | null;
+    species: Array<ISpecies> | null;
+  }
+
+  /*
+    description: An edge in a connection.
+  */
+  interface IFilmSpeciesEdge {
+    __typename: string;
+    node: ISpecies | null;
+    cursor: string;
+  }
+
+  /*
+    description: A type of person or character within the Star Wars Universe.
+  */
+  interface ISpecies {
+    __typename: string;
+    name: string | null;
+    classification: string | null;
+    designation: string | null;
+    averageHeight: number | null;
+    averageLifespan: number | null;
+    eyeColors: Array<string> | null;
+    hairColors: Array<string> | null;
+    skinColors: Array<string> | null;
+    language: string | null;
+    homeworld: IPlanet | null;
+    personConnection: ISpeciesPeopleConnection | null;
+    filmConnection: ISpeciesFilmsConnection | null;
+    created: string | null;
+    edited: string | null;
     id: string;
   }
 
@@ -153,66 +195,6 @@ module.exports = `  interface IGraphQLResponseRoot {
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
-    node: IFilm | null;
-    cursor: string;
-  }
-
-  /*
-    description: A type of person or character within the Star Wars Universe.
-  */
-  interface ISpecies {
-    __typename: string;
-    name: string | null;
-    classification: string | null;
-    designation: string | null;
-    averageHeight: number | null;
-    averageLifespan: number | null;
-    eyeColors: Array<string> | null;
-    hairColors: Array<string> | null;
-    skinColors: Array<string> | null;
-    language: string | null;
-    homeworld: IPlanet | null;
-    personConnection: ISpeciesPeopleConnection | null;
-    filmConnection: ISpeciesFilmsConnection | null;
-    created: string | null;
-    edited: string | null;
-    id: string;
-  }
-
-  /*
-    description: A connection to a list of items.
-  */
-  interface ISpeciesPeopleConnection {
-    __typename: string;
-    pageInfo: IPageInfo;
-    edges: Array<ISpeciesPeopleEdge> | null;
-    totalCount: number | null;
-  }
-
-  /*
-    description: An edge in a connection.
-  */
-  interface ISpeciesPeopleEdge {
-    __typename: string;
-    cursor: string;
-  }
-
-  /*
-    description: A connection to a list of items.
-  */
-  interface ISpeciesFilmsConnection {
-    __typename: string;
-    pageInfo: IPageInfo;
-    edges: Array<ISpeciesFilmsEdge> | null;
-    totalCount: number | null;
-    films: Array<IFilm> | null;
-  }
-
-  /*
-    description: An edge in a connection.
-  */
-  interface ISpeciesFilmsEdge {
     __typename: string;
     node: IFilm | null;
     cursor: string;
@@ -405,20 +387,38 @@ module.exports = `  interface IGraphQLResponseRoot {
   /*
     description: A connection to a list of items.
   */
-  interface IFilmSpeciesConnection {
+  interface ISpeciesPeopleConnection {
     __typename: string;
     pageInfo: IPageInfo;
-    edges: Array<IFilmSpeciesEdge> | null;
+    edges: Array<ISpeciesPeopleEdge> | null;
     totalCount: number | null;
-    species: Array<ISpecies> | null;
   }
 
   /*
     description: An edge in a connection.
   */
-  interface IFilmSpeciesEdge {
+  interface ISpeciesPeopleEdge {
     __typename: string;
-    node: ISpecies | null;
+    cursor: string;
+  }
+
+  /*
+    description: A connection to a list of items.
+  */
+  interface ISpeciesFilmsConnection {
+    __typename: string;
+    pageInfo: IPageInfo;
+    edges: Array<ISpeciesFilmsEdge> | null;
+    totalCount: number | null;
+    films: Array<IFilm> | null;
+  }
+
+  /*
+    description: An edge in a connection.
+  */
+  interface ISpeciesFilmsEdge {
+    __typename: string;
+    node: IFilm | null;
     cursor: string;
   }
 

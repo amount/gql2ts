@@ -1,28 +1,33 @@
 {
-  "name": "gql2ts",
+  "name": "gql2ts-base",
+  "private": true,
   "version": "0.6.1",
   "description": "Convert GraphQL Schema to TypeScript defs",
-  "main": "index.js",
   "dependencies": {
-    "commander": "^2.9.0"
+    "graphql": "^0.9.2"
   },
   "devDependencies": {
-    "@types/graphql": "^0.7.1",
-    "@types/node": "^6.0.45",
+    "@types/graphql": "^0.9.0",
+    "@types/node": "^7.0.12",
+    "@types/sinon": "^1.16.36",
     "chai": "^3.5.0",
-    "graphql": "^0.8.2",
-    "mocha": "^3.2.0"
+    "chai-as-promised": "^6.0.0",
+    "coveralls": "^2.13.0",
+    "lerna": "2.0.0-beta.38",
+    "mocha": "^3.2.0",
+    "nyc": "^10.2.0",
+    "sinon": "^2.1.0",
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.1"
   },
   "scripts": {
-    "test": "mocha"
+    "pretest": "lerna bootstrap --hoist graphql",
+    "test": "nyc --reporter=html --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "typescript",
     "graphql"
-  ],
-  "files": [
-    "index.js",
-    "util"
   ],
   "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
   "license": "MIT",

@@ -1,47 +1,28 @@
 # GQL2TS
 
-[![Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=refactor_with_tests)](https://travis-ci.org/avantcredit/gql2ts)
+[![TravisCI Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=master)](https://travis-ci.org/avantcredit/gql2ts)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/kfa00svxkiqfb4yh/branch/master?svg=true)](https://ci.appveyor.com/project/brettjurgens/gql2ts/branch/master)
+[![Coveralls Coverage](https://coveralls.io/repos/github/avantcredit/gql2ts/badge.svg)](https://coveralls.io/github/avantcredit/gql2ts)
+
+## This Readme is for the upcoming 1.0.0 release, for an earlier version see a previous release
 
 ```shell
-npm install -g gql2ts
+# for CLI
+npm install -g gql2ts@next
+
+# for programmatic use
+npm install @gql2ts/from-query@next
+npm install @gql2ts/from-schema@next
 ```
 
-```shell
-Usage: index [options] <schema.json>
+See the `packages` directory for package Readmes.
 
-Options:
-
-  -h, --help                         output usage information
-  -V, --version                      output the version number
-  -o --output-file [outputFile]      name for output file
-  -n --namespace [namespace]         name for the namespace, defaults to "GQL"
-  -i --ignored-types <ignoredTypes>  names of types to ignore (comma delimited)
-  -l --legacy                        Use TypeScript 1.x annotation
-```
-
-## Examples
-
-### With Default Options
-
-```shell
-# outputs to stdout
-gql2ts schema.json
-```
-
-```shell
-# outputs to file graphql.d.ts
-gql2ts schema.json -o graphql.d.ts
-```
-
-
-### With Optional Options
-
-```shell
-gql2ts -n Avant -i BadInterface,BadType,BadUnion -o avant-gql.d.ts schema.json
-```
-
-### With stdin
-
-```shell
-cat schema.json | gql2ts
+```sh
+packages/cli                  # gql2ts CLI
+packages/from-query           # @gql2ts/from-query
+packages/from-schema          # @gql2ts/from-schema
+packages/language-flow        # @gql2ts/language-flow
+packages/language-typescript  # @gql2ts/language-typescript
+packages/types                # @gql2ts/types
+packages/util                 # @gql2ts/util
 ```

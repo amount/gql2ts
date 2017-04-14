@@ -25,4 +25,4 @@ module.exports = `  interface IGraphQLResponseRoot {
   /*
     description: null
   */
-  type IColorEnum = "RED" | "GREEN" | "BLUE";`
+  type IColorEnum = 'RED' | 'GREEN' | 'BLUE';`

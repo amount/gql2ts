@@ -1,0 +1,33 @@
+{
+  "name": "@gql2ts/util",
+  "private": false,
+  "version": "1.0.0-alpha.3",
+  "description": "utilities for gql2ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc -p tsconfig.json",
+    "build:watch": "tsc -w -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avantcredit/gql2ts.git"
+  },
+  "keywords": [
+    "gql2ts",
+    "graphql",
+    "typescript"
+  ],
+  "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avantcredit/gql2ts/issues"
+  },
+  "homepage": "https://github.com/avantcredit/gql2ts#readme",
+  "dependencies": {
+    "graphql": "^0.9.2"
+  }
+}
