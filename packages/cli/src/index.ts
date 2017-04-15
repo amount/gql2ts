@@ -19,7 +19,7 @@ program
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
-  .option('-e --external-options', 'ES Module with method overwrites')
+  .option('-e --external-options [externalOptions]', 'ES Module with method overwrites')
   .parse(process.argv);
 
 interface ICLIOptions extends Partial<ISchemaToInterfaceOptions> {
