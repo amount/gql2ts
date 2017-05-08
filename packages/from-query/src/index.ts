@@ -47,7 +47,7 @@ import {
   ISubtypeMetadata,
 } from './subtype';
 
-const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {}) => {
+const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
   const TypeMap: ITypeMap = {
     ...DEFAULT_TYPE_MAP,
     ...typeMap
@@ -107,7 +107,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
     return printType(show, isNonNull);
   };
 
-  const convertVariable: HandleInputTypes = (type, isNonNull= false, replacement= null) => {
+  const convertVariable: HandleInputTypes = (type, isNonNull = false, replacement = null) => {
     if (type.kind === 'ListType') {
       return printType(wrapList(convertVariable(type.type, false, replacement)), isNonNull!);
     } else if (type.kind === 'NonNullType') {
@@ -117,7 +117,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
     }
   };
 
-  const convertToType: ConvertToTypeSignature = (type, isNonNull= false, replacement= null): string => {
+  const convertToType: ConvertToTypeSignature = (type, isNonNull = false, replacement = null): string => {
     if (isList(type)) {
       return printType(wrapList(convertToType(type.ofType, false, replacement)), isNonNull!);
     } else if (isNonNullable(type)) {
@@ -184,7 +184,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
     }
   };
 
-  const getChildSelections: GetChildSelectionsType = (operation, selection, parent?, isUndefined= false): IChildSelection => {
+  const getChildSelections: GetChildSelectionsType = (operation, selection, parent?, isUndefined = false): IChildSelection => {
     let str: string = '';
     let isFragment: boolean = false;
     let isPartial: boolean = false;
@@ -207,7 +207,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
         }
 
         const selections: IChildSelection[] =
-          selection.selectionSet.selections.map(sel => getChildSelections(operation, sel,  newParent));
+          selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, newParent));
 
         const nonFragments: IChildSelection[] = selections.filter(s => !s.isFragment);
         const fragments: IChildSelection[] = selections.filter(s => s.isFragment);
@@ -314,12 +314,12 @@ const doIt: FromQuerySignature = (schema, query, typeMap= {}, providedOptions= {
 
   const joinOutputs: (output: IOutputJoinInput) => IFromQueryReturnValue = output => {
     const { variables, additionalTypes, interface: iface } = output;
-    const result = [variables, ...additionalTypes, iface].filter(x => !!x).join('\n\n');
+    const result: string = [variables, ...additionalTypes, iface].filter(x => !!x).join('\n\n');
     return {
       ...output,
       result
     };
-  }
+  };
 
   return parsedSelection.definitions.map(def => {
     if (def.kind === 'OperationDefinition') {

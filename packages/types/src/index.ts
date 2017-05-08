@@ -17,7 +17,7 @@ export type GetChildSelectionsType =
   (operation: OperationTypeNode, selection: SelectionNode, parent?: GraphQLType, isUndefined?: boolean)
     => IChildSelection;
 
-export interface IProvidedOptions extends Partial<IFromQueryOptions> {};
+export interface IProvidedOptions extends Partial<IFromQueryOptions> { }
 
 export type FromQuerySignature =
   (schema: PossibleSchemaInput, query: string, typeMap?: Partial<ITypeMap>, options?: IProvidedOptions) => IFromQueryReturnValue[];
@@ -76,7 +76,7 @@ export interface IFromQueryOptions {
   postProcessor: WrapType;
   generateInputName: WrapType;
   addExtensionsToInterfaceName: InterfaceNameWithExtensions;
-};
+}
 
 export type HandleNamedTypes = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;
 export type HandleInputTypes = (type: TypeNode, isNonNull?: boolean, replacement?: string | null) => string;

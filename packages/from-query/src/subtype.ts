@@ -40,7 +40,7 @@ export const GenerateSubtypeCache: () => SubtypeNamerAndDedupe = () => {
   };
 
   const subTypeStuff: (name: string | null, declaration: string) => ISubtypeMetadata | null = (subtype, declaration) => {
-    if (!subtype) { return subtype as null; };
+    if (!subtype) { return subtype as null; }
 
     if (GeneratedSubtypes.has(subtype)) {
       return enumerateSubtypes(subtype, declaration);
