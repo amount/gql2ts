@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/types",
   "private": false,
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.7",
   "description": "type definitions",
   "main": "dist/index.js",
   "files": [

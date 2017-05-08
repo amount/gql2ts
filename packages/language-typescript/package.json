@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/language-typescript",
   "private": false,
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.7",
   "description": "typescript defaults",
   "main": "dist/index.js",
   "files": [
@@ -33,7 +33,7 @@
     "typescript": "^2.2.2"
   },
   "devDependencies": {
-    "@gql2ts/types": "^1.0.0-alpha.3",
+    "@gql2ts/types": "^1.0.0-alpha.7",
     "@types/humps": "^1.1.2"
   }
 }
