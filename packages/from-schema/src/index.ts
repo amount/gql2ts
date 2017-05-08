@@ -40,7 +40,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     addSemicolon,
   } = optionsInput.formats;
 
-  const TYPE_MAP: ITypeMap = {...DEFAULT_TYPE_MAP};
+  const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP };
 
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
@@ -82,7 +82,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   ${declaration}`;
 
   const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
-  (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n', description);
+    (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n', description);
 
   const typeNameDeclaration: string = addSemicolon(`__typename: ${TYPE_MAP.String}`);
 
@@ -90,20 +90,20 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     (description: string, declaration: string, fields: string[], additionalInfo: string, isInput: boolean) => string;
 
   const generateInterfaceDeclaration: GenerateInterfaceDeclaration =
-  (description, declaration, fields, additionalInfo, isInput) => {
-    if (!isInput) { fields = [typeNameDeclaration, ...fields]; }
-    return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
-  };
+    (description, declaration, fields, additionalInfo, isInput) => {
+      if (!isInput) { fields = [typeNameDeclaration, ...fields]; }
+      return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
+    };
 
   type GenerateEnumDeclaration = (description: string, name: string, enumValues: GraphQLEnumValue[]) => string;
   const generateEnumDeclaration: GenerateEnumDeclaration = (description, name, enumValues) =>
     wrapWithDescription(typeBuilder(generateEnumName(name), addSemicolon(formatEnum(enumValues))), description);
 
-/**
- * TODO
- * - add support for custom types (via optional json file or something)
- * - allow this to return metadata for Non Null types
- */
+  /**
+   * TODO
+   * - add support for custom types (via optional json file or something)
+   * - allow this to return metadata for Non Null types
+   */
   const resolveInterfaceName: (type: GraphQLInputType | GraphQLType) => string = type => {
     if (isList(type)) {
       return wrapList(resolveInterfaceName((type).ofType));
@@ -176,9 +176,9 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     let f: Array<GraphQLField<any, any> | GraphQLInputField> = Object.keys(f1).map(k => f1[k]);
 
     let fields: string[] = f
-                  .filter(field => filterField(field, ignoredTypes))
-                  .map(field => fieldToDefinition(field, isInput, supportsNullability))
-                  .filter(field => field);
+      .filter(field => filterField(field, ignoredTypes))
+      .map(field => fieldToDefinition(field, isInput, supportsNullability))
+      .filter(field => field);
 
     let interfaceDeclaration: string = generateInterfaceName(type.name);
     let additionalInfo: string = '';
@@ -187,8 +187,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       const poss: Array<GraphQLObjectType | GraphQLField<any, any>> =
         (type instanceof GraphQLInterfaceType) ? (interfaceMap.get(type) || []) : type.getTypes();
       let possibleTypes: string[] = poss
-                            .filter(t => !ignoredTypes.has(t.name))
-                            .map(t => generateInterfaceName(t.name));
+        .filter(t => !ignoredTypes.has(t.name))
+        .map(t => generateInterfaceName(t.name));
 
       if (possibleTypes.length) {
         additionalInfo = generateTypeDeclaration(type.description, generateTypeName(type.name), possibleTypes.join(' | '));
@@ -203,7 +203,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const interfaces: string[] = [];
     interfaces.push(generateRootTypes(schema));       // add root entry point & errors
     const supportsNullability: boolean = !options.legacy;
-    const types: GraphQLNamedType = schema.getTypeMap();
+    const types: { [typeName: string]: GraphQLNamedType } = schema.getTypeMap();
     const typeArr: GraphQLNamedType[] = Object.keys(types).map(k => types[k]);
     const interfaceMap: Map<GraphQLInterfaceType, GraphQLObjectType[]> = new Map();
     typeArr.forEach(type => {
@@ -212,7 +212,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
           if (interfaceMap.has(iface)) {
             interfaceMap.set(iface, [...(interfaceMap.get(iface)!), type]);
           } else {
-            interfaceMap.set(iface, [ type ]);
+            interfaceMap.set(iface, [type]);
           }
         });
       }
@@ -230,8 +230,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
         .filter(type => type);                        // remove empty ones
 
     return interfaces
-            .concat(typeInterfaces)                   // add typeInterfaces to return object
-            .join('\n\n');                            // add newlines between interfaces
+      .concat(typeInterfaces)                   // add typeInterfaces to return object
+      .join('\n\n');                            // add newlines between interfaces
   };
 
   return typesToInterfaces(schemaInput, optionsInput);
@@ -251,9 +251,14 @@ export const schemaToInterfaces: SchemaToInterfaces = (schema, options, formatte
 );
 
 export type GenerateNamespace =
-  (namespace: string, schema: PossibleSchemaInput, options: Partial<ISchemaToInterfaceOptions>, overrides: Partial<IFromQueryOptions>) => string;
+  (
+    namespace: string,
+    schema: PossibleSchemaInput,
+    options: Partial<ISchemaToInterfaceOptions>,
+    overrides: Partial<IFromQueryOptions>
+  ) => string;
 
-export const generateNamespace: GenerateNamespace = (namespace, schema, options, overrides= {}) => {
+export const generateNamespace: GenerateNamespace = (namespace, schema, options, overrides = {}) => {
   const formatters: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...overrides };
   return formatters.postProcessor(formatters.generateNamespace(namespace, schemaToInterfaces(schema, options, formatters)));
 };
