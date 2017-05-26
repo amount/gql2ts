@@ -184,8 +184,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     let additionalInfo: string = '';
 
     if (isAbstractType(type)) {
-      const poss: Array<GraphQLObjectType | GraphQLField<any, any>> =
-        (type instanceof GraphQLInterfaceType) ? (interfaceMap.get(type) || []) : type.getTypes();
+      const poss: Array<GraphQLObjectType | GraphQLField<any, any>> = interfaceMap.get(type) || [];
       let possibleTypes: string[] = poss
         .filter(t => !ignoredTypes.has(t.name))
         .map(t => generateInterfaceName(t.name));
