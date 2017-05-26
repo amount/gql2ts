@@ -14,6 +14,7 @@ import {
   isAbstractType,
   GraphQLOutputType,
   GraphQLEnumValue,
+  GraphQLUnionType,
 } from 'graphql';
 import {
   schemaFromInputs,
@@ -162,7 +163,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   ) => string | null;
 
   const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability, interfaceMap) => {
-    if (type instanceof GraphQLScalarType) {
+    if (type instanceof GraphQLScalarType || type instanceof GraphQLUnionType) {
       return null;
     }
 
@@ -171,8 +172,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     }
 
     let isInput: boolean = type instanceof GraphQLInputObjectType;
-    const f1: GraphQLInputFieldMap | GraphQLFieldMap<any, any> =
-      (type instanceof GraphQLInputObjectType) ? type.getFields() : ((type as GraphQLObjectType).getFields)();
+    const f1: GraphQLInputFieldMap | GraphQLFieldMap<any, any> = type.getFields();
     let f: Array<GraphQLField<any, any> | GraphQLInputField> = Object.keys(f1).map(k => f1[k]);
 
     let fields: string[] = f
