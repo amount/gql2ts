@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Fix `@gql2ts/from-schema` not handling Unions properly [#66](https://github.com/avantcredit/gql2ts/pull/66)
+
 ## 1.0.0
 
 - Use lerna to manage multiple packages
