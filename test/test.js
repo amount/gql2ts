@@ -8,6 +8,8 @@ let enumSchema     = require('./data/enumSchema');
 let expectedNamespace  = require('./data/expectedNamespace');
 let expectedInterfaces = require('./data/expectedInterfaces');
 let expectedLegacyInterfaces = require('./data/expectedLegacyInterfaces');
+let simpleSchema = require('./shared/simpleSchema');
+let expectedSimpleSchema = require('./data/expectedSimpleSchema');
 
 describe('gql2ts', () => {
   describe('interfaces', () => {
@@ -60,6 +62,14 @@ describe('gql2ts', () => {
       expect(namespace).to.equal(enumNamespace);
     });
   });
+
+  describe('union types', () => {
+    it('correctly translates the schema into typescript defs', () => {
+      let actual = schemaToInterfaces(simpleSchema, { ignoredTypes: [] });
+
+      expect(postProcessor(actual)).to.equal(postProcessor(expectedSimpleSchema));
+    });
+  })
 
   describe('Supports older TypeScript versions', () => {
     it('removes Nullability annotations when passed', () => {
