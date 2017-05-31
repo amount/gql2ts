@@ -155,7 +155,9 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     let nestedType: GraphQLNamedType = findRootType(field.type);
     return !ignoredTypes.has(nestedType.name);
   };
+
   type InterfaceMap = Map<GraphQLInterfaceType, GraphQLObjectType[]>;
+
   type TypeToInterface = (
     type: GraphQLNamedType,
     ignoredTypes: Set<string>,
