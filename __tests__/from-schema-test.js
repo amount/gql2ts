@@ -1,80 +1,63 @@
 'use strict';
-const expect       = require('chai').expect;
 let { schemaToInterfaces } = require('../packages/from-schema');
 let { generateNamespace } = require('../packages/from-schema');
 let { DEFAULT_OPTIONS: { postProcessor }} = require('../packages/language-typescript');
 let schema         = require('./data/starWarsSchema');
 let enumSchema     = require('./data/enumSchema');
-let expectedNamespace  = require('./data/expectedNamespace');
-let expectedInterfaces = require('./data/expectedInterfaces');
-let expectedLegacyInterfaces = require('./data/expectedLegacyInterfaces');
 let simpleSchema = require('./shared/simpleSchema');
-let expectedSimpleSchema = require('./data/expectedSimpleSchema');
 
 describe('gql2ts', () => {
   describe('interfaces', () => {
     it('correctly translates the star wars schema into typescript defs', () => {
       let actual = schemaToInterfaces(schema, { ignoredTypes: [] });
-
-      expect(postProcessor(actual)).to.equal(postProcessor(expectedInterfaces));
+      expect(actual).toMatchSnapshot();
     });
 
     it('correctly ignores types', () => {
       let actual = schemaToInterfaces(schema, { ignoredTypes: ['Person'] });
-      let ignoredPerson = require('./data/ignoredPersonInterfaces');
-      expect(postProcessor(actual)).to.equal(postProcessor(ignoredPerson));
+      expect(actual).toMatchSnapshot();
     });
 
     it('correctly translates enums', () => {
       let actual = schemaToInterfaces(enumSchema, { ignoredTypes: [] });
-      let enumInterfaces = require('./data/expectedEnumInterfaces');
-      expect(postProcessor(actual)).to.equal(postProcessor(enumInterfaces));
+      expect(actual).toMatchSnapshot();
     });
   });
 
   describe('namespace', () => {
     it('correctly generates namespace', () => {
       let namespace = generateNamespace('GQL', schema, { ignoredTypes: [] });
-      expect(namespace).to.equal(expectedNamespace);
+      expect(namespace).toMatchSnapshot();
     });
 
     it('correctly uses a custom namespace', () => {
       let namespace = generateNamespace('StarWars', schema, { ignoredTypes: [] });
-
-      let swNamespace = require('./data/starWarsNamespace');
-
-      expect(namespace).to.equal(swNamespace);
+      expect(namespace).toMatchSnapshot();
     });
 
     it('correctly uses a namespace and ignores', () => {
       let namespace = generateNamespace('StarWars', schema, { ignoredTypes: ['Person'] });
-
-      let swNamespace = require('./data/ignoredPerson');
-
-      expect(namespace).to.equal(swNamespace);
+      expect(namespace).toMatchSnapshot();
     });
 
     it('correctly translates enums', () => {
       let namespace = generateNamespace('GQL', enumSchema, { ignoredTypes: [] });
 
-      let enumNamespace = require('./data/expectedEnum');
-
-      expect(namespace).to.equal(enumNamespace);
+      expect(namespace).toMatchSnapshot();
     });
   });
 
   describe('union types', () => {
     it('correctly translates the schema into typescript defs', () => {
       let actual = schemaToInterfaces(simpleSchema, { ignoredTypes: [] });
-
-      expect(postProcessor(actual)).to.equal(postProcessor(expectedSimpleSchema));
+      expect(actual).toMatchSnapshot();
     });
   })
 
   describe('Supports older TypeScript versions', () => {
     it('removes Nullability annotations when passed', () => {
       let interfaces = schemaToInterfaces(schema, { ignoredTypes: [], legacy: true });
-      expect(postProcessor(interfaces)).to.equal(postProcessor(expectedLegacyInterfaces));
+      expect(interfaces).toMatchSnapshot();
     });
   });
 });
