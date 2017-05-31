@@ -15,6 +15,7 @@ import {
   GraphQLOutputType,
   GraphQLEnumValue,
   GraphQLUnionType,
+  GraphQLAbstractType,
 } from 'graphql';
 import {
   schemaFromInputs,
@@ -112,7 +113,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       return `!${resolveInterfaceName((type).ofType)}`;
     } else if (type instanceof GraphQLScalarType) {
       return TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT;
-    } else if (type instanceof GraphQLInterfaceType) {
+    } else if (isAbstractType(type)) {
       return generateTypeName(type.name);
     } else if (isEnum(type)) {
       return generateEnumName(type.name);
@@ -154,17 +155,36 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     let nestedType: GraphQLNamedType = findRootType(field.type);
     return !ignoredTypes.has(nestedType.name);
   };
-
+  type InterfaceMap = Map<GraphQLInterfaceType, GraphQLObjectType[]>;
   type TypeToInterface = (
     type: GraphQLNamedType,
     ignoredTypes: Set<string>,
     supportsNullability: boolean,
-    interfaceMap: Map<GraphQLInterfaceType, GraphQLObjectType[]>
+    interfaceMap: InterfaceMap
   ) => string | null;
 
+  function isUnion (type: GraphQLNamedType): type is GraphQLUnionType {
+    return type instanceof GraphQLUnionType;
+  }
+
+  type GenerateAbstractTypeDeclaration = (type: GraphQLAbstractType, ignoredTypes: Set<string>, interfaceMap: InterfaceMap) => string;
+
+  const generateAbstractTypeDeclaration: GenerateAbstractTypeDeclaration = (type, ignoredTypes, interfaceMap) => {
+    const poss: Array<GraphQLObjectType | GraphQLField<any, any>> = (isUnion(type)) ? type.getTypes() : interfaceMap.get(type) || [];
+    let possibleTypes: string[] = poss
+      .filter(t => !ignoredTypes.has(t.name))
+      .map(t => generateInterfaceName(t.name));
+
+    return generateTypeDeclaration(type.description, generateTypeName(type.name), possibleTypes.join(' | '));
+  };
+
   const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability, interfaceMap) => {
-    if (type instanceof GraphQLScalarType || type instanceof GraphQLUnionType) {
+    if (type instanceof GraphQLScalarType) {
       return null;
+    }
+
+    if (isUnion(type)) {
+      return generateAbstractTypeDeclaration(type, ignoredTypes, interfaceMap);
     }
 
     if (isEnum(type)) {
@@ -184,14 +204,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     let additionalInfo: string = '';
 
     if (isAbstractType(type)) {
-      const poss: Array<GraphQLObjectType | GraphQLField<any, any>> = interfaceMap.get(type) || [];
-      let possibleTypes: string[] = poss
-        .filter(t => !ignoredTypes.has(t.name))
-        .map(t => generateInterfaceName(t.name));
-
-      if (possibleTypes.length) {
-        additionalInfo = generateTypeDeclaration(type.description, generateTypeName(type.name), possibleTypes.join(' | '));
-      }
+      additionalInfo = generateAbstractTypeDeclaration(type, ignoredTypes, interfaceMap);
     }
 
     return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo, isInput);
