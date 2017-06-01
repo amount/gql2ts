@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/from-schema",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "convert a graphql schema to typescript interfaces",
   "main": "dist/index.js",
   "files": [
