@@ -93,7 +93,9 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const generateInterfaceDeclaration: GenerateInterfaceDeclaration =
     (description, declaration, fields, additionalInfo, isInput) => {
-      if (!isInput) { fields = [typeNameDeclaration, ...fields]; }
+      if (!isInput) {
+        fields = [optionsInput.ignoreTypeNameDeclaration ? '' : typeNameDeclaration, ...fields];
+      }
       return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
     };
 
@@ -280,6 +282,7 @@ export const generateNamespace: GenerateNamespace = (namespace, schema, options,
 export interface ISchemaToInterfaceOptions {
   legacy?: boolean;
   ignoredTypes: string[];
+  ignoreTypeNameDeclaration?: boolean;
   namespace: string;
   outputFile?: string;
   externalOptions?: string;
