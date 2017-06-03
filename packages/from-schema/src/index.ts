@@ -93,8 +93,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const generateInterfaceDeclaration: GenerateInterfaceDeclaration =
     (description, declaration, fields, additionalInfo, isInput) => {
-      if (!isInput) {
-        fields = [optionsInput.ignoreTypeNameDeclaration ? '' : typeNameDeclaration, ...fields];
+      if (!isInput && !optionsInput.ignoreTypeNameDeclaration) {
+       fields =  [typeNameDeclaration, ...fields];
       }
       return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
     };
