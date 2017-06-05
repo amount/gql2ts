@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Update `graphql` dependency to `0.10.1`
+
 ## 1.0.2
 
 - Fix the fix for unions from `1.0.1`
