@@ -2,13 +2,17 @@
 
 ## 1.1.1
 
-- Update `graphql` dependency to `0.10.1`
+- Merge back changes from `1.0.3`
 
-## 1.1.0
+## 1.1.0 (botched)
 
 ### @gql2ts/from-schema
 
 - Add option `ignoreTypeNameDeclaration` to not add `__typename` to all fields (thanks [@epicallan](https://github.com/epicallan)) [#72](https://github.com/avantcredit/gql2ts/pull/72)
+
+## 1.0.3
+
+- Update `graphql` dependency to `0.10.1`
 
 ## 1.0.2
 
