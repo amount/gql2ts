@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/types",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.1.1",
   "description": "type definitions",
   "main": "dist/index.js",
   "files": [
@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
-    "@gql2ts/util": "^1.0.3"
+    "@gql2ts/util": "^1.1.1"
   }
 }
