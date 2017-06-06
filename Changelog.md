@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+### @gql2ts/from-schema
+
+- Add option `ignoreTypeNameDeclaration` to not add `__typename` to all fields (thanks [@epicallan](https://github.com/epicallan)) [#72](https://github.com/avantcredit/gql2ts/pull/72)
+
 ## 1.0.2
 
 - Fix the fix for unions from `1.0.1`
