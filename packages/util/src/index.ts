@@ -8,4 +8,5 @@ export {
   isList,
   isNonNullable,
   isEnum,
+  gqlGlobHandler
 } from './schema';
