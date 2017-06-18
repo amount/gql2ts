@@ -30,13 +30,6 @@
   "dependencies": {
     "glob": "^7.1.2",
     "graphql": "^0.10.1",
-    "graphql-tag": "^2.2.2",
-    "graphql-tools": "^1.0.0",
-    "merge-graphql-schemas": "0.0.17"
-  },
-  "peerDependencies": {
-    "graphql-tag": "^2.2.2",
-    "graphql-tools": "^1.0.0",
-    "graphql": "^0.10.1"
+    "merge-graphql-schemas": "0.0.19"
   }
 }

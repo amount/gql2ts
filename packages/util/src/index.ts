@@ -7,6 +7,5 @@ export {
   schemaFromInputs,
   isList,
   isNonNullable,
-  isEnum,
-  gqlGlobHandler
+  isEnum
 } from './schema';

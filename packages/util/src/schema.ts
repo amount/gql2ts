@@ -8,9 +8,6 @@ import {
   GraphQLList,
   GraphQLEnumType,
 } from 'graphql';
-import * as glob from 'glob';
-import * as fs from 'fs';
-import { mergeTypes } from 'merge-graphql-schemas';
 
 export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | IntrospectionQuery;
 export type PossibleSchemaInput = GraphQLSchema | string | PossibleIntrospectionInputs;
@@ -44,10 +41,3 @@ export function isList (type: GraphQLType): type is GraphQLList<any> {
 export function isEnum (type: GraphQLType): type is GraphQLEnumType {
   return type instanceof GraphQLEnumType;
 }
-
-export const gqlGlobHandler: (pattern: string) => string = (pattern) => {
-  const files: string[] = glob.sync(pattern);
-  const content: string[] = files.map((fileName: string) => fs.readFileSync(fileName).toString());
-  const schema: string  = mergeTypes(content).join('');
-  return schema;
-};
