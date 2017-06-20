@@ -8,7 +8,7 @@ export const readFile: (fileName: string) => string = fileName => {
   if (isGqlFile) {
       const globbedFilePaths: string[] = glob.sync(fileName);
       const content: string[] = globbedFilePaths.map((filePath: string) => fs.readFileSync(filePath).toString());
-      return mergeTypes(content).join('');
+      return mergeTypes(content);
   }
   return JSON.parse(fs.readFileSync(fileName).toString());
 };
