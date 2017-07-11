@@ -1,6 +1,4 @@
-// const sinon = require('sinon');
-// const fs = require('fs');
-
+const fs = require('fs');
 const utils = require('../packages/util');
 const { badWriteHandler } = require('../packages/util/dist/fileIO');
 const schemaLanguage = require('./shared/simpleSchema');
@@ -34,25 +32,30 @@ describe('schema', () => {
   })
 });
 
-// describe('IO stuff', () => {
-//   it ('writes file', () => {
-//     const writeFileStub = sinon.stub(fs, 'writeFile');
-//     utils.writeToFile('test', 'test');
-//     expect(writeFileStub.calledOnce).toBe(true);
-//   })
-//   describe('error handler', () => {
-//     it ('does nothing if called w/ undefined', () => {
-//       expect(() => badWriteHandler(undefined)).to.throw;
-//     })
-//     it ('throws if called', () => {
-//       const err = new Error('Bad Write');
-//       expect(() => badWriteHandler(err)).toThrowError(err);
-//     })
-//   })
-//   it ('writes file', () => {
-//     const readFileStub = sinon.stub(fs, 'readFileSync').returns('{}');
-//     utils.readFile('test');
-//     expect(readFileStub.calledOnce).toBe(true);
-//     readFileStub.reset();
-//   })
-// })
+describe('IO stuff', () => {
+  it ('writes file', () => {
+    // const writeFileStub = sinon.stub(fs, 'writeFile');
+    const spy = jest.spyOn(fs, 'writeFile').mockImplementation(() => null);
+    utils.writeToFile('test', 'test');
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockReset();
+    spy.mockRestore();
+    spy.mockClear();
+  })
+  describe('error handler', () => {
+    it ('does nothing if called w/ undefined', () => {
+      expect(() => badWriteHandler(undefined)).not.toThrow();
+    })
+    it ('throws if called', () => {
+      expect(() => badWriteHandler(err)).toThrowErrorMatchingSnapshot();
+    })
+  })
+  it ('writes file', () => {
+    const spy = jest.spyOn(fs, 'readFileSync').mockImplementation(() => '{}');
+    utils.readFile('test');
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockReset();
+    spy.mockRestore();
+    spy.mockClear();
+  })
+})
