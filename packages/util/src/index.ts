@@ -7,5 +7,5 @@ export {
   schemaFromInputs,
   isList,
   isNonNullable,
-  isEnum,
+  isEnum
 } from './schema';

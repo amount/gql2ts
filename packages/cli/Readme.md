@@ -5,7 +5,7 @@ npm install -g gql2ts
 ```
 
 ```shell
-Usage: index [options] <schema.json> <query.gql>
+Usage: index [options] <schema.json> <query.gql> <**/**.gql>
 
 Options:
 

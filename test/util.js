@@ -36,6 +36,11 @@ describe('schema', () => {
   it('throws on other', () => {
     expect(() => utils.schemaFromInputs({})).to.throw('Invalid Schema Input');
   })
+
+  it('should glob .gql or graphql files and return a merged schema', () => {
+    const schema = utils.readFile('**/*.gql');
+    expect(utils.schemaFromInputs(schema)).to.be.instanceof(GraphQLSchema);
+  })
 });
 
 describe('IO stuff', () => {
