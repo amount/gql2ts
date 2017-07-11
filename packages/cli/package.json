@@ -1,6 +1,6 @@
 {
   "name": "gql2ts",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "dist/index.js",
   "files": [
@@ -8,13 +8,13 @@
   ],
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@gql2ts/from-query": "^1.0.0",
-    "@gql2ts/from-schema": "^1.0.1",
-    "@gql2ts/util": "^1.0.0",
+    "@gql2ts/from-query": "^1.1.1",
+    "@gql2ts/from-schema": "^1.1.1",
+    "@gql2ts/util": "^1.1.1",
     "commander": "^2.9.0"
   },
   "devDependencies": {
-    "@gql2ts/types": "^1.0.0",
+    "@gql2ts/types": "^1.1.1",
     "@types/commander": "^2.3.31"
   },
   "scripts": {
