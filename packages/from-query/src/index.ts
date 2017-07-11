@@ -180,11 +180,8 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       }
     } else {
       const operationFields: GraphQLObjectType | null | undefined = getOperationFields(operation);
-      if (operationFields) {
-        return operationFields.getFields()[selection.name.value];
-      } else {
-        throw new Error(`Operation '${operation}' does not exist on this schema`);
-      }
+      // operation is taken from the schema, so it should never be falsy
+      return operationFields!.getFields()[selection.name.value];
     }
   };
 
