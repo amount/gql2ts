@@ -13,6 +13,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "coveralls": "^2.13.0",
+    "jest": "^20.0.4",
     "lerna": "2.0.0-beta.38",
     "mocha": "^3.2.0",
     "nyc": "^10.2.0",
@@ -22,8 +23,8 @@
   },
   "scripts": {
     "pretest": "lerna bootstrap --hoist graphql",
-    "test": "nyc --reporter=html --reporter=text mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "jest --testRegex .*-test\\.js$ --coverage",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "typescript",
