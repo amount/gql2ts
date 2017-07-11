@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`typescript prettify prettifies 1`] = `"export interface ITestInterface { a: string; b: string | number; c: string | number | boolean; }"`;
