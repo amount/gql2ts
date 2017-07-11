@@ -1,0 +1,1032 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`directives fragments does anonymous inline fragments 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: Partial<{
+    id: string;
+    name: string | null;
+  }> | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: Partial<{
+    id: string;
+    name: string | null;
+  }> | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives fragments does anonymous inline fragments with aliases 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: Partial<{
+    b: string;
+    c: string | null;
+  }> | null;
+}",
+    "result": "export interface FragmentTest {
+  a: Partial<{
+    b: string;
+    c: string | null;
+  }> | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives fragments works with aliases on fragment spread 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: Partial<IFragmentCharacterFields> | null;
+}",
+    "result": "export interface FragmentTest {
+  a: Partial<IFragmentCharacterFields> | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  b: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  b: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives fragments works with fragment spread 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: Partial<IFragmentCharacterFields> | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: Partial<IFragmentCharacterFields> | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives fragments works with inline fragments on type 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: Partial<{
+    primaryFunction?: string | null;
+    primaryFunctionNonNull?: string;
+  }> | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: Partial<{
+    primaryFunction?: string | null;
+    primaryFunctionNonNull?: string;
+  }> | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives fragments works with inline fragments on type with aliases 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: Partial<{
+    b?: string | null;
+    c?: string;
+  }> | null;
+}",
+    "result": "export interface FragmentTest {
+  a: Partial<{
+    b?: string | null;
+    c?: string;
+  }> | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives on fields works with simple fields 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface TestQuery {
+  heroNoParam: {
+    id?: string;
+    name?: string | null;
+  } | null;
+}",
+    "result": "export interface TestQuery {
+  heroNoParam: {
+    id?: string;
+    name?: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`directives outputs bad directives 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface TestQuery {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface TestQuery {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does anonymous inline fragments 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does anonymous inline fragments with aliases 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: {
+    b: string;
+    c: string | null;
+  } | null;
+}",
+    "result": "export interface FragmentTest {
+  a: {
+    b: string;
+    c: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does inline fragments on type 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: {
+    primaryFunction?: string | null;
+    primaryFunctionNonNull?: string;
+  } | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: {
+    primaryFunction?: string | null;
+    primaryFunctionNonNull?: string;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does inline fragments on type with aliases 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: {
+    b?: string | null;
+    c?: string;
+  } | null;
+}",
+    "result": "export interface FragmentTest {
+  a: {
+    b?: string | null;
+    c?: string;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does nested fragments 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  friends: Array<IFragmentCharacterFieldsNested | null> | null;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  friends: Array<IFragmentCharacterFieldsNested | null> | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFieldsNested {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFieldsNested {
+  id: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does nested fragments 2 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested {
+  friends: Array<IFragmentCharacterFieldsNested | null> | null;
+}",
+    "result": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested {
+  friends: Array<IFragmentCharacterFieldsNested | null> | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFieldsNested {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFieldsNested {
+  id: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does nested fragments 3 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested, IFragmentCharacterFieldsNestedAgain {
+  friends: Array<IFragmentCharacterFieldsNested | null> | null;
+}",
+    "result": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested, IFragmentCharacterFieldsNestedAgain {
+  friends: Array<IFragmentCharacterFieldsNested | null> | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFieldsNested {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFieldsNested {
+  id: string;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFieldsNestedAgain {
+  name: string | null;
+}",
+    "result": "export interface IFragmentCharacterFieldsNestedAgain {
+  name: string | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does simple fragments 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does simple fragments with aliases 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  a: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  b: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  b: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does simple fragments with other selections 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: {
+    name: string | null;
+  } & IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: {
+    name: string | null;
+  } & IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`fragments does simple fragments with other selections and aliases 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  a: {
+    b: string | null;
+  } & IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  a: {
+    b: string | null;
+  } & IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  c: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  c: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`simple examples does "naked" queries 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface Anonymous {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface Anonymous {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`simple examples does a very simple query 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface TestQuery {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface TestQuery {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`simple examples does a very simple query 2`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface TestQuery {
+  heroNoParam: {
+    __typename: string;
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface TestQuery {
+  heroNoParam: {
+    __typename: string;
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`simple examples does unnamed queries 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface Anonymous {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface Anonymous {
+  heroNoParam: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`simple examples supports arrays 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface Test {
+  heroNoParam: {
+    nonNullArr: Array<{
+      id: string;
+      name: string | null;
+    } | null>;
+    nonNullArrAndContents: Array<{
+      id: string;
+      name: string | null;
+    }>;
+    nullArrNonNullContents: Array<{
+      id: string;
+      name: string | null;
+    }> | null;
+  } | null;
+}",
+    "result": "export interface Test {
+  heroNoParam: {
+    nonNullArr: Array<{
+      id: string;
+      name: string | null;
+    } | null>;
+    nonNullArrAndContents: Array<{
+      id: string;
+      name: string | null;
+    }>;
+    nullArrNonNullContents: Array<{
+      id: string;
+      name: string | null;
+    }> | null;
+  } | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`simple examples supports custom scalars 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface CustomScalarQuery {
+  test: string | null;
+}",
+    "result": "export interface CustomScalarQueryInput {
+  test?: string | null;
+}
+
+export interface CustomScalarQuery {
+  test: string | null;
+}",
+    "variables": "export interface CustomScalarQueryInput {
+  test?: string | null;
+}",
+  },
+]
+`;
+
+exports[`simple examples supports enums 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface EnumQuery {
+  hero: {
+    appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
+  } | null;
+}",
+    "result": "export interface EnumQueryInput {
+  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
+}
+
+export interface EnumQuery {
+  hero: {
+    appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
+  } | null;
+}",
+    "variables": "export interface EnumQueryInput {
+  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
+}",
+  },
+]
+`;
+
+exports[`simple examples supports list variables 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface TestQuery {
+  getCharacters: Array<{
+    id: string;
+    name: string | null;
+  } | null>;
+}",
+    "result": "export interface TestQueryInput {
+  ids: Array<string>;
+}
+
+export interface TestQuery {
+  getCharacters: Array<{
+    id: string;
+    name: string | null;
+  } | null>;
+}",
+    "variables": "export interface TestQueryInput {
+  ids: Array<string>;
+}",
+  },
+]
+`;
+
+exports[`simple examples supports unions 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface UnionQuery {
+  humanOrDroid: {
+    id: string;
+  } | null;
+}",
+    "result": "export interface UnionQueryInput {
+  id: string;
+}
+
+export interface UnionQuery {
+  humanOrDroid: {
+    id: string;
+  } | null;
+}",
+    "variables": "export interface UnionQueryInput {
+  id: string;
+}",
+  },
+]
+`;
+
+exports[`simple examples supports unions with inline fragment 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface UnionQuery {
+  humanOrDroid: {
+    id?: string;
+    name?: string | null;
+  } | null;
+}",
+    "result": "export interface UnionQueryInput {
+  id: string;
+}
+
+export interface UnionQuery {
+  humanOrDroid: {
+    id?: string;
+    name?: string | null;
+  } | null;
+}",
+    "variables": "export interface UnionQueryInput {
+  id: string;
+}",
+  },
+]
+`;
+
+exports[`simple examples supports variables 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface TestQuery {
+  human: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "result": "export interface TestQueryInput {
+  id: string;
+}
+
+export interface TestQuery {
+  human: {
+    id: string;
+    name: string | null;
+  } | null;
+}",
+    "variables": "export interface TestQueryInput {
+  id: string;
+}",
+  },
+]
+`;
+
+exports[`with subtypes dedupes and enumerates 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [
+      "export interface SelectionOnFriends {
+  id: string;
+  name: string | null;
+}",
+      "export interface SelectionOnFriends1 {
+  id: string;
+  name: string | null;
+  friends: Array<SelectionOnFriends | null> | null;
+}",
+      "export interface SelectionOnFriends2 {
+  id: string;
+  name: string | null;
+  friends: Array<SelectionOnFriends1 | null> | null;
+}",
+      "export interface SelectionOnHeroNoParam {
+  friends: Array<SelectionOnFriends2 | null> | null;
+}",
+    ],
+    "interface": "export interface Test {
+  hero1: SelectionOnHeroNoParam | null;
+  hero2: SelectionOnHeroNoParam | null;
+}",
+    "result": "export interface SelectionOnFriends {
+  id: string;
+  name: string | null;
+}
+
+export interface SelectionOnFriends1 {
+  id: string;
+  name: string | null;
+  friends: Array<SelectionOnFriends | null> | null;
+}
+
+export interface SelectionOnFriends2 {
+  id: string;
+  name: string | null;
+  friends: Array<SelectionOnFriends1 | null> | null;
+}
+
+export interface SelectionOnHeroNoParam {
+  friends: Array<SelectionOnFriends2 | null> | null;
+}
+
+export interface Test {
+  hero1: SelectionOnHeroNoParam | null;
+  hero2: SelectionOnHeroNoParam | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`with subtypes does a very simple query 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [
+      "export interface SelectionOnHeroNoParam {
+  id: string;
+  name: string | null;
+}",
+    ],
+    "interface": "export interface TestQuery {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}",
+    "result": "export interface SelectionOnHeroNoParam {
+  id: string;
+  name: string | null;
+}
+
+export interface TestQuery {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`with subtypes does array query 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [
+      "export interface SelectionOnNonNullArr {
+  id: string;
+  name: string | null;
+}",
+      "export interface SelectionOnNonNullArrAndContents {
+  id: string;
+  name: string | null;
+}",
+      "export interface SelectionOnNullArrNonNullContents {
+  id: string;
+  name: string | null;
+}",
+      "export interface SelectionOnHeroNoParam {
+  nonNullArr: Array<SelectionOnNonNullArr | null>;
+  nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
+  nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
+}",
+    ],
+    "interface": "export interface Test {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}",
+    "result": "export interface SelectionOnNonNullArr {
+  id: string;
+  name: string | null;
+}
+
+export interface SelectionOnNonNullArrAndContents {
+  id: string;
+  name: string | null;
+}
+
+export interface SelectionOnNullArrNonNullContents {
+  id: string;
+  name: string | null;
+}
+
+export interface SelectionOnHeroNoParam {
+  nonNullArr: Array<SelectionOnNonNullArr | null>;
+  nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
+  nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
+}
+
+export interface Test {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`with subtypes does fragment query 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  id: string;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`with subtypes does partial fragment query 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+}",
+    "result": "export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`with subtypes does partial fragment query with complex types 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "result": "export interface FragmentTest {
+  heroNoParam: IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [
+      "export interface SelectionOnFriends {
+  id: string;
+}",
+    ],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+  friends?: Array<SelectionOnFriends | null> | null;
+}",
+    "result": "export interface SelectionOnFriends {
+  id: string;
+}
+
+export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+  friends?: Array<SelectionOnFriends | null> | null;
+}",
+    "variables": "",
+  },
+]
+`;
+
+exports[`with subtypes does partial fragment query with complex types and directives 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [
+      "export type SelectionOnHeroNoParam = Partial<{
+  name?: string | null;
+}>",
+    ],
+    "interface": "export interface FragmentTest {
+  heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
+}",
+    "result": "export type SelectionOnHeroNoParam = Partial<{
+  name?: string | null;
+}>
+
+export interface FragmentTest {
+  heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
+}",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [
+      "export interface SelectionOnFriends {
+  id: string;
+}",
+    ],
+    "interface": "export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+  friends?: Array<SelectionOnFriends | null> | null;
+}",
+    "result": "export interface SelectionOnFriends {
+  id: string;
+}
+
+export interface IFragmentCharacterFields {
+  id: string;
+  name?: string | null;
+  friends?: Array<SelectionOnFriends | null> | null;
+}",
+    "variables": "",
+  },
+]
+`;
