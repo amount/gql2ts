@@ -1,4 +1,4 @@
-module.exports = `
+export default `
   enum Episode { NEWHOPE, EMPIRE, JEDI }
 
   interface Character {

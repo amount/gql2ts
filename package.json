@@ -8,22 +8,18 @@
   },
   "devDependencies": {
     "@types/graphql": "^0.9.3",
+    "@types/jest": "^20.0.2",
     "@types/node": "^7.0.34",
-    "@types/sinon": "^1.16.36",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
     "coveralls": "^2.13.0",
     "jest": "^20.0.4",
     "lerna": "2.0.0-beta.38",
-    "mocha": "^3.2.0",
-    "nyc": "^10.2.0",
-    "sinon": "^2.1.0",
+    "ts-jest": "^20.0.7",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
   },
   "scripts": {
-    "pretest": "lerna bootstrap --hoist graphql",
-    "test": "jest --testRegex .*-test\\.js$ --coverage",
+
+    "test": "jest --coverage",
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
@@ -39,5 +35,22 @@
   "engines": {
     "node": ">=4.0.0"
   },
-  "perferGlobal": true
+  "perferGlobal": true,
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "packages/cli/tsconfig.json"
+      }
+    },
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "mapCoverage": true,
+    "testRegex": "(/__tests__/.*-test)\\.(ts|tsx|js)$"
+  }
 }
