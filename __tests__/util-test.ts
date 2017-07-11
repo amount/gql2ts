@@ -81,6 +81,7 @@ describe('IO stuff', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     spy.mockReset();
     spy.mockClear();
+    (spy as any).mockRestore();
   });
 
   describe('error handler', () => {
@@ -97,5 +98,6 @@ describe('IO stuff', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     spy.mockReset();
     spy.mockClear();
+    (spy as any).mockRestore();
   });
 });

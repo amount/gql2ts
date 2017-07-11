@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`language-typescript DEFAULT_FORMAT_INPUT non optional 1`] = `"test: test2;"`;
+
+exports[`language-typescript DEFAULT_FORMAT_INPUT optional 1`] = `"test?: test2;"`;
+
+exports[`language-typescript DEFAULT_NAME_QUERY anonymous 1`] = `"Anonymous"`;
+
+exports[`language-typescript DEFAULT_NAME_QUERY with name 1`] = `"Test"`;
+
+exports[`language-typescript DEFAULT_TYPE_PRINTER non null 1`] = `"test | null"`;
+
+exports[`language-typescript DEFAULT_TYPE_PRINTER null 1`] = `"test"`;
+
+exports[`language-typescript interfaceExtendListToString with empty array 1`] = `""`;
+
+exports[`language-typescript interfaceExtendListToString with non-empty array 1`] = `" extends test, test2, test3"`;
