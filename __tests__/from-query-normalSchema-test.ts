@@ -1,5 +1,5 @@
-import runProgram from '../packages/from-query';
-import { IFromQueryReturnValue } from '../packages/types';
+import runProgram from '../packages/from-query/src';
+import { IFromQueryReturnValue } from '../packages/types/src';
 import schema from './shared/simpleSchema';
 
 const simplestQuery: string = `

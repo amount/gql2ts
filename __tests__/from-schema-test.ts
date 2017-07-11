@@ -1,6 +1,5 @@
-import { schemaToInterfaces } from '../packages/from-schema';
-import { generateNamespace } from '../packages/from-schema';
-import { DEFAULT_OPTIONS } from '../packages/language-typescript';
+import { schemaToInterfaces, generateNamespace } from '../packages/from-schema/src';
+import { DEFAULT_OPTIONS } from '../packages/language-typescript/src';
 import schema from './data/starWarsSchema';
 import enumSchema from './data/enumSchema';
 import simpleSchema from './shared/simpleSchema';

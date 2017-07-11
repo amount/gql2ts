@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import * as utils from '../packages/util';
-import { badWriteHandler } from '../packages/util/dist/fileIO';
+import * as utils from '../packages/util/src';
+import { badWriteHandler } from '../packages/util/src/fileIO';
 import schemaLanguage from './shared/simpleSchema';
 import { GraphQLSchema, introspectionQuery, graphql } from 'graphql';
 
