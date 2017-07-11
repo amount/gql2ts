@@ -38,7 +38,6 @@ describe('schema', () => {
 
 describe('IO stuff', () => {
   it('writes file', () => {
-    // const writeFileStub = sinon.stub(fs, 'writeFile');
     const spy: jest.Spy = jest.spyOn(fs, 'writeFile').mockImplementation(() => null);
     utils.writeToFile('test', 'test');
     expect(spy).toHaveBeenCalledTimes(1);

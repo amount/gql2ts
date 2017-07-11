@@ -18,7 +18,7 @@
     "typescript": "^2.4.1"
   },
   "scripts": {
-
+    "pretest": "lerna bootstrap --hoist graphql",
     "test": "jest --coverage",
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
