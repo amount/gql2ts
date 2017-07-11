@@ -46,17 +46,20 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
+    const queryType: GraphQLObjectType = schema.getQueryType();
+    const mutationType: GraphQLObjectType | undefined | null = schema.getMutationType();
+    const subscriptionType: GraphQLObjectType | undefined | null = schema.getSubscriptionType();
 
-    if (schema.getQueryType()) {
-      rootNamespaces.push(generateInterfaceName(schema.getQueryType().name));
+    if (queryType) {
+      rootNamespaces.push(generateInterfaceName(queryType.name));
     }
 
-    if (schema.getMutationType()) {
-      rootNamespaces.push(generateInterfaceName(schema.getMutationType().name));
+    if (mutationType) {
+      rootNamespaces.push(generateInterfaceName(mutationType.name));
     }
 
-    if (schema.getSubscriptionType()) {
-      rootNamespaces.push(generateInterfaceName(schema.getSubscriptionType().name));
+    if (subscriptionType) {
+      rootNamespaces.push(generateInterfaceName(subscriptionType.name));
     }
 
     return rootNamespaces.join(' | ');
