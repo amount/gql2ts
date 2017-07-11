@@ -145,7 +145,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     return hasDirectives;
   };
 
-  const getOperationFields: (operation: OperationTypeNode) => GraphQLObjectType = operation => {
+  const getOperationFields: (operation: OperationTypeNode) => GraphQLObjectType | null | undefined = operation => {
     switch (operation) {
       case 'query':
         return parsedSchema.getQueryType();
@@ -179,8 +179,12 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
         return parent.getFields()[selection.name.value];
       }
     } else {
-      const operationFields: GraphQLObjectType = getOperationFields(operation);
-      return operationFields.getFields()[selection.name.value];
+      const operationFields: GraphQLObjectType | null | undefined = getOperationFields(operation);
+      if (operationFields) {
+        return operationFields.getFields()[selection.name.value];
+      } else {
+        throw new Error(`Operation '${operation}' does not exist on this schema`);
+      }
     }
   };
 

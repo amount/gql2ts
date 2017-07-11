@@ -7,8 +7,8 @@
     "graphql": "^0.10.1"
   },
   "devDependencies": {
-    "@types/graphql": "^0.9.0",
-    "@types/node": "^7.0.12",
+    "@types/graphql": "^0.9.3",
+    "@types/node": "^7.0.34",
     "@types/sinon": "^1.16.36",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
@@ -17,8 +17,8 @@
     "mocha": "^3.2.0",
     "nyc": "^10.2.0",
     "sinon": "^2.1.0",
-    "tslint": "^5.0.0",
-    "typescript": "^2.2.1"
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.1"
   },
   "scripts": {
     "pretest": "lerna bootstrap --hoist graphql",
