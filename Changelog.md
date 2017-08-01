@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- Expose `ignoreTypeNameDeclaration` in the CLI. Use `--ignore-type-name-declaration` to enabled it [#81](https://github.com/avantcredit/gql2ts/pull/81)
+
 ## 1.1.1
 
 - Merge back changes from `1.0.3`
