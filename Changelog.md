@@ -2,7 +2,7 @@
 
 ## 1.1.2
 
-- Expose `ignoreTypeNameDeclaration` in the CLI. Use `--ignore-type-name-declaration` to enabled it [#81](https://github.com/avantcredit/gql2ts/pull/81)
+- Expose `ignoreTypeNameDeclaration` in the CLI. Use `--ignore-type-name-declaration` to enable it [#81](https://github.com/avantcredit/gql2ts/pull/81)
 
 ## 1.1.1
 
