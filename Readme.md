@@ -7,11 +7,11 @@
 
 ```shell
 # for CLI
-npm install -g gql2ts@next
+npm install -g gql2ts
 
 # for programmatic use
-npm install @gql2ts/from-query@next
-npm install @gql2ts/from-schema@next
+npm install @gql2ts/from-query
+npm install @gql2ts/from-schema
 ```
 
 See the `packages` directory for package Readmes.
