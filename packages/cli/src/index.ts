@@ -20,6 +20,7 @@ program
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
   .option('-l --legacy', 'Use TypeScript 1.x annotation', false)
   .option('-e --external-options [externalOptions]', 'ES Module with method overwrites')
+  .option('--ignore-type-name-declaration', 'Whether to exclude __typename', false)
   .parse(process.argv);
 
 interface ICLIOptions extends Partial<ISchemaToInterfaceOptions> {
