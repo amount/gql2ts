@@ -21,7 +21,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: null
   */
   interface IRoot {
-    __typename: string;
+    __typename: \\"Root\\";
     allFilms: IFilmsConnection;
     film: IFilm;
     allPeople: IPeopleConnection;
@@ -41,7 +41,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: string;
+    __typename: \\"FilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge>;
     totalCount: number;
@@ -52,7 +52,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: string;
+    __typename: \\"PageInfo\\";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string;
@@ -63,7 +63,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: string;
+    __typename: \\"FilmsEdge\\";
     node: IFilm;
     cursor: string;
 }
@@ -72,7 +72,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A single film.
   */
   interface IFilm {
-    __typename: string;
+    __typename: \\"Film\\";
     title: string;
     episodeID: number;
     openingCrawl: string;
@@ -98,7 +98,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An object with an ID
   */
   interface INode {
-    __typename: string;
+    __typename: \\"Node\\";
     id: string;
 }
 
@@ -106,7 +106,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: string;
+    __typename: \\"FilmSpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge>;
     totalCount: number;
@@ -117,7 +117,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: string;
+    __typename: \\"FilmSpeciesEdge\\";
     node: ISpecies;
     cursor: string;
 }
@@ -126,7 +126,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: string;
+    __typename: \\"Species\\";
     name: string;
     classification: string;
     designation: string;
@@ -149,7 +149,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
 0 ABY.
   */
   interface IPlanet {
-    __typename: string;
+    __typename: \\"Planet\\";
     name: string;
     diameter: number;
     rotationPeriod: number;
@@ -170,7 +170,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: string;
+    __typename: \\"PlanetResidentsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge>;
     totalCount: number;
@@ -181,7 +181,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: string;
+    __typename: \\"PlanetResidentsEdge\\";
     node: IPerson;
     cursor: string;
 }
@@ -190,7 +190,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An individual person or character within the Star Wars universe.
   */
   interface IPerson {
-    __typename: string;
+    __typename: \\"Person\\";
     name: string;
     birthYear: string;
     eyeColor: string;
@@ -213,7 +213,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: string;
+    __typename: \\"PersonFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge>;
     totalCount: number;
@@ -224,7 +224,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
+    __typename: \\"PersonFilmsEdge\\";
     node: IFilm;
     cursor: string;
 }
@@ -233,7 +233,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: string;
+    __typename: \\"PersonStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge>;
     totalCount: number;
@@ -244,7 +244,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: string;
+    __typename: \\"PersonStarshipsEdge\\";
     node: IStarship;
     cursor: string;
 }
@@ -253,7 +253,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: string;
+    __typename: \\"Starship\\";
     name: string;
     model: string;
     starshipClass: string;
@@ -278,7 +278,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: string;
+    __typename: \\"StarshipPilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge>;
     totalCount: number;
@@ -289,7 +289,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: string;
+    __typename: \\"StarshipPilotsEdge\\";
     node: IPerson;
     cursor: string;
 }
@@ -298,7 +298,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: string;
+    __typename: \\"StarshipFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge>;
     totalCount: number;
@@ -309,7 +309,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: string;
+    __typename: \\"StarshipFilmsEdge\\";
     node: IFilm;
     cursor: string;
 }
@@ -318,7 +318,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: string;
+    __typename: \\"PersonVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge>;
     totalCount: number;
@@ -329,7 +329,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: string;
+    __typename: \\"PersonVehiclesEdge\\";
     node: IVehicle;
     cursor: string;
 }
@@ -338,7 +338,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: string;
+    __typename: \\"Vehicle\\";
     name: string;
     model: string;
     vehicleClass: string;
@@ -361,7 +361,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: string;
+    __typename: \\"VehiclePilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge>;
     totalCount: number;
@@ -372,7 +372,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: string;
+    __typename: \\"VehiclePilotsEdge\\";
     node: IPerson;
     cursor: string;
 }
@@ -381,7 +381,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: string;
+    __typename: \\"VehicleFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge>;
     totalCount: number;
@@ -392,7 +392,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: string;
+    __typename: \\"VehicleFilmsEdge\\";
     node: IFilm;
     cursor: string;
 }
@@ -401,7 +401,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: string;
+    __typename: \\"PlanetFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge>;
     totalCount: number;
@@ -412,7 +412,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: string;
+    __typename: \\"PlanetFilmsEdge\\";
     node: IFilm;
     cursor: string;
 }
@@ -421,7 +421,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: string;
+    __typename: \\"SpeciesPeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge>;
     totalCount: number;
@@ -432,7 +432,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: string;
+    __typename: \\"SpeciesPeopleEdge\\";
     node: IPerson;
     cursor: string;
 }
@@ -441,7 +441,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: string;
+    __typename: \\"SpeciesFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge>;
     totalCount: number;
@@ -452,7 +452,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: string;
+    __typename: \\"SpeciesFilmsEdge\\";
     node: IFilm;
     cursor: string;
 }
@@ -461,7 +461,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: string;
+    __typename: \\"FilmStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge>;
     totalCount: number;
@@ -472,7 +472,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: string;
+    __typename: \\"FilmStarshipsEdge\\";
     node: IStarship;
     cursor: string;
 }
@@ -481,7 +481,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: string;
+    __typename: \\"FilmVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge>;
     totalCount: number;
@@ -492,7 +492,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: string;
+    __typename: \\"FilmVehiclesEdge\\";
     node: IVehicle;
     cursor: string;
 }
@@ -501,7 +501,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: string;
+    __typename: \\"FilmCharactersConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge>;
     totalCount: number;
@@ -512,7 +512,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: string;
+    __typename: \\"FilmCharactersEdge\\";
     node: IPerson;
     cursor: string;
 }
@@ -521,7 +521,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: string;
+    __typename: \\"FilmPlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge>;
     totalCount: number;
@@ -532,7 +532,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: string;
+    __typename: \\"FilmPlanetsEdge\\";
     node: IPlanet;
     cursor: string;
 }
@@ -541,7 +541,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: string;
+    __typename: \\"PeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge>;
     totalCount: number;
@@ -552,7 +552,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: string;
+    __typename: \\"PeopleEdge\\";
     node: IPerson;
     cursor: string;
 }
@@ -561,7 +561,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: string;
+    __typename: \\"PlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge>;
     totalCount: number;
@@ -572,7 +572,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: string;
+    __typename: \\"PlanetsEdge\\";
     node: IPlanet;
     cursor: string;
 }
@@ -581,7 +581,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: string;
+    __typename: \\"SpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge>;
     totalCount: number;
@@ -592,7 +592,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: string;
+    __typename: \\"SpeciesEdge\\";
     node: ISpecies;
     cursor: string;
 }
@@ -601,7 +601,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: string;
+    __typename: \\"StarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge>;
     totalCount: number;
@@ -612,7 +612,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: string;
+    __typename: \\"StarshipsEdge\\";
     node: IStarship;
     cursor: string;
 }
@@ -621,7 +621,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: string;
+    __typename: \\"VehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge>;
     totalCount: number;
@@ -632,7 +632,7 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     description: An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: string;
+    __typename: \\"VehiclesEdge\\";
     node: IVehicle;
     cursor: string;
 }"
@@ -659,7 +659,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: null
   */
   interface IRoot {
-    __typename: string;
+    __typename: \\"Root\\";
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -678,7 +678,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: string;
+    __typename: \\"FilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge> | null;
     totalCount: number | null;
@@ -689,7 +689,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: string;
+    __typename: \\"PageInfo\\";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string | null;
@@ -700,7 +700,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: string;
+    __typename: \\"FilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -709,7 +709,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A single film.
   */
   interface IFilm {
-    __typename: string;
+    __typename: \\"Film\\";
     title: string | null;
     episodeID: number | null;
     openingCrawl: string | null;
@@ -735,7 +735,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An object with an ID
   */
   interface INode {
-    __typename: string;
+    __typename: \\"Node\\";
     id: string;
 }
 
@@ -743,7 +743,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: string;
+    __typename: \\"FilmSpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge> | null;
     totalCount: number | null;
@@ -754,7 +754,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: string;
+    __typename: \\"FilmSpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
 }
@@ -763,7 +763,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: string;
+    __typename: \\"Species\\";
     name: string | null;
     classification: string | null;
     designation: string | null;
@@ -786,7 +786,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
 0 ABY.
   */
   interface IPlanet {
-    __typename: string;
+    __typename: \\"Planet\\";
     name: string | null;
     diameter: number | null;
     rotationPeriod: number | null;
@@ -807,7 +807,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: string;
+    __typename: \\"PlanetResidentsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge> | null;
     totalCount: number | null;
@@ -817,7 +817,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: string;
+    __typename: \\"PlanetResidentsEdge\\";
     cursor: string;
 }
 
@@ -825,7 +825,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: string;
+    __typename: \\"PersonFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge> | null;
     totalCount: number | null;
@@ -836,7 +836,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
+    __typename: \\"PersonFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -845,7 +845,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: string;
+    __typename: \\"PersonStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge> | null;
     totalCount: number | null;
@@ -856,7 +856,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: string;
+    __typename: \\"PersonStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
 }
@@ -865,7 +865,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: string;
+    __typename: \\"Starship\\";
     name: string | null;
     model: string | null;
     starshipClass: string | null;
@@ -890,7 +890,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: string;
+    __typename: \\"StarshipPilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge> | null;
     totalCount: number | null;
@@ -900,7 +900,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: string;
+    __typename: \\"StarshipPilotsEdge\\";
     cursor: string;
 }
 
@@ -908,7 +908,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: string;
+    __typename: \\"StarshipFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge> | null;
     totalCount: number | null;
@@ -919,7 +919,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: string;
+    __typename: \\"StarshipFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -928,7 +928,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: string;
+    __typename: \\"PersonVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge> | null;
     totalCount: number | null;
@@ -939,7 +939,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: string;
+    __typename: \\"PersonVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
 }
@@ -948,7 +948,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: string;
+    __typename: \\"Vehicle\\";
     name: string | null;
     model: string | null;
     vehicleClass: string | null;
@@ -971,7 +971,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: string;
+    __typename: \\"VehiclePilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge> | null;
     totalCount: number | null;
@@ -981,7 +981,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: string;
+    __typename: \\"VehiclePilotsEdge\\";
     cursor: string;
 }
 
@@ -989,7 +989,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: string;
+    __typename: \\"VehicleFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge> | null;
     totalCount: number | null;
@@ -1000,7 +1000,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: string;
+    __typename: \\"VehicleFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1009,7 +1009,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: string;
+    __typename: \\"PlanetFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge> | null;
     totalCount: number | null;
@@ -1020,7 +1020,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: string;
+    __typename: \\"PlanetFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1029,7 +1029,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: string;
+    __typename: \\"SpeciesPeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge> | null;
     totalCount: number | null;
@@ -1039,7 +1039,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: string;
+    __typename: \\"SpeciesPeopleEdge\\";
     cursor: string;
 }
 
@@ -1047,7 +1047,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: string;
+    __typename: \\"SpeciesFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge> | null;
     totalCount: number | null;
@@ -1058,7 +1058,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: string;
+    __typename: \\"SpeciesFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1067,7 +1067,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: string;
+    __typename: \\"FilmStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge> | null;
     totalCount: number | null;
@@ -1078,7 +1078,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: string;
+    __typename: \\"FilmStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
 }
@@ -1087,7 +1087,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: string;
+    __typename: \\"FilmVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge> | null;
     totalCount: number | null;
@@ -1098,7 +1098,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: string;
+    __typename: \\"FilmVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
 }
@@ -1107,7 +1107,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: string;
+    __typename: \\"FilmCharactersConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge> | null;
     totalCount: number | null;
@@ -1117,7 +1117,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: string;
+    __typename: \\"FilmCharactersEdge\\";
     cursor: string;
 }
 
@@ -1125,7 +1125,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: string;
+    __typename: \\"FilmPlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge> | null;
     totalCount: number | null;
@@ -1136,7 +1136,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: string;
+    __typename: \\"FilmPlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
 }
@@ -1145,7 +1145,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: string;
+    __typename: \\"PeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge> | null;
     totalCount: number | null;
@@ -1155,7 +1155,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: string;
+    __typename: \\"PeopleEdge\\";
     cursor: string;
 }
 
@@ -1163,7 +1163,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: string;
+    __typename: \\"PlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge> | null;
     totalCount: number | null;
@@ -1174,7 +1174,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: string;
+    __typename: \\"PlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
 }
@@ -1183,7 +1183,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: string;
+    __typename: \\"SpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge> | null;
     totalCount: number | null;
@@ -1194,7 +1194,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: string;
+    __typename: \\"SpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
 }
@@ -1203,7 +1203,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: string;
+    __typename: \\"StarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge> | null;
     totalCount: number | null;
@@ -1214,7 +1214,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: string;
+    __typename: \\"StarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
 }
@@ -1223,7 +1223,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: string;
+    __typename: \\"VehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge> | null;
     totalCount: number | null;
@@ -1234,7 +1234,7 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
     description: An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: string;
+    __typename: \\"VehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
 }"
@@ -1261,7 +1261,7 @@ exports[`gql2ts interfaces correctly translates enums 1`] = `
     description: null
   */
   interface IQuery {
-    __typename: string;
+    __typename: \\"Query\\";
     colorEnum: IColorEnum | null;
 }
 
@@ -1292,7 +1292,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: null
   */
   interface IRoot {
-    __typename: string;
+    __typename: \\"Root\\";
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -1312,7 +1312,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: string;
+    __typename: \\"FilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge> | null;
     totalCount: number | null;
@@ -1323,7 +1323,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: string;
+    __typename: \\"PageInfo\\";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string | null;
@@ -1334,7 +1334,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: string;
+    __typename: \\"FilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1343,7 +1343,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A single film.
   */
   interface IFilm {
-    __typename: string;
+    __typename: \\"Film\\";
     title: string | null;
     episodeID: number | null;
     openingCrawl: string | null;
@@ -1369,7 +1369,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An object with an ID
   */
   interface INode {
-    __typename: string;
+    __typename: \\"Node\\";
     id: string;
 }
 
@@ -1377,7 +1377,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: string;
+    __typename: \\"FilmSpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge> | null;
     totalCount: number | null;
@@ -1388,7 +1388,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: string;
+    __typename: \\"FilmSpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
 }
@@ -1397,7 +1397,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: string;
+    __typename: \\"Species\\";
     name: string | null;
     classification: string | null;
     designation: string | null;
@@ -1420,7 +1420,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
 0 ABY.
   */
   interface IPlanet {
-    __typename: string;
+    __typename: \\"Planet\\";
     name: string | null;
     diameter: number | null;
     rotationPeriod: number | null;
@@ -1441,7 +1441,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: string;
+    __typename: \\"PlanetResidentsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge> | null;
     totalCount: number | null;
@@ -1452,7 +1452,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: string;
+    __typename: \\"PlanetResidentsEdge\\";
     node: IPerson | null;
     cursor: string;
 }
@@ -1461,7 +1461,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An individual person or character within the Star Wars universe.
   */
   interface IPerson {
-    __typename: string;
+    __typename: \\"Person\\";
     name: string | null;
     birthYear: string | null;
     eyeColor: string | null;
@@ -1484,7 +1484,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: string;
+    __typename: \\"PersonFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge> | null;
     totalCount: number | null;
@@ -1495,7 +1495,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
+    __typename: \\"PersonFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1504,7 +1504,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: string;
+    __typename: \\"PersonStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge> | null;
     totalCount: number | null;
@@ -1515,7 +1515,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: string;
+    __typename: \\"PersonStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
 }
@@ -1524,7 +1524,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: string;
+    __typename: \\"Starship\\";
     name: string | null;
     model: string | null;
     starshipClass: string | null;
@@ -1549,7 +1549,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: string;
+    __typename: \\"StarshipPilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge> | null;
     totalCount: number | null;
@@ -1560,7 +1560,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: string;
+    __typename: \\"StarshipPilotsEdge\\";
     node: IPerson | null;
     cursor: string;
 }
@@ -1569,7 +1569,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: string;
+    __typename: \\"StarshipFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge> | null;
     totalCount: number | null;
@@ -1580,7 +1580,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: string;
+    __typename: \\"StarshipFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1589,7 +1589,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: string;
+    __typename: \\"PersonVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge> | null;
     totalCount: number | null;
@@ -1600,7 +1600,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: string;
+    __typename: \\"PersonVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
 }
@@ -1609,7 +1609,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: string;
+    __typename: \\"Vehicle\\";
     name: string | null;
     model: string | null;
     vehicleClass: string | null;
@@ -1632,7 +1632,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: string;
+    __typename: \\"VehiclePilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge> | null;
     totalCount: number | null;
@@ -1643,7 +1643,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: string;
+    __typename: \\"VehiclePilotsEdge\\";
     node: IPerson | null;
     cursor: string;
 }
@@ -1652,7 +1652,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: string;
+    __typename: \\"VehicleFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge> | null;
     totalCount: number | null;
@@ -1663,7 +1663,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: string;
+    __typename: \\"VehicleFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1672,7 +1672,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: string;
+    __typename: \\"PlanetFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge> | null;
     totalCount: number | null;
@@ -1683,7 +1683,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: string;
+    __typename: \\"PlanetFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1692,7 +1692,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: string;
+    __typename: \\"SpeciesPeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge> | null;
     totalCount: number | null;
@@ -1703,7 +1703,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: string;
+    __typename: \\"SpeciesPeopleEdge\\";
     node: IPerson | null;
     cursor: string;
 }
@@ -1712,7 +1712,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: string;
+    __typename: \\"SpeciesFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge> | null;
     totalCount: number | null;
@@ -1723,7 +1723,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: string;
+    __typename: \\"SpeciesFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
 }
@@ -1732,7 +1732,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: string;
+    __typename: \\"FilmStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge> | null;
     totalCount: number | null;
@@ -1743,7 +1743,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: string;
+    __typename: \\"FilmStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
 }
@@ -1752,7 +1752,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: string;
+    __typename: \\"FilmVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge> | null;
     totalCount: number | null;
@@ -1763,7 +1763,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: string;
+    __typename: \\"FilmVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
 }
@@ -1772,7 +1772,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: string;
+    __typename: \\"FilmCharactersConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge> | null;
     totalCount: number | null;
@@ -1783,7 +1783,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: string;
+    __typename: \\"FilmCharactersEdge\\";
     node: IPerson | null;
     cursor: string;
 }
@@ -1792,7 +1792,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: string;
+    __typename: \\"FilmPlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge> | null;
     totalCount: number | null;
@@ -1803,7 +1803,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: string;
+    __typename: \\"FilmPlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
 }
@@ -1812,7 +1812,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: string;
+    __typename: \\"PeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge> | null;
     totalCount: number | null;
@@ -1823,7 +1823,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: string;
+    __typename: \\"PeopleEdge\\";
     node: IPerson | null;
     cursor: string;
 }
@@ -1832,7 +1832,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: string;
+    __typename: \\"PlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge> | null;
     totalCount: number | null;
@@ -1843,7 +1843,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: string;
+    __typename: \\"PlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
 }
@@ -1852,7 +1852,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: string;
+    __typename: \\"SpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge> | null;
     totalCount: number | null;
@@ -1863,7 +1863,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: string;
+    __typename: \\"SpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
 }
@@ -1872,7 +1872,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: string;
+    __typename: \\"StarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge> | null;
     totalCount: number | null;
@@ -1883,7 +1883,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: string;
+    __typename: \\"StarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
 }
@@ -1892,7 +1892,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: string;
+    __typename: \\"VehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge> | null;
     totalCount: number | null;
@@ -1903,7 +1903,7 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
     description: An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: string;
+    __typename: \\"VehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
 }"
@@ -1934,7 +1934,7 @@ declare namespace GQL {
     description: null
   */
   interface IRoot {
-    __typename: string;
+    __typename: \\"Root\\";
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -1954,7 +1954,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: string;
+    __typename: \\"FilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge> | null;
     totalCount: number | null;
@@ -1965,7 +1965,7 @@ declare namespace GQL {
     description: Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: string;
+    __typename: \\"PageInfo\\";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string | null;
@@ -1976,7 +1976,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: string;
+    __typename: \\"FilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -1985,7 +1985,7 @@ declare namespace GQL {
     description: A single film.
   */
   interface IFilm {
-    __typename: string;
+    __typename: \\"Film\\";
     title: string | null;
     episodeID: number | null;
     openingCrawl: string | null;
@@ -2011,7 +2011,7 @@ declare namespace GQL {
     description: An object with an ID
   */
   interface INode {
-    __typename: string;
+    __typename: \\"Node\\";
     id: string;
   }
 
@@ -2019,7 +2019,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: string;
+    __typename: \\"FilmSpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge> | null;
     totalCount: number | null;
@@ -2030,7 +2030,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: string;
+    __typename: \\"FilmSpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
   }
@@ -2039,7 +2039,7 @@ declare namespace GQL {
     description: A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: string;
+    __typename: \\"Species\\";
     name: string | null;
     classification: string | null;
     designation: string | null;
@@ -2062,7 +2062,7 @@ declare namespace GQL {
 0 ABY.
   */
   interface IPlanet {
-    __typename: string;
+    __typename: \\"Planet\\";
     name: string | null;
     diameter: number | null;
     rotationPeriod: number | null;
@@ -2083,7 +2083,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: string;
+    __typename: \\"PlanetResidentsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge> | null;
     totalCount: number | null;
@@ -2094,7 +2094,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: string;
+    __typename: \\"PlanetResidentsEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2103,7 +2103,7 @@ declare namespace GQL {
     description: An individual person or character within the Star Wars universe.
   */
   interface IPerson {
-    __typename: string;
+    __typename: \\"Person\\";
     name: string | null;
     birthYear: string | null;
     eyeColor: string | null;
@@ -2126,7 +2126,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: string;
+    __typename: \\"PersonFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge> | null;
     totalCount: number | null;
@@ -2137,7 +2137,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
+    __typename: \\"PersonFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2146,7 +2146,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: string;
+    __typename: \\"PersonStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge> | null;
     totalCount: number | null;
@@ -2157,7 +2157,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: string;
+    __typename: \\"PersonStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -2166,7 +2166,7 @@ declare namespace GQL {
     description: A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: string;
+    __typename: \\"Starship\\";
     name: string | null;
     model: string | null;
     starshipClass: string | null;
@@ -2191,7 +2191,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: string;
+    __typename: \\"StarshipPilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge> | null;
     totalCount: number | null;
@@ -2202,7 +2202,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: string;
+    __typename: \\"StarshipPilotsEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2211,7 +2211,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: string;
+    __typename: \\"StarshipFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge> | null;
     totalCount: number | null;
@@ -2222,7 +2222,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: string;
+    __typename: \\"StarshipFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2231,7 +2231,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: string;
+    __typename: \\"PersonVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge> | null;
     totalCount: number | null;
@@ -2242,7 +2242,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: string;
+    __typename: \\"PersonVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -2251,7 +2251,7 @@ declare namespace GQL {
     description: A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: string;
+    __typename: \\"Vehicle\\";
     name: string | null;
     model: string | null;
     vehicleClass: string | null;
@@ -2274,7 +2274,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: string;
+    __typename: \\"VehiclePilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge> | null;
     totalCount: number | null;
@@ -2285,7 +2285,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: string;
+    __typename: \\"VehiclePilotsEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2294,7 +2294,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: string;
+    __typename: \\"VehicleFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge> | null;
     totalCount: number | null;
@@ -2305,7 +2305,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: string;
+    __typename: \\"VehicleFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2314,7 +2314,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: string;
+    __typename: \\"PlanetFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge> | null;
     totalCount: number | null;
@@ -2325,7 +2325,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: string;
+    __typename: \\"PlanetFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2334,7 +2334,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: string;
+    __typename: \\"SpeciesPeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge> | null;
     totalCount: number | null;
@@ -2345,7 +2345,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: string;
+    __typename: \\"SpeciesPeopleEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2354,7 +2354,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: string;
+    __typename: \\"SpeciesFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge> | null;
     totalCount: number | null;
@@ -2365,7 +2365,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: string;
+    __typename: \\"SpeciesFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2374,7 +2374,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: string;
+    __typename: \\"FilmStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge> | null;
     totalCount: number | null;
@@ -2385,7 +2385,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: string;
+    __typename: \\"FilmStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -2394,7 +2394,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: string;
+    __typename: \\"FilmVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge> | null;
     totalCount: number | null;
@@ -2405,7 +2405,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: string;
+    __typename: \\"FilmVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -2414,7 +2414,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: string;
+    __typename: \\"FilmCharactersConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge> | null;
     totalCount: number | null;
@@ -2425,7 +2425,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: string;
+    __typename: \\"FilmCharactersEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2434,7 +2434,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: string;
+    __typename: \\"FilmPlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge> | null;
     totalCount: number | null;
@@ -2445,7 +2445,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: string;
+    __typename: \\"FilmPlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
   }
@@ -2454,7 +2454,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: string;
+    __typename: \\"PeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge> | null;
     totalCount: number | null;
@@ -2465,7 +2465,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: string;
+    __typename: \\"PeopleEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2474,7 +2474,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: string;
+    __typename: \\"PlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge> | null;
     totalCount: number | null;
@@ -2485,7 +2485,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: string;
+    __typename: \\"PlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
   }
@@ -2494,7 +2494,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: string;
+    __typename: \\"SpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge> | null;
     totalCount: number | null;
@@ -2505,7 +2505,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: string;
+    __typename: \\"SpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
   }
@@ -2514,7 +2514,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: string;
+    __typename: \\"StarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge> | null;
     totalCount: number | null;
@@ -2525,7 +2525,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: string;
+    __typename: \\"StarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -2534,7 +2534,7 @@ declare namespace GQL {
     description: A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: string;
+    __typename: \\"VehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge> | null;
     totalCount: number | null;
@@ -2545,7 +2545,7 @@ declare namespace GQL {
     description: An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: string;
+    __typename: \\"VehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -2580,7 +2580,7 @@ declare namespace GQL {
     description: null
   */
   interface IQuery {
-    __typename: string;
+    __typename: \\"Query\\";
     colorEnum: IColorEnum | null;
   }
 
@@ -2619,7 +2619,7 @@ declare namespace StarWars {
     description: null
   */
   interface IRoot {
-    __typename: string;
+    __typename: \\"Root\\";
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -2639,7 +2639,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: string;
+    __typename: \\"FilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge> | null;
     totalCount: number | null;
@@ -2650,7 +2650,7 @@ declare namespace StarWars {
     description: Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: string;
+    __typename: \\"PageInfo\\";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string | null;
@@ -2661,7 +2661,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: string;
+    __typename: \\"FilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2670,7 +2670,7 @@ declare namespace StarWars {
     description: A single film.
   */
   interface IFilm {
-    __typename: string;
+    __typename: \\"Film\\";
     title: string | null;
     episodeID: number | null;
     openingCrawl: string | null;
@@ -2696,7 +2696,7 @@ declare namespace StarWars {
     description: An object with an ID
   */
   interface INode {
-    __typename: string;
+    __typename: \\"Node\\";
     id: string;
   }
 
@@ -2704,7 +2704,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: string;
+    __typename: \\"FilmSpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge> | null;
     totalCount: number | null;
@@ -2715,7 +2715,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: string;
+    __typename: \\"FilmSpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
   }
@@ -2724,7 +2724,7 @@ declare namespace StarWars {
     description: A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: string;
+    __typename: \\"Species\\";
     name: string | null;
     classification: string | null;
     designation: string | null;
@@ -2747,7 +2747,7 @@ declare namespace StarWars {
 0 ABY.
   */
   interface IPlanet {
-    __typename: string;
+    __typename: \\"Planet\\";
     name: string | null;
     diameter: number | null;
     rotationPeriod: number | null;
@@ -2768,7 +2768,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: string;
+    __typename: \\"PlanetResidentsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge> | null;
     totalCount: number | null;
@@ -2779,7 +2779,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: string;
+    __typename: \\"PlanetResidentsEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2788,7 +2788,7 @@ declare namespace StarWars {
     description: An individual person or character within the Star Wars universe.
   */
   interface IPerson {
-    __typename: string;
+    __typename: \\"Person\\";
     name: string | null;
     birthYear: string | null;
     eyeColor: string | null;
@@ -2811,7 +2811,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: string;
+    __typename: \\"PersonFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge> | null;
     totalCount: number | null;
@@ -2822,7 +2822,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
+    __typename: \\"PersonFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2831,7 +2831,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: string;
+    __typename: \\"PersonStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge> | null;
     totalCount: number | null;
@@ -2842,7 +2842,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: string;
+    __typename: \\"PersonStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -2851,7 +2851,7 @@ declare namespace StarWars {
     description: A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: string;
+    __typename: \\"Starship\\";
     name: string | null;
     model: string | null;
     starshipClass: string | null;
@@ -2876,7 +2876,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: string;
+    __typename: \\"StarshipPilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge> | null;
     totalCount: number | null;
@@ -2887,7 +2887,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: string;
+    __typename: \\"StarshipPilotsEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2896,7 +2896,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: string;
+    __typename: \\"StarshipFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge> | null;
     totalCount: number | null;
@@ -2907,7 +2907,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: string;
+    __typename: \\"StarshipFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2916,7 +2916,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: string;
+    __typename: \\"PersonVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge> | null;
     totalCount: number | null;
@@ -2927,7 +2927,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: string;
+    __typename: \\"PersonVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -2936,7 +2936,7 @@ declare namespace StarWars {
     description: A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: string;
+    __typename: \\"Vehicle\\";
     name: string | null;
     model: string | null;
     vehicleClass: string | null;
@@ -2959,7 +2959,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: string;
+    __typename: \\"VehiclePilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge> | null;
     totalCount: number | null;
@@ -2970,7 +2970,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: string;
+    __typename: \\"VehiclePilotsEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -2979,7 +2979,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: string;
+    __typename: \\"VehicleFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge> | null;
     totalCount: number | null;
@@ -2990,7 +2990,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: string;
+    __typename: \\"VehicleFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -2999,7 +2999,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: string;
+    __typename: \\"PlanetFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge> | null;
     totalCount: number | null;
@@ -3010,7 +3010,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: string;
+    __typename: \\"PlanetFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3019,7 +3019,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: string;
+    __typename: \\"SpeciesPeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge> | null;
     totalCount: number | null;
@@ -3030,7 +3030,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: string;
+    __typename: \\"SpeciesPeopleEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -3039,7 +3039,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: string;
+    __typename: \\"SpeciesFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge> | null;
     totalCount: number | null;
@@ -3050,7 +3050,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: string;
+    __typename: \\"SpeciesFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3059,7 +3059,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: string;
+    __typename: \\"FilmStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge> | null;
     totalCount: number | null;
@@ -3070,7 +3070,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: string;
+    __typename: \\"FilmStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -3079,7 +3079,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: string;
+    __typename: \\"FilmVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge> | null;
     totalCount: number | null;
@@ -3090,7 +3090,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: string;
+    __typename: \\"FilmVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -3099,7 +3099,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: string;
+    __typename: \\"FilmCharactersConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge> | null;
     totalCount: number | null;
@@ -3110,7 +3110,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: string;
+    __typename: \\"FilmCharactersEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -3119,7 +3119,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: string;
+    __typename: \\"FilmPlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge> | null;
     totalCount: number | null;
@@ -3130,7 +3130,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: string;
+    __typename: \\"FilmPlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
   }
@@ -3139,7 +3139,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: string;
+    __typename: \\"PeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge> | null;
     totalCount: number | null;
@@ -3150,7 +3150,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: string;
+    __typename: \\"PeopleEdge\\";
     node: IPerson | null;
     cursor: string;
   }
@@ -3159,7 +3159,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: string;
+    __typename: \\"PlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge> | null;
     totalCount: number | null;
@@ -3170,7 +3170,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: string;
+    __typename: \\"PlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
   }
@@ -3179,7 +3179,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: string;
+    __typename: \\"SpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge> | null;
     totalCount: number | null;
@@ -3190,7 +3190,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: string;
+    __typename: \\"SpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
   }
@@ -3199,7 +3199,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: string;
+    __typename: \\"StarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge> | null;
     totalCount: number | null;
@@ -3210,7 +3210,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: string;
+    __typename: \\"StarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -3219,7 +3219,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: string;
+    __typename: \\"VehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge> | null;
     totalCount: number | null;
@@ -3230,7 +3230,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: string;
+    __typename: \\"VehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -3265,7 +3265,7 @@ declare namespace StarWars {
     description: null
   */
   interface IRoot {
-    __typename: string;
+    __typename: \\"Root\\";
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -3284,7 +3284,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: string;
+    __typename: \\"FilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmsEdge> | null;
     totalCount: number | null;
@@ -3295,7 +3295,7 @@ declare namespace StarWars {
     description: Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: string;
+    __typename: \\"PageInfo\\";
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     startCursor: string | null;
@@ -3306,7 +3306,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: string;
+    __typename: \\"FilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3315,7 +3315,7 @@ declare namespace StarWars {
     description: A single film.
   */
   interface IFilm {
-    __typename: string;
+    __typename: \\"Film\\";
     title: string | null;
     episodeID: number | null;
     openingCrawl: string | null;
@@ -3341,7 +3341,7 @@ declare namespace StarWars {
     description: An object with an ID
   */
   interface INode {
-    __typename: string;
+    __typename: \\"Node\\";
     id: string;
   }
 
@@ -3349,7 +3349,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: string;
+    __typename: \\"FilmSpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmSpeciesEdge> | null;
     totalCount: number | null;
@@ -3360,7 +3360,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: string;
+    __typename: \\"FilmSpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
   }
@@ -3369,7 +3369,7 @@ declare namespace StarWars {
     description: A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: string;
+    __typename: \\"Species\\";
     name: string | null;
     classification: string | null;
     designation: string | null;
@@ -3392,7 +3392,7 @@ declare namespace StarWars {
 0 ABY.
   */
   interface IPlanet {
-    __typename: string;
+    __typename: \\"Planet\\";
     name: string | null;
     diameter: number | null;
     rotationPeriod: number | null;
@@ -3413,7 +3413,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: string;
+    __typename: \\"PlanetResidentsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetResidentsEdge> | null;
     totalCount: number | null;
@@ -3423,7 +3423,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: string;
+    __typename: \\"PlanetResidentsEdge\\";
     cursor: string;
   }
 
@@ -3431,7 +3431,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: string;
+    __typename: \\"PersonFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonFilmsEdge> | null;
     totalCount: number | null;
@@ -3442,7 +3442,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: string;
+    __typename: \\"PersonFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3451,7 +3451,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: string;
+    __typename: \\"PersonStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonStarshipsEdge> | null;
     totalCount: number | null;
@@ -3462,7 +3462,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: string;
+    __typename: \\"PersonStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -3471,7 +3471,7 @@ declare namespace StarWars {
     description: A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: string;
+    __typename: \\"Starship\\";
     name: string | null;
     model: string | null;
     starshipClass: string | null;
@@ -3496,7 +3496,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: string;
+    __typename: \\"StarshipPilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipPilotsEdge> | null;
     totalCount: number | null;
@@ -3506,7 +3506,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: string;
+    __typename: \\"StarshipPilotsEdge\\";
     cursor: string;
   }
 
@@ -3514,7 +3514,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: string;
+    __typename: \\"StarshipFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipFilmsEdge> | null;
     totalCount: number | null;
@@ -3525,7 +3525,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: string;
+    __typename: \\"StarshipFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3534,7 +3534,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: string;
+    __typename: \\"PersonVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPersonVehiclesEdge> | null;
     totalCount: number | null;
@@ -3545,7 +3545,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: string;
+    __typename: \\"PersonVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -3554,7 +3554,7 @@ declare namespace StarWars {
     description: A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: string;
+    __typename: \\"Vehicle\\";
     name: string | null;
     model: string | null;
     vehicleClass: string | null;
@@ -3577,7 +3577,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: string;
+    __typename: \\"VehiclePilotsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclePilotsEdge> | null;
     totalCount: number | null;
@@ -3587,7 +3587,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: string;
+    __typename: \\"VehiclePilotsEdge\\";
     cursor: string;
   }
 
@@ -3595,7 +3595,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: string;
+    __typename: \\"VehicleFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehicleFilmsEdge> | null;
     totalCount: number | null;
@@ -3606,7 +3606,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: string;
+    __typename: \\"VehicleFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3615,7 +3615,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: string;
+    __typename: \\"PlanetFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetFilmsEdge> | null;
     totalCount: number | null;
@@ -3626,7 +3626,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: string;
+    __typename: \\"PlanetFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3635,7 +3635,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: string;
+    __typename: \\"SpeciesPeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesPeopleEdge> | null;
     totalCount: number | null;
@@ -3645,7 +3645,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: string;
+    __typename: \\"SpeciesPeopleEdge\\";
     cursor: string;
   }
 
@@ -3653,7 +3653,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: string;
+    __typename: \\"SpeciesFilmsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesFilmsEdge> | null;
     totalCount: number | null;
@@ -3664,7 +3664,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: string;
+    __typename: \\"SpeciesFilmsEdge\\";
     node: IFilm | null;
     cursor: string;
   }
@@ -3673,7 +3673,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: string;
+    __typename: \\"FilmStarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmStarshipsEdge> | null;
     totalCount: number | null;
@@ -3684,7 +3684,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: string;
+    __typename: \\"FilmStarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -3693,7 +3693,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: string;
+    __typename: \\"FilmVehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmVehiclesEdge> | null;
     totalCount: number | null;
@@ -3704,7 +3704,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: string;
+    __typename: \\"FilmVehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -3713,7 +3713,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: string;
+    __typename: \\"FilmCharactersConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmCharactersEdge> | null;
     totalCount: number | null;
@@ -3723,7 +3723,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: string;
+    __typename: \\"FilmCharactersEdge\\";
     cursor: string;
   }
 
@@ -3731,7 +3731,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: string;
+    __typename: \\"FilmPlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IFilmPlanetsEdge> | null;
     totalCount: number | null;
@@ -3742,7 +3742,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: string;
+    __typename: \\"FilmPlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
   }
@@ -3751,7 +3751,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: string;
+    __typename: \\"PeopleConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPeopleEdge> | null;
     totalCount: number | null;
@@ -3761,7 +3761,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: string;
+    __typename: \\"PeopleEdge\\";
     cursor: string;
   }
 
@@ -3769,7 +3769,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: string;
+    __typename: \\"PlanetsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IPlanetsEdge> | null;
     totalCount: number | null;
@@ -3780,7 +3780,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: string;
+    __typename: \\"PlanetsEdge\\";
     node: IPlanet | null;
     cursor: string;
   }
@@ -3789,7 +3789,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: string;
+    __typename: \\"SpeciesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<ISpeciesEdge> | null;
     totalCount: number | null;
@@ -3800,7 +3800,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: string;
+    __typename: \\"SpeciesEdge\\";
     node: ISpecies | null;
     cursor: string;
   }
@@ -3809,7 +3809,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: string;
+    __typename: \\"StarshipsConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IStarshipsEdge> | null;
     totalCount: number | null;
@@ -3820,7 +3820,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: string;
+    __typename: \\"StarshipsEdge\\";
     node: IStarship | null;
     cursor: string;
   }
@@ -3829,7 +3829,7 @@ declare namespace StarWars {
     description: A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: string;
+    __typename: \\"VehiclesConnection\\";
     pageInfo: IPageInfo;
     edges: Array<IVehiclesEdge> | null;
     totalCount: number | null;
@@ -3840,7 +3840,7 @@ declare namespace StarWars {
     description: An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: string;
+    __typename: \\"VehiclesEdge\\";
     node: IVehicle | null;
     cursor: string;
   }
@@ -3871,7 +3871,7 @@ exports[`gql2ts union types correctly translates the schema into typescript defs
     description: 
   */
   interface IQuery {
-    __typename: string;
+    __typename: \\"Query\\";
     heroNoParam: Character | null;
     hero: Character | null;
     human: IHuman | null;
@@ -3890,7 +3890,7 @@ exports[`gql2ts union types correctly translates the schema into typescript defs
     description: 
   */
   interface ICharacter {
-    __typename: string;
+    __typename: \\"Character\\";
     id: string;
     name: string | null;
     friends: Array<Character> | null;
@@ -3909,7 +3909,7 @@ exports[`gql2ts union types correctly translates the schema into typescript defs
     description: 
   */
   interface IHuman {
-    __typename: string;
+    __typename: \\"Human\\";
     id: string;
     name: string | null;
     friends: Array<Character> | null;
@@ -3924,7 +3924,7 @@ exports[`gql2ts union types correctly translates the schema into typescript defs
     description: 
   */
   interface IDroid {
-    __typename: string;
+    __typename: \\"Droid\\";
     id: string;
     name: string | null;
     friends: Array<Character> | null;
