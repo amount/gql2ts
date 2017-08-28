@@ -44,6 +44,10 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP };
 
+  function isScalar (type: any): type is GraphQLScalarType {
+    return type instanceof GraphQLScalarType || !!(type as any)._scalarConfig;
+  }
+
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
     const queryType: GraphQLObjectType = schema.getQueryType();
@@ -116,7 +120,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       return wrapList(resolveInterfaceName((type).ofType));
     } else if (isNonNullable(type)) {
       return `!${resolveInterfaceName((type).ofType)}`;
-    } else if (type instanceof GraphQLScalarType) {
+    } else if (isScalar(type)) {
       return TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT;
     } else if (isAbstractType(type)) {
       return generateTypeName(type.name);
@@ -186,7 +190,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   };
 
   const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability, interfaceMap) => {
-    if (type instanceof GraphQLScalarType) {
+    if (isScalar(type)) {
       return null;
     }
 
