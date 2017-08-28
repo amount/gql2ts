@@ -93,15 +93,15 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
     (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n', description);
 
-  const typeNameDeclaration: string = addSemicolon(`__typename: ${TYPE_MAP.String}`);
+  const typeNameDeclaration: (name: string) => string = name => addSemicolon(`__typename: "${name}"`);
 
   type GenerateInterfaceDeclaration =
-    (description: string, declaration: string, fields: string[], additionalInfo: string, isInput: boolean) => string;
+    (type: GraphQLNamedType, declaration: string, fields: string[], additionalInfo: string, isInput: boolean) => string;
 
   const generateInterfaceDeclaration: GenerateInterfaceDeclaration =
-    (description, declaration, fields, additionalInfo, isInput) => {
+    ({ name, description }, declaration, fields, additionalInfo, isInput) => {
       if (!isInput && !optionsInput.ignoreTypeNameDeclaration) {
-       fields =  [typeNameDeclaration, ...fields];
+       fields =  [typeNameDeclaration(name), ...fields];
       }
       return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
     };
@@ -218,7 +218,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       additionalInfo = generateAbstractTypeDeclaration(type, ignoredTypes, interfaceMap);
     }
 
-    return generateInterfaceDeclaration(type.description, interfaceDeclaration, fields, additionalInfo, isInput);
+    return generateInterfaceDeclaration(type, interfaceDeclaration, fields, additionalInfo, isInput);
   };
 
   const typesToInterfaces: (schema: GraphQLSchema, options: Partial<IInternalOptions>) => string = (schema, options) => {
