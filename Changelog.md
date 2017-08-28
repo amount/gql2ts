@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- Fix [Issue #85](https://github.com/avantcredit/gql2ts/issues/85) [#86](https://github.com/avantcredit/gql2ts/pull/86)
+
 ## 1.1.2
 
 - Expose `ignoreTypeNameDeclaration` in the CLI. Use `--ignore-type-name-declaration` to enable it [#81](https://github.com/avantcredit/gql2ts/pull/81)
