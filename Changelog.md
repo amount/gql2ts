@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0
+
+### Breaking Changes
+
+- Use string literal for `__typename` [#87](https://github.com/avantcredit/gql2ts/pull/87), for instance:
+
+```ts
+interface IWhatever {
+  __typename: "Whatever";
+}
+```
+
 ## 1.1.3
 
 - Fix [Issue #85](https://github.com/avantcredit/gql2ts/issues/85) [#86](https://github.com/avantcredit/gql2ts/pull/86)
