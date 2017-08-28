@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Pin version of `graphql` to `^0.10.5` in all packages [#89](https://github.com/avantcredit/gql2ts/pull/89)
+
 ## 1.2.0
 
 ### Breaking Changes
