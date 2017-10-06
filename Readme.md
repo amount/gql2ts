@@ -1,5 +1,7 @@
 # GQL2TS
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/avantcredit/gql2ts.svg)](https://greenkeeper.io/)
+
 [![npm version](https://badge.fury.io/js/gql2ts.svg)](https://badge.fury.io/js/gql2ts)
 [![TravisCI Build Status](https://travis-ci.org/avantcredit/gql2ts.svg?branch=master)](https://travis-ci.org/avantcredit/gql2ts)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/kfa00svxkiqfb4yh/branch/master?svg=true)](https://ci.appveyor.com/project/brettjurgens/gql2ts/branch/master)
