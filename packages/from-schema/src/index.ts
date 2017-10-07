@@ -85,7 +85,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     column: number;
   }`;
 
-  const generateDescription: (description?: string) => string = description => description ? `/*
+  const generateDescription: (description?: string) => string = description => description ? `/**
     description: ${description}
   */` : '';
 
