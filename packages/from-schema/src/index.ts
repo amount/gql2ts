@@ -85,9 +85,12 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     column: number;
   }`;
 
-  const wrapWithDescription: (declaration: string, description: string) => string = (declaration, description) => `  /*
+  const generateDescription: (description?: string) => string = description => description ? `/**
     description: ${description}
-  */
+  */` : '';
+
+  const wrapWithDescription: (declaration: string, description: string) => string = (declaration, description) =>
+  `  ${generateDescription(description)}
   ${declaration}`;
 
   const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
@@ -208,7 +211,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     let fields: string[] = f
       .filter(field => filterField(field, ignoredTypes))
-      .map(field => fieldToDefinition(field, isInput, supportsNullability))
+      .map(field => [generateDescription(field.description), fieldToDefinition(field, isInput, supportsNullability)])
+      .reduce((acc, val) => [...acc, ...val.filter(x => x)] , [])
       .filter(field => field);
 
     let interfaceDeclaration: string = generateInterfaceName(type.name);
