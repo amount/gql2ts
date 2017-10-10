@@ -10,6 +10,8 @@ import {
 import { ISchemaToInterfaceOptions, generateNamespace } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
 import { IFromQueryReturnValue } from '@gql2ts/types';
+
+// tslint:disable-next-line no-require-imports no-var-requires
 const { version } = require('../package.json');
 
 program
@@ -31,7 +33,8 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
   let defaultOverrides: object = {};
   if (program.externalOptions) {
     // tslint:disable-next-line no-require-imports no-var-requires
-    defaultOverrides = require(program.externalOptions);
+    const externalFile: { default?: object } | object = require(program.externalOptions);
+    defaultOverrides = externalFile.default || externalFile;
   }
 
   if (program.args[1]) {
