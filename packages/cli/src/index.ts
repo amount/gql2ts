@@ -33,7 +33,7 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
   let defaultOverrides: object = {};
   if (program.externalOptions) {
     // tslint:disable-next-line no-require-imports no-var-requires
-    const externalFile: { default?: object } | object = require(program.externalOptions);
+    const externalFile: any = require(program.externalOptions);
     defaultOverrides = externalFile.default || externalFile;
   }
 
