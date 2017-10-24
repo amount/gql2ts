@@ -17,7 +17,7 @@ const { version } = require('../package.json');
 
 program
   .version(version)
-  .usage('[options] <schema.json> <query.gql>')
+  .usage('[options] <schema.json | schema.gql> <query.gql>')
   .option('-o --output-file [outputFile]', 'name for output file, will use stdout if not specified')
   .option('-n --namespace [namespace]', 'name for the namespace, defaults to "GQL"', 'GQL')
   .option('-i --ignored-types <ignoredTypes>', 'names of types to ignore (comma delimited)', v => v.split(','), [])
