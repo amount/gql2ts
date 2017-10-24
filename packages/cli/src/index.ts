@@ -6,6 +6,7 @@ import {
   readFile,
   writeToFile,
   PossibleSchemaInput,
+  safeJSONParse,
 } from '@gql2ts/util';
 import { ISchemaToInterfaceOptions, generateNamespace } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
@@ -68,10 +69,10 @@ if (!process.stdin.isTTY) {
   process.stdin.on('data', (data) => {
     input += data;
   });
-  process.stdin.on('end', () => run(JSON.parse(input), program as any));
+  process.stdin.on('end', () => run(safeJSONParse(input) as PossibleSchemaInput, program as any));
 } else if (fileName) {
-  const schema: string = readFile(fileName);
-  run(schema, program as any);
+  const schema: string | object = readFile(fileName);
+  run(schema as PossibleSchemaInput, program as any);
 } else {
   console.error('No input specified. Please use stdin or a file name.');
   program.outputHelp();
