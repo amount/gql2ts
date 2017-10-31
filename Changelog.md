@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Allow GraphQL Schema Language input in CLI
+
 ## 1.2.2
 
 - Fix Default Export / CommonJS for `-e` flag on CLI [#99](https://github.com/avantcredit/gql2ts/pull/99)
