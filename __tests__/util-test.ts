@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as utils from '../packages/util/src';
-import { badWriteHandler } from '../packages/util/src/fileIO';
+import { badWriteHandler, safeJSONParse, readFile } from '../packages/util/src/fileIO';
 import schemaLanguage from './shared/simpleSchema';
 import { GraphQLSchema, introspectionQuery, graphql, GraphQLNonNull, GraphQLList, GraphQLEnumType, GraphQLString } from 'graphql';
 
@@ -99,5 +99,34 @@ describe('IO stuff', () => {
     spy.mockReset();
     spy.mockClear();
     (spy as any).mockRestore();
+  });
+
+  describe('readFile', () => {
+    it ('reads json', () => {
+      const spy: jest.MockInstance<{}> = jest.spyOn(fs, 'readFileSync').mockImplementation(() => '{ "test": true }');
+      expect(readFile('test.json')).toEqual({ test: true });
+      spy.mockReset();
+      spy.mockClear();
+      (spy as any).mockRestore();
+    });
+
+    it ('reads strings', () => {
+      const spy: jest.MockInstance<{}> = jest.spyOn(fs, 'readFileSync').mockImplementation(() => 'test');
+      expect(readFile('test.gql')).toEqual('test');
+      spy.mockReset();
+      spy.mockClear();
+      (spy as any).mockRestore();
+    });
+  });
+
+  describe('safeJSONParse', () => {
+    it ('falls back to string', () => {
+      const input: string = 'test';
+      expect(safeJSONParse(input)).toEqual(input);
+    });
+    it ('parses json', () => {
+      const input: string = '{ "test": true }';
+      expect(safeJSONParse(input)).toEqual({ test: true });
+    });
   });
 });

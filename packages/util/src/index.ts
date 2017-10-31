@@ -1,4 +1,8 @@
-export { readFile, writeToFile } from './fileIO';
+export {
+  readFile,
+  writeToFile,
+  safeJSONParse
+} from './fileIO';
 
 export {
   PossibleIntrospectionInputs,

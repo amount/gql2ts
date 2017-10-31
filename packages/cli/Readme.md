@@ -5,7 +5,7 @@ npm install -g gql2ts
 ```
 
 ```shell
-Usage: index [options] <schema.json> <query.gql>
+Usage: index [options] <schema.json | schema.gql> <query.gql>
 
 Options:
 
@@ -19,6 +19,8 @@ Options:
 ```
 
 ## Usage Explanation
+
+Schema can be inputted via a file or stdin and formatted as either JSON (Introspection Query result) or GraphQL Schema Language.
 
 If a `query.gql` file is specified, `gql2ts` will run the query against the schema and generate interfaces based on that. If no query is specified, `gql2ts` will create a namespace for your schema and add the interfaces to there.
 
