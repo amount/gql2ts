@@ -1,5 +1,6 @@
 import { schemaToInterfaces, generateNamespace } from '../packages/from-schema/src';
 import { DEFAULT_OPTIONS } from '../packages/language-typescript/src';
+import FLOW_OPTIONS from '../packages/language-flow/src';
 import schema from './data/starWarsSchema';
 import enumSchema from './data/enumSchema';
 import simpleSchema from './shared/simpleSchema';
@@ -15,6 +16,18 @@ describe('gql2ts', () => {
       const actual: string = schemaToInterfaces(schemaAsAny, {
         ignoredTypes: []
       });
+      expect(actual).toMatchSnapshot();
+    });
+
+    it('correctly translates the star wars schema into flow type defs', () => {
+      const actual: string = schemaToInterfaces(
+        schemaAsAny,
+        {
+          ignoredTypes: []
+        },
+        FLOW_OPTIONS
+      );
+
       expect(actual).toMatchSnapshot();
     });
 
