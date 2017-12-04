@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+- Allow custom `TypeMap` in `@gql2ts/from-schema`, similar to `@gql2ts/from-query` [#109](https://github.com/avantcredit/gql2ts/pull/109)
+
 ## 1.3.0
 
 - Allow GraphQL Schema Language input in CLI
