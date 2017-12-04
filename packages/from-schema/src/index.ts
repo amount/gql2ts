@@ -42,7 +42,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     addSemicolon,
   } = optionsInput.formats;
 
-  const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP };
+  const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP, ...(optionsInput.typeMap || {}) };
 
   function isScalar (type: any): type is GraphQLScalarType {
     return type instanceof GraphQLScalarType || !!(type as any)._scalarConfig;
@@ -301,6 +301,7 @@ export interface ISchemaToInterfaceOptions {
   namespace: string;
   outputFile?: string;
   externalOptions?: string;
+  typeMap?: ITypeMap;
 }
 
 export interface IInternalOptions extends Partial<ISchemaToInterfaceOptions> {
