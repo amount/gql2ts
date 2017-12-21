@@ -62,7 +62,10 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
 
 const fileName: string | undefined = program.args[0];
 
-if (!process.stdin.isTTY) {
+if (fileName) {
+  const schema: string | object = readFile(fileName);
+  run(schema as PossibleSchemaInput, program as any);
+} else if (!process.stdin.isTTY) {
   let input: string = '';
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
@@ -70,9 +73,6 @@ if (!process.stdin.isTTY) {
     input += data;
   });
   process.stdin.on('end', () => run(safeJSONParse(input) as PossibleSchemaInput, program as any));
-} else if (fileName) {
-  const schema: string | object = readFile(fileName);
-  run(schema as PossibleSchemaInput, program as any);
 } else {
   console.error('No input specified. Please use stdin or a file name.');
   program.outputHelp();
