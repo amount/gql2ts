@@ -40,6 +40,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     generateInterfaceDeclaration: gID,
     interfaceBuilder,
     addSemicolon,
+    enumTypeBuilder,
   } = optionsInput.formats;
 
   const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP, ...(optionsInput.typeMap || {}) };
@@ -110,8 +111,23 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     };
 
   type GenerateEnumDeclaration = (description: string, name: string, enumValues: GraphQLEnumValue[]) => string;
-  const generateEnumDeclaration: GenerateEnumDeclaration = (description, name, enumValues) =>
-    wrapWithDescription(typeBuilder(generateEnumName(name), addSemicolon(formatEnum(enumValues))), description);
+
+  const generateEnumDeclaration: GenerateEnumDeclaration = (description, name, enumValues) => {
+    if (!enumTypeBuilder) {
+      console.warn(
+        'Missing `enumTypeBuilder` from language file and falling back to using a type for enums. This new option was added in v1.5.0'
+      );
+    }
+    return wrapWithDescription(
+      (enumTypeBuilder || typeBuilder)(
+        generateEnumName(name),
+        addSemicolon(
+          formatEnum(enumValues)
+        )
+      ),
+      description
+    );
+  };
 
   /**
    * TODO

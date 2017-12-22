@@ -12,6 +12,7 @@ import {
   TypePrinter,
   NamespaceGenerator,
   InterfaceNameWithExtensions,
+  EnumTypeBuilder
 } from '@gql2ts/types';
 import prettify from './typescriptPrettify';
 import { pascalize } from 'humps';
@@ -53,9 +54,15 @@ export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull 
 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${pascalize(selectionName)}`;
 
-export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
+// values.map(v => `'${v.value}'`).join(' | ');
+export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => `{
+  ${values.map(({ value }) => `${value} = '${value}'`).join(',\n')}
+}`;
 
-export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `I${pascalize(name)}Enum`;
+export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) =>
+`enum ${name} ${values}`;
+
+export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `${pascalize(name)}`;
 export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)}Input`;
 export const DEFAULT_EXPORT_FUNCTION: WrapType = declaration => `export ${declaration}`;
 export const ADD_SEMICOLON: WrapType = str => `${str};`;
@@ -81,6 +88,7 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   formatEnum: DEFAULT_ENUM_FORMATTER,
   interfaceBuilder: DEFAULT_INTERFACE_BUILDER,
   typeBuilder: DEFAULT_TYPE_BUILDER,
+  enumTypeBuilder: DEFAULT_ENUM_TYPE_BUILDER,
   typeJoiner: DEFAULT_TYPE_JOINER,
   generateInterfaceDeclaration: DEFAULT_INTERFACE_DECLARATION,
   generateEnumName: DEFAULT_ENUM_NAME_GENERATOR,

@@ -61,7 +61,6 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     formatInput,
     generateFragmentName,
     generateQueryName,
-    formatEnum,
     interfaceBuilder,
     typeBuilder,
     typeJoiner,
@@ -85,7 +84,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
   };
 
   const handleEnum: (type: GraphQLEnumType, isNonNull: boolean) => string = (type, isNonNull) => {
-    const decl: string = formatEnum(type.getValues());
+    const decl: string = type.getValues().map(({ value }) => `'${value}'`).join(' | ');
     return printType(decl, isNonNull);
   };
 
@@ -117,7 +116,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     }
   };
 
-  const convertToType: ConvertToTypeSignature = (type, isNonNull = false, replacement = null): string => {
+  const convertToType: ConvertToTypeSignature = (type, isNonNull = false, replacement = null) => {
     if (isList(type)) {
       return printType(wrapList(convertToType(type.ofType, false, replacement)), isNonNull!);
     } else if (isNonNullable(type)) {
@@ -190,7 +189,6 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     let isFragment: boolean = false;
     let isPartial: boolean = false;
     let complexTypes: IComplexTypeSignature[] = [];
-
     if (selection.kind === 'Field') {
       const field: GraphQLField<any, any> = getField(operation, selection, parent);
       const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;

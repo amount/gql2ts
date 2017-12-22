@@ -50,6 +50,7 @@ export type InputFormatter = (name: string, isOptional: boolean, type: string) =
 export type QueryNamer = (def: OperationDefinitionNode) => string;
 export type EnumFormatter = (values: GraphQLEnumValue[]) => string;
 export type InterfaceAndTypeBuilder = (name: string, body: string) => string;
+export type EnumTypeBuilder = (name: string, values: string) => string;
 export type TypeJoiner = (types: string[]) => string;
 export type InterfaceDeclarationGenerator = (fields: string[], indentation?: string) => string;
 export type NamespaceGenerator = (namespaceName: string, interfaces: string) => string;
@@ -62,12 +63,13 @@ export interface IFromQueryOptions {
   formatInput: InputFormatter;
   generateFragmentName: WrapType;
   generateQueryName: QueryNamer;
-  formatEnum: EnumFormatter;
   interfaceBuilder: InterfaceAndTypeBuilder;
   typeBuilder: InterfaceAndTypeBuilder;
+  enumTypeBuilder: EnumTypeBuilder;
+  generateEnumName: WrapType;
+  formatEnum: EnumFormatter;
   typeJoiner: TypeJoiner;
   generateInterfaceDeclaration: InterfaceDeclarationGenerator;
-  generateEnumName: WrapType;
   generateTypeName: WrapType;
   generateInterfaceName: WrapType;
   exportFunction: WrapType;
