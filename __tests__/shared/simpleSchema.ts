@@ -6,6 +6,7 @@ export default `
     name: String
     friends: [Character]
     appearsIn: [Episode]
+    anOldField: String @deprecated(reason: "Field No Longer Available.")
 
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
@@ -18,6 +19,7 @@ export default `
     friends: [Character]
     appearsIn: [Episode]
     homePlanet: String
+    anOldField: String @deprecated(reason: "Field No Longer Available.")
 
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
@@ -30,8 +32,8 @@ export default `
     friends: [Character]
     appearsIn: [Episode]
     primaryFunction: String
-
     primaryFunctionNonNull: String!
+    anOldField: String @deprecated(reason: "Field No Longer Available.")
 
     nonNullArr: [Character]!
     nonNullArrAndContents: [Character!]!
@@ -50,5 +52,6 @@ export default `
     test(test: TestScalar): TestScalar
     humanOrDroid(id: String!): HumanOrDroid
     getCharacters(ids: [ID!]!): [Character]!
+    anOldField: String @deprecated(reason: "Field No Longer Available.")
   }
 `;
