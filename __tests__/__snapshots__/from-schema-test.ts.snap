@@ -4321,6 +4321,51 @@ full \\"{ edges { node } }\\" version should be used instead.
 }"
 `;
 
+exports[`gql2ts mutations supports mutations 1`] = `
+"  interface IGraphQLResponseRoot {
+    data?: IQuery | IMutation;
+    errors?: Array<IGraphQLResponseError>;
+  }
+
+  interface IGraphQLResponseError {
+    message: string;            // Required for all errors
+    locations?: Array<IGraphQLResponseErrorLocation>;
+    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+  }
+
+  interface IGraphQLResponseErrorLocation {
+    line: number;
+    column: number;
+  }
+
+  
+  interface IQuery {
+    __typename: \\"Query\\";
+    getMessage: IMessage | null;
+}
+
+  
+  interface IMessage {
+    __typename: \\"Message\\";
+    id: string;
+    content: string | null;
+    author: string | null;
+}
+
+  
+  interface IMutation {
+    __typename: \\"Mutation\\";
+    createMessage: IMessage | null;
+    updateMessage: IMessage | null;
+}
+
+  
+  interface IMessageInput {
+    content?: string | null;
+    author?: string | null;
+}"
+`;
+
 exports[`gql2ts namespace correctly generates namespace 1`] = `
 "// tslint:disable
 // graphql typescript definitions
