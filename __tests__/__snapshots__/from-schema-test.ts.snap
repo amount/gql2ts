@@ -1480,6 +1480,86 @@ full \\"{ edges { node } }\\" version should be used instead.
 }"
 `;
 
+exports[`gql2ts deprecation removes deprecated fields if requested 1`] = `
+"  interface IGraphQLResponseRoot {
+    data?: IQuery;
+    errors?: Array<IGraphQLResponseError>;
+  }
+
+  interface IGraphQLResponseError {
+    message: string;            // Required for all errors
+    locations?: Array<IGraphQLResponseErrorLocation>;
+    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+  }
+
+  interface IGraphQLResponseErrorLocation {
+    line: number;
+    column: number;
+  }
+
+  
+  interface IQuery {
+    __typename: \\"Query\\";
+    heroNoParam: Character | null;
+    hero: Character | null;
+    human: IHuman | null;
+    droid: IDroid | null;
+    test: any | null;
+    humanOrDroid: HumanOrDroid | null;
+    getCharacters: Array<Character>;
+}
+
+  
+  type Character = IHuman | IDroid;
+
+  
+  interface ICharacter {
+    __typename: \\"Character\\";
+    id: string;
+    name: string | null;
+    friends: Array<Character> | null;
+    appearsIn: Array<IEpisodeEnum> | null;
+    nonNullArr: Array<Character>;
+    nonNullArrAndContents: Array<Character>;
+    nullArrNonNullContents: Array<Character>;
+}
+
+  
+  type IEpisodeEnum = 'NEWHOPE' | 'EMPIRE' | 'JEDI';
+
+  
+  interface IHuman {
+    __typename: \\"Human\\";
+    id: string;
+    name: string | null;
+    friends: Array<Character> | null;
+    appearsIn: Array<IEpisodeEnum> | null;
+    homePlanet: string | null;
+    nonNullArr: Array<Character>;
+    nonNullArrAndContents: Array<Character>;
+    nullArrNonNullContents: Array<Character>;
+}
+
+  
+  interface IDroid {
+    __typename: \\"Droid\\";
+    id: string;
+    name: string | null;
+    friends: Array<Character> | null;
+    appearsIn: Array<IEpisodeEnum> | null;
+    primaryFunction: string | null;
+    primaryFunctionNonNull: string;
+    nonNullArr: Array<Character>;
+    nonNullArrAndContents: Array<Character>;
+    nullArrNonNullContents: Array<Character>;
+}
+
+  
+  type HumanOrDroid = IHuman | IDroid;
+
+"
+`;
+
 exports[`gql2ts interfaces correctly ignores types 1`] = `
 "  interface IGraphQLResponseRoot {
     data?: IRoot;

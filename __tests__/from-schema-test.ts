@@ -92,4 +92,14 @@ describe('gql2ts', () => {
       expect(actual).toMatchSnapshot();
     });
   });
+
+  describe('deprecation', () => {
+    it('removes deprecated fields if requested', () => {
+      const actual: string = schemaToInterfaces(simpleSchema, {
+        ignoredTypes: [],
+        excludeDeprecatedFields: true
+      });
+      expect(actual).toMatchSnapshot();
+    });
+  });
 });

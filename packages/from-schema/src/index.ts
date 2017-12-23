@@ -97,6 +97,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     tag: string;
     value: string;
   }
+
   function isInputField (field: GraphQLField<any, any> | GraphQLInputField): field is GraphQLInputField {
     return !!field.astNode && field.astNode.kind === 'InputValueDefinition';
   }
@@ -190,7 +191,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const filterField: (field: GraphQLField<any, any> | GraphQLInputField, ignoredTypes: Set<String>) => boolean = (field, ignoredTypes) => {
     let nestedType: GraphQLNamedType = findRootType(field.type);
-    return !ignoredTypes.has(nestedType.name);
+    return !ignoredTypes.has(nestedType.name) && (!optionsInput.excludeDeprecatedFields || !(field as GraphQLField<any, any>).isDeprecated);
   };
 
   type InterfaceMap = Map<GraphQLInterfaceType, GraphQLObjectType[]>;
@@ -327,6 +328,7 @@ export interface ISchemaToInterfaceOptions {
   outputFile?: string;
   externalOptions?: string;
   typeMap?: ITypeMap;
+  excludeDeprecatedFields?: boolean;
 }
 
 export interface IInternalOptions extends Partial<ISchemaToInterfaceOptions> {
