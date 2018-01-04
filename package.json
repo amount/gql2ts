@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@types/graphql": "^0.11.4",
-    "@types/jest": "^21.1.2",
+    "@types/jest": "^22.0.1",
     "@types/node": "^8.0.32",
     "coveralls": "^3.0.0",
     "jest": "^21.2.1",
