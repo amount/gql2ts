@@ -3,6 +3,7 @@ import { DEFAULT_OPTIONS } from '../packages/language-typescript/src';
 import schema from './data/starWarsSchema';
 import enumSchema from './data/enumSchema';
 import simpleSchema from './shared/simpleSchema';
+import mutationSchema from './shared/mutationSchema';
 
 const { postProcessor } = DEFAULT_OPTIONS;
 
@@ -80,6 +81,25 @@ describe('gql2ts', () => {
         legacy: true
       });
       expect(interfaces).toMatchSnapshot();
+    });
+  });
+
+  describe('mutations', () => {
+    it('supports mutations', () => {
+      const actual: string = schemaToInterfaces(mutationSchema, {
+        ignoredTypes: []
+      });
+      expect(actual).toMatchSnapshot();
+    });
+  });
+
+  describe('deprecation', () => {
+    it('removes deprecated fields if requested', () => {
+      const actual: string = schemaToInterfaces(simpleSchema, {
+        ignoredTypes: [],
+        excludeDeprecatedFields: true
+      });
+      expect(actual).toMatchSnapshot();
     });
   });
 });

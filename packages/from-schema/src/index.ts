@@ -84,14 +84,40 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     line: number;
     column: number;
   }`;
-
-  const generateDescription: (description?: string) => string = description => description ? `/**
-    description: ${description}
+  type GenerateDescription = (description?: string, jsDoc?: IJSDocTag[]) => string;
+  const generateDescription: GenerateDescription = (description, jsDoc = []) => (description || jsDoc.length) ? `/**
+    ${[description, ...jsDoc.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n')}
   */` : '';
 
   const wrapWithDescription: (declaration: string, description: string) => string = (declaration, description) =>
   `  ${generateDescription(description)}
   ${declaration}`;
+
+  interface IJSDocTag {
+    tag: string;
+    value: string;
+  }
+
+  function isInputField (field: GraphQLField<any, any> | GraphQLInputField): field is GraphQLInputField {
+    return !!field.astNode && field.astNode.kind === 'InputValueDefinition';
+  }
+
+  const buildDocTags: (field: GraphQLField<any, any> | GraphQLInputField) => IJSDocTag[] = field => {
+    const tags: IJSDocTag[] = [];
+    if (!field.astNode) {
+      return tags;
+    } else if (isInputField(field)) {
+      if (field.defaultValue) {
+        tags.push({ tag: 'default', value: field.defaultValue });
+      }
+    } else {
+      if (field.isDeprecated) {
+        tags.push({ tag: 'deprecated', value: field.deprecationReason || '' });
+      }
+    }
+
+    return tags;
+  };
 
   const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
     (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n', description);
@@ -165,7 +191,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const filterField: (field: GraphQLField<any, any> | GraphQLInputField, ignoredTypes: Set<String>) => boolean = (field, ignoredTypes) => {
     let nestedType: GraphQLNamedType = findRootType(field.type);
-    return !ignoredTypes.has(nestedType.name);
+    return !ignoredTypes.has(nestedType.name) && (!optionsInput.excludeDeprecatedFields || !(field as GraphQLField<any, any>).isDeprecated);
   };
 
   type InterfaceMap = Map<GraphQLInterfaceType, GraphQLObjectType[]>;
@@ -211,7 +237,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     let fields: string[] = f
       .filter(field => filterField(field, ignoredTypes))
-      .map(field => [generateDescription(field.description), fieldToDefinition(field, isInput, supportsNullability)])
+      .map(field => [generateDescription(field.description, buildDocTags(field)), fieldToDefinition(field, isInput, supportsNullability)])
       .reduce((acc, val) => [...acc, ...val.filter(x => x)] , [])
       .filter(field => field);
 
@@ -302,6 +328,7 @@ export interface ISchemaToInterfaceOptions {
   outputFile?: string;
   externalOptions?: string;
   typeMap?: ITypeMap;
+  excludeDeprecatedFields?: boolean;
 }
 
 export interface IInternalOptions extends Partial<ISchemaToInterfaceOptions> {
