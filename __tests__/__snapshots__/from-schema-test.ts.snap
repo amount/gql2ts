@@ -2921,6 +2921,1486 @@ exports[`gql2ts interfaces correctly translates enums 1`] = `
   type IColorEnum = 'RED' | 'GREEN' | 'BLUE';"
 `;
 
+exports[`gql2ts interfaces correctly translates the star wars schema into flow type defs 1`] = `
+"  interface IGraphQLResponseRoot {
+    data?: Root;
+    errors?: Array<IGraphQLResponseError>;
+  }
+
+  interface IGraphQLResponseError {
+    message: string;            // Required for all errors
+    locations?: Array<IGraphQLResponseErrorLocation>;
+    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+  }
+
+  interface IGraphQLResponseErrorLocation {
+    line: number;
+    column: number;
+  }
+
+  
+  export type Root = {
+    __typename: \\"Root\\";
+    allFilms: ?FilmsConnection;
+    film: ?Film;
+    allPeople: ?PeopleConnection;
+    person: ?Person;
+    allPlanets: ?PlanetsConnection;
+    planet: ?Planet;
+    allSpecies: ?SpeciesConnection;
+    species: ?Species;
+    allStarships: ?StarshipsConnection;
+    starship: ?Starship;
+    allVehicles: ?VehiclesConnection;
+    vehicle: ?Vehicle;
+    /**
+    description: Fetches an object given its ID
+  */
+    node: ?Node;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type FilmsConnection = {
+    __typename: \\"FilmsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<FilmsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    films: ?Array<Film>;
+}
+
+  /**
+    description: Information about pagination in a connection.
+  */
+  export type PageInfo = {
+    __typename: \\"PageInfo\\";
+    /**
+    description: When paginating forwards, are there more items?
+  */
+    hasNextPage: boolean;
+    /**
+    description: When paginating backwards, are there more items?
+  */
+    hasPreviousPage: boolean;
+    /**
+    description: When paginating backwards, the cursor to continue.
+  */
+    startCursor: ?string;
+    /**
+    description: When paginating forwards, the cursor to continue.
+  */
+    endCursor: ?string;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type FilmsEdge = {
+    __typename: \\"FilmsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Film;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A single film.
+  */
+  export type Film = {
+    __typename: \\"Film\\";
+    /**
+    description: The title of this film.
+  */
+    title: ?string;
+    /**
+    description: The episode number of this film.
+  */
+    episodeID: ?number;
+    /**
+    description: The opening paragraphs at the beginning of this film.
+  */
+    openingCrawl: ?string;
+    /**
+    description: The name of the director of this film.
+  */
+    director: ?string;
+    /**
+    description: The name(s) of the producer(s) of this film.
+  */
+    producers: ?Array<string>;
+    /**
+    description: The ISO 8601 date format of film release at original creator country.
+  */
+    releaseDate: ?string;
+    speciesConnection: ?FilmSpeciesConnection;
+    starshipConnection: ?FilmStarshipsConnection;
+    vehicleConnection: ?FilmVehiclesConnection;
+    characterConnection: ?FilmCharactersConnection;
+    planetConnection: ?FilmPlanetsConnection;
+    /**
+    description: The ISO 8601 date format of the time that this resource was created.
+  */
+    created: ?string;
+    /**
+    description: The ISO 8601 date format of the time that this resource was edited.
+  */
+    edited: ?string;
+    /**
+    description: The ID of an object
+  */
+    id: string;
+}
+
+  /**
+    description: An object with an ID
+  */
+  type Node = Film | Species | Planet | Person | Starship | Vehicle;
+
+  /**
+    description: An object with an ID
+  */
+  export type Node = {
+    __typename: \\"Node\\";
+    /**
+    description: The id of the object.
+  */
+    id: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type FilmSpeciesConnection = {
+    __typename: \\"FilmSpeciesConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<FilmSpeciesEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    species: ?Array<Species>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type FilmSpeciesEdge = {
+    __typename: \\"FilmSpeciesEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Species;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A type of person or character within the Star Wars Universe.
+  */
+  export type Species = {
+    __typename: \\"Species\\";
+    /**
+    description: The name of this species.
+  */
+    name: ?string;
+    /**
+    description: The classification of this species, such as \\"mammal\\" or \\"reptile\\".
+  */
+    classification: ?string;
+    /**
+    description: The designation of this species, such as \\"sentient\\".
+  */
+    designation: ?string;
+    /**
+    description: The average height of this species in centimeters.
+  */
+    averageHeight: ?number;
+    /**
+    description: The average lifespan of this species in years.
+  */
+    averageLifespan: ?number;
+    /**
+    description: Common eye colors for this species, null if this species does not typically
+have eyes.
+  */
+    eyeColors: ?Array<string>;
+    /**
+    description: Common hair colors for this species, null if this species does not typically
+have hair.
+  */
+    hairColors: ?Array<string>;
+    /**
+    description: Common skin colors for this species, null if this species does not typically
+have skin.
+  */
+    skinColors: ?Array<string>;
+    /**
+    description: The language commonly spoken by this species.
+  */
+    language: ?string;
+    /**
+    description: A planet that this species originates from.
+  */
+    homeworld: ?Planet;
+    personConnection: ?SpeciesPeopleConnection;
+    filmConnection: ?SpeciesFilmsConnection;
+    /**
+    description: The ISO 8601 date format of the time that this resource was created.
+  */
+    created: ?string;
+    /**
+    description: The ISO 8601 date format of the time that this resource was edited.
+  */
+    edited: ?string;
+    /**
+    description: The ID of an object
+  */
+    id: string;
+}
+
+  /**
+    description: A large mass, planet or planetoid in the Star Wars Universe, at the time of
+0 ABY.
+  */
+  export type Planet = {
+    __typename: \\"Planet\\";
+    /**
+    description: The name of this planet.
+  */
+    name: ?string;
+    /**
+    description: The diameter of this planet in kilometers.
+  */
+    diameter: ?number;
+    /**
+    description: The number of standard hours it takes for this planet to complete a single
+rotation on its axis.
+  */
+    rotationPeriod: ?number;
+    /**
+    description: The number of standard days it takes for this planet to complete a single orbit
+of its local star.
+  */
+    orbitalPeriod: ?number;
+    /**
+    description: A number denoting the gravity of this planet, where \\"1\\" is normal or 1 standard
+G. \\"2\\" is twice or 2 standard Gs. \\"0.5\\" is half or 0.5 standard Gs.
+  */
+    gravity: ?string;
+    /**
+    description: The average population of sentient beings inhabiting this planet.
+  */
+    population: ?number;
+    /**
+    description: The climates of this planet.
+  */
+    climates: ?Array<string>;
+    /**
+    description: The terrains of this planet.
+  */
+    terrains: ?Array<string>;
+    /**
+    description: The percentage of the planet surface that is naturally occuring water or bodies
+of water.
+  */
+    surfaceWater: ?number;
+    residentConnection: ?PlanetResidentsConnection;
+    filmConnection: ?PlanetFilmsConnection;
+    /**
+    description: The ISO 8601 date format of the time that this resource was created.
+  */
+    created: ?string;
+    /**
+    description: The ISO 8601 date format of the time that this resource was edited.
+  */
+    edited: ?string;
+    /**
+    description: The ID of an object
+  */
+    id: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PlanetResidentsConnection = {
+    __typename: \\"PlanetResidentsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PlanetResidentsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    residents: ?Array<Person>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PlanetResidentsEdge = {
+    __typename: \\"PlanetResidentsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Person;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: An individual person or character within the Star Wars universe.
+  */
+  export type Person = {
+    __typename: \\"Person\\";
+    /**
+    description: The name of this person.
+  */
+    name: ?string;
+    /**
+    description: The birth year of the person, using the in-universe standard of BBY or ABY -
+Before the Battle of Yavin or After the Battle of Yavin. The Battle of Yavin is
+a battle that occurs at the end of Star Wars episode IV: A New Hope.
+  */
+    birthYear: ?string;
+    /**
+    description: The eye color of this person. Will be \\"unknown\\" if not known or \\"n/a\\" if the
+person does not have an eye.
+  */
+    eyeColor: ?string;
+    /**
+    description: The gender of this person. Either \\"Male\\", \\"Female\\" or \\"unknown\\",
+\\"n/a\\" if the person does not have a gender.
+  */
+    gender: ?string;
+    /**
+    description: The hair color of this person. Will be \\"unknown\\" if not known or \\"n/a\\" if the
+person does not have hair.
+  */
+    hairColor: ?string;
+    /**
+    description: The height of the person in centimeters.
+  */
+    height: ?number;
+    /**
+    description: The mass of the person in kilograms.
+  */
+    mass: ?number;
+    /**
+    description: The skin color of this person.
+  */
+    skinColor: ?string;
+    /**
+    description: A planet that this person was born on or inhabits.
+  */
+    homeworld: ?Planet;
+    filmConnection: ?PersonFilmsConnection;
+    /**
+    description: The species that this person belongs to, or null if unknown.
+  */
+    species: ?Species;
+    starshipConnection: ?PersonStarshipsConnection;
+    vehicleConnection: ?PersonVehiclesConnection;
+    /**
+    description: The ISO 8601 date format of the time that this resource was created.
+  */
+    created: ?string;
+    /**
+    description: The ISO 8601 date format of the time that this resource was edited.
+  */
+    edited: ?string;
+    /**
+    description: The ID of an object
+  */
+    id: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PersonFilmsConnection = {
+    __typename: \\"PersonFilmsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PersonFilmsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    films: ?Array<Film>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PersonFilmsEdge = {
+    __typename: \\"PersonFilmsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Film;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PersonStarshipsConnection = {
+    __typename: \\"PersonStarshipsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PersonStarshipsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    starships: ?Array<Starship>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PersonStarshipsEdge = {
+    __typename: \\"PersonStarshipsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Starship;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A single transport craft that has hyperdrive capability.
+  */
+  export type Starship = {
+    __typename: \\"Starship\\";
+    /**
+    description: The name of this starship. The common name, such as \\"Death Star\\".
+  */
+    name: ?string;
+    /**
+    description: The model or official name of this starship. Such as \\"T-65 X-wing\\" or \\"DS-1
+Orbital Battle Station\\".
+  */
+    model: ?string;
+    /**
+    description: The class of this starship, such as \\"Starfighter\\" or \\"Deep Space Mobile
+Battlestation\\"
+  */
+    starshipClass: ?string;
+    /**
+    description: The manufacturers of this starship.
+  */
+    manufacturers: ?Array<string>;
+    /**
+    description: The cost of this starship new, in galactic credits.
+  */
+    costInCredits: ?number;
+    /**
+    description: The length of this starship in meters.
+  */
+    length: ?number;
+    /**
+    description: The number of personnel needed to run or pilot this starship.
+  */
+    crew: ?string;
+    /**
+    description: The number of non-essential people this starship can transport.
+  */
+    passengers: ?string;
+    /**
+    description: The maximum speed of this starship in atmosphere. null if this starship is
+incapable of atmosphering flight.
+  */
+    maxAtmospheringSpeed: ?number;
+    /**
+    description: The class of this starships hyperdrive.
+  */
+    hyperdriveRating: ?number;
+    /**
+    description: The Maximum number of Megalights this starship can travel in a standard hour.
+A \\"Megalight\\" is a standard unit of distance and has never been defined before
+within the Star Wars universe. This figure is only really useful for measuring
+the difference in speed of starships. We can assume it is similar to AU, the
+distance between our Sun (Sol) and Earth.
+  */
+    MGLT: ?number;
+    /**
+    description: The maximum number of kilograms that this starship can transport.
+  */
+    cargoCapacity: ?number;
+    /**
+    description: The maximum length of time that this starship can provide consumables for its
+entire crew without having to resupply.
+  */
+    consumables: ?string;
+    pilotConnection: ?StarshipPilotsConnection;
+    filmConnection: ?StarshipFilmsConnection;
+    /**
+    description: The ISO 8601 date format of the time that this resource was created.
+  */
+    created: ?string;
+    /**
+    description: The ISO 8601 date format of the time that this resource was edited.
+  */
+    edited: ?string;
+    /**
+    description: The ID of an object
+  */
+    id: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type StarshipPilotsConnection = {
+    __typename: \\"StarshipPilotsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<StarshipPilotsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    pilots: ?Array<Person>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type StarshipPilotsEdge = {
+    __typename: \\"StarshipPilotsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Person;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type StarshipFilmsConnection = {
+    __typename: \\"StarshipFilmsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<StarshipFilmsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    films: ?Array<Film>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type StarshipFilmsEdge = {
+    __typename: \\"StarshipFilmsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Film;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PersonVehiclesConnection = {
+    __typename: \\"PersonVehiclesConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PersonVehiclesEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    vehicles: ?Array<Vehicle>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PersonVehiclesEdge = {
+    __typename: \\"PersonVehiclesEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Vehicle;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A single transport craft that does not have hyperdrive capability
+  */
+  export type Vehicle = {
+    __typename: \\"Vehicle\\";
+    /**
+    description: The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
+bike\\".
+  */
+    name: ?string;
+    /**
+    description: The model or official name of this vehicle. Such as \\"All-Terrain Attack
+Transport\\".
+  */
+    model: ?string;
+    /**
+    description: The class of this vehicle, such as \\"Wheeled\\" or \\"Repulsorcraft\\".
+  */
+    vehicleClass: ?string;
+    /**
+    description: The manufacturers of this vehicle.
+  */
+    manufacturers: ?Array<string>;
+    /**
+    description: The cost of this vehicle new, in Galactic Credits.
+  */
+    costInCredits: ?number;
+    /**
+    description: The length of this vehicle in meters.
+  */
+    length: ?number;
+    /**
+    description: The number of personnel needed to run or pilot this vehicle.
+  */
+    crew: ?string;
+    /**
+    description: The number of non-essential people this vehicle can transport.
+  */
+    passengers: ?string;
+    /**
+    description: The maximum speed of this vehicle in atmosphere.
+  */
+    maxAtmospheringSpeed: ?number;
+    /**
+    description: The maximum number of kilograms that this vehicle can transport.
+  */
+    cargoCapacity: ?number;
+    /**
+    description: The maximum length of time that this vehicle can provide consumables for its
+entire crew without having to resupply.
+  */
+    consumables: ?string;
+    pilotConnection: ?VehiclePilotsConnection;
+    filmConnection: ?VehicleFilmsConnection;
+    /**
+    description: The ISO 8601 date format of the time that this resource was created.
+  */
+    created: ?string;
+    /**
+    description: The ISO 8601 date format of the time that this resource was edited.
+  */
+    edited: ?string;
+    /**
+    description: The ID of an object
+  */
+    id: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type VehiclePilotsConnection = {
+    __typename: \\"VehiclePilotsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<VehiclePilotsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    pilots: ?Array<Person>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type VehiclePilotsEdge = {
+    __typename: \\"VehiclePilotsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Person;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type VehicleFilmsConnection = {
+    __typename: \\"VehicleFilmsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<VehicleFilmsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    films: ?Array<Film>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type VehicleFilmsEdge = {
+    __typename: \\"VehicleFilmsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Film;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PlanetFilmsConnection = {
+    __typename: \\"PlanetFilmsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PlanetFilmsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    films: ?Array<Film>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PlanetFilmsEdge = {
+    __typename: \\"PlanetFilmsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Film;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type SpeciesPeopleConnection = {
+    __typename: \\"SpeciesPeopleConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<SpeciesPeopleEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    people: ?Array<Person>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type SpeciesPeopleEdge = {
+    __typename: \\"SpeciesPeopleEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Person;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type SpeciesFilmsConnection = {
+    __typename: \\"SpeciesFilmsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<SpeciesFilmsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    films: ?Array<Film>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type SpeciesFilmsEdge = {
+    __typename: \\"SpeciesFilmsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Film;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type FilmStarshipsConnection = {
+    __typename: \\"FilmStarshipsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<FilmStarshipsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    starships: ?Array<Starship>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type FilmStarshipsEdge = {
+    __typename: \\"FilmStarshipsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Starship;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type FilmVehiclesConnection = {
+    __typename: \\"FilmVehiclesConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<FilmVehiclesEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    vehicles: ?Array<Vehicle>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type FilmVehiclesEdge = {
+    __typename: \\"FilmVehiclesEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Vehicle;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type FilmCharactersConnection = {
+    __typename: \\"FilmCharactersConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<FilmCharactersEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    characters: ?Array<Person>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type FilmCharactersEdge = {
+    __typename: \\"FilmCharactersEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Person;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type FilmPlanetsConnection = {
+    __typename: \\"FilmPlanetsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<FilmPlanetsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    planets: ?Array<Planet>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type FilmPlanetsEdge = {
+    __typename: \\"FilmPlanetsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Planet;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PeopleConnection = {
+    __typename: \\"PeopleConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PeopleEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    people: ?Array<Person>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PeopleEdge = {
+    __typename: \\"PeopleEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Person;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type PlanetsConnection = {
+    __typename: \\"PlanetsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<PlanetsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    planets: ?Array<Planet>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type PlanetsEdge = {
+    __typename: \\"PlanetsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Planet;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type SpeciesConnection = {
+    __typename: \\"SpeciesConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<SpeciesEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    species: ?Array<Species>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type SpeciesEdge = {
+    __typename: \\"SpeciesEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Species;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type StarshipsConnection = {
+    __typename: \\"StarshipsConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<StarshipsEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    starships: ?Array<Starship>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type StarshipsEdge = {
+    __typename: \\"StarshipsEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Starship;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}
+
+  /**
+    description: A connection to a list of items.
+  */
+  export type VehiclesConnection = {
+    __typename: \\"VehiclesConnection\\";
+    /**
+    description: Information to aid in pagination.
+  */
+    pageInfo: PageInfo;
+    /**
+    description: Information to aid in pagination.
+  */
+    edges: ?Array<VehiclesEdge>;
+    /**
+    description: A count of the total number of objects in this connection, ignoring pagination.
+This allows a client to fetch the first five objects by passing \\"5\\" as the
+argument to \\"first\\", then fetch the total count so it could display \\"5 of 83\\",
+for example.
+  */
+    totalCount: ?number;
+    /**
+    description: A list of all of the objects returned in the connection. This is a convenience
+field provided for quickly exploring the API; rather than querying for
+\\"{ edges { node } }\\" when no edge data is needed, this field can be be used
+instead. Note that when clients like Relay need to fetch the \\"cursor\\" field on
+the edge to enable efficient pagination, this shortcut cannot be used, and the
+full \\"{ edges { node } }\\" version should be used instead.
+  */
+    vehicles: ?Array<Vehicle>;
+}
+
+  /**
+    description: An edge in a connection.
+  */
+  export type VehiclesEdge = {
+    __typename: \\"VehiclesEdge\\";
+    /**
+    description: The item at the end of the edge
+  */
+    node: ?Vehicle;
+    /**
+    description: A cursor for use in pagination
+  */
+    cursor: string;
+}"
+`;
+
 exports[`gql2ts interfaces correctly translates the star wars schema into typescript defs 1`] = `
 "  interface IGraphQLResponseRoot {
     data?: IRoot;
