@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- Lock Typescript to <2.7.0 [#132](https://github.com/avantcredit/gql2ts/pull/132)
+
 ## 1.4.0
 
 - Allow custom `TypeMap` in `@gql2ts/from-schema`, similar to `@gql2ts/from-query` [#109](https://github.com/avantcredit/gql2ts/pull/109)
