@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/from-schema",
   "private": false,
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "convert a graphql schema to typescript interfaces",
   "main": "dist/index.js",
   "files": [
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
-    "@gql2ts/language-typescript": "^1.3.0",
+    "@gql2ts/language-typescript": "^1.4.1",
     "@gql2ts/util": "^1.3.0",
     "graphql": ">= 0.10 <0.12"
   },
