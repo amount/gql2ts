@@ -9,6 +9,7 @@
   ],
   "typings": "dist/index.d.ts",
   "scripts": {
+    "postinstall": "node postinstall.js",
     "prepublish": "tsc -p tsconfig.json",
     "build:watch": "tsc -w -p tsconfig.json"
   },
