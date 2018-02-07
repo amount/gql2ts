@@ -16,7 +16,7 @@
     "lerna": "2.3.1",
     "ts-jest": "^21.0.1",
     "tslint": "^5.5.0",
-    "typescript": "^2.4.1 <2.7.0"
+    "typescript": "^2.4.1"
   },
   "scripts": {
     "pretest": "lerna bootstrap --hoist graphql",
