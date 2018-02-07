@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "dependencies": {
-    "graphql": ">= 0.10 <0.12"
+    "graphql": ">=0.13.0"
   },
   "devDependencies": {
     "@types/graphql": "^0.11.4",
