@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- Fix 1.4.2 release
+
 ## 1.4.2
 
 - [#137](https://github.com/avantcredit/gql2ts/pull/137)
