@@ -8,21 +8,25 @@ Array [
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "result": "export interface CreateMessageInput {
   author?: string | null;
   content?: string | null;
 }
 
+
 export interface CreateMessage {
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "variables": "export interface CreateMessageInput {
   author?: string | null;
   content?: string | null;
-}",
+}
+",
   },
 ]
 `;
@@ -35,12 +39,14 @@ Array [
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "result": "export interface CreateMessage {
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -54,7 +60,8 @@ Array [
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "result": "export interface CreateMessageInput {
   input: {
     content?: string | null;
@@ -62,17 +69,20 @@ Array [
   };
 }
 
+
 export interface CreateMessage {
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "variables": "export interface CreateMessageInput {
   input: {
     content?: string | null;
     author?: string | null;
   };
-}",
+}
+",
   },
 ]
 `;
@@ -85,7 +95,8 @@ Array [
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "result": "export interface CreateMessageInput {
   input?: {
     content?: string | null;
@@ -93,17 +104,20 @@ Array [
   } | null;
 }
 
+
 export interface CreateMessage {
   createMessage: {
     id: string;
   } | null;
-}",
+}
+",
     "variables": "export interface CreateMessageInput {
   input?: {
     content?: string | null;
     author?: string | null;
   } | null;
-}",
+}
+",
   },
 ]
 `;

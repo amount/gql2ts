@@ -4457,9 +4457,9 @@ declare namespace GQL {
   }
 
   interface IGraphQLResponseError {
-    message: string;            // Required for all errors
+    message: string; // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
-    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+    [propName: string]: any; // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
   interface IGraphQLResponseErrorLocation {
@@ -4467,9 +4467,8 @@ declare namespace GQL {
     column: number;
   }
 
-
   interface IRoot {
-    __typename: \\"Root\\";
+    __typename: 'Root';
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -4492,7 +4491,7 @@ declare namespace GQL {
     A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: \\"FilmsConnection\\";
+    __typename: 'FilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -4523,7 +4522,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: \\"PageInfo\\";
+    __typename: 'PageInfo';
     /**
     When paginating forwards, are there more items?
   */
@@ -4546,7 +4545,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: \\"FilmsEdge\\";
+    __typename: 'FilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -4561,7 +4560,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single film.
   */
   interface IFilm {
-    __typename: \\"Film\\";
+    __typename: 'Film';
     /**
     The title of this film.
   */
@@ -4614,7 +4613,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An object with an ID
   */
   interface INode {
-    __typename: \\"Node\\";
+    __typename: 'Node';
     /**
     The id of the object.
   */
@@ -4625,7 +4624,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: \\"FilmSpeciesConnection\\";
+    __typename: 'FilmSpeciesConnection';
     /**
     Information to aid in pagination.
   */
@@ -4656,7 +4655,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: \\"FilmSpeciesEdge\\";
+    __typename: 'FilmSpeciesEdge';
     /**
     The item at the end of the edge
   */
@@ -4671,7 +4670,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: \\"Species\\";
+    __typename: 'Species';
     /**
     The name of this species.
   */
@@ -4736,7 +4735,7 @@ have skin.
 0 ABY.
   */
   interface IPlanet {
-    __typename: \\"Planet\\";
+    __typename: 'Planet';
     /**
     The name of this planet.
   */
@@ -4797,7 +4796,7 @@ of water.
     A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: \\"PlanetResidentsConnection\\";
+    __typename: 'PlanetResidentsConnection';
     /**
     Information to aid in pagination.
   */
@@ -4828,7 +4827,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: \\"PlanetResidentsEdge\\";
+    __typename: 'PlanetResidentsEdge';
     /**
     The item at the end of the edge
   */
@@ -4843,7 +4842,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An individual person or character within the Star Wars universe.
   */
   interface IPerson {
-    __typename: \\"Person\\";
+    __typename: 'Person';
     /**
     The name of this person.
   */
@@ -4910,7 +4909,7 @@ person does not have hair.
     A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: \\"PersonFilmsConnection\\";
+    __typename: 'PersonFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -4941,7 +4940,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: \\"PersonFilmsEdge\\";
+    __typename: 'PersonFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -4956,7 +4955,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: \\"PersonStarshipsConnection\\";
+    __typename: 'PersonStarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -4987,7 +4986,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: \\"PersonStarshipsEdge\\";
+    __typename: 'PersonStarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -5002,7 +5001,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: \\"Starship\\";
+    __typename: 'Starship';
     /**
     The name of this starship. The common name, such as \\"Death Star\\".
   */
@@ -5083,7 +5082,7 @@ entire crew without having to resupply.
     A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: \\"StarshipPilotsConnection\\";
+    __typename: 'StarshipPilotsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5114,7 +5113,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: \\"StarshipPilotsEdge\\";
+    __typename: 'StarshipPilotsEdge';
     /**
     The item at the end of the edge
   */
@@ -5129,7 +5128,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: \\"StarshipFilmsConnection\\";
+    __typename: 'StarshipFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5160,7 +5159,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: \\"StarshipFilmsEdge\\";
+    __typename: 'StarshipFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -5175,7 +5174,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: \\"PersonVehiclesConnection\\";
+    __typename: 'PersonVehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -5206,7 +5205,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: \\"PersonVehiclesEdge\\";
+    __typename: 'PersonVehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -5221,7 +5220,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: \\"Vehicle\\";
+    __typename: 'Vehicle';
     /**
     The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
 bike\\".
@@ -5289,7 +5288,7 @@ entire crew without having to resupply.
     A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: \\"VehiclePilotsConnection\\";
+    __typename: 'VehiclePilotsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5320,7 +5319,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: \\"VehiclePilotsEdge\\";
+    __typename: 'VehiclePilotsEdge';
     /**
     The item at the end of the edge
   */
@@ -5335,7 +5334,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: \\"VehicleFilmsConnection\\";
+    __typename: 'VehicleFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5366,7 +5365,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: \\"VehicleFilmsEdge\\";
+    __typename: 'VehicleFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -5381,7 +5380,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: \\"PlanetFilmsConnection\\";
+    __typename: 'PlanetFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5412,7 +5411,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: \\"PlanetFilmsEdge\\";
+    __typename: 'PlanetFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -5427,7 +5426,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: \\"SpeciesPeopleConnection\\";
+    __typename: 'SpeciesPeopleConnection';
     /**
     Information to aid in pagination.
   */
@@ -5458,7 +5457,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: \\"SpeciesPeopleEdge\\";
+    __typename: 'SpeciesPeopleEdge';
     /**
     The item at the end of the edge
   */
@@ -5473,7 +5472,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: \\"SpeciesFilmsConnection\\";
+    __typename: 'SpeciesFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5504,7 +5503,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: \\"SpeciesFilmsEdge\\";
+    __typename: 'SpeciesFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -5519,7 +5518,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: \\"FilmStarshipsConnection\\";
+    __typename: 'FilmStarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5550,7 +5549,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: \\"FilmStarshipsEdge\\";
+    __typename: 'FilmStarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -5565,7 +5564,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: \\"FilmVehiclesConnection\\";
+    __typename: 'FilmVehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -5596,7 +5595,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: \\"FilmVehiclesEdge\\";
+    __typename: 'FilmVehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -5611,7 +5610,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: \\"FilmCharactersConnection\\";
+    __typename: 'FilmCharactersConnection';
     /**
     Information to aid in pagination.
   */
@@ -5642,7 +5641,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: \\"FilmCharactersEdge\\";
+    __typename: 'FilmCharactersEdge';
     /**
     The item at the end of the edge
   */
@@ -5657,7 +5656,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: \\"FilmPlanetsConnection\\";
+    __typename: 'FilmPlanetsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5688,7 +5687,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: \\"FilmPlanetsEdge\\";
+    __typename: 'FilmPlanetsEdge';
     /**
     The item at the end of the edge
   */
@@ -5703,7 +5702,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: \\"PeopleConnection\\";
+    __typename: 'PeopleConnection';
     /**
     Information to aid in pagination.
   */
@@ -5734,7 +5733,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: \\"PeopleEdge\\";
+    __typename: 'PeopleEdge';
     /**
     The item at the end of the edge
   */
@@ -5749,7 +5748,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: \\"PlanetsConnection\\";
+    __typename: 'PlanetsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5780,7 +5779,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: \\"PlanetsEdge\\";
+    __typename: 'PlanetsEdge';
     /**
     The item at the end of the edge
   */
@@ -5795,7 +5794,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: \\"SpeciesConnection\\";
+    __typename: 'SpeciesConnection';
     /**
     Information to aid in pagination.
   */
@@ -5826,7 +5825,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: \\"SpeciesEdge\\";
+    __typename: 'SpeciesEdge';
     /**
     The item at the end of the edge
   */
@@ -5841,7 +5840,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: \\"StarshipsConnection\\";
+    __typename: 'StarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -5872,7 +5871,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: \\"StarshipsEdge\\";
+    __typename: 'StarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -5887,7 +5886,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: \\"VehiclesConnection\\";
+    __typename: 'VehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -5918,7 +5917,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: \\"VehiclesEdge\\";
+    __typename: 'VehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -5945,9 +5944,9 @@ declare namespace GQL {
   }
 
   interface IGraphQLResponseError {
-    message: string;            // Required for all errors
+    message: string; // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
-    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+    [propName: string]: any; // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
   interface IGraphQLResponseErrorLocation {
@@ -5955,12 +5954,10 @@ declare namespace GQL {
     column: number;
   }
 
-
   interface IQuery {
-    __typename: \\"Query\\";
+    __typename: 'Query';
     colorEnum: IColorEnum | null;
   }
-
 
   type IColorEnum = 'RED' | 'GREEN' | 'BLUE';
 }
@@ -5980,9 +5977,9 @@ declare namespace StarWars {
   }
 
   interface IGraphQLResponseError {
-    message: string;            // Required for all errors
+    message: string; // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
-    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+    [propName: string]: any; // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
   interface IGraphQLResponseErrorLocation {
@@ -5990,9 +5987,8 @@ declare namespace StarWars {
     column: number;
   }
 
-
   interface IRoot {
-    __typename: \\"Root\\";
+    __typename: 'Root';
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -6015,7 +6011,7 @@ declare namespace StarWars {
     A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: \\"FilmsConnection\\";
+    __typename: 'FilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6046,7 +6042,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: \\"PageInfo\\";
+    __typename: 'PageInfo';
     /**
     When paginating forwards, are there more items?
   */
@@ -6069,7 +6065,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: \\"FilmsEdge\\";
+    __typename: 'FilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -6084,7 +6080,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single film.
   */
   interface IFilm {
-    __typename: \\"Film\\";
+    __typename: 'Film';
     /**
     The title of this film.
   */
@@ -6137,7 +6133,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An object with an ID
   */
   interface INode {
-    __typename: \\"Node\\";
+    __typename: 'Node';
     /**
     The id of the object.
   */
@@ -6148,7 +6144,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: \\"FilmSpeciesConnection\\";
+    __typename: 'FilmSpeciesConnection';
     /**
     Information to aid in pagination.
   */
@@ -6179,7 +6175,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: \\"FilmSpeciesEdge\\";
+    __typename: 'FilmSpeciesEdge';
     /**
     The item at the end of the edge
   */
@@ -6194,7 +6190,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: \\"Species\\";
+    __typename: 'Species';
     /**
     The name of this species.
   */
@@ -6259,7 +6255,7 @@ have skin.
 0 ABY.
   */
   interface IPlanet {
-    __typename: \\"Planet\\";
+    __typename: 'Planet';
     /**
     The name of this planet.
   */
@@ -6320,7 +6316,7 @@ of water.
     A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: \\"PlanetResidentsConnection\\";
+    __typename: 'PlanetResidentsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6351,7 +6347,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: \\"PlanetResidentsEdge\\";
+    __typename: 'PlanetResidentsEdge';
     /**
     The item at the end of the edge
   */
@@ -6366,7 +6362,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An individual person or character within the Star Wars universe.
   */
   interface IPerson {
-    __typename: \\"Person\\";
+    __typename: 'Person';
     /**
     The name of this person.
   */
@@ -6433,7 +6429,7 @@ person does not have hair.
     A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: \\"PersonFilmsConnection\\";
+    __typename: 'PersonFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6464,7 +6460,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: \\"PersonFilmsEdge\\";
+    __typename: 'PersonFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -6479,7 +6475,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: \\"PersonStarshipsConnection\\";
+    __typename: 'PersonStarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6510,7 +6506,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: \\"PersonStarshipsEdge\\";
+    __typename: 'PersonStarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -6525,7 +6521,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: \\"Starship\\";
+    __typename: 'Starship';
     /**
     The name of this starship. The common name, such as \\"Death Star\\".
   */
@@ -6606,7 +6602,7 @@ entire crew without having to resupply.
     A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: \\"StarshipPilotsConnection\\";
+    __typename: 'StarshipPilotsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6637,7 +6633,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: \\"StarshipPilotsEdge\\";
+    __typename: 'StarshipPilotsEdge';
     /**
     The item at the end of the edge
   */
@@ -6652,7 +6648,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: \\"StarshipFilmsConnection\\";
+    __typename: 'StarshipFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6683,7 +6679,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: \\"StarshipFilmsEdge\\";
+    __typename: 'StarshipFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -6698,7 +6694,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: \\"PersonVehiclesConnection\\";
+    __typename: 'PersonVehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -6729,7 +6725,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: \\"PersonVehiclesEdge\\";
+    __typename: 'PersonVehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -6744,7 +6740,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: \\"Vehicle\\";
+    __typename: 'Vehicle';
     /**
     The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
 bike\\".
@@ -6812,7 +6808,7 @@ entire crew without having to resupply.
     A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: \\"VehiclePilotsConnection\\";
+    __typename: 'VehiclePilotsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6843,7 +6839,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: \\"VehiclePilotsEdge\\";
+    __typename: 'VehiclePilotsEdge';
     /**
     The item at the end of the edge
   */
@@ -6858,7 +6854,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: \\"VehicleFilmsConnection\\";
+    __typename: 'VehicleFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6889,7 +6885,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: \\"VehicleFilmsEdge\\";
+    __typename: 'VehicleFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -6904,7 +6900,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: \\"PlanetFilmsConnection\\";
+    __typename: 'PlanetFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -6935,7 +6931,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: \\"PlanetFilmsEdge\\";
+    __typename: 'PlanetFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -6950,7 +6946,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: \\"SpeciesPeopleConnection\\";
+    __typename: 'SpeciesPeopleConnection';
     /**
     Information to aid in pagination.
   */
@@ -6981,7 +6977,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: \\"SpeciesPeopleEdge\\";
+    __typename: 'SpeciesPeopleEdge';
     /**
     The item at the end of the edge
   */
@@ -6996,7 +6992,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: \\"SpeciesFilmsConnection\\";
+    __typename: 'SpeciesFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7027,7 +7023,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: \\"SpeciesFilmsEdge\\";
+    __typename: 'SpeciesFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -7042,7 +7038,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: \\"FilmStarshipsConnection\\";
+    __typename: 'FilmStarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7073,7 +7069,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: \\"FilmStarshipsEdge\\";
+    __typename: 'FilmStarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -7088,7 +7084,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: \\"FilmVehiclesConnection\\";
+    __typename: 'FilmVehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -7119,7 +7115,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: \\"FilmVehiclesEdge\\";
+    __typename: 'FilmVehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -7134,7 +7130,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: \\"FilmCharactersConnection\\";
+    __typename: 'FilmCharactersConnection';
     /**
     Information to aid in pagination.
   */
@@ -7165,7 +7161,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: \\"FilmCharactersEdge\\";
+    __typename: 'FilmCharactersEdge';
     /**
     The item at the end of the edge
   */
@@ -7180,7 +7176,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: \\"FilmPlanetsConnection\\";
+    __typename: 'FilmPlanetsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7211,7 +7207,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: \\"FilmPlanetsEdge\\";
+    __typename: 'FilmPlanetsEdge';
     /**
     The item at the end of the edge
   */
@@ -7226,7 +7222,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: \\"PeopleConnection\\";
+    __typename: 'PeopleConnection';
     /**
     Information to aid in pagination.
   */
@@ -7257,7 +7253,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: \\"PeopleEdge\\";
+    __typename: 'PeopleEdge';
     /**
     The item at the end of the edge
   */
@@ -7272,7 +7268,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: \\"PlanetsConnection\\";
+    __typename: 'PlanetsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7303,7 +7299,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: \\"PlanetsEdge\\";
+    __typename: 'PlanetsEdge';
     /**
     The item at the end of the edge
   */
@@ -7318,7 +7314,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: \\"SpeciesConnection\\";
+    __typename: 'SpeciesConnection';
     /**
     Information to aid in pagination.
   */
@@ -7349,7 +7345,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: \\"SpeciesEdge\\";
+    __typename: 'SpeciesEdge';
     /**
     The item at the end of the edge
   */
@@ -7364,7 +7360,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: \\"StarshipsConnection\\";
+    __typename: 'StarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7395,7 +7391,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: \\"StarshipsEdge\\";
+    __typename: 'StarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -7410,7 +7406,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: \\"VehiclesConnection\\";
+    __typename: 'VehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -7441,7 +7437,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: \\"VehiclesEdge\\";
+    __typename: 'VehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -7468,9 +7464,9 @@ declare namespace StarWars {
   }
 
   interface IGraphQLResponseError {
-    message: string;            // Required for all errors
+    message: string; // Required for all errors
     locations?: Array<IGraphQLResponseErrorLocation>;
-    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+    [propName: string]: any; // 7.2.2 says 'GraphQL servers may provide additional entries to error'
   }
 
   interface IGraphQLResponseErrorLocation {
@@ -7478,9 +7474,8 @@ declare namespace StarWars {
     column: number;
   }
 
-
   interface IRoot {
-    __typename: \\"Root\\";
+    __typename: 'Root';
     allFilms: IFilmsConnection | null;
     film: IFilm | null;
     allPeople: IPeopleConnection | null;
@@ -7502,7 +7497,7 @@ declare namespace StarWars {
     A connection to a list of items.
   */
   interface IFilmsConnection {
-    __typename: \\"FilmsConnection\\";
+    __typename: 'FilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7533,7 +7528,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     Information about pagination in a connection.
   */
   interface IPageInfo {
-    __typename: \\"PageInfo\\";
+    __typename: 'PageInfo';
     /**
     When paginating forwards, are there more items?
   */
@@ -7556,7 +7551,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmsEdge {
-    __typename: \\"FilmsEdge\\";
+    __typename: 'FilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -7571,7 +7566,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single film.
   */
   interface IFilm {
-    __typename: \\"Film\\";
+    __typename: 'Film';
     /**
     The title of this film.
   */
@@ -7624,7 +7619,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An object with an ID
   */
   interface INode {
-    __typename: \\"Node\\";
+    __typename: 'Node';
     /**
     The id of the object.
   */
@@ -7635,7 +7630,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmSpeciesConnection {
-    __typename: \\"FilmSpeciesConnection\\";
+    __typename: 'FilmSpeciesConnection';
     /**
     Information to aid in pagination.
   */
@@ -7666,7 +7661,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmSpeciesEdge {
-    __typename: \\"FilmSpeciesEdge\\";
+    __typename: 'FilmSpeciesEdge';
     /**
     The item at the end of the edge
   */
@@ -7681,7 +7676,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A type of person or character within the Star Wars Universe.
   */
   interface ISpecies {
-    __typename: \\"Species\\";
+    __typename: 'Species';
     /**
     The name of this species.
   */
@@ -7746,7 +7741,7 @@ have skin.
 0 ABY.
   */
   interface IPlanet {
-    __typename: \\"Planet\\";
+    __typename: 'Planet';
     /**
     The name of this planet.
   */
@@ -7807,7 +7802,7 @@ of water.
     A connection to a list of items.
   */
   interface IPlanetResidentsConnection {
-    __typename: \\"PlanetResidentsConnection\\";
+    __typename: 'PlanetResidentsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7829,7 +7824,7 @@ for example.
     An edge in a connection.
   */
   interface IPlanetResidentsEdge {
-    __typename: \\"PlanetResidentsEdge\\";
+    __typename: 'PlanetResidentsEdge';
     /**
     A cursor for use in pagination
   */
@@ -7840,7 +7835,7 @@ for example.
     A connection to a list of items.
   */
   interface IPersonFilmsConnection {
-    __typename: \\"PersonFilmsConnection\\";
+    __typename: 'PersonFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7871,7 +7866,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonFilmsEdge {
-    __typename: \\"PersonFilmsEdge\\";
+    __typename: 'PersonFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -7886,7 +7881,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPersonStarshipsConnection {
-    __typename: \\"PersonStarshipsConnection\\";
+    __typename: 'PersonStarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -7917,7 +7912,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonStarshipsEdge {
-    __typename: \\"PersonStarshipsEdge\\";
+    __typename: 'PersonStarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -7932,7 +7927,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single transport craft that has hyperdrive capability.
   */
   interface IStarship {
-    __typename: \\"Starship\\";
+    __typename: 'Starship';
     /**
     The name of this starship. The common name, such as \\"Death Star\\".
   */
@@ -8013,7 +8008,7 @@ entire crew without having to resupply.
     A connection to a list of items.
   */
   interface IStarshipPilotsConnection {
-    __typename: \\"StarshipPilotsConnection\\";
+    __typename: 'StarshipPilotsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8035,7 +8030,7 @@ for example.
     An edge in a connection.
   */
   interface IStarshipPilotsEdge {
-    __typename: \\"StarshipPilotsEdge\\";
+    __typename: 'StarshipPilotsEdge';
     /**
     A cursor for use in pagination
   */
@@ -8046,7 +8041,7 @@ for example.
     A connection to a list of items.
   */
   interface IStarshipFilmsConnection {
-    __typename: \\"StarshipFilmsConnection\\";
+    __typename: 'StarshipFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8077,7 +8072,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipFilmsEdge {
-    __typename: \\"StarshipFilmsEdge\\";
+    __typename: 'StarshipFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -8092,7 +8087,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPersonVehiclesConnection {
-    __typename: \\"PersonVehiclesConnection\\";
+    __typename: 'PersonVehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -8123,7 +8118,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPersonVehiclesEdge {
-    __typename: \\"PersonVehiclesEdge\\";
+    __typename: 'PersonVehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -8138,7 +8133,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A single transport craft that does not have hyperdrive capability
   */
   interface IVehicle {
-    __typename: \\"Vehicle\\";
+    __typename: 'Vehicle';
     /**
     The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
 bike\\".
@@ -8206,7 +8201,7 @@ entire crew without having to resupply.
     A connection to a list of items.
   */
   interface IVehiclePilotsConnection {
-    __typename: \\"VehiclePilotsConnection\\";
+    __typename: 'VehiclePilotsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8228,7 +8223,7 @@ for example.
     An edge in a connection.
   */
   interface IVehiclePilotsEdge {
-    __typename: \\"VehiclePilotsEdge\\";
+    __typename: 'VehiclePilotsEdge';
     /**
     A cursor for use in pagination
   */
@@ -8239,7 +8234,7 @@ for example.
     A connection to a list of items.
   */
   interface IVehicleFilmsConnection {
-    __typename: \\"VehicleFilmsConnection\\";
+    __typename: 'VehicleFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8270,7 +8265,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehicleFilmsEdge {
-    __typename: \\"VehicleFilmsEdge\\";
+    __typename: 'VehicleFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -8285,7 +8280,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPlanetFilmsConnection {
-    __typename: \\"PlanetFilmsConnection\\";
+    __typename: 'PlanetFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8316,7 +8311,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetFilmsEdge {
-    __typename: \\"PlanetFilmsEdge\\";
+    __typename: 'PlanetFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -8331,7 +8326,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesPeopleConnection {
-    __typename: \\"SpeciesPeopleConnection\\";
+    __typename: 'SpeciesPeopleConnection';
     /**
     Information to aid in pagination.
   */
@@ -8353,7 +8348,7 @@ for example.
     An edge in a connection.
   */
   interface ISpeciesPeopleEdge {
-    __typename: \\"SpeciesPeopleEdge\\";
+    __typename: 'SpeciesPeopleEdge';
     /**
     A cursor for use in pagination
   */
@@ -8364,7 +8359,7 @@ for example.
     A connection to a list of items.
   */
   interface ISpeciesFilmsConnection {
-    __typename: \\"SpeciesFilmsConnection\\";
+    __typename: 'SpeciesFilmsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8395,7 +8390,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesFilmsEdge {
-    __typename: \\"SpeciesFilmsEdge\\";
+    __typename: 'SpeciesFilmsEdge';
     /**
     The item at the end of the edge
   */
@@ -8410,7 +8405,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmStarshipsConnection {
-    __typename: \\"FilmStarshipsConnection\\";
+    __typename: 'FilmStarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8441,7 +8436,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmStarshipsEdge {
-    __typename: \\"FilmStarshipsEdge\\";
+    __typename: 'FilmStarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -8456,7 +8451,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmVehiclesConnection {
-    __typename: \\"FilmVehiclesConnection\\";
+    __typename: 'FilmVehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -8487,7 +8482,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmVehiclesEdge {
-    __typename: \\"FilmVehiclesEdge\\";
+    __typename: 'FilmVehiclesEdge';
     /**
     The item at the end of the edge
   */
@@ -8502,7 +8497,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IFilmCharactersConnection {
-    __typename: \\"FilmCharactersConnection\\";
+    __typename: 'FilmCharactersConnection';
     /**
     Information to aid in pagination.
   */
@@ -8524,7 +8519,7 @@ for example.
     An edge in a connection.
   */
   interface IFilmCharactersEdge {
-    __typename: \\"FilmCharactersEdge\\";
+    __typename: 'FilmCharactersEdge';
     /**
     A cursor for use in pagination
   */
@@ -8535,7 +8530,7 @@ for example.
     A connection to a list of items.
   */
   interface IFilmPlanetsConnection {
-    __typename: \\"FilmPlanetsConnection\\";
+    __typename: 'FilmPlanetsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8566,7 +8561,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IFilmPlanetsEdge {
-    __typename: \\"FilmPlanetsEdge\\";
+    __typename: 'FilmPlanetsEdge';
     /**
     The item at the end of the edge
   */
@@ -8581,7 +8576,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IPeopleConnection {
-    __typename: \\"PeopleConnection\\";
+    __typename: 'PeopleConnection';
     /**
     Information to aid in pagination.
   */
@@ -8603,7 +8598,7 @@ for example.
     An edge in a connection.
   */
   interface IPeopleEdge {
-    __typename: \\"PeopleEdge\\";
+    __typename: 'PeopleEdge';
     /**
     A cursor for use in pagination
   */
@@ -8614,7 +8609,7 @@ for example.
     A connection to a list of items.
   */
   interface IPlanetsConnection {
-    __typename: \\"PlanetsConnection\\";
+    __typename: 'PlanetsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8645,7 +8640,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IPlanetsEdge {
-    __typename: \\"PlanetsEdge\\";
+    __typename: 'PlanetsEdge';
     /**
     The item at the end of the edge
   */
@@ -8660,7 +8655,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface ISpeciesConnection {
-    __typename: \\"SpeciesConnection\\";
+    __typename: 'SpeciesConnection';
     /**
     Information to aid in pagination.
   */
@@ -8691,7 +8686,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface ISpeciesEdge {
-    __typename: \\"SpeciesEdge\\";
+    __typename: 'SpeciesEdge';
     /**
     The item at the end of the edge
   */
@@ -8706,7 +8701,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IStarshipsConnection {
-    __typename: \\"StarshipsConnection\\";
+    __typename: 'StarshipsConnection';
     /**
     Information to aid in pagination.
   */
@@ -8737,7 +8732,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IStarshipsEdge {
-    __typename: \\"StarshipsEdge\\";
+    __typename: 'StarshipsEdge';
     /**
     The item at the end of the edge
   */
@@ -8752,7 +8747,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     A connection to a list of items.
   */
   interface IVehiclesConnection {
-    __typename: \\"VehiclesConnection\\";
+    __typename: 'VehiclesConnection';
     /**
     Information to aid in pagination.
   */
@@ -8783,7 +8778,7 @@ full \\"{ edges { node } }\\" version should be used instead.
     An edge in a connection.
   */
   interface IVehiclesEdge {
-    __typename: \\"VehiclesEdge\\";
+    __typename: 'VehiclesEdge';
     /**
     The item at the end of the edge
   */
