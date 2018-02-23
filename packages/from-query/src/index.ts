@@ -48,6 +48,8 @@ import {
 } from './subtype';
 
 const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
+  const enumDeclarations: Map<string, string> = new Map<string, string>();
+
   const TypeMap: ITypeMap = {
     ...DEFAULT_TYPE_MAP,
     ...typeMap
@@ -69,6 +71,9 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     postProcessor,
     generateInputName,
     addExtensionsToInterfaceName,
+    enumTypeBuilder,
+    formatEnum,
+    generateEnumName
   }: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
 
   const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
@@ -84,8 +89,15 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
   };
 
   const handleEnum: (type: GraphQLEnumType, isNonNull: boolean) => string = (type, isNonNull) => {
-    const decl: string = type.getValues().map(({ value }) => `'${value}'`).join(' | ');
-    return printType(decl, isNonNull);
+    const enumName: string = generateEnumName(type.name);
+
+    if (!enumDeclarations.has(type.name)) {
+      const enumDeclaration: string = enumTypeBuilder(enumName, formatEnum(type.getValues()));
+      enumDeclarations.set(type.name, enumDeclaration);
+      console.log(enumDeclaration);
+    }
+
+    return printType(enumName, isNonNull);
   };
 
   const handleNamedTypeInput: (type: TypeNode, isNonNull: boolean) => string | undefined = (type, isNonNull) => {
