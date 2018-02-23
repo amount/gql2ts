@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.2
+
+- [#137](https://github.com/avantcredit/gql2ts/pull/137)
+  - Remove Typescript 2.7.0 lock
+  - Add optional [`prettier`](https://github.com/prettier/prettier) integration to typescript package to pretty-print code
+  - Remove custom Typescript formatter
+
 ## 1.4.1
 
 - Lock Typescript to <2.7.0 [#132](https://github.com/avantcredit/gql2ts/pull/132)
