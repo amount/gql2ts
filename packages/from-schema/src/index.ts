@@ -175,7 +175,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean, supportsNullability: boolean) => string;
   const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
     const { name, showNullabilityAttribute } = extractInterfaceMetadata(
-      resolveInterfaceName(field.type), supportsNullability
+      resolveInterfaceName(field.type),
+      supportsNullability
     );
 
     return formatInput(
@@ -190,7 +191,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
     const docTags: IJSDocTag[] = buildDocTags(arg);
     const { name, showNullabilityAttribute } = extractInterfaceMetadata(
-      resolveInterfaceName(arg.type), supportsNullability
+      resolveInterfaceName(arg.type),
+      supportsNullability
     );
 
     const docblock: string = generateDescription(arg.description, docTags);
