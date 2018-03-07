@@ -189,16 +189,15 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => string;
 
   const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
-    const docTags: IJSDocTag[] = buildDocTags(arg);
     const { name, showNullabilityAttribute } = extractInterfaceMetadata(
       resolveInterfaceName(arg.type),
       supportsNullability
     );
 
-    const docblock: string = generateDescription(arg.description, docTags);
-    const iface: string = formatInput(arg.name, showNullabilityAttribute, printType(name, !showNullabilityAttribute));
-
-    return [docblock, iface].filter(Boolean).join('\n');
+    return [
+      generateDescription(arg.description, buildDocTags(arg)),
+      formatInput(arg.name, showNullabilityAttribute, printType(name, !showNullabilityAttribute))
+    ].filter(Boolean).join('\n');
   };
 
   type ArgumentsToDefinition = (
@@ -276,7 +275,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     const fields: string[] = filteredFields
       .map(field => [generateDescription(field.description, buildDocTags(field)), fieldToDefinition(field, isInput, supportsNullability)])
-      .reduce((acc, val) => [...acc, ...val.filter(x => x)] , [])
+      .reduce((acc, val) => [...acc, ...val.filter(Boolean)] , [])
       .filter(field => field);
 
     const interfaceDeclaration: string = generateInterfaceName(type.name);
