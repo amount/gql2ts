@@ -98,6 +98,9 @@ id: string;
 vehicleID: string;
 }
 interface INodeOnRootArguments {
+/**
+    The ID of an object
+  */
 id: string;
 }
 
@@ -1830,6 +1833,9 @@ id?: string | null;
 vehicleID?: string | null;
 }
 interface INodeOnRootArguments {
+/**
+    The ID of an object
+  */
 id: string;
 }
 
@@ -3333,6 +3339,9 @@ id?: string | null;
 vehicleID?: string | null;
 }
 interface INodeOnRootArguments {
+/**
+    The ID of an object
+  */
 id: string;
 }
 
@@ -5030,6 +5039,9 @@ declare namespace GQL {
     vehicleID?: string | null;
   }
   interface INodeOnRootArguments {
+    /**
+    The ID of an object
+  */
     id: string;
   }
 
@@ -6709,6 +6721,9 @@ declare namespace StarWars {
     vehicleID?: string | null;
   }
   interface INodeOnRootArguments {
+    /**
+    The ID of an object
+  */
     id: string;
   }
 
@@ -8350,6 +8365,9 @@ declare namespace StarWars {
     vehicleID?: string | null;
   }
   interface INodeOnRootArguments {
+    /**
+    The ID of an object
+  */
     id: string;
   }
 

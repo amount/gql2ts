@@ -160,46 +160,41 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       return generateInterfaceName(type.name);
     }
   };
+
+  interface IInterfaceMetadata {
+    name: string;
+    showNullabilityAttribute: boolean;
+  }
+  type ExtractInterfaceMetadata = (interfaceName: string, supportsNullability: boolean) => IInterfaceMetadata;
+  const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName, supportsNullability) => ({
+    name: interfaceName.replace(/\!/g, ''),
+    showNullabilityAttribute: !interfaceName.includes('!') && supportsNullability
+  });
+
   type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean, supportsNullability: boolean) => string;
   const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
-    let interfaceName: string = resolveInterfaceName(field.type);
-    let isNotNull: boolean = interfaceName.includes('!');
-    let showNullabilityAttribute: boolean = !isNotNull && supportsNullability;
-
-    if (isNotNull) {
-      /**
-       * should probably refactor this at some point to have
-       * `resolveInterfaceName` return better metadata
-       * global regex replace is ugly
-       */
-      interfaceName = interfaceName.replace(/\!/g, '');
-    }
+    const { name: interfaceName, showNullabilityAttribute } = extractInterfaceMetadata(
+      resolveInterfaceName(field.type), supportsNullability
+    );
 
     return formatInput(
       field.name,
-      isInput && (showNullabilityAttribute || !isNotNull),
+      isInput && (showNullabilityAttribute || !showNullabilityAttribute),
       printType(interfaceName, !showNullabilityAttribute)
     );
   };
 
-  type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => [IJSDocTag[], string | undefined, string];
+  type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => string;
 
   const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
     const docTags: IJSDocTag[] = buildDocTags(arg);
-    let interfaceName: string = resolveInterfaceName(arg.type);
-    let isNotNull: boolean = interfaceName.includes('!');
-    if (isNotNull) {
-      /**
-       * should probably refactor this at some point to have
-       * `resolveInterfaceName` return better metadata
-       * global regex replace is ugly
-       */
-      interfaceName = interfaceName.replace(/\!/g, '');
-    }
-    let showNullabilityAttribute: boolean = !isNotNull && supportsNullability;
+    const { name: interfaceName, showNullabilityAttribute } = extractInterfaceMetadata(
+      resolveInterfaceName(arg.type), supportsNullability
+    );
 
     const something: string = formatInput(arg.name, showNullabilityAttribute, printType(interfaceName, !showNullabilityAttribute));
-    return [docTags, arg.description, something];
+    const comment: string = generateDescription(arg.description, docTags);
+    return [comment, something].filter(Boolean).join('\n');
   };
 
   type ArgumentsToDefinition = (
@@ -213,21 +208,15 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       return null;
     }
 
-    const info: Array<{ desc: string; declaration: string }> = field.args
-      .map(arg => generateArgumentDeclaration(arg, supportsNullability))
-      .map(([jsDoc, desc, declaration]) => ({
-        desc: generateDescription(desc, jsDoc),
-        declaration
-      }));
+    const info: string[] = field.args.map(arg => generateArgumentDeclaration(arg, supportsNullability));
 
     if (!info.length) {
-      return '';
+      return null;
     }
 
     const name: string = generateInterfaceName(`${field.name}_On_${parentName}`) + 'Arguments';
 
-    const iface: string = interfaceBuilder(name, gID(info.map(({ declaration }) => declaration)));
-    return iface;
+    return interfaceBuilder(name, gID(info));
   };
 
   const findRootType: (type: GraphQLOutputType | GraphQLInputType) => GraphQLNamedType = type => {
