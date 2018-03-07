@@ -179,7 +179,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     return formatInput(
       field.name,
-      isInput && (showNullabilityAttribute || !showNullabilityAttribute),
+      isInput && showNullabilityAttribute,
       printType(interfaceName, !showNullabilityAttribute)
     );
   };
