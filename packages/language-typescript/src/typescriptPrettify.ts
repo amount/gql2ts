@@ -5,6 +5,9 @@
  *  https://github.com/vvakame/typescript-formatter/tree/a49f0949c9760530365c5b874cf0e979bd010a04#read-settings-from-files
  */
 import { format as prettierFormat } from 'prettier';
+
+let hasWarned: boolean = false;
+
 const format: (text: string) => string = text => {
   try {
     // tslint:disable no-require-imports
@@ -18,7 +21,10 @@ const format: (text: string) => string = text => {
       useTabs: false,
     });
   } catch (e) {
-    console.warn('To enable pretty-printing, please install prettier');
+    if (!hasWarned) {
+      console.warn('To enable pretty-printing, please install prettier');
+      hasWarned = true;
+    }
     return text;
   }
 };
