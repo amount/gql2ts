@@ -206,19 +206,14 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   ) => string | null;
 
   const generateArgumentsDeclaration: ArgumentsToDefinition = (field, parentName, supportsNullability) => {
-    if (isInputField(field)) {
+    if (isInputField(field) || !field.args.length) {
       return null;
     }
 
-    const info: string[] = field.args.map(arg => generateArgumentDeclaration(arg, supportsNullability));
-
-    if (!info.length) {
-      return null;
-    }
-
+    const fieldDeclaration: string[] = field.args.map(arg => generateArgumentDeclaration(arg, supportsNullability));
     const name: string = generateInterfaceName(`${field.name}_On_${parentName}`) + 'Arguments';
 
-    return interfaceBuilder(name, gID(info));
+    return interfaceBuilder(name, gID(fieldDeclaration));
   };
 
   const findRootType: (type: GraphQLOutputType | GraphQLInputType) => GraphQLNamedType = type => {
