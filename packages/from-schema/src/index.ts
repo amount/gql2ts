@@ -16,6 +16,7 @@ import {
   GraphQLEnumValue,
   GraphQLUnionType,
   GraphQLAbstractType,
+  GraphQLArgument,
 } from 'graphql';
 import {
   schemaFromInputs,
@@ -163,7 +164,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
     let interfaceName: string = resolveInterfaceName(field.type);
     let isNotNull: boolean = interfaceName.includes('!');
-    let showNullabiltyAttribute: boolean = !isNotNull && supportsNullability;
+    let showNullabilityAttribute: boolean = !isNotNull && supportsNullability;
 
     if (isNotNull) {
       /**
@@ -176,9 +177,57 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     return formatInput(
       field.name,
-      isInput && (showNullabiltyAttribute || !isNotNull),
-      printType(interfaceName, !showNullabiltyAttribute)
+      isInput && (showNullabilityAttribute || !isNotNull),
+      printType(interfaceName, !showNullabilityAttribute)
     );
+  };
+
+  type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => [IJSDocTag[], string | undefined, string];
+
+  const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
+    const docTags: IJSDocTag[] = buildDocTags(arg);
+    let interfaceName: string = resolveInterfaceName(arg.type);
+    let isNotNull: boolean = interfaceName.includes('!');
+    if (isNotNull) {
+      /**
+       * should probably refactor this at some point to have
+       * `resolveInterfaceName` return better metadata
+       * global regex replace is ugly
+       */
+      interfaceName = interfaceName.replace(/\!/g, '');
+    }
+    let showNullabilityAttribute: boolean = !isNotNull && supportsNullability;
+
+    const something: string = formatInput(arg.name, showNullabilityAttribute, printType(interfaceName, !showNullabilityAttribute));
+    return [docTags, arg.description, something];
+  };
+
+  type ArgumentsToDefinition = (
+    field: GraphQLField<any, any> | GraphQLInputField,
+    parentName: string,
+    supportsNullability: boolean
+  ) => string | null;
+
+  const generateArgumentsDeclaration: ArgumentsToDefinition = (field, parentName, supportsNullability) => {
+    if (isInputField(field)) {
+      return null;
+    }
+
+    const info: Array<{ desc: string; declaration: string }> = field.args
+      .map(arg => generateArgumentDeclaration(arg, supportsNullability))
+      .map(([jsDoc, desc, declaration]) => ({
+        desc: generateDescription(desc, jsDoc),
+        declaration
+      }));
+
+    if (!info.length) {
+      return '';
+    }
+
+    const name: string = generateInterfaceName(`${field.name}_On_${parentName}`) + 'Arguments';
+
+    const iface: string = interfaceBuilder(name, gID(info.map(({ declaration }) => declaration)));
+    return iface;
   };
 
   const findRootType: (type: GraphQLOutputType | GraphQLInputType) => GraphQLNamedType = type => {
@@ -235,8 +284,9 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const f1: GraphQLInputFieldMap | GraphQLFieldMap<any, any> = type.getFields();
     let f: Array<GraphQLField<any, any> | GraphQLInputField> = Object.keys(f1).map(k => f1[k]);
 
-    let fields: string[] = f
-      .filter(field => filterField(field, ignoredTypes))
+    const filteredFields: typeof f = f.filter(field => filterField(field, ignoredTypes));
+
+    let fields: string[] = filteredFields
       .map(field => [generateDescription(field.description, buildDocTags(field)), fieldToDefinition(field, isInput, supportsNullability)])
       .reduce((acc, val) => [...acc, ...val.filter(x => x)] , [])
       .filter(field => field);
@@ -248,7 +298,10 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       additionalInfo = generateAbstractTypeDeclaration(type, ignoredTypes, interfaceMap);
     }
 
-    return generateInterfaceDeclaration(type, interfaceDeclaration, fields, additionalInfo, isInput);
+    return [
+      generateInterfaceDeclaration(type, interfaceDeclaration, fields, additionalInfo, isInput),
+      ...filteredFields.map(field => generateArgumentsDeclaration(field, type.name, supportsNullability))
+    ].filter(Boolean).join('\n');
   };
 
   const typesToInterfaces: (schema: GraphQLSchema, options: Partial<IInternalOptions>) => string = (schema, options) => {
