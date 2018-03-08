@@ -100,7 +100,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   }
 
   function isInputField (field: GraphQLField<any, any> | GraphQLInputField): field is GraphQLInputField {
-    return !!field.astNode && field.astNode.kind === 'InputValueDefinition';
+    return !!field.astNode && field.astNode.kind === 'InputValueDefinition' || !({}).hasOwnProperty.call(field, 'args');
   }
 
   const buildDocTags: (field: GraphQLField<any, any> | GraphQLInputField) => IJSDocTag[] = field => {
@@ -207,7 +207,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   ) => string | null;
 
   const generateArgumentsDeclaration: ArgumentsToDefinition = (field, parentName, supportsNullability) => {
-    if (isInputField(field) || !field.args.length) {
+    if (isInputField(field) || !field.args || !field.args.length) {
       return null;
     }
 
