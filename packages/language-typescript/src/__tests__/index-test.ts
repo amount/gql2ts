@@ -4,7 +4,8 @@ import {
   DEFAULT_FORMAT_INPUT,
   DEFAULT_TYPE_PRINTER,
   DEFAULT_ENUM_FORMATTER,
-  DEFAULT_ENUM_TYPE_BUILDER
+  DEFAULT_ENUM_TYPE_BUILDER,
+  DEFAULT_ENUM_NAME_GENERATOR,
 } from '../';
 import { GraphQLEnumValue } from 'graphql';
 
@@ -61,7 +62,7 @@ describe('language-typescript', () => {
   describe('DEFAULT_ENUM_TYPE_BUILDER', () => {
     it('formats properly', () => {
       expect(DEFAULT_ENUM_TYPE_BUILDER(
-        'test',
+        DEFAULT_ENUM_NAME_GENERATOR('test'),
         DEFAULT_ENUM_FORMATTER([
           { value: 'a' } as GraphQLEnumValue,
           { value: 'b' } as GraphQLEnumValue,

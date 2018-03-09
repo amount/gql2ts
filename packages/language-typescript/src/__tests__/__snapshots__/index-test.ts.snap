@@ -8,7 +8,7 @@ b = 'b'
 `;
 
 exports[`language-typescript DEFAULT_ENUM_TYPE_BUILDER formats properly 1`] = `
-"enum test {
+"enum Test {
   a = 'a',
 b = 'b'
 }"
