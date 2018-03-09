@@ -27,7 +27,10 @@
     "url": "https://github.com/avantcredit/gql2ts/issues"
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
-  "dependencies": {
+  "devDependencies": {
+    "graphql": ">= 0.10 <1.0.0"
+  },
+  "peerDependencies": {
     "graphql": ">= 0.10 <1.0.0"
   }
 }
