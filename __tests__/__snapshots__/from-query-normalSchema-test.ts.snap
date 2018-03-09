@@ -726,7 +726,14 @@ export interface CustomScalarQuery {
 exports[`simple examples supports enums 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
+    "additionalTypes": Array [
+      "export enum Episode {
+  NEWHOPE = 'NEWHOPE',
+  EMPIRE = 'EMPIRE',
+  JEDI = 'JEDI'
+}
+",
+    ],
     "interface": "export interface EnumQuery {
   hero: {
     appearsIn: Array<Episode | null> | null;
@@ -735,6 +742,13 @@ Array [
 ",
     "result": "export interface EnumQueryInput {
   episode?: Episode | null;
+}
+
+
+export enum Episode {
+  NEWHOPE = 'NEWHOPE',
+  EMPIRE = 'EMPIRE',
+  JEDI = 'JEDI'
 }
 
 

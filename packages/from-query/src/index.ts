@@ -94,7 +94,6 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     if (!enumDeclarations.has(type.name)) {
       const enumDeclaration: string = enumTypeBuilder(enumName, formatEnum(type.getValues()));
       enumDeclarations.set(type.name, enumDeclaration);
-      console.log(enumDeclaration);
     }
 
     return printType(enumName, isNonNull);
@@ -314,7 +313,9 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       } else {
         return postProcessor(exportFunction(interfaceBuilder(subtype.name, subtype.iface)));
       }
-    });
+    }).concat([
+      ...enumDeclarations.values()
+    ].map(enumDecl => postProcessor(exportFunction(enumDecl))));
   };
 
   interface IOutputJoinInput {
