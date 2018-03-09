@@ -194,14 +194,14 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => string;
 
   const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
-    const { name, showNullabilityAttribute } = extractInterfaceMetadata(
+    const { name, isNonNull, showNullabilityAttribute } = extractInterfaceMetadata(
       resolveInterfaceName(arg.type),
       supportsNullability
     );
 
     return [
       generateDescription(arg.description, buildDocTags(arg)),
-      formatInput(arg.name, showNullabilityAttribute, printType(name, !showNullabilityAttribute))
+      formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
     ].filter(Boolean).join('\n');
   };
 
