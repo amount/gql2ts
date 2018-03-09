@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`language-typescript DEFAULT_ENUM_FORMATTER formats properly 1`] = `
+"{
+  a = 'a',
+b = 'b'
+}"
+`;
+
+exports[`language-typescript DEFAULT_ENUM_TYPE_BUILDER formats properly 1`] = `
+"enum test {
+  a = 'a',
+b = 'b'
+}"
+`;
+
 exports[`language-typescript DEFAULT_FORMAT_INPUT non optional 1`] = `"test: test2;"`;
 
 exports[`language-typescript DEFAULT_FORMAT_INPUT optional 1`] = `"test?: test2;"`;
