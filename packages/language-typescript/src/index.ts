@@ -75,7 +75,7 @@ const fixDescriptionDocblock: (description?: string) => string | undefined = des
   description ? description.replace(/\n/g, '\n* ') : description;
 
 export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => (description || tags.length) ? `/**
-  ${[fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n')}
+${[fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `* @${tag} ${value}`)].filter(x => !!x).join('\n')}
 */` : '';
 
 export const DEFAULT_OPTIONS: IFromQueryOptions = {

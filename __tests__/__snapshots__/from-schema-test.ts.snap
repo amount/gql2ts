@@ -100,7 +100,7 @@ vehicleID?: string;
 }
 interface INodeOnRootArguments {
 /**
-  The ID of an object
+The ID of an object
 */
 id: string;
 }
@@ -108,7 +108,7 @@ id: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmsConnection {
+interface IFilmsConnection {
 __typename: \\"FilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -139,7 +139,7 @@ films: Array<IFilm>;
 /**
 Information about pagination in a connection.
 */
-  interface IPageInfo {
+interface IPageInfo {
 __typename: \\"PageInfo\\";
 /**
 When paginating forwards, are there more items?
@@ -162,7 +162,7 @@ endCursor: string;
 /**
 An edge in a connection.
 */
-  interface IFilmsEdge {
+interface IFilmsEdge {
 __typename: \\"FilmsEdge\\";
 /**
 The item at the end of the edge
@@ -177,7 +177,7 @@ cursor: string;
 /**
 A single film.
 */
-  interface IFilm {
+interface IFilm {
 __typename: \\"Film\\";
 /**
 The title of this film.
@@ -255,12 +255,12 @@ last?: number;
 /**
 An object with an ID
 */
-  type Node = IFilm | ISpecies | IPlanet | IPerson | IStarship | IVehicle;
+type Node = IFilm | ISpecies | IPlanet | IPerson | IStarship | IVehicle;
 
 /**
 An object with an ID
 */
-  interface INode {
+interface INode {
 __typename: \\"Node\\";
 /**
 The id of the object.
@@ -271,7 +271,7 @@ id: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmSpeciesConnection {
+interface IFilmSpeciesConnection {
 __typename: \\"FilmSpeciesConnection\\";
 /**
 Information to aid in pagination.
@@ -302,7 +302,7 @@ species: Array<ISpecies>;
 /**
 An edge in a connection.
 */
-  interface IFilmSpeciesEdge {
+interface IFilmSpeciesEdge {
 __typename: \\"FilmSpeciesEdge\\";
 /**
 The item at the end of the edge
@@ -317,7 +317,7 @@ cursor: string;
 /**
 A type of person or character within the Star Wars Universe.
 */
-  interface ISpecies {
+interface ISpecies {
 __typename: \\"Species\\";
 /**
 The name of this species.
@@ -394,7 +394,7 @@ last?: number;
 A large mass, planet or planetoid in the Star Wars Universe, at the time of
 * 0 ABY.
 */
-  interface IPlanet {
+interface IPlanet {
 __typename: \\"Planet\\";
 /**
 The name of this planet.
@@ -467,7 +467,7 @@ last?: number;
 /**
 A connection to a list of items.
 */
-  interface IPlanetResidentsConnection {
+interface IPlanetResidentsConnection {
 __typename: \\"PlanetResidentsConnection\\";
 /**
 Information to aid in pagination.
@@ -498,7 +498,7 @@ residents: Array<IPerson>;
 /**
 An edge in a connection.
 */
-  interface IPlanetResidentsEdge {
+interface IPlanetResidentsEdge {
 __typename: \\"PlanetResidentsEdge\\";
 /**
 The item at the end of the edge
@@ -513,7 +513,7 @@ cursor: string;
 /**
 An individual person or character within the Star Wars universe.
 */
-  interface IPerson {
+interface IPerson {
 __typename: \\"Person\\";
 /**
 The name of this person.
@@ -598,7 +598,7 @@ last?: number;
 /**
 A connection to a list of items.
 */
-  interface IPersonFilmsConnection {
+interface IPersonFilmsConnection {
 __typename: \\"PersonFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -629,7 +629,7 @@ films: Array<IFilm>;
 /**
 An edge in a connection.
 */
-  interface IPersonFilmsEdge {
+interface IPersonFilmsEdge {
 __typename: \\"PersonFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -644,7 +644,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonStarshipsConnection {
+interface IPersonStarshipsConnection {
 __typename: \\"PersonStarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -675,7 +675,7 @@ starships: Array<IStarship>;
 /**
 An edge in a connection.
 */
-  interface IPersonStarshipsEdge {
+interface IPersonStarshipsEdge {
 __typename: \\"PersonStarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -690,7 +690,7 @@ cursor: string;
 /**
 A single transport craft that has hyperdrive capability.
 */
-  interface IStarship {
+interface IStarship {
 __typename: \\"Starship\\";
 /**
 The name of this starship. The common name, such as \\"Death Star\\".
@@ -783,7 +783,7 @@ last?: number;
 /**
 A connection to a list of items.
 */
-  interface IStarshipPilotsConnection {
+interface IStarshipPilotsConnection {
 __typename: \\"StarshipPilotsConnection\\";
 /**
 Information to aid in pagination.
@@ -814,7 +814,7 @@ pilots: Array<IPerson>;
 /**
 An edge in a connection.
 */
-  interface IStarshipPilotsEdge {
+interface IStarshipPilotsEdge {
 __typename: \\"StarshipPilotsEdge\\";
 /**
 The item at the end of the edge
@@ -829,7 +829,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IStarshipFilmsConnection {
+interface IStarshipFilmsConnection {
 __typename: \\"StarshipFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -860,7 +860,7 @@ films: Array<IFilm>;
 /**
 An edge in a connection.
 */
-  interface IStarshipFilmsEdge {
+interface IStarshipFilmsEdge {
 __typename: \\"StarshipFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -875,7 +875,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonVehiclesConnection {
+interface IPersonVehiclesConnection {
 __typename: \\"PersonVehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -906,7 +906,7 @@ vehicles: Array<IVehicle>;
 /**
 An edge in a connection.
 */
-  interface IPersonVehiclesEdge {
+interface IPersonVehiclesEdge {
 __typename: \\"PersonVehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -921,7 +921,7 @@ cursor: string;
 /**
 A single transport craft that does not have hyperdrive capability
 */
-  interface IVehicle {
+interface IVehicle {
 __typename: \\"Vehicle\\";
 /**
 The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
@@ -1001,7 +1001,7 @@ last?: number;
 /**
 A connection to a list of items.
 */
-  interface IVehiclePilotsConnection {
+interface IVehiclePilotsConnection {
 __typename: \\"VehiclePilotsConnection\\";
 /**
 Information to aid in pagination.
@@ -1032,7 +1032,7 @@ pilots: Array<IPerson>;
 /**
 An edge in a connection.
 */
-  interface IVehiclePilotsEdge {
+interface IVehiclePilotsEdge {
 __typename: \\"VehiclePilotsEdge\\";
 /**
 The item at the end of the edge
@@ -1047,7 +1047,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IVehicleFilmsConnection {
+interface IVehicleFilmsConnection {
 __typename: \\"VehicleFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -1078,7 +1078,7 @@ films: Array<IFilm>;
 /**
 An edge in a connection.
 */
-  interface IVehicleFilmsEdge {
+interface IVehicleFilmsEdge {
 __typename: \\"VehicleFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -1093,7 +1093,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPlanetFilmsConnection {
+interface IPlanetFilmsConnection {
 __typename: \\"PlanetFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -1124,7 +1124,7 @@ films: Array<IFilm>;
 /**
 An edge in a connection.
 */
-  interface IPlanetFilmsEdge {
+interface IPlanetFilmsEdge {
 __typename: \\"PlanetFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -1139,7 +1139,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesPeopleConnection {
+interface ISpeciesPeopleConnection {
 __typename: \\"SpeciesPeopleConnection\\";
 /**
 Information to aid in pagination.
@@ -1170,7 +1170,7 @@ people: Array<IPerson>;
 /**
 An edge in a connection.
 */
-  interface ISpeciesPeopleEdge {
+interface ISpeciesPeopleEdge {
 __typename: \\"SpeciesPeopleEdge\\";
 /**
 The item at the end of the edge
@@ -1185,7 +1185,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesFilmsConnection {
+interface ISpeciesFilmsConnection {
 __typename: \\"SpeciesFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -1216,7 +1216,7 @@ films: Array<IFilm>;
 /**
 An edge in a connection.
 */
-  interface ISpeciesFilmsEdge {
+interface ISpeciesFilmsEdge {
 __typename: \\"SpeciesFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -1231,7 +1231,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmStarshipsConnection {
+interface IFilmStarshipsConnection {
 __typename: \\"FilmStarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -1262,7 +1262,7 @@ starships: Array<IStarship>;
 /**
 An edge in a connection.
 */
-  interface IFilmStarshipsEdge {
+interface IFilmStarshipsEdge {
 __typename: \\"FilmStarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -1277,7 +1277,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmVehiclesConnection {
+interface IFilmVehiclesConnection {
 __typename: \\"FilmVehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -1308,7 +1308,7 @@ vehicles: Array<IVehicle>;
 /**
 An edge in a connection.
 */
-  interface IFilmVehiclesEdge {
+interface IFilmVehiclesEdge {
 __typename: \\"FilmVehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -1323,7 +1323,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmCharactersConnection {
+interface IFilmCharactersConnection {
 __typename: \\"FilmCharactersConnection\\";
 /**
 Information to aid in pagination.
@@ -1354,7 +1354,7 @@ characters: Array<IPerson>;
 /**
 An edge in a connection.
 */
-  interface IFilmCharactersEdge {
+interface IFilmCharactersEdge {
 __typename: \\"FilmCharactersEdge\\";
 /**
 The item at the end of the edge
@@ -1369,7 +1369,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmPlanetsConnection {
+interface IFilmPlanetsConnection {
 __typename: \\"FilmPlanetsConnection\\";
 /**
 Information to aid in pagination.
@@ -1400,7 +1400,7 @@ planets: Array<IPlanet>;
 /**
 An edge in a connection.
 */
-  interface IFilmPlanetsEdge {
+interface IFilmPlanetsEdge {
 __typename: \\"FilmPlanetsEdge\\";
 /**
 The item at the end of the edge
@@ -1415,7 +1415,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPeopleConnection {
+interface IPeopleConnection {
 __typename: \\"PeopleConnection\\";
 /**
 Information to aid in pagination.
@@ -1446,7 +1446,7 @@ people: Array<IPerson>;
 /**
 An edge in a connection.
 */
-  interface IPeopleEdge {
+interface IPeopleEdge {
 __typename: \\"PeopleEdge\\";
 /**
 The item at the end of the edge
@@ -1461,7 +1461,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPlanetsConnection {
+interface IPlanetsConnection {
 __typename: \\"PlanetsConnection\\";
 /**
 Information to aid in pagination.
@@ -1492,7 +1492,7 @@ planets: Array<IPlanet>;
 /**
 An edge in a connection.
 */
-  interface IPlanetsEdge {
+interface IPlanetsEdge {
 __typename: \\"PlanetsEdge\\";
 /**
 The item at the end of the edge
@@ -1507,7 +1507,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesConnection {
+interface ISpeciesConnection {
 __typename: \\"SpeciesConnection\\";
 /**
 Information to aid in pagination.
@@ -1538,7 +1538,7 @@ species: Array<ISpecies>;
 /**
 An edge in a connection.
 */
-  interface ISpeciesEdge {
+interface ISpeciesEdge {
 __typename: \\"SpeciesEdge\\";
 /**
 The item at the end of the edge
@@ -1553,7 +1553,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IStarshipsConnection {
+interface IStarshipsConnection {
 __typename: \\"StarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -1584,7 +1584,7 @@ starships: Array<IStarship>;
 /**
 An edge in a connection.
 */
-  interface IStarshipsEdge {
+interface IStarshipsEdge {
 __typename: \\"StarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -1599,7 +1599,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IVehiclesConnection {
+interface IVehiclesConnection {
 __typename: \\"VehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -1630,7 +1630,7 @@ vehicles: Array<IVehicle>;
 /**
 An edge in a connection.
 */
-  interface IVehiclesEdge {
+interface IVehiclesEdge {
 __typename: \\"VehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -1831,7 +1831,7 @@ vehicleID?: string | null;
 }
 interface INodeOnRootArguments {
 /**
-  The ID of an object
+The ID of an object
 */
 id: string;
 }
@@ -1839,7 +1839,7 @@ id: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmsConnection {
+interface IFilmsConnection {
 __typename: \\"FilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -1870,7 +1870,7 @@ films: Array<IFilm> | null;
 /**
 Information about pagination in a connection.
 */
-  interface IPageInfo {
+interface IPageInfo {
 __typename: \\"PageInfo\\";
 /**
 When paginating forwards, are there more items?
@@ -1893,7 +1893,7 @@ endCursor: string | null;
 /**
 An edge in a connection.
 */
-  interface IFilmsEdge {
+interface IFilmsEdge {
 __typename: \\"FilmsEdge\\";
 /**
 The item at the end of the edge
@@ -1908,7 +1908,7 @@ cursor: string;
 /**
 A single film.
 */
-  interface IFilm {
+interface IFilm {
 __typename: \\"Film\\";
 /**
 The title of this film.
@@ -1986,12 +1986,12 @@ last?: number | null;
 /**
 An object with an ID
 */
-  type Node = IFilm | ISpecies | IPlanet | IStarship | IVehicle;
+type Node = IFilm | ISpecies | IPlanet | IStarship | IVehicle;
 
 /**
 An object with an ID
 */
-  interface INode {
+interface INode {
 __typename: \\"Node\\";
 /**
 The id of the object.
@@ -2002,7 +2002,7 @@ id: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmSpeciesConnection {
+interface IFilmSpeciesConnection {
 __typename: \\"FilmSpeciesConnection\\";
 /**
 Information to aid in pagination.
@@ -2033,7 +2033,7 @@ species: Array<ISpecies> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmSpeciesEdge {
+interface IFilmSpeciesEdge {
 __typename: \\"FilmSpeciesEdge\\";
 /**
 The item at the end of the edge
@@ -2048,7 +2048,7 @@ cursor: string;
 /**
 A type of person or character within the Star Wars Universe.
 */
-  interface ISpecies {
+interface ISpecies {
 __typename: \\"Species\\";
 /**
 The name of this species.
@@ -2125,7 +2125,7 @@ last?: number | null;
 A large mass, planet or planetoid in the Star Wars Universe, at the time of
 * 0 ABY.
 */
-  interface IPlanet {
+interface IPlanet {
 __typename: \\"Planet\\";
 /**
 The name of this planet.
@@ -2198,7 +2198,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IPlanetResidentsConnection {
+interface IPlanetResidentsConnection {
 __typename: \\"PlanetResidentsConnection\\";
 /**
 Information to aid in pagination.
@@ -2220,7 +2220,7 @@ totalCount: number | null;
 /**
 An edge in a connection.
 */
-  interface IPlanetResidentsEdge {
+interface IPlanetResidentsEdge {
 __typename: \\"PlanetResidentsEdge\\";
 /**
 A cursor for use in pagination
@@ -2231,7 +2231,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonFilmsConnection {
+interface IPersonFilmsConnection {
 __typename: \\"PersonFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -2262,7 +2262,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IPersonFilmsEdge {
+interface IPersonFilmsEdge {
 __typename: \\"PersonFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -2277,7 +2277,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonStarshipsConnection {
+interface IPersonStarshipsConnection {
 __typename: \\"PersonStarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -2308,7 +2308,7 @@ starships: Array<IStarship> | null;
 /**
 An edge in a connection.
 */
-  interface IPersonStarshipsEdge {
+interface IPersonStarshipsEdge {
 __typename: \\"PersonStarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -2323,7 +2323,7 @@ cursor: string;
 /**
 A single transport craft that has hyperdrive capability.
 */
-  interface IStarship {
+interface IStarship {
 __typename: \\"Starship\\";
 /**
 The name of this starship. The common name, such as \\"Death Star\\".
@@ -2416,7 +2416,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IStarshipPilotsConnection {
+interface IStarshipPilotsConnection {
 __typename: \\"StarshipPilotsConnection\\";
 /**
 Information to aid in pagination.
@@ -2438,7 +2438,7 @@ totalCount: number | null;
 /**
 An edge in a connection.
 */
-  interface IStarshipPilotsEdge {
+interface IStarshipPilotsEdge {
 __typename: \\"StarshipPilotsEdge\\";
 /**
 A cursor for use in pagination
@@ -2449,7 +2449,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IStarshipFilmsConnection {
+interface IStarshipFilmsConnection {
 __typename: \\"StarshipFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -2480,7 +2480,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IStarshipFilmsEdge {
+interface IStarshipFilmsEdge {
 __typename: \\"StarshipFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -2495,7 +2495,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonVehiclesConnection {
+interface IPersonVehiclesConnection {
 __typename: \\"PersonVehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -2526,7 +2526,7 @@ vehicles: Array<IVehicle> | null;
 /**
 An edge in a connection.
 */
-  interface IPersonVehiclesEdge {
+interface IPersonVehiclesEdge {
 __typename: \\"PersonVehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -2541,7 +2541,7 @@ cursor: string;
 /**
 A single transport craft that does not have hyperdrive capability
 */
-  interface IVehicle {
+interface IVehicle {
 __typename: \\"Vehicle\\";
 /**
 The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
@@ -2621,7 +2621,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IVehiclePilotsConnection {
+interface IVehiclePilotsConnection {
 __typename: \\"VehiclePilotsConnection\\";
 /**
 Information to aid in pagination.
@@ -2643,7 +2643,7 @@ totalCount: number | null;
 /**
 An edge in a connection.
 */
-  interface IVehiclePilotsEdge {
+interface IVehiclePilotsEdge {
 __typename: \\"VehiclePilotsEdge\\";
 /**
 A cursor for use in pagination
@@ -2654,7 +2654,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IVehicleFilmsConnection {
+interface IVehicleFilmsConnection {
 __typename: \\"VehicleFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -2685,7 +2685,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IVehicleFilmsEdge {
+interface IVehicleFilmsEdge {
 __typename: \\"VehicleFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -2700,7 +2700,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPlanetFilmsConnection {
+interface IPlanetFilmsConnection {
 __typename: \\"PlanetFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -2731,7 +2731,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IPlanetFilmsEdge {
+interface IPlanetFilmsEdge {
 __typename: \\"PlanetFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -2746,7 +2746,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesPeopleConnection {
+interface ISpeciesPeopleConnection {
 __typename: \\"SpeciesPeopleConnection\\";
 /**
 Information to aid in pagination.
@@ -2768,7 +2768,7 @@ totalCount: number | null;
 /**
 An edge in a connection.
 */
-  interface ISpeciesPeopleEdge {
+interface ISpeciesPeopleEdge {
 __typename: \\"SpeciesPeopleEdge\\";
 /**
 A cursor for use in pagination
@@ -2779,7 +2779,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesFilmsConnection {
+interface ISpeciesFilmsConnection {
 __typename: \\"SpeciesFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -2810,7 +2810,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface ISpeciesFilmsEdge {
+interface ISpeciesFilmsEdge {
 __typename: \\"SpeciesFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -2825,7 +2825,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmStarshipsConnection {
+interface IFilmStarshipsConnection {
 __typename: \\"FilmStarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -2856,7 +2856,7 @@ starships: Array<IStarship> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmStarshipsEdge {
+interface IFilmStarshipsEdge {
 __typename: \\"FilmStarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -2871,7 +2871,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmVehiclesConnection {
+interface IFilmVehiclesConnection {
 __typename: \\"FilmVehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -2902,7 +2902,7 @@ vehicles: Array<IVehicle> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmVehiclesEdge {
+interface IFilmVehiclesEdge {
 __typename: \\"FilmVehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -2917,7 +2917,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmCharactersConnection {
+interface IFilmCharactersConnection {
 __typename: \\"FilmCharactersConnection\\";
 /**
 Information to aid in pagination.
@@ -2939,7 +2939,7 @@ totalCount: number | null;
 /**
 An edge in a connection.
 */
-  interface IFilmCharactersEdge {
+interface IFilmCharactersEdge {
 __typename: \\"FilmCharactersEdge\\";
 /**
 A cursor for use in pagination
@@ -2950,7 +2950,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmPlanetsConnection {
+interface IFilmPlanetsConnection {
 __typename: \\"FilmPlanetsConnection\\";
 /**
 Information to aid in pagination.
@@ -2981,7 +2981,7 @@ planets: Array<IPlanet> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmPlanetsEdge {
+interface IFilmPlanetsEdge {
 __typename: \\"FilmPlanetsEdge\\";
 /**
 The item at the end of the edge
@@ -2996,7 +2996,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPeopleConnection {
+interface IPeopleConnection {
 __typename: \\"PeopleConnection\\";
 /**
 Information to aid in pagination.
@@ -3018,7 +3018,7 @@ totalCount: number | null;
 /**
 An edge in a connection.
 */
-  interface IPeopleEdge {
+interface IPeopleEdge {
 __typename: \\"PeopleEdge\\";
 /**
 A cursor for use in pagination
@@ -3029,7 +3029,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPlanetsConnection {
+interface IPlanetsConnection {
 __typename: \\"PlanetsConnection\\";
 /**
 Information to aid in pagination.
@@ -3060,7 +3060,7 @@ planets: Array<IPlanet> | null;
 /**
 An edge in a connection.
 */
-  interface IPlanetsEdge {
+interface IPlanetsEdge {
 __typename: \\"PlanetsEdge\\";
 /**
 The item at the end of the edge
@@ -3075,7 +3075,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesConnection {
+interface ISpeciesConnection {
 __typename: \\"SpeciesConnection\\";
 /**
 Information to aid in pagination.
@@ -3106,7 +3106,7 @@ species: Array<ISpecies> | null;
 /**
 An edge in a connection.
 */
-  interface ISpeciesEdge {
+interface ISpeciesEdge {
 __typename: \\"SpeciesEdge\\";
 /**
 The item at the end of the edge
@@ -3121,7 +3121,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IStarshipsConnection {
+interface IStarshipsConnection {
 __typename: \\"StarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -3152,7 +3152,7 @@ starships: Array<IStarship> | null;
 /**
 An edge in a connection.
 */
-  interface IStarshipsEdge {
+interface IStarshipsEdge {
 __typename: \\"StarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -3167,7 +3167,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IVehiclesConnection {
+interface IVehiclesConnection {
 __typename: \\"VehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -3198,7 +3198,7 @@ vehicles: Array<IVehicle> | null;
 /**
 An edge in a connection.
 */
-  interface IVehiclesEdge {
+interface IVehiclesEdge {
 __typename: \\"VehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -3338,7 +3338,7 @@ vehicleID?: string | null;
 }
 interface INodeOnRootArguments {
 /**
-  The ID of an object
+The ID of an object
 */
 id: string;
 }
@@ -3346,7 +3346,7 @@ id: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmsConnection {
+interface IFilmsConnection {
 __typename: \\"FilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -3377,7 +3377,7 @@ films: Array<IFilm> | null;
 /**
 Information about pagination in a connection.
 */
-  interface IPageInfo {
+interface IPageInfo {
 __typename: \\"PageInfo\\";
 /**
 When paginating forwards, are there more items?
@@ -3400,7 +3400,7 @@ endCursor: string | null;
 /**
 An edge in a connection.
 */
-  interface IFilmsEdge {
+interface IFilmsEdge {
 __typename: \\"FilmsEdge\\";
 /**
 The item at the end of the edge
@@ -3415,7 +3415,7 @@ cursor: string;
 /**
 A single film.
 */
-  interface IFilm {
+interface IFilm {
 __typename: \\"Film\\";
 /**
 The title of this film.
@@ -3493,12 +3493,12 @@ last?: number | null;
 /**
 An object with an ID
 */
-  type Node = IFilm | ISpecies | IPlanet | IPerson | IStarship | IVehicle;
+type Node = IFilm | ISpecies | IPlanet | IPerson | IStarship | IVehicle;
 
 /**
 An object with an ID
 */
-  interface INode {
+interface INode {
 __typename: \\"Node\\";
 /**
 The id of the object.
@@ -3509,7 +3509,7 @@ id: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmSpeciesConnection {
+interface IFilmSpeciesConnection {
 __typename: \\"FilmSpeciesConnection\\";
 /**
 Information to aid in pagination.
@@ -3540,7 +3540,7 @@ species: Array<ISpecies> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmSpeciesEdge {
+interface IFilmSpeciesEdge {
 __typename: \\"FilmSpeciesEdge\\";
 /**
 The item at the end of the edge
@@ -3555,7 +3555,7 @@ cursor: string;
 /**
 A type of person or character within the Star Wars Universe.
 */
-  interface ISpecies {
+interface ISpecies {
 __typename: \\"Species\\";
 /**
 The name of this species.
@@ -3632,7 +3632,7 @@ last?: number | null;
 A large mass, planet or planetoid in the Star Wars Universe, at the time of
 * 0 ABY.
 */
-  interface IPlanet {
+interface IPlanet {
 __typename: \\"Planet\\";
 /**
 The name of this planet.
@@ -3705,7 +3705,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IPlanetResidentsConnection {
+interface IPlanetResidentsConnection {
 __typename: \\"PlanetResidentsConnection\\";
 /**
 Information to aid in pagination.
@@ -3736,7 +3736,7 @@ residents: Array<IPerson> | null;
 /**
 An edge in a connection.
 */
-  interface IPlanetResidentsEdge {
+interface IPlanetResidentsEdge {
 __typename: \\"PlanetResidentsEdge\\";
 /**
 The item at the end of the edge
@@ -3751,7 +3751,7 @@ cursor: string;
 /**
 An individual person or character within the Star Wars universe.
 */
-  interface IPerson {
+interface IPerson {
 __typename: \\"Person\\";
 /**
 The name of this person.
@@ -3836,7 +3836,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IPersonFilmsConnection {
+interface IPersonFilmsConnection {
 __typename: \\"PersonFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -3867,7 +3867,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IPersonFilmsEdge {
+interface IPersonFilmsEdge {
 __typename: \\"PersonFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -3882,7 +3882,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonStarshipsConnection {
+interface IPersonStarshipsConnection {
 __typename: \\"PersonStarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -3913,7 +3913,7 @@ starships: Array<IStarship> | null;
 /**
 An edge in a connection.
 */
-  interface IPersonStarshipsEdge {
+interface IPersonStarshipsEdge {
 __typename: \\"PersonStarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -3928,7 +3928,7 @@ cursor: string;
 /**
 A single transport craft that has hyperdrive capability.
 */
-  interface IStarship {
+interface IStarship {
 __typename: \\"Starship\\";
 /**
 The name of this starship. The common name, such as \\"Death Star\\".
@@ -4021,7 +4021,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IStarshipPilotsConnection {
+interface IStarshipPilotsConnection {
 __typename: \\"StarshipPilotsConnection\\";
 /**
 Information to aid in pagination.
@@ -4052,7 +4052,7 @@ pilots: Array<IPerson> | null;
 /**
 An edge in a connection.
 */
-  interface IStarshipPilotsEdge {
+interface IStarshipPilotsEdge {
 __typename: \\"StarshipPilotsEdge\\";
 /**
 The item at the end of the edge
@@ -4067,7 +4067,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IStarshipFilmsConnection {
+interface IStarshipFilmsConnection {
 __typename: \\"StarshipFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -4098,7 +4098,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IStarshipFilmsEdge {
+interface IStarshipFilmsEdge {
 __typename: \\"StarshipFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -4113,7 +4113,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPersonVehiclesConnection {
+interface IPersonVehiclesConnection {
 __typename: \\"PersonVehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -4144,7 +4144,7 @@ vehicles: Array<IVehicle> | null;
 /**
 An edge in a connection.
 */
-  interface IPersonVehiclesEdge {
+interface IPersonVehiclesEdge {
 __typename: \\"PersonVehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -4159,7 +4159,7 @@ cursor: string;
 /**
 A single transport craft that does not have hyperdrive capability
 */
-  interface IVehicle {
+interface IVehicle {
 __typename: \\"Vehicle\\";
 /**
 The name of this vehicle. The common name, such as \\"Sand Crawler\\" or \\"Speeder
@@ -4239,7 +4239,7 @@ last?: number | null;
 /**
 A connection to a list of items.
 */
-  interface IVehiclePilotsConnection {
+interface IVehiclePilotsConnection {
 __typename: \\"VehiclePilotsConnection\\";
 /**
 Information to aid in pagination.
@@ -4270,7 +4270,7 @@ pilots: Array<IPerson> | null;
 /**
 An edge in a connection.
 */
-  interface IVehiclePilotsEdge {
+interface IVehiclePilotsEdge {
 __typename: \\"VehiclePilotsEdge\\";
 /**
 The item at the end of the edge
@@ -4285,7 +4285,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IVehicleFilmsConnection {
+interface IVehicleFilmsConnection {
 __typename: \\"VehicleFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -4316,7 +4316,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IVehicleFilmsEdge {
+interface IVehicleFilmsEdge {
 __typename: \\"VehicleFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -4331,7 +4331,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPlanetFilmsConnection {
+interface IPlanetFilmsConnection {
 __typename: \\"PlanetFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -4362,7 +4362,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface IPlanetFilmsEdge {
+interface IPlanetFilmsEdge {
 __typename: \\"PlanetFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -4377,7 +4377,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesPeopleConnection {
+interface ISpeciesPeopleConnection {
 __typename: \\"SpeciesPeopleConnection\\";
 /**
 Information to aid in pagination.
@@ -4408,7 +4408,7 @@ people: Array<IPerson> | null;
 /**
 An edge in a connection.
 */
-  interface ISpeciesPeopleEdge {
+interface ISpeciesPeopleEdge {
 __typename: \\"SpeciesPeopleEdge\\";
 /**
 The item at the end of the edge
@@ -4423,7 +4423,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesFilmsConnection {
+interface ISpeciesFilmsConnection {
 __typename: \\"SpeciesFilmsConnection\\";
 /**
 Information to aid in pagination.
@@ -4454,7 +4454,7 @@ films: Array<IFilm> | null;
 /**
 An edge in a connection.
 */
-  interface ISpeciesFilmsEdge {
+interface ISpeciesFilmsEdge {
 __typename: \\"SpeciesFilmsEdge\\";
 /**
 The item at the end of the edge
@@ -4469,7 +4469,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmStarshipsConnection {
+interface IFilmStarshipsConnection {
 __typename: \\"FilmStarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -4500,7 +4500,7 @@ starships: Array<IStarship> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmStarshipsEdge {
+interface IFilmStarshipsEdge {
 __typename: \\"FilmStarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -4515,7 +4515,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmVehiclesConnection {
+interface IFilmVehiclesConnection {
 __typename: \\"FilmVehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -4546,7 +4546,7 @@ vehicles: Array<IVehicle> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmVehiclesEdge {
+interface IFilmVehiclesEdge {
 __typename: \\"FilmVehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -4561,7 +4561,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmCharactersConnection {
+interface IFilmCharactersConnection {
 __typename: \\"FilmCharactersConnection\\";
 /**
 Information to aid in pagination.
@@ -4592,7 +4592,7 @@ characters: Array<IPerson> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmCharactersEdge {
+interface IFilmCharactersEdge {
 __typename: \\"FilmCharactersEdge\\";
 /**
 The item at the end of the edge
@@ -4607,7 +4607,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IFilmPlanetsConnection {
+interface IFilmPlanetsConnection {
 __typename: \\"FilmPlanetsConnection\\";
 /**
 Information to aid in pagination.
@@ -4638,7 +4638,7 @@ planets: Array<IPlanet> | null;
 /**
 An edge in a connection.
 */
-  interface IFilmPlanetsEdge {
+interface IFilmPlanetsEdge {
 __typename: \\"FilmPlanetsEdge\\";
 /**
 The item at the end of the edge
@@ -4653,7 +4653,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPeopleConnection {
+interface IPeopleConnection {
 __typename: \\"PeopleConnection\\";
 /**
 Information to aid in pagination.
@@ -4684,7 +4684,7 @@ people: Array<IPerson> | null;
 /**
 An edge in a connection.
 */
-  interface IPeopleEdge {
+interface IPeopleEdge {
 __typename: \\"PeopleEdge\\";
 /**
 The item at the end of the edge
@@ -4699,7 +4699,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IPlanetsConnection {
+interface IPlanetsConnection {
 __typename: \\"PlanetsConnection\\";
 /**
 Information to aid in pagination.
@@ -4730,7 +4730,7 @@ planets: Array<IPlanet> | null;
 /**
 An edge in a connection.
 */
-  interface IPlanetsEdge {
+interface IPlanetsEdge {
 __typename: \\"PlanetsEdge\\";
 /**
 The item at the end of the edge
@@ -4745,7 +4745,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface ISpeciesConnection {
+interface ISpeciesConnection {
 __typename: \\"SpeciesConnection\\";
 /**
 Information to aid in pagination.
@@ -4776,7 +4776,7 @@ species: Array<ISpecies> | null;
 /**
 An edge in a connection.
 */
-  interface ISpeciesEdge {
+interface ISpeciesEdge {
 __typename: \\"SpeciesEdge\\";
 /**
 The item at the end of the edge
@@ -4791,7 +4791,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IStarshipsConnection {
+interface IStarshipsConnection {
 __typename: \\"StarshipsConnection\\";
 /**
 Information to aid in pagination.
@@ -4822,7 +4822,7 @@ starships: Array<IStarship> | null;
 /**
 An edge in a connection.
 */
-  interface IStarshipsEdge {
+interface IStarshipsEdge {
 __typename: \\"StarshipsEdge\\";
 /**
 The item at the end of the edge
@@ -4837,7 +4837,7 @@ cursor: string;
 /**
 A connection to a list of items.
 */
-  interface IVehiclesConnection {
+interface IVehiclesConnection {
 __typename: \\"VehiclesConnection\\";
 /**
 Information to aid in pagination.
@@ -4868,7 +4868,7 @@ vehicles: Array<IVehicle> | null;
 /**
 An edge in a connection.
 */
-  interface IVehiclesEdge {
+interface IVehiclesEdge {
 __typename: \\"VehiclesEdge\\";
 /**
 The item at the end of the edge
@@ -5038,7 +5038,7 @@ Fetches an object given its ID
   }
   interface INodeOnRootArguments {
     /**
-  The ID of an object
+The ID of an object
 */
     id: string;
   }
@@ -6724,7 +6724,7 @@ Fetches an object given its ID
   }
   interface INodeOnRootArguments {
     /**
-  The ID of an object
+The ID of an object
 */
     id: string;
   }
@@ -8370,7 +8370,7 @@ Fetches an object given its ID
   }
   interface INodeOnRootArguments {
     /**
-  The ID of an object
+The ID of an object
 */
     id: string;
   }
@@ -9783,7 +9783,7 @@ test: any | null;
 humanOrDroid: HumanOrDroid | null;
 getCharacters: Array<Character>;
 /**
-@deprecated Field No Longer Available.
+* @deprecated Field No Longer Available.
 */
 anOldField: string | null;
 }
@@ -9815,7 +9815,7 @@ name: string | null;
 friends: Array<Character> | null;
 appearsIn: Array<IEpisodeEnum> | null;
 /**
-@deprecated Field No Longer Available.
+* @deprecated Field No Longer Available.
 */
 anOldField: string | null;
 nonNullArr: Array<Character>;
@@ -9833,7 +9833,7 @@ friends: Array<Character> | null;
 appearsIn: Array<IEpisodeEnum> | null;
 homePlanet: string | null;
 /**
-@deprecated Field No Longer Available.
+* @deprecated Field No Longer Available.
 */
 anOldField: string | null;
 nonNullArr: Array<Character>;
@@ -9850,7 +9850,7 @@ appearsIn: Array<IEpisodeEnum> | null;
 primaryFunction: string | null;
 primaryFunctionNonNull: string;
 /**
-@deprecated Field No Longer Available.
+* @deprecated Field No Longer Available.
 */
 anOldField: string | null;
 nonNullArr: Array<Character>;
