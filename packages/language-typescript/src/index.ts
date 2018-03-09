@@ -54,7 +54,6 @@ export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull 
 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${pascalize(selectionName)}`;
 
-// values.map(v => `'${v.value}'`).join(' | ');
 export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => `{
   ${values.map(({ value }) => `${value} = '${value}'`).join(',\n')}
 }`;

@@ -32,6 +32,18 @@ describe('gql2ts', () => {
       });
       expect(actual).toMatchSnapshot();
     });
+
+    it('correctly translates enums with types', () => {
+      const actual: string = schemaToInterfaces(
+        enumSchemaAsAny,
+        { ignoredTypes: [], },
+        {
+          enumTypeBuilder: undefined,
+          formatEnum: values => values.map(v => `'${v.value}'`).join(' | ')
+        }
+      );
+      expect(actual).toMatchSnapshot();
+    });
   });
 
   describe('namespace', () => {

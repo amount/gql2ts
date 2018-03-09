@@ -3249,6 +3249,33 @@ BLUE = 'BLUE'
 };"
 `;
 
+exports[`gql2ts interfaces correctly translates enums with types 1`] = `
+"  interface IGraphQLResponseRoot {
+    data?: IQuery;
+    errors?: Array<IGraphQLResponseError>;
+  }
+
+  interface IGraphQLResponseError {
+    message: string;            // Required for all errors
+    locations?: Array<IGraphQLResponseErrorLocation>;
+    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
+  }
+
+  interface IGraphQLResponseErrorLocation {
+    line: number;
+    column: number;
+  }
+
+  
+  interface IQuery {
+    __typename: \\"Query\\";
+    colorEnum: Color | null;
+}
+
+  
+  type Color = 'RED' | 'GREEN' | 'BLUE';"
+`;
+
 exports[`gql2ts interfaces correctly translates the star wars schema into typescript defs 1`] = `
 "  interface IGraphQLResponseRoot {
     data?: IRoot;
