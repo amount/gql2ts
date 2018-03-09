@@ -1,5 +1,28 @@
 # Changelog
 
+## Master
+
+- Generate Argument Interfaces in `@gql2ts/from-schema` [#148](https://github.com/avantcredit/gql2ts/pull/148)
+
+For example:
+
+```graphql
+type Query {
+  test(arg1: String, arg2: Boolean): String
+}
+```
+
+will output
+
+```typescript
+interface ITestOnQueryArguments {
+  arg1: string;
+  arg2: boolean;
+}
+```
+
+- Only warn about prettier once in `@gql2ts/language-typescript` [#147](https://github.com/avantcredit/gql2ts/pull/147)
+
 ## 1.4.3
 
 - Fix 1.4.2 release
