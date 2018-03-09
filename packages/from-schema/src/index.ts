@@ -27,6 +27,7 @@ import {
 } from '@gql2ts/util';
 import { IFromQueryOptions, ITypeMap } from '@gql2ts/types';
 import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
+import * as dedent from 'dedent';
 
 const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => string = (schemaInput, optionsInput) => {
   const {
@@ -70,29 +71,40 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return rootNamespaces.join(' | ');
   };
 
-  const generateRootTypes: (schema: GraphQLSchema) => string = schema => `  interface IGraphQLResponseRoot {
-    data?: ${generateRootDataName(schema)};
-    errors?: Array<IGraphQLResponseError>;
-  }
+  const generateRootTypes: (schema: GraphQLSchema) => string = schema => dedent`
+    interface IGraphQLResponseRoot {
+      data?: ${generateRootDataName(schema)};
+      errors?: Array<IGraphQLResponseError>;
+    }
 
-  interface IGraphQLResponseError {
-    message: string;            // Required for all errors
-    locations?: Array<IGraphQLResponseErrorLocation>;
-    [propName: string]: any;    // 7.2.2 says 'GraphQL servers may provide additional entries to error'
-  }
+    interface IGraphQLResponseError {
+      /** Required for all errors */
+      message: string;
+      locations?: Array<IGraphQLResponseErrorLocation>;
+      /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+      [propName: string]: any;
+    }
 
-  interface IGraphQLResponseErrorLocation {
-    line: number;
-    column: number;
-  }`;
+    interface IGraphQLResponseErrorLocation {
+      line: number;
+      column: number;
+    }
+  `;
+
+  const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
+    description ? description.replace(/\n/g, '\n* ') : description;
+
   type GenerateDescription = (description?: string, jsDoc?: IJSDocTag[]) => string;
-  const generateDescription: GenerateDescription = (description, jsDoc = []) => (description || jsDoc.length) ? `/**
-    ${[description, ...jsDoc.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n')}
-  */` : '';
+  const generateDescription: GenerateDescription = (description, jsDoc = []) => (description || jsDoc.length) ? dedent`
+    /**
+     * ${[fixDescriptionDocblock(description), ...jsDoc.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n*')}
+     */
+   ` : '';
 
-  const wrapWithDescription: (declaration: string, description: string) => string = (declaration, description) =>
-  `  ${generateDescription(description)}
-  ${declaration}`;
+  const wrapWithDescription: (declaration: string, description: string) => string = (declaration, description) => dedent`
+    ${generateDescription(description)}
+    ${declaration}
+  `;
 
   interface IJSDocTag {
     tag: string;
@@ -121,7 +133,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   };
 
   const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
-    (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n', description);
+    (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)), description) + '\n\n';
 
   const typeNameDeclaration: (name: string) => string = name => addSemicolon(`__typename: "${name}"`);
 
@@ -133,7 +145,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       if (!isInput && !optionsInput.ignoreTypeNameDeclaration) {
        fields =  [typeNameDeclaration(name), ...fields];
       }
-      return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
+      return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields)), description);
     };
 
   type GenerateEnumDeclaration = (description: string, name: string, enumValues: GraphQLEnumValue[]) => string;
@@ -298,8 +310,6 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const typesToInterfaces: (schema: GraphQLSchema, options: Partial<IInternalOptions>) => string = (schema, options) => {
     const ignoredTypes: Set<string> = new Set(options.ignoredTypes);
-    const interfaces: string[] = [];
-    interfaces.push(generateRootTypes(schema));       // add root entry point & errors
     const supportsNullability: boolean = !options.legacy;
     const types: { [typeName: string]: GraphQLNamedType } = schema.getTypeMap();
     const typeArr: GraphQLNamedType[] = Object.keys(types).map(k => types[k]);
@@ -327,9 +337,10 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
         )
         .filter(type => type);                        // remove empty ones
 
-    return interfaces
-      .concat(typeInterfaces)                   // add typeInterfaces to return object
-      .join('\n\n');                            // add newlines between interfaces
+    return [
+      generateRootTypes(schema),
+      ...typeInterfaces
+    ].join('\n\n');
   };
 
   return typesToInterfaces(schemaInput, optionsInput);
