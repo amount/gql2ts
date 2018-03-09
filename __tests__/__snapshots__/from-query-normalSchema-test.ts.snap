@@ -607,7 +607,7 @@ Array [
 ]
 `;
 
-exports[`simple examples does a very simple query 2`] = `
+exports[`simple examples does a very simple query with typename 1`] = `
 Array [
   Object {
     "additionalTypes": Array [],

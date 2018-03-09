@@ -122,7 +122,7 @@ describe('simple examples', () => {
     );
     expect(response).toMatchSnapshot();
   });
-  it('does a very simple query', () => {
+  it('does a very simple query with typename', () => {
     const response: IFromQueryReturnValue[] = runProgram(
       schema,
       simpleQueryWithTypename,
