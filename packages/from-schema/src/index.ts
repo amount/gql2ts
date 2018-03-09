@@ -164,24 +164,29 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   interface IInterfaceMetadata {
     name: string;
     showNullabilityAttribute: boolean;
+    isNonNull: boolean;
   }
 
   type ExtractInterfaceMetadata = (interfaceName: string, supportsNullability: boolean) => IInterfaceMetadata;
-  const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName, supportsNullability) => ({
-    name: interfaceName.replace(/\!/g, ''),
-    showNullabilityAttribute: !interfaceName.includes('!') && supportsNullability
-  });
+  const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName, supportsNullability) => {
+    const isNonNull: boolean = interfaceName.includes('!');
+    return {
+      isNonNull,
+      name: interfaceName.replace(/\!/g, ''),
+      showNullabilityAttribute: !isNonNull && supportsNullability
+    };
+  };
 
   type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean, supportsNullability: boolean) => string;
   const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
-    const { name, showNullabilityAttribute } = extractInterfaceMetadata(
+    const { name, showNullabilityAttribute, isNonNull } = extractInterfaceMetadata(
       resolveInterfaceName(field.type),
       supportsNullability
     );
 
     return formatInput(
       field.name,
-      isInput && showNullabilityAttribute,
+      isInput && !isNonNull,
       printType(name, !showNullabilityAttribute)
     );
   };
