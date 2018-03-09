@@ -38,64 +38,64 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
     node: Node;
 }
 interface IAllFilmsOnRootArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IFilmOnRootArguments {
-id: string;
-filmID: string;
+id?: string;
+filmID?: string;
 }
 interface IAllPeopleOnRootArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IPersonOnRootArguments {
-id: string;
-personID: string;
+id?: string;
+personID?: string;
 }
 interface IAllPlanetsOnRootArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IPlanetOnRootArguments {
-id: string;
-planetID: string;
+id?: string;
+planetID?: string;
 }
 interface IAllSpeciesOnRootArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface ISpeciesOnRootArguments {
-id: string;
-speciesID: string;
+id?: string;
+speciesID?: string;
 }
 interface IAllStarshipsOnRootArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IStarshipOnRootArguments {
-id: string;
-starshipID: string;
+id?: string;
+starshipID?: string;
 }
 interface IAllVehiclesOnRootArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IVehicleOnRootArguments {
-id: string;
-vehicleID: string;
+id?: string;
+vehicleID?: string;
 }
 interface INodeOnRootArguments {
 /**
@@ -221,34 +221,34 @@ full \\"{ edges { node } }\\" version should be used instead.
     id: string;
 }
 interface ISpeciesConnectionOnFilmArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IStarshipConnectionOnFilmArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IVehicleConnectionOnFilmArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface ICharacterConnectionOnFilmArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IPlanetConnectionOnFilmArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 
   /**
@@ -377,16 +377,16 @@ have skin.
     id: string;
 }
 interface IPersonConnectionOnSpeciesArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IFilmConnectionOnSpeciesArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 
   /**
@@ -451,16 +451,16 @@ of water.
     id: string;
 }
 interface IResidentConnectionOnPlanetArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IFilmConnectionOnPlanetArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 
   /**
@@ -576,22 +576,22 @@ person does not have hair.
     id: string;
 }
 interface IFilmConnectionOnPersonArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IStarshipConnectionOnPersonArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IVehicleConnectionOnPersonArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 
   /**
@@ -767,16 +767,16 @@ entire crew without having to resupply.
     id: string;
 }
 interface IPilotConnectionOnStarshipArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IFilmConnectionOnStarshipArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 
   /**
@@ -985,16 +985,16 @@ entire crew without having to resupply.
     id: string;
 }
 interface IPilotConnectionOnVehicleArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 interface IFilmConnectionOnVehicleArguments {
-after: string;
-first: number;
-before: string;
-last: number;
+after?: string;
+first?: number;
+before?: string;
+last?: number;
 }
 
   /**
