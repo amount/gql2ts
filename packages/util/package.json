@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
-    "graphql": ">= 0.10 <0.12"
+    "graphql": ">= 0.10 <1.0.0"
   }
 }

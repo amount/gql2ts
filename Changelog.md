@@ -23,6 +23,10 @@ interface ITestOnQueryArguments {
 
 - Only warn about prettier once in `@gql2ts/language-typescript` [#147](https://github.com/avantcredit/gql2ts/pull/147)
 
+## 1.4.4
+
+- Loosen `graphql` version restriction to `< 1.0.0` [#152](https://github.com/avantcredit/gql2ts/pull/152)
+
 ## 1.4.3
 
 - Fix 1.4.2 release
