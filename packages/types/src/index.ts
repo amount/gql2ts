@@ -11,7 +11,7 @@ import {
   GraphQLEnumValue,
   FieldNode,
 } from 'graphql';
-import { PossibleSchemaInput, IJSDocTag, IFieldDocumentation } from '@gql2ts/util';
+import { PossibleSchemaInput, IFieldDocumentation } from '@gql2ts/util';
 
 export type GetChildSelectionsType =
   (operation: OperationTypeNode, selection: SelectionNode, parent?: GraphQLType, isUndefined?: boolean)

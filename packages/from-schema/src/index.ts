@@ -43,6 +43,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     generateInterfaceDeclaration: gID,
     interfaceBuilder,
     addSemicolon,
+    generateDocumentation,
   } = optionsInput.formats;
 
   const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP, ...(optionsInput.typeMap || {}) };
@@ -87,13 +88,9 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     line: number;
     column: number;
   }`;
-  type GenerateDescription = (documentation: IFieldDocumentation) => string;
-  const generateDescription: GenerateDescription = ({ description, tags = [] }) => (description || tags.length) ? `/**
-    ${[description, ...tags.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n')}
-  */` : '';
 
-  const wrapWithDocumentation: (declaration: string, documentation: IFieldDocumentation) => string = (declaration, description) =>
-  `  ${generateDescription(description)}
+  const wrapWithDocumentation: (declaration: string, documentation: IFieldDocumentation) => string = (declaration, documentation) =>
+  `  ${generateDocumentation(documentation)}
   ${declaration}`;
 
   function isInputField (field: GraphQLField<any, any> | GraphQLInputField): field is GraphQLInputField {
@@ -189,7 +186,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     );
 
     return [
-      generateDescription(buildDocumentation(arg)),
+      generateDocumentation(buildDocumentation(arg)),
       formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
     ].filter(Boolean).join('\n');
   };
@@ -268,7 +265,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const filteredFields: Array<GraphQLField<any, any> | GraphQLInputField> = f.filter(field => filterField(field, ignoredTypes));
 
     const fields: string[] = filteredFields
-      .map(field => [generateDescription(buildDocumentation(field)), fieldToDefinition(field, isInput, supportsNullability)])
+      .map(field => [generateDocumentation(buildDocumentation(field)), fieldToDefinition(field, isInput, supportsNullability)])
       .reduce((acc, val) => [...acc, ...val.filter(Boolean)] , [])
       .filter(field => field);
 

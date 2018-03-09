@@ -99,4 +99,5 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   addExtensionsToInterfaceName: ADD_INTERFACE_EXTENSIONS,
   generateDocumentation: DEFAULT_DOCUMENTATION_GENERATOR
 };
+
 export default DEFAULT_OPTIONS;
