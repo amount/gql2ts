@@ -24,6 +24,8 @@ import {
   isEnum,
   isList,
   isNonNullable,
+  buildDocumentation,
+  IFieldDocumentation
 } from '@gql2ts/util';
 import { IFromQueryOptions, ITypeMap } from '@gql2ts/types';
 import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
@@ -85,43 +87,24 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     line: number;
     column: number;
   }`;
-  type GenerateDescription = (description?: string, jsDoc?: IJSDocTag[]) => string;
-  const generateDescription: GenerateDescription = (description, jsDoc = []) => (description || jsDoc.length) ? `/**
-    ${[description, ...jsDoc.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n')}
+  type GenerateDescription = (documentation: IFieldDocumentation) => string;
+  const generateDescription: GenerateDescription = ({ description, tags = [] }) => (description || tags.length) ? `/**
+    ${[description, ...tags.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n')}
   */` : '';
 
-  const wrapWithDescription: (declaration: string, description: string) => string = (declaration, description) =>
+  const wrapWithDocumentation: (declaration: string, documentation: IFieldDocumentation) => string = (declaration, description) =>
   `  ${generateDescription(description)}
   ${declaration}`;
-
-  interface IJSDocTag {
-    tag: string;
-    value: string;
-  }
 
   function isInputField (field: GraphQLField<any, any> | GraphQLInputField): field is GraphQLInputField {
     return (!!field.astNode && field.astNode.kind === 'InputValueDefinition') || !({}).hasOwnProperty.call(field, 'args');
   }
 
-  const buildDocTags: (field: GraphQLField<any, any> | GraphQLInputField) => IJSDocTag[] = field => {
-    const tags: IJSDocTag[] = [];
-    if (!field.astNode) {
-      return tags;
-    } else if (isInputField(field)) {
-      if (field.defaultValue) {
-        tags.push({ tag: 'default', value: field.defaultValue });
-      }
-    } else {
-      if (field.isDeprecated) {
-        tags.push({ tag: 'deprecated', value: field.deprecationReason || '' });
-      }
-    }
-
-    return tags;
-  };
-
   const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
-    (description, name, possibleTypes) => wrapWithDescription(addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n', description);
+    (description, name, possibleTypes) => wrapWithDocumentation(
+      addSemicolon(typeBuilder(name, possibleTypes)) + '\n\n',
+      { description, tags: [] }
+    );
 
   const typeNameDeclaration: (name: string) => string = name => addSemicolon(`__typename: "${name}"`);
 
@@ -133,12 +116,18 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       if (!isInput && !optionsInput.ignoreTypeNameDeclaration) {
        fields =  [typeNameDeclaration(name), ...fields];
       }
-      return additionalInfo + wrapWithDescription(interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')), description);
+      return additionalInfo + wrapWithDocumentation(
+        interfaceBuilder(declaration, gID(fields.map(f => `    ${f}`), '  ')),
+        { description, tags: [] }
+      );
     };
 
   type GenerateEnumDeclaration = (description: string, name: string, enumValues: GraphQLEnumValue[]) => string;
   const generateEnumDeclaration: GenerateEnumDeclaration = (description, name, enumValues) =>
-    wrapWithDescription(typeBuilder(generateEnumName(name), addSemicolon(formatEnum(enumValues))), description);
+    wrapWithDocumentation(
+      typeBuilder(generateEnumName(name), addSemicolon(formatEnum(enumValues))),
+      { description, tags: [] }
+    );
 
   /**
    * TODO
@@ -200,7 +189,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     );
 
     return [
-      generateDescription(arg.description, buildDocTags(arg)),
+      generateDescription(buildDocumentation(arg)),
       formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
     ].filter(Boolean).join('\n');
   };
@@ -279,7 +268,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const filteredFields: Array<GraphQLField<any, any> | GraphQLInputField> = f.filter(field => filterField(field, ignoredTypes));
 
     const fields: string[] = filteredFields
-      .map(field => [generateDescription(field.description, buildDocTags(field)), fieldToDefinition(field, isInput, supportsNullability)])
+      .map(field => [generateDescription(buildDocumentation(field)), fieldToDefinition(field, isInput, supportsNullability)])
       .reduce((acc, val) => [...acc, ...val.filter(Boolean)] , [])
       .filter(field => field);
 
