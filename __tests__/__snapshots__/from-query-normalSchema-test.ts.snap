@@ -9,13 +9,15 @@ Array [
     id: string;
     name: string | null;
   }> | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: Partial<{
     id: string;
     name: string | null;
   }> | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -30,13 +32,15 @@ Array [
     b: string;
     c: string | null;
   }> | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   a: Partial<{
     b: string;
     c: string | null;
   }> | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -48,20 +52,24 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   a: Partial<IFragmentCharacterFields> | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   a: Partial<IFragmentCharacterFields> | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   b: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   b: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -73,20 +81,24 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: Partial<IFragmentCharacterFields> | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: Partial<IFragmentCharacterFields> | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -101,13 +113,15 @@ Array [
     primaryFunction?: string | null;
     primaryFunctionNonNull?: string;
   }> | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: Partial<{
     primaryFunction?: string | null;
     primaryFunctionNonNull?: string;
   }> | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -122,13 +136,15 @@ Array [
     b?: string | null;
     c?: string;
   }> | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   a: Partial<{
     b?: string | null;
     c?: string;
   }> | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -143,13 +159,15 @@ Array [
     id?: string;
     name?: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface TestQuery {
   heroNoParam: {
     id?: string;
     name?: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -164,13 +182,15 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface TestQuery {
   heroNoParam: {
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -185,13 +205,15 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: {
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -206,13 +228,15 @@ Array [
     b: string;
     c: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   a: {
     b: string;
     c: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -227,13 +251,15 @@ Array [
     primaryFunction?: string | null;
     primaryFunctionNonNull?: string;
   } | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: {
     primaryFunction?: string | null;
     primaryFunctionNonNull?: string;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -248,13 +274,15 @@ Array [
     b?: string | null;
     c?: string;
   } | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   a: {
     b?: string | null;
     c?: string;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -266,30 +294,36 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFieldsNested {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFieldsNested {
   id: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -301,30 +335,38 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested {
+    "interface": "export interface IFragmentCharacterFields
+  extends IFragmentCharacterFieldsNested {
   friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}",
-    "result": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested {
+}
+",
+    "result": "export interface IFragmentCharacterFields
+  extends IFragmentCharacterFieldsNested {
   friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFieldsNested {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFieldsNested {
   id: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -336,40 +378,52 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested, IFragmentCharacterFieldsNestedAgain {
+    "interface": "export interface IFragmentCharacterFields
+  extends IFragmentCharacterFieldsNested,
+    IFragmentCharacterFieldsNestedAgain {
   friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}",
-    "result": "export interface IFragmentCharacterFields extends IFragmentCharacterFieldsNested, IFragmentCharacterFieldsNestedAgain {
+}
+",
+    "result": "export interface IFragmentCharacterFields
+  extends IFragmentCharacterFieldsNested,
+    IFragmentCharacterFieldsNestedAgain {
   friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFieldsNested {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFieldsNested {
   id: string;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFieldsNestedAgain {
   name: string | null;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFieldsNestedAgain {
   name: string | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -381,20 +435,24 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -406,20 +464,24 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   a: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   a: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   b: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   b: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -430,25 +492,33 @@ Array [
   Object {
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
-  heroNoParam: {
-    name: string | null;
-  } & IFragmentCharacterFields | null;
-}",
+  heroNoParam:
+    | {
+        name: string | null;
+      } & IFragmentCharacterFields
+    | null;
+}
+",
     "result": "export interface FragmentTest {
-  heroNoParam: {
-    name: string | null;
-  } & IFragmentCharacterFields | null;
-}",
+  heroNoParam:
+    | {
+        name: string | null;
+      } & IFragmentCharacterFields
+    | null;
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -459,25 +529,33 @@ Array [
   Object {
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
-  a: {
-    b: string | null;
-  } & IFragmentCharacterFields | null;
-}",
+  a:
+    | {
+        b: string | null;
+      } & IFragmentCharacterFields
+    | null;
+}
+",
     "result": "export interface FragmentTest {
-  a: {
-    b: string | null;
-  } & IFragmentCharacterFields | null;
-}",
+  a:
+    | {
+        b: string | null;
+      } & IFragmentCharacterFields
+    | null;
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   c: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   c: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -492,13 +570,15 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface Anonymous {
   heroNoParam: {
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -513,13 +593,15 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface TestQuery {
   heroNoParam: {
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -535,14 +617,16 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface TestQuery {
   heroNoParam: {
     __typename: string;
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -557,13 +641,15 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface Anonymous {
   heroNoParam: {
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -588,7 +674,8 @@ Array [
       name: string | null;
     }> | null;
   } | null;
-}",
+}
+",
     "result": "export interface Test {
   heroNoParam: {
     nonNullArr: Array<{
@@ -604,7 +691,8 @@ Array [
       name: string | null;
     }> | null;
   } | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -616,17 +704,21 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface CustomScalarQuery {
   test: string | null;
-}",
+}
+",
     "result": "export interface CustomScalarQueryInput {
   test?: string | null;
 }
 
+
 export interface CustomScalarQuery {
   test: string | null;
-}",
+}
+",
     "variables": "export interface CustomScalarQueryInput {
   test?: string | null;
-}",
+}
+",
   },
 ]
 `;
@@ -637,21 +729,25 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface EnumQuery {
   hero: {
-    appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
+    appearsIn: Array<Episode | null> | null;
   } | null;
-}",
-    "result": "export interface EnumQueryInput {
-  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
 }
+",
+    "result": "export interface EnumQueryInput {
+  episode?: Episode | null;
+}
+
 
 export interface EnumQuery {
   hero: {
-    appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
+    appearsIn: Array<Episode | null> | null;
   } | null;
-}",
+}
+",
     "variables": "export interface EnumQueryInput {
-  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
-}",
+  episode?: Episode | null;
+}
+",
   },
 ]
 `;
@@ -665,20 +761,24 @@ Array [
     id: string;
     name: string | null;
   } | null>;
-}",
+}
+",
     "result": "export interface TestQueryInput {
   ids: Array<string>;
 }
+
 
 export interface TestQuery {
   getCharacters: Array<{
     id: string;
     name: string | null;
   } | null>;
-}",
+}
+",
     "variables": "export interface TestQueryInput {
   ids: Array<string>;
-}",
+}
+",
   },
 ]
 `;
@@ -691,19 +791,23 @@ Array [
   humanOrDroid: {
     id: string;
   } | null;
-}",
+}
+",
     "result": "export interface UnionQueryInput {
   id: string;
 }
+
 
 export interface UnionQuery {
   humanOrDroid: {
     id: string;
   } | null;
-}",
+}
+",
     "variables": "export interface UnionQueryInput {
   id: string;
-}",
+}
+",
   },
 ]
 `;
@@ -717,20 +821,24 @@ Array [
     id?: string;
     name?: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface UnionQueryInput {
   id: string;
 }
+
 
 export interface UnionQuery {
   humanOrDroid: {
     id?: string;
     name?: string | null;
   } | null;
-}",
+}
+",
     "variables": "export interface UnionQueryInput {
   id: string;
-}",
+}
+",
   },
 ]
 `;
@@ -744,20 +852,24 @@ Array [
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "result": "export interface TestQueryInput {
   id: string;
 }
+
 
 export interface TestQuery {
   human: {
     id: string;
     name: string | null;
   } | null;
-}",
+}
+",
     "variables": "export interface TestQueryInput {
   id: string;
-}",
+}
+",
   },
 ]
 `;
@@ -769,29 +881,35 @@ Array [
       "export interface SelectionOnFriends {
   id: string;
   name: string | null;
-}",
+}
+",
       "export interface SelectionOnFriends1 {
   id: string;
   name: string | null;
   friends: Array<SelectionOnFriends | null> | null;
-}",
+}
+",
       "export interface SelectionOnFriends2 {
   id: string;
   name: string | null;
   friends: Array<SelectionOnFriends1 | null> | null;
-}",
+}
+",
       "export interface SelectionOnHeroNoParam {
   friends: Array<SelectionOnFriends2 | null> | null;
-}",
+}
+",
     ],
     "interface": "export interface Test {
   hero1: SelectionOnHeroNoParam | null;
   hero2: SelectionOnHeroNoParam | null;
-}",
+}
+",
     "result": "export interface SelectionOnFriends {
   id: string;
   name: string | null;
 }
+
 
 export interface SelectionOnFriends1 {
   id: string;
@@ -799,20 +917,24 @@ export interface SelectionOnFriends1 {
   friends: Array<SelectionOnFriends | null> | null;
 }
 
+
 export interface SelectionOnFriends2 {
   id: string;
   name: string | null;
   friends: Array<SelectionOnFriends1 | null> | null;
 }
 
+
 export interface SelectionOnHeroNoParam {
   friends: Array<SelectionOnFriends2 | null> | null;
 }
 
+
 export interface Test {
   hero1: SelectionOnHeroNoParam | null;
   hero2: SelectionOnHeroNoParam | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -825,19 +947,23 @@ Array [
       "export interface SelectionOnHeroNoParam {
   id: string;
   name: string | null;
-}",
+}
+",
     ],
     "interface": "export interface TestQuery {
   heroNoParam: SelectionOnHeroNoParam | null;
-}",
+}
+",
     "result": "export interface SelectionOnHeroNoParam {
   id: string;
   name: string | null;
 }
 
+
 export interface TestQuery {
   heroNoParam: SelectionOnHeroNoParam | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -850,38 +976,46 @@ Array [
       "export interface SelectionOnNonNullArr {
   id: string;
   name: string | null;
-}",
+}
+",
       "export interface SelectionOnNonNullArrAndContents {
   id: string;
   name: string | null;
-}",
+}
+",
       "export interface SelectionOnNullArrNonNullContents {
   id: string;
   name: string | null;
-}",
+}
+",
       "export interface SelectionOnHeroNoParam {
   nonNullArr: Array<SelectionOnNonNullArr | null>;
   nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
   nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
-}",
+}
+",
     ],
     "interface": "export interface Test {
   heroNoParam: SelectionOnHeroNoParam | null;
-}",
+}
+",
     "result": "export interface SelectionOnNonNullArr {
   id: string;
   name: string | null;
 }
+
 
 export interface SelectionOnNonNullArrAndContents {
   id: string;
   name: string | null;
 }
 
+
 export interface SelectionOnNullArrNonNullContents {
   id: string;
   name: string | null;
 }
+
 
 export interface SelectionOnHeroNoParam {
   nonNullArr: Array<SelectionOnNonNullArr | null>;
@@ -889,9 +1023,11 @@ export interface SelectionOnHeroNoParam {
   nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
 }
 
+
 export interface Test {
   heroNoParam: SelectionOnHeroNoParam | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -903,20 +1039,24 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [],
     "interface": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   id: string;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -928,10 +1068,12 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
@@ -939,11 +1081,13 @@ Array [
     "interface": "export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
-}",
+}
+",
     "result": "export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -955,32 +1099,38 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export interface FragmentTest {
   heroNoParam: IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [
       "export interface SelectionOnFriends {
   id: string;
-}",
+}
+",
     ],
     "interface": "export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
   friends?: Array<SelectionOnFriends | null> | null;
-}",
+}
+",
     "result": "export interface SelectionOnFriends {
   id: string;
 }
+
 
 export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
   friends?: Array<SelectionOnFriends | null> | null;
-}",
+}
+",
     "variables": "",
   },
 ]
@@ -992,40 +1142,48 @@ Array [
     "additionalTypes": Array [
       "export type SelectionOnHeroNoParam = Partial<{
   name?: string | null;
-}>",
+}>;
+",
     ],
     "interface": "export interface FragmentTest {
   heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
-}",
+}
+",
     "result": "export type SelectionOnHeroNoParam = Partial<{
   name?: string | null;
-}>
+}>;
+
 
 export interface FragmentTest {
   heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
-}",
+}
+",
     "variables": "",
   },
   Object {
     "additionalTypes": Array [
       "export interface SelectionOnFriends {
   id: string;
-}",
+}
+",
     ],
     "interface": "export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
   friends?: Array<SelectionOnFriends | null> | null;
-}",
+}
+",
     "result": "export interface SelectionOnFriends {
   id: string;
 }
+
 
 export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
   friends?: Array<SelectionOnFriends | null> | null;
-}",
+}
+",
     "variables": "",
   },
 ]

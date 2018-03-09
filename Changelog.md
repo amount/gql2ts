@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.5.0
+
+- Generate Argument Interfaces in `@gql2ts/from-schema` [#148](https://github.com/avantcredit/gql2ts/pull/148)
+
+For example:
+
+```graphql
+type Query {
+  test(arg1: String!, arg2: Boolean): String
+}
+```
+
+will output
+
+```typescript
+interface ITestOnQueryArguments {
+  arg1: string;
+  arg2?: boolean;
+}
+```
+
+- Only warn about prettier once in `@gql2ts/language-typescript` [#147](https://github.com/avantcredit/gql2ts/pull/147)
+
+## 1.4.4
+
+- Loosen `graphql` version restriction to `< 1.0.0` [#152](https://github.com/avantcredit/gql2ts/pull/152)
+
+## 1.4.3
+
+- Fix 1.4.2 release
+
+## 1.4.2
+
+- [#137](https://github.com/avantcredit/gql2ts/pull/137)
+  - Remove Typescript 2.7.0 lock
+  - Add optional [`prettier`](https://github.com/prettier/prettier) integration to typescript package to pretty-print code
+  - Remove custom Typescript formatter
+
+## 1.4.1
+
+- Lock Typescript to <2.7.0 [#132](https://github.com/avantcredit/gql2ts/pull/132)
+
 ## 1.4.0
 
 - Allow custom `TypeMap` in `@gql2ts/from-schema`, similar to `@gql2ts/from-query` [#109](https://github.com/avantcredit/gql2ts/pull/109)
