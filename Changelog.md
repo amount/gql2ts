@@ -1,6 +1,6 @@
 # Changelog
 
-## Master
+## 1.5.0
 
 - Generate Argument Interfaces in `@gql2ts/from-schema` [#148](https://github.com/avantcredit/gql2ts/pull/148)
 
@@ -8,7 +8,7 @@ For example:
 
 ```graphql
 type Query {
-  test(arg1: String, arg2: Boolean): String
+  test(arg1: String!, arg2: Boolean): String
 }
 ```
 
@@ -17,7 +17,7 @@ will output
 ```typescript
 interface ITestOnQueryArguments {
   arg1: string;
-  arg2: boolean;
+  arg2?: boolean;
 }
 ```
 
