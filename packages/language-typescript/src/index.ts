@@ -12,24 +12,26 @@ import {
   TypePrinter,
   NamespaceGenerator,
   InterfaceNameWithExtensions,
+  EnumTypeBuilder,
   GenerateDocumentation,
 } from '@gql2ts/types';
+import { buildDocumentation, filterAndJoinArray } from '@gql2ts/util';
 import prettify from './typescriptPrettify';
 import { pascalize } from 'humps';
 
 export const DEFAULT_INTERFACE_DECLARATION: InterfaceDeclarationGenerator = fields => `{
-${fields.join('\n')}
+${filterAndJoinArray(fields)}
 }`;
 
 export const DEFAULT_INTERFACE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `interface ${name} ${body}`;
 export const DEFAULT_INTERFACE_NAMER: WrapType = name => `I${pascalize(name)}`;
 export const DEFAULT_TYPE_BUILDER: InterfaceAndTypeBuilder = (name, body) => `type ${name} = ${body}`;
-export const DEFAULT_TYPE_JOINER: TypeJoiner = types => types.join(' & ');
+export const DEFAULT_TYPE_JOINER: TypeJoiner = types => filterAndJoinArray(types, ' & ');
 export const DEFAULT_TYPE_NAMER: WrapType = name => name;
 
 export const interfaceExtendListToString: (extensions: string[]) => string = exts => {
   if (!exts.length) { return ''; }
-  return ` extends ${exts.join(', ')}`;
+  return ` extends ${filterAndJoinArray(exts, ', ')}`;
 };
 
 export const ADD_INTERFACE_EXTENSIONS: InterfaceNameWithExtensions = (opName, exts) => opName + interfaceExtendListToString(exts);
@@ -54,9 +56,20 @@ export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull 
 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${pascalize(selectionName)}`;
 
-export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => values.map(v => `'${v.value}'`).join(' | ');
+export const DEFAULT_ENUM_FORMATTER: EnumFormatter = (values, documentationGenerator) => `{
+  ${filterAndJoinArray(
+    values.map(value => filterAndJoinArray([
+      documentationGenerator(buildDocumentation(value)),
+      `${value.name} = '${value.name}'`
+    ])),
+    ',\n'
+  )}
+}`;
 
-export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `I${pascalize(name)}Enum`;
+export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) =>
+`enum ${name} ${values}`;
+
+export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `${pascalize(name)}`;
 export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)}Input`;
 export const DEFAULT_EXPORT_FUNCTION: WrapType = declaration => `export ${declaration}`;
 export const ADD_SEMICOLON: WrapType = str => `${str};`;
@@ -76,7 +89,7 @@ const fixDescriptionDocblock: (description?: string) => string | undefined = des
 
 export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => (description || tags.length) ? `
   /**
-   * ${[fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n* ')}
+   * ${filterAndJoinArray([fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)], '\n* ')}
    */` : '';
 
 export const DEFAULT_OPTIONS: IFromQueryOptions = {
@@ -90,6 +103,7 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   formatEnum: DEFAULT_ENUM_FORMATTER,
   interfaceBuilder: DEFAULT_INTERFACE_BUILDER,
   typeBuilder: DEFAULT_TYPE_BUILDER,
+  enumTypeBuilder: DEFAULT_ENUM_TYPE_BUILDER,
   typeJoiner: DEFAULT_TYPE_JOINER,
   generateInterfaceDeclaration: DEFAULT_INTERFACE_DECLARATION,
   generateEnumName: DEFAULT_ENUM_NAME_GENERATOR,

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`language-flow FLOW_ENUM_TYPE formats properly 1`] = `"type Test = 'a' | 'b'"`;
+
+exports[`language-flow FLOW_FORMAT_ENUM w/ deprecated value 1`] = `"'a' | 'b' | 'c' | 'd' | 'e'"`;
+
+exports[`language-flow FLOW_FORMAT_ENUM w/ description 1`] = `"'a' | 'b'"`;
+
+exports[`language-flow FLOW_FORMAT_ENUM w/o description 1`] = `"'a' | 'b'"`;

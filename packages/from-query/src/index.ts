@@ -24,6 +24,7 @@ import {
   isList,
   isNonNullable,
   isEnum,
+  filterAndJoinArray,
 } from '@gql2ts/util';
 import {
   GetChildSelectionsType,
@@ -48,6 +49,8 @@ import {
 } from './subtype';
 
 const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
+  const enumDeclarations: Map<string, string> = new Map<string, string>();
+
   const TypeMap: ITypeMap = {
     ...DEFAULT_TYPE_MAP,
     ...typeMap
@@ -61,7 +64,6 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     formatInput,
     generateFragmentName,
     generateQueryName,
-    formatEnum,
     interfaceBuilder,
     typeBuilder,
     typeJoiner,
@@ -70,6 +72,10 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     postProcessor,
     generateInputName,
     addExtensionsToInterfaceName,
+    enumTypeBuilder,
+    formatEnum,
+    generateEnumName,
+    generateDocumentation
   }: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
 
   const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
@@ -85,8 +91,14 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
   };
 
   const handleEnum: (type: GraphQLEnumType, isNonNull: boolean) => string = (type, isNonNull) => {
-    const decl: string = formatEnum(type.getValues());
-    return printType(decl, isNonNull);
+    const enumName: string = generateEnumName(type.name);
+
+    if (!enumDeclarations.has(type.name)) {
+      const enumDeclaration: string = enumTypeBuilder(enumName, formatEnum(type.getValues(), generateDocumentation));
+      enumDeclarations.set(type.name, enumDeclaration);
+    }
+
+    return printType(enumName, isNonNull);
   };
 
   const handleNamedTypeInput: (type: TypeNode, isNonNull: boolean) => string | undefined = (type, isNonNull) => {
@@ -117,7 +129,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     }
   };
 
-  const convertToType: ConvertToTypeSignature = (type, isNonNull = false, replacement = null): string => {
+  const convertToType: ConvertToTypeSignature = (type, isNonNull = false, replacement = null) => {
     if (isList(type)) {
       return printType(wrapList(convertToType(type.ofType, false, replacement)), isNonNull!);
     } else if (isNonNullable(type)) {
@@ -190,7 +202,6 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     let isFragment: boolean = false;
     let isPartial: boolean = false;
     let complexTypes: IComplexTypeSignature[] = [];
-
     if (selection.kind === 'Field') {
       const field: GraphQLField<any, any> = getField(operation, selection, parent);
       const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;
@@ -263,7 +274,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       const selections: IChildSelection[] =
         selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, parent, !anon));
 
-      let joinSelections: string = selections.map(s => s.iface).join('\n');
+      let joinSelections: string = filterAndJoinArray(selections.map(s => s.iface), '\n');
       isPartial = isUndefinedFromDirective(selection.directives);
       complexTypes.push(...flattenComplexTypes(selections));
       return {
@@ -304,7 +315,9 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       } else {
         return postProcessor(exportFunction(interfaceBuilder(subtype.name, subtype.iface)));
       }
-    });
+    }).concat([
+      ...enumDeclarations.values()
+    ].map(enumDecl => postProcessor(exportFunction(enumDecl))));
   };
 
   interface IOutputJoinInput {
@@ -315,7 +328,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const joinOutputs: (output: IOutputJoinInput) => IFromQueryReturnValue = output => {
     const { variables, additionalTypes, interface: iface } = output;
-    const result: string = [variables, ...additionalTypes, iface].filter(x => !!x).join('\n\n');
+    const result: string = postProcessor(filterAndJoinArray([variables, ...additionalTypes, iface], '\n\n'));
     return {
       ...output,
       result

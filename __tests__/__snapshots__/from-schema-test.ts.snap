@@ -1919,7 +1919,7 @@ getCharacters: Array<Character>;
 }
 
 interface IHeroOnQueryArguments {
-episode?: IEpisodeEnum | null;
+episode?: Episode | null;
 }
 
 interface IHumanOnQueryArguments {
@@ -1949,20 +1949,24 @@ __typename: \\"Character\\";
 id: string;
 name: string | null;
 friends: Array<Character> | null;
-appearsIn: Array<IEpisodeEnum> | null;
+appearsIn: Array<Episode> | null;
 nonNullArr: Array<Character>;
 nonNullArrAndContents: Array<Character>;
 nullArrNonNullContents: Array<Character>;
 }
 
-type IEpisodeEnum = 'NEWHOPE' | 'EMPIRE' | 'JEDI';
+enum Episode {
+NEWHOPE = 'NEWHOPE',
+EMPIRE = 'EMPIRE',
+JEDI = 'JEDI'
+};
 
 interface IHuman {
 __typename: \\"Human\\";
 id: string;
 name: string | null;
 friends: Array<Character> | null;
-appearsIn: Array<IEpisodeEnum> | null;
+appearsIn: Array<Episode> | null;
 homePlanet: string | null;
 nonNullArr: Array<Character>;
 nonNullArrAndContents: Array<Character>;
@@ -1974,7 +1978,7 @@ __typename: \\"Droid\\";
 id: string;
 name: string | null;
 friends: Array<Character> | null;
-appearsIn: Array<IEpisodeEnum> | null;
+appearsIn: Array<Episode> | null;
 primaryFunction: string | null;
 primaryFunctionNonNull: string;
 nonNullArr: Array<Character>;
@@ -3699,10 +3703,41 @@ interface IGraphQLResponseErrorLocation {
 
 interface IQuery {
 __typename: \\"Query\\";
-colorEnum: IColorEnum | null;
+colorEnum: Color | null;
 }
 
-type IColorEnum = 'RED' | 'GREEN' | 'BLUE';"
+enum Color {
+RED = 'RED',
+GREEN = 'GREEN',
+BLUE = 'BLUE'
+};"
+`;
+
+exports[`gql2ts interfaces correctly translates enums with types 1`] = `
+"interface IGraphQLResponseRoot {
+  data?: IQuery;
+  errors?: Array<IGraphQLResponseError>;
+}
+
+interface IGraphQLResponseError {
+  /** Required for all errors */
+  message: string;
+  locations?: Array<IGraphQLResponseErrorLocation>;
+  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+  [propName: string]: any;
+}
+
+interface IGraphQLResponseErrorLocation {
+  line: number;
+  column: number;
+}
+
+interface IQuery {
+__typename: \\"Query\\";
+colorEnum: Color | null;
+}
+
+type Color = 'RED' | 'GREEN' | 'BLUE';"
 `;
 
 exports[`gql2ts interfaces correctly translates the star wars schema into typescript defs 1`] = `
@@ -7569,10 +7604,14 @@ declare namespace GQL {
 
   interface IQuery {
     __typename: 'Query';
-    colorEnum: IColorEnum | null;
+    colorEnum: Color | null;
   }
 
-  type IColorEnum = 'RED' | 'GREEN' | 'BLUE';
+  enum Color {
+    RED = 'RED',
+    GREEN = 'GREEN',
+    BLUE = 'BLUE'
+  }
 }
 
 // tslint:enable
@@ -11208,7 +11247,7 @@ anOldField: string | null;
 }
 
 interface IHeroOnQueryArguments {
-episode?: IEpisodeEnum | null;
+episode?: Episode | null;
 }
 
 interface IHumanOnQueryArguments {
@@ -11238,7 +11277,7 @@ __typename: \\"Character\\";
 id: string;
 name: string | null;
 friends: Array<Character> | null;
-appearsIn: Array<IEpisodeEnum> | null;
+appearsIn: Array<Episode> | null;
 
 /**
  * @deprecated Field No Longer Available.
@@ -11249,14 +11288,18 @@ nonNullArrAndContents: Array<Character>;
 nullArrNonNullContents: Array<Character>;
 }
 
-type IEpisodeEnum = 'NEWHOPE' | 'EMPIRE' | 'JEDI';
+enum Episode {
+NEWHOPE = 'NEWHOPE',
+EMPIRE = 'EMPIRE',
+JEDI = 'JEDI'
+};
 
 interface IHuman {
 __typename: \\"Human\\";
 id: string;
 name: string | null;
 friends: Array<Character> | null;
-appearsIn: Array<IEpisodeEnum> | null;
+appearsIn: Array<Episode> | null;
 homePlanet: string | null;
 
 /**
@@ -11273,7 +11316,7 @@ __typename: \\"Droid\\";
 id: string;
 name: string | null;
 friends: Array<Character> | null;
-appearsIn: Array<IEpisodeEnum> | null;
+appearsIn: Array<Episode> | null;
 primaryFunction: string | null;
 primaryFunctionNonNull: string;
 

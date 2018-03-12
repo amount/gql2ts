@@ -249,3 +249,48 @@ describe('parser', () => {
     });
   });
 });
+
+describe('utils', () => {
+  describe('filterAndJoinArray', () => {
+    describe('with default joinChar', () => {
+      it ('with empty array', () => {
+        expect(utils.filterAndJoinArray([])).toMatchSnapshot();
+      });
+      it ('with array length 1', () => {
+        expect(utils.filterAndJoinArray(['hi'])).toMatchSnapshot();
+      });
+      it ('with array length > 1', () => {
+        expect(utils.filterAndJoinArray(['hi', 'there', 'hello'])).toMatchSnapshot();
+      });
+      it ('with array length > 1 w/ undefined, false, and null', () => {
+        expect(utils.filterAndJoinArray(['hi', 'there', 'hello', undefined, null, false, 'woah!'])).toMatchSnapshot();
+      });
+      it ('with only falsy values', () => {
+        expect(utils.filterAndJoinArray([undefined, null, false])).toMatchSnapshot();
+      });
+      it ('with falsy values & 1 truthy', () => {
+        expect(utils.filterAndJoinArray([undefined, null, 'hi', false])).toMatchSnapshot();
+      });
+    });
+    describe('with alternative joinChar', () => {
+      it ('with empty array', () => {
+        expect(utils.filterAndJoinArray([], '\t')).toMatchSnapshot();
+      });
+      it ('with array length 1', () => {
+        expect(utils.filterAndJoinArray(['hi'], '\t')).toMatchSnapshot();
+      });
+      it ('with array length > 1', () => {
+        expect(utils.filterAndJoinArray(['hi', 'there', 'hello'], '\t')).toMatchSnapshot();
+      });
+      it ('with array length > 1 w/ undefined, false, and null', () => {
+        expect(utils.filterAndJoinArray(['hi', 'there', 'hello', undefined, null, false, 'woah!'], '\t')).toMatchSnapshot();
+      });
+      it ('with only falsy values', () => {
+        expect(utils.filterAndJoinArray([undefined, null, false], '\t')).toMatchSnapshot();
+      });
+      it ('with falsy values & 1 truthy', () => {
+        expect(utils.filterAndJoinArray([undefined, null, 'hi', false], '\t')).toMatchSnapshot();
+      });
+    });
+  });
+});

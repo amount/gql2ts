@@ -20,3 +20,7 @@ export {
   buildDocumentation,
   IFieldDocumentation
 } from './parser';
+
+export {
+  filterAndJoinArray
+} from './util';

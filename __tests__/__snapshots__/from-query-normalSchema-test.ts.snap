@@ -607,7 +607,7 @@ Array [
 ]
 `;
 
-exports[`simple examples does a very simple query 2`] = `
+exports[`simple examples does a very simple query with typename 1`] = `
 Array [
   Object {
     "additionalTypes": Array [],
@@ -710,7 +710,6 @@ Array [
   test?: string | null;
 }
 
-
 export interface CustomScalarQuery {
   test: string | null;
 }
@@ -726,26 +725,38 @@ export interface CustomScalarQuery {
 exports[`simple examples supports enums 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
+    "additionalTypes": Array [
+      "export enum Episode {
+  NEWHOPE = 'NEWHOPE',
+  EMPIRE = 'EMPIRE',
+  JEDI = 'JEDI'
+}
+",
+    ],
     "interface": "export interface EnumQuery {
   hero: {
-    appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
+    appearsIn: Array<Episode | null> | null;
   } | null;
 }
 ",
     "result": "export interface EnumQueryInput {
-  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
+  episode?: Episode | null;
 }
 
+export enum Episode {
+  NEWHOPE = 'NEWHOPE',
+  EMPIRE = 'EMPIRE',
+  JEDI = 'JEDI'
+}
 
 export interface EnumQuery {
   hero: {
-    appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
+    appearsIn: Array<Episode | null> | null;
   } | null;
 }
 ",
     "variables": "export interface EnumQueryInput {
-  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
+  episode?: Episode | null;
 }
 ",
   },
@@ -766,7 +777,6 @@ Array [
     "result": "export interface TestQueryInput {
   ids: Array<string>;
 }
-
 
 export interface TestQuery {
   getCharacters: Array<{
@@ -797,7 +807,6 @@ Array [
   id: string;
 }
 
-
 export interface UnionQuery {
   humanOrDroid: {
     id: string;
@@ -826,7 +835,6 @@ Array [
     "result": "export interface UnionQueryInput {
   id: string;
 }
-
 
 export interface UnionQuery {
   humanOrDroid: {
@@ -857,7 +865,6 @@ Array [
     "result": "export interface TestQueryInput {
   id: string;
 }
-
 
 export interface TestQuery {
   human: {
@@ -910,13 +917,11 @@ Array [
   name: string | null;
 }
 
-
 export interface SelectionOnFriends1 {
   id: string;
   name: string | null;
   friends: Array<SelectionOnFriends | null> | null;
 }
-
 
 export interface SelectionOnFriends2 {
   id: string;
@@ -924,11 +929,9 @@ export interface SelectionOnFriends2 {
   friends: Array<SelectionOnFriends1 | null> | null;
 }
 
-
 export interface SelectionOnHeroNoParam {
   friends: Array<SelectionOnFriends2 | null> | null;
 }
-
 
 export interface Test {
   hero1: SelectionOnHeroNoParam | null;
@@ -958,7 +961,6 @@ Array [
   id: string;
   name: string | null;
 }
-
 
 export interface TestQuery {
   heroNoParam: SelectionOnHeroNoParam | null;
@@ -1004,25 +1006,21 @@ Array [
   name: string | null;
 }
 
-
 export interface SelectionOnNonNullArrAndContents {
   id: string;
   name: string | null;
 }
-
 
 export interface SelectionOnNullArrNonNullContents {
   id: string;
   name: string | null;
 }
 
-
 export interface SelectionOnHeroNoParam {
   nonNullArr: Array<SelectionOnNonNullArr | null>;
   nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
   nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
 }
-
 
 export interface Test {
   heroNoParam: SelectionOnHeroNoParam | null;
@@ -1124,7 +1122,6 @@ Array [
   id: string;
 }
 
-
 export interface IFragmentCharacterFields {
   id: string;
   name?: string | null;
@@ -1153,7 +1150,6 @@ Array [
   name?: string | null;
 }>;
 
-
 export interface FragmentTest {
   heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
 }
@@ -1176,7 +1172,6 @@ export interface FragmentTest {
     "result": "export interface SelectionOnFriends {
   id: string;
 }
-
 
 export interface IFragmentCharacterFields {
   id: string;
