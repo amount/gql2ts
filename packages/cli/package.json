@@ -1,6 +1,6 @@
 {
   "name": "gql2ts",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "main": "dist/index.js",
   "files": [
