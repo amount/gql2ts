@@ -135,11 +135,12 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
         'Missing `enumTypeBuilder` from language file and falling back to using a type for enums. This new option was added in v1.5.0'
       );
     }
+
     return wrapWithDocumentation(
       (enumTypeBuilder || typeBuilder)(
         generateEnumName(name),
         addSemicolon(
-          formatEnum(enumValues)
+          formatEnum(enumValues, generateDocumentation)
         )
       ),
       { description, tags: [] }

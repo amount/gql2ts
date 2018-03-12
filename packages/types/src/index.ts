@@ -48,7 +48,7 @@ export type WrapType = (type: string) => string;
 export type TypePrinter = (type: string, isNonNull: boolean) => string;
 export type InputFormatter = (name: string, isOptional: boolean, type: string) => string;
 export type QueryNamer = (def: OperationDefinitionNode) => string;
-export type EnumFormatter = (values: GraphQLEnumValue[]) => string;
+export type EnumFormatter = (values: GraphQLEnumValue[], documentationGenerator: GenerateDocumentation) => string;
 export type InterfaceAndTypeBuilder = (name: string, body: string) => string;
 export type EnumTypeBuilder = (name: string, values: string) => string;
 export type TypeJoiner = (types: string[]) => string;

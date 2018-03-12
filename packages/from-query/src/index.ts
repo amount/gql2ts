@@ -73,7 +73,8 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     addExtensionsToInterfaceName,
     enumTypeBuilder,
     formatEnum,
-    generateEnumName
+    generateEnumName,
+    generateDocumentation
   }: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
 
   const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
@@ -92,7 +93,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     const enumName: string = generateEnumName(type.name);
 
     if (!enumDeclarations.has(type.name)) {
-      const enumDeclaration: string = enumTypeBuilder(enumName, formatEnum(type.getValues()));
+      const enumDeclaration: string = enumTypeBuilder(enumName, formatEnum(type.getValues(), generateDocumentation));
       enumDeclarations.set(type.name, enumDeclaration);
     }
 

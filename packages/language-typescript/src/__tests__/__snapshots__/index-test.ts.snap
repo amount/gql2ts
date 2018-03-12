@@ -41,7 +41,41 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a descripti
 
 exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description without tags 1`] = `""`;
 
-exports[`language-typescript DEFAULT_ENUM_FORMATTER formats properly 1`] = `
+exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ deprecated value 1`] = `
+"{
+  
+  /**
+   * value A
+* @deprecated Bad
+   */
+a = 'a',
+
+  /**
+   * @deprecated Bad
+   */
+b = 'b',
+
+  /**
+   * value C
+   */
+c = 'c',
+d = 'd',
+e = 'e'
+}"
+`;
+
+exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ description 1`] = `
+"{
+  
+  /**
+   * value A
+   */
+a = 'a',
+b = 'b'
+}"
+`;
+
+exports[`language-typescript DEFAULT_ENUM_FORMATTER w/o description 1`] = `
 "{
   a = 'a',
 b = 'b'

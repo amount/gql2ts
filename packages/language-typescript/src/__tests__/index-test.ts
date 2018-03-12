@@ -52,11 +52,41 @@ describe('language-typescript', () => {
   });
 
   describe('DEFAULT_ENUM_FORMATTER', () => {
-    it('formats properly', () => {
-      expect(DEFAULT_ENUM_FORMATTER([
-        { value: 'a' } as GraphQLEnumValue,
-        { value: 'b' } as GraphQLEnumValue,
-      ])).toMatchSnapshot();
+    it('w/o description', () => {
+      expect(
+        DEFAULT_ENUM_FORMATTER(
+          [
+            { name: 'a' } as GraphQLEnumValue,
+            { name: 'b' } as GraphQLEnumValue,
+          ],
+          DEFAULT_DOCUMENTATION_GENERATOR
+        )
+      ).toMatchSnapshot();
+    });
+    it('w/ description', () => {
+      expect(
+        DEFAULT_ENUM_FORMATTER(
+          [
+            { name: 'a', description: 'value A' } as GraphQLEnumValue,
+            { name: 'b' } as GraphQLEnumValue,
+          ],
+          DEFAULT_DOCUMENTATION_GENERATOR
+        )
+      ).toMatchSnapshot();
+    });
+    it('w/ deprecated value', () => {
+      expect(
+        DEFAULT_ENUM_FORMATTER(
+          [
+            { name: 'a', description: 'value A', deprecationReason: 'Bad', isDeprecated: true } as GraphQLEnumValue,
+            { name: 'b', deprecationReason: 'Bad', isDeprecated: true } as GraphQLEnumValue,
+            { name: 'c', description: 'value C'} as GraphQLEnumValue,
+            { name: 'd' } as GraphQLEnumValue,
+            { name: 'e', isDeprecated: false } as GraphQLEnumValue,
+          ],
+          DEFAULT_DOCUMENTATION_GENERATOR
+        )
+      ).toMatchSnapshot();
     });
   });
 
@@ -64,10 +94,13 @@ describe('language-typescript', () => {
     it('formats properly', () => {
       expect(DEFAULT_ENUM_TYPE_BUILDER(
         DEFAULT_ENUM_NAME_GENERATOR('test'),
-        DEFAULT_ENUM_FORMATTER([
-          { value: 'a' } as GraphQLEnumValue,
-          { value: 'b' } as GraphQLEnumValue,
-        ]))
+        DEFAULT_ENUM_FORMATTER(
+          [
+            { name: 'a' } as GraphQLEnumValue,
+            { name: 'b' } as GraphQLEnumValue,
+          ],
+          DEFAULT_DOCUMENTATION_GENERATOR
+        ))
       ).toMatchSnapshot();
     });
   });

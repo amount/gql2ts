@@ -15,6 +15,7 @@ import {
   EnumTypeBuilder,
   GenerateDocumentation,
 } from '@gql2ts/types';
+import { buildDocumentation } from '@gql2ts/util';
 import prettify from './typescriptPrettify';
 import { pascalize } from 'humps';
 
@@ -55,8 +56,11 @@ export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull 
 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${pascalize(selectionName)}`;
 
-export const DEFAULT_ENUM_FORMATTER: EnumFormatter = values => `{
-  ${values.map(({ value }) => `${value} = '${value}'`).join(',\n')}
+export const DEFAULT_ENUM_FORMATTER: EnumFormatter = (values, documentationGenerator) => `{
+  ${values.map(value => [
+    documentationGenerator(buildDocumentation(value)),
+    `${value.name} = '${value.name}'`
+  ].filter(Boolean).join('\n')).join(',\n')}
 }`;
 
 export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) =>
