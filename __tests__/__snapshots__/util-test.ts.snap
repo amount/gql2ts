@@ -151,3 +151,36 @@ Object {
   "tags": Array [],
 }
 `;
+
+exports[`utils filterAndJoinArray with alternative joinChar with array length > 1 1`] = `"hi	there	hello"`;
+
+exports[`utils filterAndJoinArray with alternative joinChar with array length > 1 w/ undefined, false, and null 1`] = `"hi	there	hello	woah!"`;
+
+exports[`utils filterAndJoinArray with alternative joinChar with array length 1 1`] = `"hi"`;
+
+exports[`utils filterAndJoinArray with alternative joinChar with empty array 1`] = `""`;
+
+exports[`utils filterAndJoinArray with alternative joinChar with falsy values & 1 truthy 1`] = `"hi"`;
+
+exports[`utils filterAndJoinArray with alternative joinChar with only falsy values 1`] = `""`;
+
+exports[`utils filterAndJoinArray with default joinChar with array length > 1 1`] = `
+"hi
+there
+hello"
+`;
+
+exports[`utils filterAndJoinArray with default joinChar with array length > 1 w/ undefined, false, and null 1`] = `
+"hi
+there
+hello
+woah!"
+`;
+
+exports[`utils filterAndJoinArray with default joinChar with array length 1 1`] = `"hi"`;
+
+exports[`utils filterAndJoinArray with default joinChar with empty array 1`] = `""`;
+
+exports[`utils filterAndJoinArray with default joinChar with falsy values & 1 truthy 1`] = `"hi"`;
+
+exports[`utils filterAndJoinArray with default joinChar with only falsy values 1`] = `""`;
