@@ -202,7 +202,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return [
       generateDescription(arg.description, buildDocTags(arg)),
       formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
-    ].filter(Boolean).join('\n\n');
+    ].filter(Boolean).join('\n');
   };
 
   type ArgumentsToDefinition = (
@@ -293,7 +293,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return [
       generateInterfaceDeclaration(type, interfaceDeclaration, fields, additionalInfo, isInput),
       ...filteredFields.map(field => generateArgumentsDeclaration(field, type.name, supportsNullability))
-    ].filter(Boolean).join('\n');
+    ].filter(Boolean).join('\n\n');
   };
 
   const typesToInterfaces: (schema: GraphQLSchema, options: Partial<IInternalOptions>) => string = (schema, options) => {

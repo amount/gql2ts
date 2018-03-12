@@ -37,66 +37,79 @@ exports[`gql2ts Supports older TypeScript versions removes Nullability annotatio
   */
     node: Node;
 }
+
 interface IAllFilmsOnRootArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IFilmOnRootArguments {
 id?: string;
 filmID?: string;
 }
+
 interface IAllPeopleOnRootArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IPersonOnRootArguments {
 id?: string;
 personID?: string;
 }
+
 interface IAllPlanetsOnRootArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IPlanetOnRootArguments {
 id?: string;
 planetID?: string;
 }
+
 interface IAllSpeciesOnRootArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface ISpeciesOnRootArguments {
 id?: string;
 speciesID?: string;
 }
+
 interface IAllStarshipsOnRootArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IStarshipOnRootArguments {
 id?: string;
 starshipID?: string;
 }
+
 interface IAllVehiclesOnRootArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IVehicleOnRootArguments {
 id?: string;
 vehicleID?: string;
 }
+
 interface INodeOnRootArguments {
 /**
     The ID of an object
@@ -220,30 +233,35 @@ full \\"{ edges { node } }\\" version should be used instead.
   */
     id: string;
 }
+
 interface ISpeciesConnectionOnFilmArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IStarshipConnectionOnFilmArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IVehicleConnectionOnFilmArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface ICharacterConnectionOnFilmArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IPlanetConnectionOnFilmArguments {
 after?: string;
 first?: number;
@@ -376,12 +394,14 @@ have skin.
   */
     id: string;
 }
+
 interface IPersonConnectionOnSpeciesArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IFilmConnectionOnSpeciesArguments {
 after?: string;
 first?: number;
@@ -450,12 +470,14 @@ of water.
   */
     id: string;
 }
+
 interface IResidentConnectionOnPlanetArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IFilmConnectionOnPlanetArguments {
 after?: string;
 first?: number;
@@ -575,18 +597,21 @@ person does not have hair.
   */
     id: string;
 }
+
 interface IFilmConnectionOnPersonArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IStarshipConnectionOnPersonArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IVehicleConnectionOnPersonArguments {
 after?: string;
 first?: number;
@@ -766,12 +791,14 @@ entire crew without having to resupply.
   */
     id: string;
 }
+
 interface IPilotConnectionOnStarshipArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IFilmConnectionOnStarshipArguments {
 after?: string;
 first?: number;
@@ -984,12 +1011,14 @@ entire crew without having to resupply.
   */
     id: string;
 }
+
 interface IPilotConnectionOnVehicleArguments {
 after?: string;
 first?: number;
 before?: string;
 last?: number;
 }
+
 interface IFilmConnectionOnVehicleArguments {
 after?: string;
 first?: number;
@@ -1670,21 +1699,27 @@ exports[`gql2ts deprecation removes deprecated fields if requested 1`] = `
     humanOrDroid: HumanOrDroid | null;
     getCharacters: Array<Character>;
 }
+
 interface IHeroOnQueryArguments {
 episode?: IEpisodeEnum | null;
 }
+
 interface IHumanOnQueryArguments {
 id: string;
 }
+
 interface IDroidOnQueryArguments {
 id: string;
 }
+
 interface ITestOnQueryArguments {
 test?: any | null;
 }
+
 interface IHumanOrDroidOnQueryArguments {
 id: string;
 }
+
 interface IGetCharactersOnQueryArguments {
 ids: Array<string>;
 }
@@ -1776,62 +1811,74 @@ exports[`gql2ts interfaces correctly ignores types 1`] = `
   */
     node: Node | null;
 }
+
 interface IAllFilmsOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmOnRootArguments {
 id?: string | null;
 filmID?: string | null;
 }
+
 interface IAllPeopleOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IAllPlanetsOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IPlanetOnRootArguments {
 id?: string | null;
 planetID?: string | null;
 }
+
 interface IAllSpeciesOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface ISpeciesOnRootArguments {
 id?: string | null;
 speciesID?: string | null;
 }
+
 interface IAllStarshipsOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IStarshipOnRootArguments {
 id?: string | null;
 starshipID?: string | null;
 }
+
 interface IAllVehiclesOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IVehicleOnRootArguments {
 id?: string | null;
 vehicleID?: string | null;
 }
+
 interface INodeOnRootArguments {
 /**
     The ID of an object
@@ -1955,30 +2002,35 @@ full \\"{ edges { node } }\\" version should be used instead.
   */
     id: string;
 }
+
 interface ISpeciesConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IStarshipConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IVehicleConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface ICharacterConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IPlanetConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
@@ -2111,12 +2163,14 @@ have skin.
   */
     id: string;
 }
+
 interface IPersonConnectionOnSpeciesArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnSpeciesArguments {
 after?: string | null;
 first?: number | null;
@@ -2185,12 +2239,14 @@ of water.
   */
     id: string;
 }
+
 interface IResidentConnectionOnPlanetArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnPlanetArguments {
 after?: string | null;
 first?: number | null;
@@ -2403,12 +2459,14 @@ entire crew without having to resupply.
   */
     id: string;
 }
+
 interface IPilotConnectionOnStarshipArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnStarshipArguments {
 after?: string | null;
 first?: number | null;
@@ -2608,12 +2666,14 @@ entire crew without having to resupply.
   */
     id: string;
 }
+
 interface IPilotConnectionOnVehicleArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnVehicleArguments {
 after?: string | null;
 first?: number | null;
@@ -3278,66 +3338,79 @@ exports[`gql2ts interfaces correctly translates the star wars schema into typesc
   */
     node: Node | null;
 }
+
 interface IAllFilmsOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmOnRootArguments {
 id?: string | null;
 filmID?: string | null;
 }
+
 interface IAllPeopleOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IPersonOnRootArguments {
 id?: string | null;
 personID?: string | null;
 }
+
 interface IAllPlanetsOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IPlanetOnRootArguments {
 id?: string | null;
 planetID?: string | null;
 }
+
 interface IAllSpeciesOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface ISpeciesOnRootArguments {
 id?: string | null;
 speciesID?: string | null;
 }
+
 interface IAllStarshipsOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IStarshipOnRootArguments {
 id?: string | null;
 starshipID?: string | null;
 }
+
 interface IAllVehiclesOnRootArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IVehicleOnRootArguments {
 id?: string | null;
 vehicleID?: string | null;
 }
+
 interface INodeOnRootArguments {
 /**
     The ID of an object
@@ -3461,30 +3534,35 @@ full \\"{ edges { node } }\\" version should be used instead.
   */
     id: string;
 }
+
 interface ISpeciesConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IStarshipConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IVehicleConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface ICharacterConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IPlanetConnectionOnFilmArguments {
 after?: string | null;
 first?: number | null;
@@ -3617,12 +3695,14 @@ have skin.
   */
     id: string;
 }
+
 interface IPersonConnectionOnSpeciesArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnSpeciesArguments {
 after?: string | null;
 first?: number | null;
@@ -3691,12 +3771,14 @@ of water.
   */
     id: string;
 }
+
 interface IResidentConnectionOnPlanetArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnPlanetArguments {
 after?: string | null;
 first?: number | null;
@@ -3816,18 +3898,21 @@ person does not have hair.
   */
     id: string;
 }
+
 interface IFilmConnectionOnPersonArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IStarshipConnectionOnPersonArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IVehicleConnectionOnPersonArguments {
 after?: string | null;
 first?: number | null;
@@ -4007,12 +4092,14 @@ entire crew without having to resupply.
   */
     id: string;
 }
+
 interface IPilotConnectionOnStarshipArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnStarshipArguments {
 after?: string | null;
 first?: number | null;
@@ -4225,12 +4312,14 @@ entire crew without having to resupply.
   */
     id: string;
 }
+
 interface IPilotConnectionOnVehicleArguments {
 after?: string | null;
 first?: number | null;
 before?: string | null;
 last?: number | null;
 }
+
 interface IFilmConnectionOnVehicleArguments {
 after?: string | null;
 first?: number | null;
@@ -4905,6 +4994,7 @@ exports[`gql2ts mutations supports mutations 1`] = `
     __typename: \\"Query\\";
     getMessage: IMessage | null;
 }
+
 interface IGetMessageOnQueryArguments {
 id: string;
 }
@@ -4923,9 +5013,11 @@ id: string;
     createMessage: IMessage | null;
     updateMessage: IMessage | null;
 }
+
 interface ICreateMessageOnMutationArguments {
 input?: IMessageInput | null;
 }
+
 interface IUpdateMessageOnMutationArguments {
 id: string;
 input?: IMessageInput | null;
@@ -4978,66 +5070,79 @@ declare namespace GQL {
   */
     node: Node | null;
   }
+
   interface IAllFilmsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmOnRootArguments {
     id?: string | null;
     filmID?: string | null;
   }
+
   interface IAllPeopleOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPersonOnRootArguments {
     id?: string | null;
     personID?: string | null;
   }
+
   interface IAllPlanetsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPlanetOnRootArguments {
     id?: string | null;
     planetID?: string | null;
   }
+
   interface IAllSpeciesOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface ISpeciesOnRootArguments {
     id?: string | null;
     speciesID?: string | null;
   }
+
   interface IAllStarshipsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipOnRootArguments {
     id?: string | null;
     starshipID?: string | null;
   }
+
   interface IAllVehiclesOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleOnRootArguments {
     id?: string | null;
     vehicleID?: string | null;
   }
+
   interface INodeOnRootArguments {
     /**
     The ID of an object
@@ -5161,30 +5266,35 @@ full \\"{ edges { node } }\\" version should be used instead.
   */
     id: string;
   }
+
   interface ISpeciesConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface ICharacterConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPlanetConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
@@ -5317,12 +5427,14 @@ have skin.
   */
     id: string;
   }
+
   interface IPersonConnectionOnSpeciesArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnSpeciesArguments {
     after?: string | null;
     first?: number | null;
@@ -5391,12 +5503,14 @@ of water.
   */
     id: string;
   }
+
   interface IResidentConnectionOnPlanetArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnPlanetArguments {
     after?: string | null;
     first?: number | null;
@@ -5516,18 +5630,21 @@ person does not have hair.
   */
     id: string;
   }
+
   interface IFilmConnectionOnPersonArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipConnectionOnPersonArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleConnectionOnPersonArguments {
     after?: string | null;
     first?: number | null;
@@ -5707,12 +5824,14 @@ entire crew without having to resupply.
   */
     id: string;
   }
+
   interface IPilotConnectionOnStarshipArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnStarshipArguments {
     after?: string | null;
     first?: number | null;
@@ -5925,12 +6044,14 @@ entire crew without having to resupply.
   */
     id: string;
   }
+
   interface IPilotConnectionOnVehicleArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnVehicleArguments {
     after?: string | null;
     first?: number | null;
@@ -6660,66 +6781,79 @@ declare namespace StarWars {
   */
     node: Node | null;
   }
+
   interface IAllFilmsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmOnRootArguments {
     id?: string | null;
     filmID?: string | null;
   }
+
   interface IAllPeopleOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPersonOnRootArguments {
     id?: string | null;
     personID?: string | null;
   }
+
   interface IAllPlanetsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPlanetOnRootArguments {
     id?: string | null;
     planetID?: string | null;
   }
+
   interface IAllSpeciesOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface ISpeciesOnRootArguments {
     id?: string | null;
     speciesID?: string | null;
   }
+
   interface IAllStarshipsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipOnRootArguments {
     id?: string | null;
     starshipID?: string | null;
   }
+
   interface IAllVehiclesOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleOnRootArguments {
     id?: string | null;
     vehicleID?: string | null;
   }
+
   interface INodeOnRootArguments {
     /**
     The ID of an object
@@ -6843,30 +6977,35 @@ full \\"{ edges { node } }\\" version should be used instead.
   */
     id: string;
   }
+
   interface ISpeciesConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface ICharacterConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPlanetConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
@@ -6999,12 +7138,14 @@ have skin.
   */
     id: string;
   }
+
   interface IPersonConnectionOnSpeciesArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnSpeciesArguments {
     after?: string | null;
     first?: number | null;
@@ -7073,12 +7214,14 @@ of water.
   */
     id: string;
   }
+
   interface IResidentConnectionOnPlanetArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnPlanetArguments {
     after?: string | null;
     first?: number | null;
@@ -7198,18 +7341,21 @@ person does not have hair.
   */
     id: string;
   }
+
   interface IFilmConnectionOnPersonArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipConnectionOnPersonArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleConnectionOnPersonArguments {
     after?: string | null;
     first?: number | null;
@@ -7389,12 +7535,14 @@ entire crew without having to resupply.
   */
     id: string;
   }
+
   interface IPilotConnectionOnStarshipArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnStarshipArguments {
     after?: string | null;
     first?: number | null;
@@ -7607,12 +7755,14 @@ entire crew without having to resupply.
   */
     id: string;
   }
+
   interface IPilotConnectionOnVehicleArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnVehicleArguments {
     after?: string | null;
     first?: number | null;
@@ -8308,62 +8458,74 @@ declare namespace StarWars {
   */
     node: Node | null;
   }
+
   interface IAllFilmsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmOnRootArguments {
     id?: string | null;
     filmID?: string | null;
   }
+
   interface IAllPeopleOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IAllPlanetsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPlanetOnRootArguments {
     id?: string | null;
     planetID?: string | null;
   }
+
   interface IAllSpeciesOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface ISpeciesOnRootArguments {
     id?: string | null;
     speciesID?: string | null;
   }
+
   interface IAllStarshipsOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipOnRootArguments {
     id?: string | null;
     starshipID?: string | null;
   }
+
   interface IAllVehiclesOnRootArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleOnRootArguments {
     id?: string | null;
     vehicleID?: string | null;
   }
+
   interface INodeOnRootArguments {
     /**
     The ID of an object
@@ -8487,30 +8649,35 @@ full \\"{ edges { node } }\\" version should be used instead.
   */
     id: string;
   }
+
   interface ISpeciesConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IStarshipConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IVehicleConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface ICharacterConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IPlanetConnectionOnFilmArguments {
     after?: string | null;
     first?: number | null;
@@ -8643,12 +8810,14 @@ have skin.
   */
     id: string;
   }
+
   interface IPersonConnectionOnSpeciesArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnSpeciesArguments {
     after?: string | null;
     first?: number | null;
@@ -8717,12 +8886,14 @@ of water.
   */
     id: string;
   }
+
   interface IResidentConnectionOnPlanetArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnPlanetArguments {
     after?: string | null;
     first?: number | null;
@@ -8935,12 +9106,14 @@ entire crew without having to resupply.
   */
     id: string;
   }
+
   interface IPilotConnectionOnStarshipArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnStarshipArguments {
     after?: string | null;
     first?: number | null;
@@ -9140,12 +9313,14 @@ entire crew without having to resupply.
   */
     id: string;
   }
+
   interface IPilotConnectionOnVehicleArguments {
     after?: string | null;
     first?: number | null;
     before?: string | null;
     last?: number | null;
   }
+
   interface IFilmConnectionOnVehicleArguments {
     after?: string | null;
     first?: number | null;
@@ -9782,21 +9957,27 @@ exports[`gql2ts union types correctly translates the schema into typescript defs
   */
     anOldField: string | null;
 }
+
 interface IHeroOnQueryArguments {
 episode?: IEpisodeEnum | null;
 }
+
 interface IHumanOnQueryArguments {
 id: string;
 }
+
 interface IDroidOnQueryArguments {
 id: string;
 }
+
 interface ITestOnQueryArguments {
 test?: any | null;
 }
+
 interface IHumanOrDroidOnQueryArguments {
 id: string;
 }
+
 interface IGetCharactersOnQueryArguments {
 ids: Array<string>;
 }
