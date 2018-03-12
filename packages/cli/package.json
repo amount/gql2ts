@@ -11,7 +11,8 @@
     "@gql2ts/from-query": "^1.5.1",
     "@gql2ts/from-schema": "^1.5.1",
     "@gql2ts/util": "^1.5.1",
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "graphql": ">= 0.10 <1.0.0"
   },
   "devDependencies": {
     "@gql2ts/types": "^1.5.1",
