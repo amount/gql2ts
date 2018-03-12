@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description with >1 tag 1`] = `
+"
+  /**
+   * This is a thing
+* @default myDefaultValue
+* @deprecated Use the other field instead
+   */"
+`;
+
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description with 1 tag 1`] = `
+"
+  /**
+   * This is a thing
+* @default myDefaultValue
+   */"
+`;
+
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description without tags 1`] = `
+"
+  /**
+   * This is a thing
+   */"
+`;
+
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description with >1 tag 1`] = `
+"
+  /**
+   * @default myDefaultValue
+* @deprecated Use the other field instead
+   */"
+`;
+
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description with 1 tag 1`] = `
+"
+  /**
+   * @default myDefaultValue
+   */"
+`;
+
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description without tags 1`] = `""`;
+
 exports[`language-typescript DEFAULT_FORMAT_INPUT non optional 1`] = `"test: test2;"`;
 
 exports[`language-typescript DEFAULT_FORMAT_INPUT optional 1`] = `"test?: test2;"`;
