@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0
+
+- Use native enums in Typescript instead of union type [#116](https://github.com/avantcredit/gql2ts/pull/116)
+
 ## 1.6.0
 
 - Improve documentation generation [#154](https://github.com/avantcredit/gql2ts/pull/154)
