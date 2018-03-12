@@ -2,7 +2,8 @@ import {
   interfaceExtendListToString,
   DEFAULT_NAME_QUERY,
   DEFAULT_FORMAT_INPUT,
-  DEFAULT_TYPE_PRINTER
+  DEFAULT_TYPE_PRINTER,
+  DEFAULT_DOCUMENTATION_GENERATOR
 } from '../';
 
 describe('language-typescript', () => {
@@ -43,6 +44,53 @@ describe('language-typescript', () => {
     });
     it('null', () => {
       expect(DEFAULT_TYPE_PRINTER('test', true)).toMatchSnapshot();
+    });
+  });
+
+  describe('DEFAULT_DOCUMENTATION_GENERATOR', () => {
+    describe('with a description', () => {
+      it('without tags', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: []
+        })).toMatchSnapshot();
+      });
+      it('with 1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: [{ tag: 'default', value: 'myDefaultValue' }]
+        })).toMatchSnapshot();
+      });
+      it('with >1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: [
+            { tag: 'default', value: 'myDefaultValue' },
+            { tag: 'deprecated', value: 'Use the other field instead' }
+          ]
+        })).toMatchSnapshot();
+      });
+    });
+
+    describe('without a description', () => {
+      it('without tags', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: []
+        })).toMatchSnapshot();
+      });
+      it('with 1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: [{ tag: 'default', value: 'myDefaultValue' }]
+        })).toMatchSnapshot();
+      });
+      it('with >1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: [
+            { tag: 'default', value: 'myDefaultValue' },
+            { tag: 'deprecated', value: 'Use the other field instead' }
+          ]
+        })).toMatchSnapshot();
+      });
     });
   });
 });
