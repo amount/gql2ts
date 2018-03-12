@@ -15,7 +15,6 @@ Array [
   content?: string | null;
 }
 
-
 export interface CreateMessage {
   createMessage: {
     id: string;
@@ -69,7 +68,6 @@ Array [
   };
 }
 
-
 export interface CreateMessage {
   createMessage: {
     id: string;
@@ -103,7 +101,6 @@ Array [
     author?: string | null;
   } | null;
 }
-
 
 export interface CreateMessage {
   createMessage: {

@@ -328,7 +328,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const joinOutputs: (output: IOutputJoinInput) => IFromQueryReturnValue = output => {
     const { variables, additionalTypes, interface: iface } = output;
-    const result: string = filterAndJoinArray([variables, ...additionalTypes, iface], '\n\n');
+    const result: string = postProcessor(filterAndJoinArray([variables, ...additionalTypes, iface], '\n\n'));
     return {
       ...output,
       result
