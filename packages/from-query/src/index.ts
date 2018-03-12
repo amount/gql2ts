@@ -24,6 +24,7 @@ import {
   isList,
   isNonNullable,
   isEnum,
+  filterAndJoinArray,
 } from '@gql2ts/util';
 import {
   GetChildSelectionsType,
@@ -273,7 +274,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       const selections: IChildSelection[] =
         selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, parent, !anon));
 
-      let joinSelections: string = selections.map(s => s.iface).join('\n');
+      let joinSelections: string = filterAndJoinArray(selections.map(s => s.iface), '\n');
       isPartial = isUndefinedFromDirective(selection.directives);
       complexTypes.push(...flattenComplexTypes(selections));
       return {
@@ -327,7 +328,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const joinOutputs: (output: IOutputJoinInput) => IFromQueryReturnValue = output => {
     const { variables, additionalTypes, interface: iface } = output;
-    const result: string = [variables, ...additionalTypes, iface].filter(x => !!x).join('\n\n');
+    const result: string = filterAndJoinArray([variables, ...additionalTypes, iface], '\n\n');
     return {
       ...output,
       result
