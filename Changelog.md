@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.2
+
+- Add graphql as dependency for CLI
+
+## 1.5.1
+
+- Move graphql to peer-dependency [#156](https://github.com/avantcredit/gql2ts/pull/156)
+
 ## 1.5.0
 
 - Generate Argument Interfaces in `@gql2ts/from-schema` [#148](https://github.com/avantcredit/gql2ts/pull/148)
