@@ -202,7 +202,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return [
       generateDescription(arg.description, buildDocTags(arg)),
       formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
-    ].filter(Boolean).join('\n');
+    ].filter(Boolean).join('\n\n');
   };
 
   type ArgumentsToDefinition = (
