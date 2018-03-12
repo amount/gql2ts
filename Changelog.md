@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+
+- Add graphql as dependency for CLI
+
 ## 1.5.1
 
 - Move graphql to peer-dependency [#156](https://github.com/avantcredit/gql2ts/pull/156)
