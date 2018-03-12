@@ -1,3 +1,153 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`IO stuff error handler throws if called 1`] = `"Error test"`;
+
+exports[`parser with description the unlikely default value & deprecated w/ deprecation reason 1`] = `
+Object {
+  "description": "This field is something useful",
+  "tags": Array [
+    Object {
+      "tag": "default",
+      "value": "abc",
+    },
+    Object {
+      "tag": "deprecated",
+      "value": "Use the other field instead!",
+    },
+  ],
+}
+`;
+
+exports[`parser with description the unlikely default value & deprecated w/o deprecation reason 1`] = `
+Object {
+  "description": "This field is something useful",
+  "tags": Array [
+    Object {
+      "tag": "default",
+      "value": "abc",
+    },
+    Object {
+      "tag": "deprecated",
+      "value": "",
+    },
+  ],
+}
+`;
+
+exports[`parser with description with default tag 1`] = `
+Object {
+  "description": "This field is something useful",
+  "tags": Array [
+    Object {
+      "tag": "default",
+      "value": "abc",
+    },
+  ],
+}
+`;
+
+exports[`parser with description with deprecated tag w/ reason 1`] = `
+Object {
+  "description": "This field is something useful",
+  "tags": Array [
+    Object {
+      "tag": "deprecated",
+      "value": "Use the other field instead!",
+    },
+  ],
+}
+`;
+
+exports[`parser with description with deprecated tag w/o reason 1`] = `
+Object {
+  "description": "This field is something useful",
+  "tags": Array [
+    Object {
+      "tag": "deprecated",
+      "value": "",
+    },
+  ],
+}
+`;
+
+exports[`parser with description without any tags 1`] = `
+Object {
+  "description": "This field is something useful",
+  "tags": Array [],
+}
+`;
+
+exports[`parser without description the unlikely default value & deprecated w/ deprecation reason 1`] = `
+Object {
+  "description": undefined,
+  "tags": Array [
+    Object {
+      "tag": "default",
+      "value": "abc",
+    },
+    Object {
+      "tag": "deprecated",
+      "value": "Use the other field instead!",
+    },
+  ],
+}
+`;
+
+exports[`parser without description the unlikely default value & deprecated w/o deprecation reason 1`] = `
+Object {
+  "description": undefined,
+  "tags": Array [
+    Object {
+      "tag": "default",
+      "value": "abc",
+    },
+    Object {
+      "tag": "deprecated",
+      "value": "",
+    },
+  ],
+}
+`;
+
+exports[`parser without description with default tag 1`] = `
+Object {
+  "description": undefined,
+  "tags": Array [
+    Object {
+      "tag": "default",
+      "value": "abc",
+    },
+  ],
+}
+`;
+
+exports[`parser without description with deprecated tag w/ reason 1`] = `
+Object {
+  "description": undefined,
+  "tags": Array [
+    Object {
+      "tag": "deprecated",
+      "value": "Use the other field instead!",
+    },
+  ],
+}
+`;
+
+exports[`parser without description with deprecated tag w/o reason 1`] = `
+Object {
+  "description": undefined,
+  "tags": Array [
+    Object {
+      "tag": "deprecated",
+      "value": "",
+    },
+  ],
+}
+`;
+
+exports[`parser without description without any tags 1`] = `
+Object {
+  "description": undefined,
+  "tags": Array [],
+}
+`;

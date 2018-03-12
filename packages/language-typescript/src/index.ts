@@ -12,7 +12,8 @@ import {
   TypePrinter,
   NamespaceGenerator,
   InterfaceNameWithExtensions,
-  EnumTypeBuilder
+  EnumTypeBuilder,
+  GenerateDocumentation,
 } from '@gql2ts/types';
 import prettify from './typescriptPrettify';
 import { pascalize } from 'humps';
@@ -76,6 +77,14 @@ ${interfaces}
 // tslint:enable
 `;
 
+const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
+  description ? description.replace(/\n/g, '\n* ') : description;
+
+export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => (description || tags.length) ? `
+  /**
+   * ${[fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)].filter(x => !!x).join('\n* ')}
+   */` : '';
+
 export const DEFAULT_OPTIONS: IFromQueryOptions = {
   wrapList: DEFAULT_WRAP_LIST,
   wrapPartial: DEFAULT_WRAP_PARTIAL,
@@ -98,6 +107,8 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   generateNamespace: DEFAULT_NAMESPACE_GENERATOR,
   postProcessor: prettify,
   generateInputName: DEFAULT_INPUT_NAME_GENERATOR,
-  addExtensionsToInterfaceName: ADD_INTERFACE_EXTENSIONS
+  addExtensionsToInterfaceName: ADD_INTERFACE_EXTENSIONS,
+  generateDocumentation: DEFAULT_DOCUMENTATION_GENERATOR
 };
+
 export default DEFAULT_OPTIONS;

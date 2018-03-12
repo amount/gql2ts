@@ -11,7 +11,7 @@ import {
   GraphQLEnumValue,
   FieldNode,
 } from 'graphql';
-import { PossibleSchemaInput } from '@gql2ts/util';
+import { PossibleSchemaInput, IFieldDocumentation } from '@gql2ts/util';
 
 export type GetChildSelectionsType =
   (operation: OperationTypeNode, selection: SelectionNode, parent?: GraphQLType, isUndefined?: boolean)
@@ -54,6 +54,7 @@ export type EnumTypeBuilder = (name: string, values: string) => string;
 export type TypeJoiner = (types: string[]) => string;
 export type InterfaceDeclarationGenerator = (fields: string[], indentation?: string) => string;
 export type NamespaceGenerator = (namespaceName: string, interfaces: string) => string;
+export type GenerateDocumentation = (documentation: IFieldDocumentation) => string;
 
 export interface IFromQueryOptions {
   wrapList: WrapType;
@@ -78,6 +79,7 @@ export interface IFromQueryOptions {
   postProcessor: WrapType;
   generateInputName: WrapType;
   addExtensionsToInterfaceName: InterfaceNameWithExtensions;
+  generateDocumentation: GenerateDocumentation;
 }
 
 export type HandleNamedTypes = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;

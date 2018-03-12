@@ -130,3 +130,122 @@ describe('IO stuff', () => {
     });
   });
 });
+
+describe('parser', () => {
+  describe('with description', () => {
+    it ('without any tags', () => {
+      expect(
+        utils.buildDocumentation({
+          description: 'This field is something useful'
+        } as any)
+      ).toMatchSnapshot();
+    });
+
+    it ('with default tag', () => {
+      expect(
+        utils.buildDocumentation({
+          description: 'This field is something useful',
+          defaultValue: 'abc'
+        } as any)
+      ).toMatchSnapshot();
+    });
+
+    it ('with deprecated tag w/o reason', () => {
+      expect(
+        utils.buildDocumentation({
+          description: 'This field is something useful',
+          isDeprecated: true,
+          deprecationReason: undefined
+        } as any)
+      ).toMatchSnapshot();
+    });
+
+    it ('with deprecated tag w/ reason', () => {
+      expect(
+        utils.buildDocumentation({
+          description: 'This field is something useful',
+          isDeprecated: true,
+          deprecationReason: 'Use the other field instead!'
+        } as any)
+      ).toMatchSnapshot();
+    });
+    describe('the unlikely default value & deprecated', () => {
+      it ('w/o deprecation reason', () => {
+        expect(
+          utils.buildDocumentation({
+            description: 'This field is something useful',
+            defaultValue: 'abc',
+            isDeprecated: true,
+            deprecationReason: undefined
+          } as any)
+        ).toMatchSnapshot();
+      });
+
+      it ('w/ deprecation reason', () => {
+        expect(
+          utils.buildDocumentation({
+            description: 'This field is something useful',
+            defaultValue: 'abc',
+            isDeprecated: true,
+            deprecationReason: 'Use the other field instead!'
+          } as any)
+        ).toMatchSnapshot();
+      });
+    });
+  });
+
+  describe('without description', () => {
+    it ('without any tags', () => {
+      expect(
+        utils.buildDocumentation({        } as any)
+      ).toMatchSnapshot();
+    });
+
+    it ('with default tag', () => {
+      expect(
+        utils.buildDocumentation({
+          defaultValue: 'abc'
+        } as any)
+      ).toMatchSnapshot();
+    });
+
+    it ('with deprecated tag w/o reason', () => {
+      expect(
+        utils.buildDocumentation({
+          isDeprecated: true,
+          deprecationReason: undefined
+        } as any)
+      ).toMatchSnapshot();
+    });
+
+    it ('with deprecated tag w/ reason', () => {
+      expect(
+        utils.buildDocumentation({
+          isDeprecated: true,
+          deprecationReason: 'Use the other field instead!'
+        } as any)
+      ).toMatchSnapshot();
+    });
+    describe('the unlikely default value & deprecated', () => {
+      it ('w/o deprecation reason', () => {
+        expect(
+          utils.buildDocumentation({
+            defaultValue: 'abc',
+            isDeprecated: true,
+            deprecationReason: undefined
+          } as any)
+        ).toMatchSnapshot();
+      });
+
+      it ('w/ deprecation reason', () => {
+        expect(
+          utils.buildDocumentation({
+            defaultValue: 'abc',
+            isDeprecated: true,
+            deprecationReason: 'Use the other field instead!'
+          } as any)
+        ).toMatchSnapshot();
+      });
+    });
+  });
+});

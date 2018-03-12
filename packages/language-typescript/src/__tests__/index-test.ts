@@ -6,6 +6,7 @@ import {
   DEFAULT_ENUM_FORMATTER,
   DEFAULT_ENUM_TYPE_BUILDER,
   DEFAULT_ENUM_NAME_GENERATOR,
+  DEFAULT_DOCUMENTATION_GENERATOR,
 } from '../';
 import { GraphQLEnumValue } from 'graphql';
 
@@ -68,6 +69,53 @@ describe('language-typescript', () => {
           { value: 'b' } as GraphQLEnumValue,
         ]))
       ).toMatchSnapshot();
+    });
+  });
+
+  describe('DEFAULT_DOCUMENTATION_GENERATOR', () => {
+    describe('with a description', () => {
+      it('without tags', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: []
+        })).toMatchSnapshot();
+      });
+      it('with 1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: [{ tag: 'default', value: 'myDefaultValue' }]
+        })).toMatchSnapshot();
+      });
+      it('with >1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: [
+            { tag: 'default', value: 'myDefaultValue' },
+            { tag: 'deprecated', value: 'Use the other field instead' }
+          ]
+        })).toMatchSnapshot();
+      });
+    });
+
+    describe('without a description', () => {
+      it('without tags', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: []
+        })).toMatchSnapshot();
+      });
+      it('with 1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: [{ tag: 'default', value: 'myDefaultValue' }]
+        })).toMatchSnapshot();
+      });
+      it('with >1 tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: [
+            { tag: 'default', value: 'myDefaultValue' },
+            { tag: 'deprecated', value: 'Use the other field instead' }
+          ]
+        })).toMatchSnapshot();
+      });
     });
   });
 });

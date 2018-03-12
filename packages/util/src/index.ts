@@ -13,3 +13,10 @@ export {
   isNonNullable,
   isEnum,
 } from './schema';
+
+export {
+  getDocTags,
+  IJSDocTag,
+  buildDocumentation,
+  IFieldDocumentation
+} from './parser';
