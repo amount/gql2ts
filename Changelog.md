@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.0
+
+- Improve documentation generation [#154](https://github.com/avantcredit/gql2ts/pull/154)
+- Add new line in between Argument Interfaces [#157](https://github.com/avantcredit/gql2ts/pull/157)
+
 ## 1.5.2
 
 - Add graphql as dependency for CLI
