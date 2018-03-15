@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1
+
+- Run default fields (`IGraphQLRootResponse`, etc.) through provided formatters [#159](https://github.com/avantcredit/gql2ts/pull/159)
+
 ## 1.7.0
 
 - Use native enums in Typescript instead of union type [#116](https://github.com/avantcredit/gql2ts/pull/116)
