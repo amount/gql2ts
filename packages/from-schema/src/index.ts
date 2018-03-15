@@ -76,25 +76,35 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return filterAndJoinArray(rootNamespaces, ' | ');
   };
 
-  const generateRootTypes: (schema: GraphQLSchema) => string = schema => dedent`
-    interface IGraphQLResponseRoot {
-      data?: ${generateRootDataName(schema)};
-      errors?: Array<IGraphQLResponseError>;
-    }
-
-    interface IGraphQLResponseError {
-      /** Required for all errors */
-      message: string;
-      locations?: Array<IGraphQLResponseErrorLocation>;
-      /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-      [propName: string]: any;
-    }
-
-    interface IGraphQLResponseErrorLocation {
-      line: number;
-      column: number;
-    }
-  `;
+  const generateRootTypes: (schema: GraphQLSchema) => string = schema => filterAndJoinArray(
+    [
+      interfaceBuilder(
+        generateInterfaceName('GraphQLResponseRoot'),
+        gID([
+          formatInput('data', !optionsInput.legacy, generateRootDataName(schema)),
+          formatInput('errors', !optionsInput.legacy, wrapList(generateInterfaceName('GraphQLResponseError')))
+        ])
+      ),
+      interfaceBuilder(
+        generateInterfaceName('GraphQLResponseError'),
+        gID([
+          '/** Required for all errors */',
+          formatInput('message', false, TYPE_MAP.String),
+          formatInput('locations', !optionsInput.legacy, wrapList(generateInterfaceName('GraphQLResponseErrorLocation'))),
+          `/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */`,
+          formatInput('[propName: string]', false, TYPE_MAP.__DEFAULT),
+        ])
+      ),
+      interfaceBuilder(
+        generateInterfaceName('GraphQLResponseErrorLocation'),
+        gID([
+          formatInput('line', false, TYPE_MAP.Int),
+          formatInput('column', false, TYPE_MAP.Int),
+        ])
+      )
+    ],
+    '\n\n'
+  );
 
   const wrapWithDocumentation: (declaration: string, documentation: IFieldDocumentation) => string = (declaration, documentation) => dedent`
     ${generateDocumentation(documentation)}
