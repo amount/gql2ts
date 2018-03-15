@@ -2,21 +2,21 @@
 
 exports[`gql2ts Supports older TypeScript versions removes Nullability annotations when passed 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IRoot;
-  errors?: Array<IGraphQLResponseError>;
+data: IRoot;
+errors: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IRoot {
@@ -1890,21 +1890,21 @@ cursor: string;
 
 exports[`gql2ts deprecation removes deprecated fields if requested 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IQuery;
-  errors?: Array<IGraphQLResponseError>;
+data?: IQuery;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IQuery {
@@ -1993,21 +1993,21 @@ type HumanOrDroid = IHuman | IDroid;
 
 exports[`gql2ts interfaces correctly ignores types 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IRoot;
-  errors?: Array<IGraphQLResponseError>;
+data?: IRoot;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IRoot {
@@ -3684,21 +3684,21 @@ cursor: string;
 
 exports[`gql2ts interfaces correctly translates enums 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IQuery;
-  errors?: Array<IGraphQLResponseError>;
+data?: IQuery;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IQuery {
@@ -3715,21 +3715,21 @@ BLUE = 'BLUE'
 
 exports[`gql2ts interfaces correctly translates enums with types 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IQuery;
-  errors?: Array<IGraphQLResponseError>;
+data?: IQuery;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IQuery {
@@ -3742,21 +3742,21 @@ type Color = 'RED' | 'GREEN' | 'BLUE';"
 
 exports[`gql2ts interfaces correctly translates the star wars schema into typescript defs 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IRoot;
-  errors?: Array<IGraphQLResponseError>;
+data?: IRoot;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IRoot {
@@ -5630,21 +5630,21 @@ cursor: string;
 
 exports[`gql2ts mutations supports mutations 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IQuery | IMutation;
-  errors?: Array<IGraphQLResponseError>;
+data?: IQuery | IMutation;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IQuery {
@@ -11213,21 +11213,21 @@ declare namespace StarWars {
 
 exports[`gql2ts union types correctly translates the schema into typescript defs 1`] = `
 "interface IGraphQLResponseRoot {
-  data?: IQuery;
-  errors?: Array<IGraphQLResponseError>;
+data?: IQuery;
+errors?: Array<IGraphQLResponseError>;
 }
 
 interface IGraphQLResponseError {
-  /** Required for all errors */
-  message: string;
-  locations?: Array<IGraphQLResponseErrorLocation>;
-  /** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
-  [propName: string]: any;
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
 }
 
 interface IGraphQLResponseErrorLocation {
-  line: number;
-  column: number;
+line: number;
+column: number;
 }
 
 interface IQuery {
