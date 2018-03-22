@@ -107,19 +107,24 @@ Array [
 exports[`directives fragments works with inline fragments on type 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: Partial<{
-    primaryFunction?: string | null;
-    primaryFunctionNonNull?: string;
-  }> | null;
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnDroid {
+  primaryFunction: string | null;
+  primaryFunctionNonNull: string;
 }
 ",
-    "result": "export interface FragmentTest {
-  heroNoParam: Partial<{
-    primaryFunction?: string | null;
-    primaryFunctionNonNull?: string;
-  }> | null;
+    ],
+    "interface": "export interface FragmentTest {
+  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
+}
+",
+    "result": "export interface IFragmentSpreadOnDroid {
+  primaryFunction: string | null;
+  primaryFunctionNonNull: string;
+}
+
+export interface FragmentTest {
+  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
 }
 ",
     "variables": "",
@@ -130,19 +135,24 @@ Array [
 exports[`directives fragments works with inline fragments on type with aliases 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a: Partial<{
-    b?: string | null;
-    c?: string;
-  }> | null;
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnDroid {
+  b: string | null;
+  c: string;
 }
 ",
-    "result": "export interface FragmentTest {
-  a: Partial<{
-    b?: string | null;
-    c?: string;
-  }> | null;
+    ],
+    "interface": "export interface FragmentTest {
+  a: Partial<IFragmentSpreadOnDroid> | null;
+}
+",
+    "result": "export interface IFragmentSpreadOnDroid {
+  b: string | null;
+  c: string;
+}
+
+export interface FragmentTest {
+  a: Partial<IFragmentSpreadOnDroid> | null;
 }
 ",
     "variables": "",
@@ -245,19 +255,24 @@ Array [
 exports[`fragments does inline fragments on type 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: {
-    primaryFunction?: string | null;
-    primaryFunctionNonNull?: string;
-  } | null;
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnDroid {
+  primaryFunction: string | null;
+  primaryFunctionNonNull: string;
 }
 ",
-    "result": "export interface FragmentTest {
-  heroNoParam: {
-    primaryFunction?: string | null;
-    primaryFunctionNonNull?: string;
-  } | null;
+    ],
+    "interface": "export interface FragmentTest {
+  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
+}
+",
+    "result": "export interface IFragmentSpreadOnDroid {
+  primaryFunction: string | null;
+  primaryFunctionNonNull: string;
+}
+
+export interface FragmentTest {
+  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
 }
 ",
     "variables": "",
@@ -268,19 +283,24 @@ Array [
 exports[`fragments does inline fragments on type with aliases 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a: {
-    b?: string | null;
-    c?: string;
-  } | null;
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnDroid {
+  b: string | null;
+  c: string;
 }
 ",
-    "result": "export interface FragmentTest {
-  a: {
-    b?: string | null;
-    c?: string;
-  } | null;
+    ],
+    "interface": "export interface FragmentTest {
+  a: Partial<IFragmentSpreadOnDroid> | null;
+}
+",
+    "result": "export interface IFragmentSpreadOnDroid {
+  b: string | null;
+  c: string;
+}
+
+export interface FragmentTest {
+  a: Partial<IFragmentSpreadOnDroid> | null;
 }
 ",
     "variables": "",
@@ -824,23 +844,38 @@ export interface UnionQuery {
 exports[`simple examples supports unions with inline fragment 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [],
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnHuman {
+  id: string;
+}
+",
+      "export interface IFragmentSpreadOnDroid {
+  name: string | null;
+}
+",
+    ],
     "interface": "export interface UnionQuery {
-  humanOrDroid: {
-    id?: string;
-    name?: string | null;
-  } | null;
+  humanOrDroid:
+    | Partial<IFragmentSpreadOnHuman> & Partial<IFragmentSpreadOnDroid>
+    | null;
 }
 ",
     "result": "export interface UnionQueryInput {
   id: string;
 }
 
+export interface IFragmentSpreadOnHuman {
+  id: string;
+}
+
+export interface IFragmentSpreadOnDroid {
+  name: string | null;
+}
+
 export interface UnionQuery {
-  humanOrDroid: {
-    id?: string;
-    name?: string | null;
-  } | null;
+  humanOrDroid:
+    | Partial<IFragmentSpreadOnHuman> & Partial<IFragmentSpreadOnDroid>
+    | null;
 }
 ",
     "variables": "export interface UnionQueryInput {
@@ -1075,15 +1110,24 @@ Array [
     "variables": "",
   },
   Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
-  id: string;
-  name?: string | null;
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnHuman {
+  name: string | null;
 }
 ",
-    "result": "export interface IFragmentCharacterFields {
+    ],
+    "interface": "export interface IFragmentCharacterFields
+  extends Partial<IFragmentSpreadOnHuman> {
   id: string;
-  name?: string | null;
+}
+",
+    "result": "export interface IFragmentSpreadOnHuman {
+  name: string | null;
+}
+
+export interface IFragmentCharacterFields
+  extends Partial<IFragmentSpreadOnHuman> {
+  id: string;
 }
 ",
     "variables": "",
@@ -1111,21 +1155,29 @@ Array [
   id: string;
 }
 ",
+      "export interface IFragmentSpreadOnHuman {
+  name: string | null;
+  friends: Array<SelectionOnFriends | null> | null;
+}
+",
     ],
-    "interface": "export interface IFragmentCharacterFields {
+    "interface": "export interface IFragmentCharacterFields
+  extends Partial<IFragmentSpreadOnHuman> {
   id: string;
-  name?: string | null;
-  friends?: Array<SelectionOnFriends | null> | null;
 }
 ",
     "result": "export interface SelectionOnFriends {
   id: string;
 }
 
-export interface IFragmentCharacterFields {
+export interface IFragmentSpreadOnHuman {
+  name: string | null;
+  friends: Array<SelectionOnFriends | null> | null;
+}
+
+export interface IFragmentCharacterFields
+  extends Partial<IFragmentSpreadOnHuman> {
   id: string;
-  name?: string | null;
-  friends?: Array<SelectionOnFriends | null> | null;
 }
 ",
     "variables": "",
@@ -1137,21 +1189,25 @@ exports[`with subtypes does partial fragment query with complex types and direct
 Array [
   Object {
     "additionalTypes": Array [
-      "export type SelectionOnHeroNoParam = Partial<{
-  name?: string | null;
-}>;
+      "export interface IFragmentSpreadOnDroid {
+  name: string | null;
+}
 ",
     ],
     "interface": "export interface FragmentTest {
-  heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
+  heroNoParam:
+    | IFragmentCharacterFields & Partial<IFragmentSpreadOnDroid>
+    | null;
 }
 ",
-    "result": "export type SelectionOnHeroNoParam = Partial<{
-  name?: string | null;
-}>;
+    "result": "export interface IFragmentSpreadOnDroid {
+  name: string | null;
+}
 
 export interface FragmentTest {
-  heroNoParam: SelectionOnHeroNoParam & IFragmentCharacterFields | null;
+  heroNoParam:
+    | IFragmentCharacterFields & Partial<IFragmentSpreadOnDroid>
+    | null;
 }
 ",
     "variables": "",
@@ -1162,21 +1218,29 @@ export interface FragmentTest {
   id: string;
 }
 ",
+      "export interface IFragmentSpreadOnHuman {
+  name: string | null;
+  friends: Array<SelectionOnFriends | null> | null;
+}
+",
     ],
-    "interface": "export interface IFragmentCharacterFields {
+    "interface": "export interface IFragmentCharacterFields
+  extends Partial<IFragmentSpreadOnHuman> {
   id: string;
-  name?: string | null;
-  friends?: Array<SelectionOnFriends | null> | null;
 }
 ",
     "result": "export interface SelectionOnFriends {
   id: string;
 }
 
-export interface IFragmentCharacterFields {
+export interface IFragmentSpreadOnHuman {
+  name: string | null;
+  friends: Array<SelectionOnFriends | null> | null;
+}
+
+export interface IFragmentCharacterFields
+  extends Partial<IFragmentSpreadOnHuman> {
   id: string;
-  name?: string | null;
-  friends?: Array<SelectionOnFriends | null> | null;
 }
 ",
     "variables": "",

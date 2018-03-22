@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/language-flow",
   "private": false,
-  "version": "1.7.0",
+  "version": "1.7.2-4",
   "description": "flowtype defaults for gql2ts",
   "main": "dist/index.js",
   "files": [
@@ -30,10 +30,10 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
-    "@gql2ts/language-typescript": "^1.7.0",
-    "@gql2ts/util": "^1.7.0"
+    "@gql2ts/language-typescript": "^1.7.2-4",
+    "@gql2ts/util": "^1.7.2-4"
   },
   "devDependencies": {
-    "@gql2ts/types": "^1.7.0"
+    "@gql2ts/types": "^1.7.2-4"
   }
 }
