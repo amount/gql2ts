@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`additional fragments generates a proper interface 1`] = `
+exports[`additional fragments works 1 1`] = `
 Array [
   Object {
     "additionalTypes": Array [
@@ -8,21 +8,141 @@ Array [
   login: string;
 }
 ",
+      "export interface IFragmentSpreadOnRepository {
+  id: string;
+  name: string;
+  owner: SelectionOnOwner;
+}
+",
+      "export interface SelectionOnAuthor {
+  login: string;
+}
+",
+      "export interface IFragmentSpreadOnPullRequest {
+  id: string;
+  title: string;
+  author: SelectionOnAuthor | null;
+}
+",
       "export interface IFragmentSpreadOnOrganization {
-  __typename?: string;
+  __typename: string;
 }
 ",
       "export interface SelectionOnResource {
   __typename: string;
-  id?: string;
-  name?: string;
-  owner?: SelectionOnOwner;
 }
 ",
     ],
     "interface": "export interface MyTestQuery {
   resource:
     | SelectionOnResource &
+        Partial<IFragmentSpreadOnRepository> &
+        Partial<IFragmentSpreadOnPullRequest> &
+        Partial<IFragmentIssue> &
+        Partial<IFragmentOrganization> &
+        Partial<IFragmentSpreadOnOrganization>
+    | null;
+}
+",
+    "result": "export interface SelectionOnOwner {
+  login: string;
+}
+
+export interface IFragmentSpreadOnRepository {
+  id: string;
+  name: string;
+  owner: SelectionOnOwner;
+}
+
+export interface SelectionOnAuthor {
+  login: string;
+}
+
+export interface IFragmentSpreadOnPullRequest {
+  id: string;
+  title: string;
+  author: SelectionOnAuthor | null;
+}
+
+export interface IFragmentSpreadOnOrganization {
+  __typename: string;
+}
+
+export interface SelectionOnResource {
+  __typename: string;
+}
+
+export interface MyTestQuery {
+  resource:
+    | SelectionOnResource &
+        Partial<IFragmentSpreadOnRepository> &
+        Partial<IFragmentSpreadOnPullRequest> &
+        Partial<IFragmentIssue> &
+        Partial<IFragmentOrganization> &
+        Partial<IFragmentSpreadOnOrganization>
+    | null;
+}
+",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentIssue {
+  id: string;
+  title: string;
+  author: SelectionOnAuthor | null;
+}
+",
+    "result": "export interface IFragmentIssue {
+  id: string;
+  title: string;
+  author: SelectionOnAuthor | null;
+}
+",
+    "variables": "",
+  },
+  Object {
+    "additionalTypes": Array [],
+    "interface": "export interface IFragmentOrganization {
+  orgName: string | null;
+}
+",
+    "result": "export interface IFragmentOrganization {
+  orgName: string | null;
+}
+",
+    "variables": "",
+  },
+]
+`;
+
+exports[`additional fragments works 2 1`] = `
+Array [
+  Object {
+    "additionalTypes": Array [
+      "export interface SelectionOnOwner {
+  login: string;
+}
+",
+      "export interface IFragmentSpreadOnRepository {
+  id: string;
+  name: string;
+  owner: SelectionOnOwner;
+}
+",
+      "export interface IFragmentSpreadOnOrganization {
+  __typename: string;
+}
+",
+      "export interface SelectionOnResource {
+  __typename: string;
+}
+",
+    ],
+    "interface": "export interface MyTestQuery {
+  resource:
+    | SelectionOnResource &
+        Partial<IFragmentSpreadOnRepository> &
         IFragmentPullRequest &
         Partial<IFragmentIssue> &
         Partial<IFragmentOrganization> &
@@ -34,20 +154,24 @@ Array [
   login: string;
 }
 
+export interface IFragmentSpreadOnRepository {
+  id: string;
+  name: string;
+  owner: SelectionOnOwner;
+}
+
 export interface IFragmentSpreadOnOrganization {
-  __typename?: string;
+  __typename: string;
 }
 
 export interface SelectionOnResource {
   __typename: string;
-  id?: string;
-  name?: string;
-  owner?: SelectionOnOwner;
 }
 
 export interface MyTestQuery {
   resource:
     | SelectionOnResource &
+        Partial<IFragmentSpreadOnRepository> &
         IFragmentPullRequest &
         Partial<IFragmentIssue> &
         Partial<IFragmentOrganization> &
@@ -95,18 +219,25 @@ export interface IFragmentIssue {
     "variables": "",
   },
   Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentPullRequest {
-  id?: string;
-  title?: string;
-  author?: SelectionOnAuthor | null;
+    "additionalTypes": Array [
+      "export interface IFragmentSpreadOnPullRequest {
+  id: string;
+  title: string;
+  author: SelectionOnAuthor | null;
 }
 ",
-    "result": "export interface IFragmentPullRequest {
-  id?: string;
-  title?: string;
-  author?: SelectionOnAuthor | null;
+    ],
+    "interface": "export interface IFragmentPullRequest
+  extends Partial<IFragmentSpreadOnPullRequest> {}
+",
+    "result": "export interface IFragmentSpreadOnPullRequest {
+  id: string;
+  title: string;
+  author: SelectionOnAuthor | null;
 }
+
+export interface IFragmentPullRequest
+  extends Partial<IFragmentSpreadOnPullRequest> {}
 ",
     "variables": "",
   },

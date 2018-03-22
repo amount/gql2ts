@@ -268,18 +268,15 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       const anon: boolean = !selection.typeCondition;
       let fragName: string = '';
 
-      if (selection.typeCondition) {
-        isFragment = true;
-        fragName = generateFragmentName(`SpreadOn${selection.typeCondition.name.value}`);
-      }
-
-      if (!anon) {
-        const typeName: string = selection.typeCondition!.name.value;
+      if (!anon && selection.typeCondition) {
+        const typeName: string = selection.typeCondition.name.value;
         parent = parsedSchema.getType(typeName);
+        isFragment = true;
+        fragName = generateFragmentName(`SpreadOn${typeName}`);
       }
 
       const selections: IChildSelection[] =
-        selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, parent, !anon));
+        selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, parent, false));
 
       const fragmentSelections: IChildSelection[] = selections.filter(({ isFragment: frag }) => frag);
       const nonFragmentSelections: IChildSelection[] = selections.filter(({ isFragment: frag }) => !frag);
@@ -290,7 +287,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
        * `fragmentSelections.length` is definitely a hack and a proper solution should be investigated
        * See: https://github.com/avantcredit/gql2ts/issues/76
        */
-      if (!fragmentSelections.length) {
+      if (!fragmentSelections.length && anon) {
         let joinSelections: string = filterAndJoinArray(selections.map(s => s.iface), '\n');
         isPartial = isUndefinedFromDirective(selection.directives);
         complexTypes.push(...flattenComplexTypes(selections));
@@ -313,7 +310,8 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
         }
 
         return {
-          iface: typeJoiner(interfaces.map(wrapPartial)),
+          // Avoid Double Partial, i.e. Partial<Partial<IFragmentOnWhatever>>
+          iface: interfaces.length === 1 && isPartial ? interfaces[0] : typeJoiner(interfaces.map(wrapPartial)),
           isFragment,
           isPartial,
           complexTypes,
