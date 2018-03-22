@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/from-query",
   "private": false,
-  "version": "1.7.2-y.0",
+  "version": "1.7.2-4",
   "description": "generate typescript interfaces from a graphql schema and query",
   "main": "dist/index.js",
   "files": [
@@ -28,11 +28,11 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
-    "@gql2ts/language-typescript": "^1.7.2-y.0",
-    "@gql2ts/util": "^1.7.2-y.0"
+    "@gql2ts/language-typescript": "^1.7.2-4",
+    "@gql2ts/util": "^1.7.2-4"
   },
   "devDependencies": {
-    "@gql2ts/types": "^1.7.2-y.0",
+    "@gql2ts/types": "^1.7.2-4",
     "graphql": ">= 0.10 <1.0.0"
   },
   "peerDependencies": {
