@@ -266,6 +266,13 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       isPartial = isUndefinedFromDirective(selection.directives);
     } else if (selection.kind === 'InlineFragment') {
       const anon: boolean = !selection.typeCondition;
+      let fragName: string = '';
+
+      if (selection.typeCondition) {
+        isFragment = true;
+        fragName = generateFragmentName(`SpreadOn${selection.typeCondition.name.value}`);
+      }
+
       if (!anon) {
         const typeName: string = selection.typeCondition!.name.value;
         parent = parsedSchema.getType(typeName);
@@ -274,15 +281,44 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       const selections: IChildSelection[] =
         selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, parent, !anon));
 
-      let joinSelections: string = filterAndJoinArray(selections.map(s => s.iface), '\n');
-      isPartial = isUndefinedFromDirective(selection.directives);
-      complexTypes.push(...flattenComplexTypes(selections));
-      return {
-        iface: joinSelections,
-        isFragment,
-        isPartial,
-        complexTypes,
-      };
+      const fragmentSelections: IChildSelection[] = selections.filter(({ isFragment: frag }) => frag);
+      const nonFragmentSelections: IChildSelection[] = selections.filter(({ isFragment: frag }) => !frag);
+
+      /**
+       * @TODO need to handle fragments of fragments better
+       * An example of a previously unsupported fragment can be found in the __tests__ directory
+       * `fragmentSelections.length` is definitely a hack and a proper solution should be investigated
+       * See: https://github.com/avantcredit/gql2ts/issues/76
+       */
+      if (!fragmentSelections.length) {
+        let joinSelections: string = filterAndJoinArray(selections.map(s => s.iface), '\n');
+        isPartial = isUndefinedFromDirective(selection.directives);
+        complexTypes.push(...flattenComplexTypes(selections));
+        return {
+          iface: joinSelections,
+          isFragment: false,
+          isPartial,
+          complexTypes,
+        };
+      } else {
+        let joinSelections: string[] = nonFragmentSelections.map(s => s.iface);
+        isPartial = isUndefinedFromDirective(selection.directives);
+        complexTypes.push(...flattenComplexTypes(selections));
+
+        const interfaces: string[] = fragmentSelections.map(({ iface }) => iface);
+
+        if (joinSelections.length) {
+          complexTypes.push({ name: fragName, iface: generateInterfaceDeclaration(joinSelections), isPartial: false });
+          interfaces.push(fragName);
+        }
+
+        return {
+          iface: typeJoiner(interfaces.map(wrapPartial)),
+          isFragment,
+          isPartial,
+          complexTypes,
+        };
+      }
     }
 
     return {
