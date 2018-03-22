@@ -1,6 +1,6 @@
 # Changelog
 
-## Master
+## 1.7.2
 
 - Fix fragment spread inside of inline fragment [Issue #76](https://github.com/avantcredit/gql2ts/issues/76) [PR #162](https://github.com/avantcredit/gql2ts/issues/162)
 
