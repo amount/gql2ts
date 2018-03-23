@@ -8,6 +8,8 @@ import { format as prettierFormat } from 'prettier';
 
 let hasWarned: boolean = false;
 
+export const PRETTY_PRINT_WARNING: string = 'To enable pretty-printing, please install prettier';
+
 const format: (text: string) => string = text => {
   try {
     // tslint:disable no-require-imports
@@ -22,7 +24,7 @@ const format: (text: string) => string = text => {
     });
   } catch (e) {
     if (!hasWarned) {
-      console.warn('To enable pretty-printing, please install prettier');
+      console.warn(PRETTY_PRINT_WARNING);
       hasWarned = true;
     }
     return text;
