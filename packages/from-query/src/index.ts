@@ -198,6 +198,8 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     }
   };
 
+  const rootIntrospectionTypes: Map<string, string> = new Map([[ '__schema', '__Schema' ], [ '__type', '__Type' ]]);
+
   const getChildSelections: GetChildSelectionsType = (operation, selection, parent?, isUndefined = false): IChildSelection => {
     let str: string = '';
     let isFragment: boolean = false;
@@ -224,11 +226,11 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
         } else {
           resolvedType = `'${parent.toString()}'`;
         }
-      } else if (originalName.startsWith('__')) {
-        resolvedType = TypeMap.__DEFAULT;
       } else if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
-        const fieldType: GraphQLNamedType = getNamedType(field.type);
+        const fieldType: GraphQLNamedType = rootIntrospectionTypes.has(originalName) ? parsedSchema.getType(
+          rootIntrospectionTypes.get(originalName)!
+        ) : getNamedType(field.type);
         if (isCompositeType(fieldType)) {
           newParent = fieldType;
         }
@@ -270,7 +272,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
         andOps.push(...fragments.map(wrapPossiblePartial));
         childType = typeJoiner(andOps);
-        resolvedType = convertToType(field.type, false, childType);
+        resolvedType = convertToType(field ? field.type : fieldType, false, childType);
       } else {
         resolvedType = convertToType(field.type, false, childType);
       }
@@ -357,17 +359,18 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const buildAdditionalTypes: (children: IChildSelection[]) => string[] = children => {
     const subTypes: IComplexTypeSignature[] = flattenComplexTypes(children);
-
     return subTypes.map(subtype => {
       if (subtype.isPartial) {
         return postProcessor(exportFunction(typeBuilder(subtype.name, subtype.iface)));
       } else {
         return postProcessor(exportFunction(interfaceBuilder(subtype.name, subtype.iface)));
       }
-    }).concat([
-      ...enumDeclarations.values()
-    ].map(enumDecl => postProcessor(exportFunction(enumDecl))));
+    });
   };
+
+  const getEnums: () => string[] = () => [
+    ...enumDeclarations.values()
+  ].map(enumDecl => postProcessor(exportFunction(enumDecl)));
 
   interface IOutputJoinInput {
     variables: string;
@@ -425,7 +428,15 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     } else {
       throw new Error(`Unsupported Definition ${def.kind}`);
     }
-  });
+  }).concat(
+    enumDeclarations.size ? [
+      joinOutputs({
+        additionalTypes: getEnums(),
+        interface: '',
+        variables: ''
+      })
+    ] : []
+  );
 };
 
 export default doIt;

@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as utils from '../packages/util/src';
 import { badWriteHandler, safeJSONParse, readFile } from '../packages/util/src/fileIO';
 import schemaLanguage from './shared/simpleSchema';
-import { GraphQLSchema, introspectionQuery, graphql, GraphQLNonNull, GraphQLList, GraphQLEnumType, GraphQLString } from 'graphql';
+import { GraphQLSchema, introspectionQuery, graphql, GraphQLNonNull, GraphQLList, GraphQLEnumType, GraphQLString, GraphQLUnionType } from 'graphql';
 
 const builtSchema: GraphQLSchema = utils.schemaFromInputs(schemaLanguage);
 
@@ -69,6 +69,32 @@ describe('schema', () => {
 
       it('returns false for non enum', () => {
         expect(utils.isEnum(GraphQLString)).toBe(false);
+      });
+    });
+
+    describe('isUnion', () => {
+      it('returns true for an union', () => {
+        expect(utils.isUnion(new GraphQLUnionType({
+          name: 'testenum',
+          types: []
+        }))).toBe(true);
+      });
+
+      it('returns false for non union', () => {
+        expect(utils.isUnion(GraphQLString)).toBe(false);
+      });
+    });
+
+    describe('isScalar', () => {
+      it('returns true for an scalar', () => {
+        expect(utils.isScalar(GraphQLString)).toBe(true);
+      });
+
+      it('returns false for non scalar', () => {
+        expect(utils.isScalar(new GraphQLUnionType({
+          name: 'fakeenum',
+          types: []
+        }))).toBe(false);
       });
     });
   });
