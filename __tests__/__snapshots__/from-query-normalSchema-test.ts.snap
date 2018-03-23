@@ -633,7 +633,7 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface TestQuery {
   heroNoParam: {
-    __typename: string;
+    __typename: 'Human' | 'Droid';
     id: string;
     name: string | null;
   } | null;
@@ -641,7 +641,7 @@ Array [
 ",
     "result": "export interface TestQuery {
   heroNoParam: {
-    __typename: string;
+    __typename: 'Human' | 'Droid';
     id: string;
     name: string | null;
   } | null;
@@ -745,14 +745,7 @@ export interface CustomScalarQuery {
 exports[`simple examples supports enums 1`] = `
 Array [
   Object {
-    "additionalTypes": Array [
-      "export enum Episode {
-  NEWHOPE = 'NEWHOPE',
-  EMPIRE = 'EMPIRE',
-  JEDI = 'JEDI'
-}
-",
-    ],
+    "additionalTypes": Array [],
     "interface": "export interface EnumQuery {
   hero: {
     appearsIn: Array<Episode | null> | null;
@@ -761,12 +754,6 @@ Array [
 ",
     "result": "export interface EnumQueryInput {
   episode?: Episode | null;
-}
-
-export enum Episode {
-  NEWHOPE = 'NEWHOPE',
-  EMPIRE = 'EMPIRE',
-  JEDI = 'JEDI'
 }
 
 export interface EnumQuery {
@@ -779,6 +766,24 @@ export interface EnumQuery {
   episode?: Episode | null;
 }
 ",
+  },
+  Object {
+    "additionalTypes": Array [
+      "export enum Episode {
+  NEWHOPE = 'NEWHOPE',
+  EMPIRE = 'EMPIRE',
+  JEDI = 'JEDI'
+}
+",
+    ],
+    "interface": "",
+    "result": "export enum Episode {
+  NEWHOPE = 'NEWHOPE',
+  EMPIRE = 'EMPIRE',
+  JEDI = 'JEDI'
+}
+",
+    "variables": "",
   },
 ]
 `;

@@ -18,6 +18,7 @@ import {
   GraphQLUnionType,
   GraphQLNamedType,
   FieldNode,
+  isAbstractType,
 } from 'graphql';
 import {
   schemaFromInputs,
@@ -197,6 +198,8 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     }
   };
 
+  const rootIntrospectionTypes: Map<string, string> = new Map([[ '__schema', '__Schema' ], [ '__type', '__Type' ]]);
+
   const getChildSelections: GetChildSelectionsType = (operation, selection, parent?, isUndefined = false): IChildSelection => {
     let str: string = '';
     let isFragment: boolean = false;
@@ -204,16 +207,30 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     let complexTypes: IComplexTypeSignature[] = [];
     if (selection.kind === 'Field') {
       const field: GraphQLField<any, any> = getField(operation, selection, parent);
-      const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;
+      const originalName: string = selection.name.value;
+      const selectionName: string = selection.alias ? selection.alias.value : originalName;
       let childType: string | undefined;
 
       isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
       let resolvedType: string;
-      if (selectionName.startsWith('__')) {
-        resolvedType = TypeMap.String;
+      if (originalName === '__typename') {
+        if (!parent) {
+          resolvedType = TypeMap.String;
+        } else if (isAbstractType(parent)) {
+          const possibleTypes: GraphQLObjectType[] = parsedSchema.getPossibleTypes(parent);
+          /**
+           * @TODO break this OR logic out of here (and the other places) and put into a printer
+           * @TODO break out the string-literal type out of here as it probably isn't supported by other languages
+           */
+          resolvedType = possibleTypes.map(({ name }) => `'${name}'`).join(' | ');
+        } else {
+          resolvedType = `'${parent.toString()}'`;
+        }
       } else if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
-        const fieldType: GraphQLNamedType = getNamedType(field.type);
+        const fieldType: GraphQLNamedType = rootIntrospectionTypes.has(originalName) ? parsedSchema.getType(
+          rootIntrospectionTypes.get(originalName)!
+        ) : getNamedType(field.type);
         if (isCompositeType(fieldType)) {
           newParent = fieldType;
         }
@@ -255,7 +272,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
         andOps.push(...fragments.map(wrapPossiblePartial));
         childType = typeJoiner(andOps);
-        resolvedType = convertToType(field.type, false, childType);
+        resolvedType = convertToType(field ? field.type : fieldType, false, childType);
       } else {
         resolvedType = convertToType(field.type, false, childType);
       }
@@ -342,17 +359,18 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const buildAdditionalTypes: (children: IChildSelection[]) => string[] = children => {
     const subTypes: IComplexTypeSignature[] = flattenComplexTypes(children);
-
     return subTypes.map(subtype => {
       if (subtype.isPartial) {
         return postProcessor(exportFunction(typeBuilder(subtype.name, subtype.iface)));
       } else {
         return postProcessor(exportFunction(interfaceBuilder(subtype.name, subtype.iface)));
       }
-    }).concat([
-      ...enumDeclarations.values()
-    ].map(enumDecl => postProcessor(exportFunction(enumDecl))));
+    });
   };
+
+  const getEnums: () => string[] = () => [
+    ...enumDeclarations.values()
+  ].map(enumDecl => postProcessor(exportFunction(enumDecl)));
 
   interface IOutputJoinInput {
     variables: string;
@@ -410,7 +428,15 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     } else {
       throw new Error(`Unsupported Definition ${def.kind}`);
     }
-  });
+  }).concat(
+    enumDeclarations.size ? [
+      joinOutputs({
+        additionalTypes: getEnums(),
+        interface: '',
+        variables: ''
+      })
+    ] : []
+  );
 };
 
 export default doIt;
