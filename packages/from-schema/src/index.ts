@@ -1,9 +1,7 @@
 import {
   GraphQLSchema,
   GraphQLNamedType,
-  GraphQLScalarType,
   GraphQLInputObjectType,
-  GraphQLInterfaceType,
   GraphQLField,
   GraphQLObjectType,
   GraphQLInputFieldMap,
@@ -14,7 +12,6 @@ import {
   isAbstractType,
   GraphQLOutputType,
   GraphQLEnumValue,
-  GraphQLUnionType,
   GraphQLAbstractType,
   GraphQLArgument,
 } from 'graphql';
@@ -26,7 +23,9 @@ import {
   isNonNullable,
   buildDocumentation,
   IFieldDocumentation,
-  filterAndJoinArray
+  filterAndJoinArray,
+  isUnion,
+  isScalar
 } from '@gql2ts/util';
 import { IFromQueryOptions, ITypeMap } from '@gql2ts/types';
 import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
@@ -50,10 +49,6 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   } = optionsInput.formats;
 
   const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP, ...(optionsInput.typeMap || {}) };
-
-  function isScalar (type: any): type is GraphQLScalarType {
-    return type instanceof GraphQLScalarType || !!(type as any)._scalarConfig;
-  }
 
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
@@ -253,23 +248,16 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return !ignoredTypes.has(nestedType.name) && (!optionsInput.excludeDeprecatedFields || !(field as GraphQLField<any, any>).isDeprecated);
   };
 
-  type InterfaceMap = Map<GraphQLInterfaceType, GraphQLObjectType[]>;
-
   type TypeToInterface = (
     type: GraphQLNamedType,
     ignoredTypes: Set<string>,
-    supportsNullability: boolean,
-    interfaceMap: InterfaceMap
+    supportsNullability: boolean
   ) => string | null;
 
-  function isUnion (type: GraphQLNamedType): type is GraphQLUnionType {
-    return type instanceof GraphQLUnionType;
-  }
+  type GenerateAbstractTypeDeclaration = (type: GraphQLAbstractType, ignoredTypes: Set<string>) => string;
 
-  type GenerateAbstractTypeDeclaration = (type: GraphQLAbstractType, ignoredTypes: Set<string>, interfaceMap: InterfaceMap) => string;
-
-  const generateAbstractTypeDeclaration: GenerateAbstractTypeDeclaration = (type, ignoredTypes, interfaceMap) => {
-    const poss: Array<GraphQLObjectType | GraphQLField<any, any>> = (isUnion(type)) ? type.getTypes() : interfaceMap.get(type) || [];
+  const generateAbstractTypeDeclaration: GenerateAbstractTypeDeclaration = (type, ignoredTypes) => {
+    const poss: GraphQLObjectType[] = schemaInput.getPossibleTypes(type);
     let possibleTypes: string[] = poss
       .filter(t => !ignoredTypes.has(t.name))
       .map(t => generateInterfaceName(t.name));
@@ -277,13 +265,13 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return generateTypeDeclaration(type.description, generateTypeName(type.name), possibleTypes.join(' | '));
   };
 
-  const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability, interfaceMap) => {
+  const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability) => {
     if (isScalar(type)) {
       return null;
     }
 
     if (isUnion(type)) {
-      return generateAbstractTypeDeclaration(type, ignoredTypes, interfaceMap);
+      return generateAbstractTypeDeclaration(type, ignoredTypes);
     }
 
     if (isEnum(type)) {
@@ -305,7 +293,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     let additionalInfo: string = '';
 
     if (isAbstractType(type)) {
-      additionalInfo = generateAbstractTypeDeclaration(type, ignoredTypes, interfaceMap);
+      additionalInfo = generateAbstractTypeDeclaration(type, ignoredTypes);
     }
 
     return filterAndJoinArray(
@@ -322,18 +310,6 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const supportsNullability: boolean = !options.legacy;
     const types: { [typeName: string]: GraphQLNamedType } = schema.getTypeMap();
     const typeArr: GraphQLNamedType[] = Object.keys(types).map(k => types[k]);
-    const interfaceMap: Map<GraphQLInterfaceType, GraphQLObjectType[]> = new Map();
-    typeArr.forEach(type => {
-      if (type instanceof GraphQLObjectType) {
-        type.getInterfaces().forEach(iface => {
-          if (interfaceMap.has(iface)) {
-            interfaceMap.set(iface, [...(interfaceMap.get(iface)!), type]);
-          } else {
-            interfaceMap.set(iface, [type]);
-          }
-        });
-      }
-    });
 
     const typeInterfaces: string[] =
       typeArr
@@ -342,7 +318,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
           !ignoredTypes.has(type.name)
         )
         .map(type =>                                  // convert to interface
-          typeToInterface(type, ignoredTypes, supportsNullability, interfaceMap)!
+          typeToInterface(type, ignoredTypes, supportsNullability)!
         );
 
     return filterAndJoinArray(

@@ -7,6 +7,9 @@ import {
   GraphQLNonNull,
   GraphQLList,
   GraphQLEnumType,
+  GraphQLNamedType,
+  GraphQLUnionType,
+  GraphQLScalarType,
 } from 'graphql';
 
 export type PossibleIntrospectionInputs = { data: IntrospectionQuery } | IntrospectionQuery;
@@ -40,4 +43,12 @@ export function isList (type: GraphQLType): type is GraphQLList<any> {
 
 export function isEnum (type: GraphQLType): type is GraphQLEnumType {
   return type instanceof GraphQLEnumType;
+}
+
+export function isUnion (type: GraphQLNamedType): type is GraphQLUnionType {
+  return type instanceof GraphQLUnionType;
+}
+
+export function isScalar (type: any): type is GraphQLScalarType {
+  return type instanceof GraphQLScalarType || !!(type as any)._scalarConfig;
 }

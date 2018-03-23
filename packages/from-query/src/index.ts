@@ -18,6 +18,7 @@ import {
   GraphQLUnionType,
   GraphQLNamedType,
   FieldNode,
+  isAbstractType,
 } from 'graphql';
 import {
   schemaFromInputs,
@@ -204,13 +205,27 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     let complexTypes: IComplexTypeSignature[] = [];
     if (selection.kind === 'Field') {
       const field: GraphQLField<any, any> = getField(operation, selection, parent);
-      const selectionName: string = selection.alias ? selection.alias.value : selection.name.value;
+      const originalName: string = selection.name.value;
+      const selectionName: string = selection.alias ? selection.alias.value : originalName;
       let childType: string | undefined;
 
       isUndefined = isUndefined || isUndefinedFromDirective(selection.directives);
       let resolvedType: string;
-      if (selectionName.startsWith('__')) {
-        resolvedType = TypeMap.String;
+      if (originalName === '__typename') {
+        if (!parent) {
+          resolvedType = TypeMap.String;
+        } else if (isAbstractType(parent)) {
+          const possibleTypes: GraphQLObjectType[] = parsedSchema.getPossibleTypes(parent);
+          /**
+           * @TODO break this OR logic out of here (and the other places) and put into a printer
+           * @TODO break out the string-literal type out of here as it probably isn't supported by other languages
+           */
+          resolvedType = possibleTypes.map(({ name }) => `'${name}'`).join(' | ');
+        } else {
+          resolvedType = `'${parent.toString()}'`;
+        }
+      } else if (originalName.startsWith('__')) {
+        resolvedType = TypeMap.__DEFAULT;
       } else if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
         const fieldType: GraphQLNamedType = getNamedType(field.type);

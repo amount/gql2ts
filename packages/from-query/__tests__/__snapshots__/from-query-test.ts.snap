@@ -25,11 +25,24 @@ Array [
 }
 ",
       "export interface IFragmentSpreadOnOrganization {
-  __typename: string;
+  __typename: 'Organization';
 }
 ",
       "export interface SelectionOnResource {
-  __typename: string;
+  __typename:
+    | 'Organization'
+    | 'Issue'
+    | 'User'
+    | 'Repository'
+    | 'PullRequest'
+    | 'PullRequestCommit'
+    | 'Milestone'
+    | 'MergedEvent'
+    | 'CrossReferencedEvent'
+    | 'ReviewDismissedEvent'
+    | 'Release'
+    | 'RepositoryTopic'
+    | 'Bot';
 }
 ",
     ],
@@ -65,11 +78,24 @@ export interface IFragmentSpreadOnPullRequest {
 }
 
 export interface IFragmentSpreadOnOrganization {
-  __typename: string;
+  __typename: 'Organization';
 }
 
 export interface SelectionOnResource {
-  __typename: string;
+  __typename:
+    | 'Organization'
+    | 'Issue'
+    | 'User'
+    | 'Repository'
+    | 'PullRequest'
+    | 'PullRequestCommit'
+    | 'Milestone'
+    | 'MergedEvent'
+    | 'CrossReferencedEvent'
+    | 'ReviewDismissedEvent'
+    | 'Release'
+    | 'RepositoryTopic'
+    | 'Bot';
 }
 
 export interface MyTestQuery {
@@ -131,11 +157,24 @@ Array [
 }
 ",
       "export interface IFragmentSpreadOnOrganization {
-  __typename: string;
+  __typename: 'Organization';
 }
 ",
       "export interface SelectionOnResource {
-  __typename: string;
+  __typename:
+    | 'Organization'
+    | 'Issue'
+    | 'User'
+    | 'Repository'
+    | 'PullRequest'
+    | 'PullRequestCommit'
+    | 'Milestone'
+    | 'MergedEvent'
+    | 'CrossReferencedEvent'
+    | 'ReviewDismissedEvent'
+    | 'Release'
+    | 'RepositoryTopic'
+    | 'Bot';
 }
 ",
     ],
@@ -161,11 +200,24 @@ export interface IFragmentSpreadOnRepository {
 }
 
 export interface IFragmentSpreadOnOrganization {
-  __typename: string;
+  __typename: 'Organization';
 }
 
 export interface SelectionOnResource {
-  __typename: string;
+  __typename:
+    | 'Organization'
+    | 'Issue'
+    | 'User'
+    | 'Repository'
+    | 'PullRequest'
+    | 'PullRequestCommit'
+    | 'Milestone'
+    | 'MergedEvent'
+    | 'CrossReferencedEvent'
+    | 'ReviewDismissedEvent'
+    | 'Release'
+    | 'RepositoryTopic'
+    | 'Bot';
 }
 
 export interface MyTestQuery {

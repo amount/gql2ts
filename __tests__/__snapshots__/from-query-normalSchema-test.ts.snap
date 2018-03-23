@@ -633,7 +633,7 @@ Array [
     "additionalTypes": Array [],
     "interface": "export interface TestQuery {
   heroNoParam: {
-    __typename: string;
+    __typename: 'Human' | 'Droid';
     id: string;
     name: string | null;
   } | null;
@@ -641,7 +641,7 @@ Array [
 ",
     "result": "export interface TestQuery {
   heroNoParam: {
-    __typename: string;
+    __typename: 'Human' | 'Droid';
     id: string;
     name: string | null;
   } | null;

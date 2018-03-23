@@ -1,8 +1,12 @@
 # Changelog
 
+## Master
+
+- Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #168](https://github.com/avantcredit/gql2ts/pull/168)
+
 ## 1.7.2
 
-- Fix fragment spread inside of inline fragment [Issue #76](https://github.com/avantcredit/gql2ts/issues/76) [PR #162](https://github.com/avantcredit/gql2ts/issues/162)
+- Fix fragment spread inside of inline fragment for `@gql2ts/from-query` [Issue #76](https://github.com/avantcredit/gql2ts/issues/76) [PR #162](https://github.com/avantcredit/gql2ts/issues/162)
 
 ## 1.7.1
 

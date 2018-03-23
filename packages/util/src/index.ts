@@ -12,6 +12,8 @@ export {
   isList,
   isNonNullable,
   isEnum,
+  isScalar,
+  isUnion
 } from './schema';
 
 export {
