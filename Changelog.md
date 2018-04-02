@@ -2,6 +2,7 @@
 
 ## 2.0.0
 
+### Breaking Changes
 - Remove legacy TS 1.x support (without `strictNullChecks`)
 
 ## Master
