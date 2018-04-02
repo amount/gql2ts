@@ -1,8 +1,12 @@
 # Changelog
 
+## 2.0.0
+
+- Remove legacy TS 1.x support (without `strictNullChecks`)
+
 ## Master
 
-- Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #168](https://github.com/avantcredit/gql2ts/pull/168)
+- Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #169](https://github.com/avantcredit/gql2ts/pull/169)
 
 ## 1.7.2
 
