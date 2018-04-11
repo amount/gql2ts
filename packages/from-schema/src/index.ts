@@ -46,9 +46,14 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     addSemicolon,
     enumTypeBuilder,
     generateDocumentation,
+    typeMap
   } = optionsInput.formats;
 
-  const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP, ...(optionsInput.typeMap || {}) };
+  const TYPE_MAP: ITypeMap = {
+    ...DEFAULT_TYPE_MAP,
+    ...(typeMap || {}),
+    ...(optionsInput.typeMap || {})
+  };
 
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
