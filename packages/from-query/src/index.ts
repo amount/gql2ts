@@ -52,11 +52,6 @@ import {
 const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
   const enumDeclarations: Map<string, string> = new Map<string, string>();
 
-  const TypeMap: ITypeMap = {
-    ...DEFAULT_TYPE_MAP,
-    ...typeMap
-  };
-
   const {
     wrapList,
     wrapPartial,
@@ -76,8 +71,15 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     enumTypeBuilder,
     formatEnum,
     generateEnumName,
-    generateDocumentation
+    generateDocumentation,
+    typeMap: langTypeMap
   }: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
+
+  const TypeMap: ITypeMap = {
+    ...DEFAULT_TYPE_MAP,
+    ...langTypeMap,
+    ...typeMap,
+  };
 
   const getSubtype: SubtypeNamerAndDedupe = GenerateSubtypeCache();
 

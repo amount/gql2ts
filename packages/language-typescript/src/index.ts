@@ -3,7 +3,6 @@ import {
   WrapType,
   IFromQueryOptions,
   InputFormatter,
-  IDefaultTypeMap,
   QueryNamer,
   EnumFormatter,
   InterfaceAndTypeBuilder,
@@ -14,6 +13,7 @@ import {
   InterfaceNameWithExtensions,
   EnumTypeBuilder,
   GenerateDocumentation,
+  ITypeMap,
 } from '@gql2ts/types';
 import { buildDocumentation, filterAndJoinArray } from '@gql2ts/util';
 import prettify from './typescriptPrettify';
@@ -40,7 +40,7 @@ export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? pascalize(def.na
 
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => ADD_SEMICOLON(`${name}${isOptional ? '?:' : ':' } ${type}`);
 
-export const DEFAULT_TYPE_MAP: IDefaultTypeMap = {
+export const DEFAULT_TYPE_MAP: ITypeMap = {
   ID: 'string',
   String: 'string',
   Boolean: 'boolean',
@@ -115,7 +115,8 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   postProcessor: prettify,
   generateInputName: DEFAULT_INPUT_NAME_GENERATOR,
   addExtensionsToInterfaceName: ADD_INTERFACE_EXTENSIONS,
-  generateDocumentation: DEFAULT_DOCUMENTATION_GENERATOR
+  generateDocumentation: DEFAULT_DOCUMENTATION_GENERATOR,
+  typeMap: DEFAULT_TYPE_MAP
 };
 
 export default DEFAULT_OPTIONS;
