@@ -39,7 +39,7 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a descripti
    */"
 `;
 
-exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with default values with default value as an object`] = `
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with default values with 1 default value as an object 1`] = `
 "
   /**
    * @default {"number":1,"string":"string"}
