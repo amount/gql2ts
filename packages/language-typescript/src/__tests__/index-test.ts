@@ -150,5 +150,14 @@ describe('language-typescript', () => {
         })).toMatchSnapshot();
       });
     });
+
+    describe('with default values', () => {
+      it('with default value as an object', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+            description: 'This is a thing',
+            tags: [{tag: 'default', value: JSON.stringify({number: 1, string: "string"})}]
+        })).toMatchSnapshot();
+      });
+    });
   });
 });

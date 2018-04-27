@@ -39,6 +39,13 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a descripti
    */"
 `;
 
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with default values with default value as an object`] = `
+"
+  /**
+   * @default {"number":1,"string":"string"}
+   */"
+`;
+
 exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description without tags 1`] = `""`;
 
 exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ deprecated value 1`] = `
