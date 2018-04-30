@@ -1,8 +1,10 @@
 # Changelog
 
-## Master
+## 1.8.0
 
 - Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #168](https://github.com/avantcredit/gql2ts/pull/168)
+
+- Import TypeMap from language packages [PR #175](https://github.com/avantcredit/gql2ts/pull/175) [PR #176](https://github.com/avantcredit/gql2ts/pull/176)
 
 ## 1.7.2
 
