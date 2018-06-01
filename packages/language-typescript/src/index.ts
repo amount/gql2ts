@@ -87,9 +87,11 @@ ${interfaces}
 const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
   description ? description.replace(/\n/g, '\n* ') : description;
 
+const _printValue = value => typeof value === 'object' ? JSON.stringify(value) : value;
+
 export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => (description || tags.length) ? `
   /**
-   * ${filterAndJoinArray([fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)], '\n* ')}
+   * ${filterAndJoinArray([fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${_printValue(value)}`)], '\n* ')}
    */` : '';
 
 export const DEFAULT_OPTIONS: IFromQueryOptions = {

@@ -119,6 +119,12 @@ describe('language-typescript', () => {
           tags: [{ tag: 'default', value: 'myDefaultValue' }]
         })).toMatchSnapshot();
       });
+      it('with 1 json tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          description: 'This is a thing',
+          tags: [{ tag: 'default', value: { myDefault: 'Value' } }]
+        })).toMatchSnapshot();
+      });
       it('with >1 tag', () => {
         expect(DEFAULT_DOCUMENTATION_GENERATOR({
           description: 'This is a thing',
@@ -139,6 +145,11 @@ describe('language-typescript', () => {
       it('with 1 tag', () => {
         expect(DEFAULT_DOCUMENTATION_GENERATOR({
           tags: [{ tag: 'default', value: 'myDefaultValue' }]
+        })).toMatchSnapshot();
+      });
+      it('with 1 json tag', () => {
+        expect(DEFAULT_DOCUMENTATION_GENERATOR({
+          tags: [{ tag: 'default', value: { myDefault: 'Value' } }]
         })).toMatchSnapshot();
       });
       it('with >1 tag', () => {

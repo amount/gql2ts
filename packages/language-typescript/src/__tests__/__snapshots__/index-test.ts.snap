@@ -9,6 +9,14 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description 
    */"
 `;
 
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description with 1 json tag 1`] = `
+"
+  /**
+   * This is a thing
+* @default {\\"myDefault\\":\\"Value\\"}
+   */"
+`;
+
 exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description with 1 tag 1`] = `
 "
   /**
@@ -29,6 +37,13 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a descripti
   /**
    * @default myDefaultValue
 * @deprecated Use the other field instead
+   */"
+`;
+
+exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description with 1 json tag 1`] = `
+"
+  /**
+   * @default {\\"myDefault\\":\\"Value\\"}
    */"
 `;
 
