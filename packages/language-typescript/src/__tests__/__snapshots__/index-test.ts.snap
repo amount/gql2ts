@@ -4,8 +4,8 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description 
 "
   /**
    * This is a thing
-   * @default myDefaultValue
-   * @deprecated Use the other field instead
+   * @default \\"myDefaultValue\\"
+   * @deprecated \\"Use the other field instead\\"
    */"
 `;
 
@@ -21,7 +21,7 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description 
 "
   /**
    * This is a thing
-   * @default myDefaultValue
+   * @default \\"myDefaultValue\\"
    */"
 `;
 
@@ -35,8 +35,8 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR with a description 
 exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description with >1 tag 1`] = `
 "
   /**
-   * @default myDefaultValue
-   * @deprecated Use the other field instead
+   * @default \\"myDefaultValue\\"
+   * @deprecated \\"Use the other field instead\\"
    */"
 `;
 
@@ -50,7 +50,7 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a descripti
 exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a description with 1 tag 1`] = `
 "
   /**
-   * @default myDefaultValue
+   * @default \\"myDefaultValue\\"
    */"
 `;
 
@@ -61,12 +61,12 @@ exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ deprecated value 1`] = `
   
   /**
    * value A
-   * @deprecated Bad
+   * @deprecated \\"Bad\\"
    */
 a = 'a',
 
   /**
-   * @deprecated Bad
+   * @deprecated \\"Bad\\"
    */
 b = 'b',
 

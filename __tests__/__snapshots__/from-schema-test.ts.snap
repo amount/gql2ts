@@ -11241,7 +11241,7 @@ humanOrDroid: HumanOrDroid | null;
 getCharacters: Array<Character>;
 
 /**
- * @deprecated Field No Longer Available.
+ * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
 }
@@ -11280,7 +11280,7 @@ friends: Array<Character> | null;
 appearsIn: Array<Episode> | null;
 
 /**
- * @deprecated Field No Longer Available.
+ * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
 nonNullArr: Array<Character>;
@@ -11303,7 +11303,7 @@ appearsIn: Array<Episode> | null;
 homePlanet: string | null;
 
 /**
- * @deprecated Field No Longer Available.
+ * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
 nonNullArr: Array<Character>;
@@ -11321,7 +11321,7 @@ primaryFunction: string | null;
 primaryFunctionNonNull: string;
 
 /**
- * @deprecated Field No Longer Available.
+ * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
 nonNullArr: Array<Character>;

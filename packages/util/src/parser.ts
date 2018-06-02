@@ -7,7 +7,7 @@ import {
 
 export interface IJSDocTag {
   tag: string;
-  value: string | Object;
+  value: string | object;
 }
 
 export interface IFieldDocumentation {

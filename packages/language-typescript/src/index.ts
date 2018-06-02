@@ -93,8 +93,7 @@ export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ descrip
   }
   const arr: Array<string | undefined> = [
     fixDescriptionDocblock(description),
-    ...tags.map(({ tag, value }) =>
-      `@${tag} ${typeof value === 'object' ? JSON.stringify(value) : value}`)
+    ...tags.map(({ tag, value }) => `@${tag} ${JSON.stringify(value)}`)
   ];
   return `
   /**
