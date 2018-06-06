@@ -87,10 +87,19 @@ ${interfaces}
 const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
   description ? description.replace(/\n/g, '\n* ') : description;
 
-export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => (description || tags.length) ? `
+export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => {
+  if (!description && !tags.length) {
+    return '';
+  }
+  const arr: Array<string | undefined> = [
+    fixDescriptionDocblock(description),
+    ...tags.map(({ tag, value }) => `@${tag} ${JSON.stringify(value)}`)
+  ];
+  return `
   /**
-   * ${filterAndJoinArray([fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)], '\n* ')}
-   */` : '';
+   * ${filterAndJoinArray(arr, '\n   * ')}
+   */`;
+};
 
 export const DEFAULT_OPTIONS: IFromQueryOptions = {
   wrapList: DEFAULT_WRAP_LIST,
