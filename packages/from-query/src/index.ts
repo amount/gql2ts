@@ -48,6 +48,7 @@ import {
   SubtypeNamerAndDedupe,
   ISubtypeMetadata,
 } from './subtype';
+import { isSelectionSetExhaustive } from './fragment';
 
 const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
   const enumDeclarations: Map<string, string> = new Map<string, string>();
@@ -241,7 +242,24 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
           selection.selectionSet.selections.map(sel => getChildSelections(operation, sel, newParent));
 
         const nonFragments: IChildSelection[] = selections.filter(s => !s.isFragment);
-        const fragments: IChildSelection[] = selections.filter(s => s.isFragment);
+        let fragments: IChildSelection[] = selections.filter(s => s.isFragment);
+
+        /**
+         * WIP, but remove "Partial", need to make it use OR instead of AND. Also obviously shouldn't be doing
+         * string replaces (especially because other languages might not use the `Partial` type (or even have that
+         * capability)
+         */
+        if (fragments.length) {
+          if (isSelectionSetExhaustive(selection, parent as any, parsedSchema)) {
+            console.log(fragments);
+            fragments = fragments.reduce((acc, frag) => {
+              if (frag.iface.startsWith('Partial<')) {
+                return [...acc, {...frag, iface: frag.iface.replace('Partial<', '').replace('>', '')}]
+              }
+              return [...acc, frag];
+            }, [])
+          }
+        }
         const andOps: string[] = [];
 
         complexTypes.push(...flattenComplexTypes(selections));
