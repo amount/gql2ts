@@ -58,7 +58,7 @@ exports[`language-typescript DEFAULT_DOCUMENTATION_GENERATOR without a descripti
 
 exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ deprecated value 1`] = `
 "{
-  
+
   /**
    * value A
    * @deprecated \\"Bad\\"
@@ -81,7 +81,7 @@ e = 'e'
 
 exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ description 1`] = `
 "{
-  
+
   /**
    * value A
    */
