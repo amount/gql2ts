@@ -67,7 +67,7 @@ export const DEFAULT_ENUM_FORMATTER: EnumFormatter = (values, documentationGener
 }`;
 
 export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) =>
-`enum ${name} ${values}`;
+`const enum ${name} ${values}`;
 
 export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `${pascalize(name)}`;
 export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)}Input`;

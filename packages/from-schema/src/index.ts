@@ -150,9 +150,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return wrapWithDocumentation(
       (enumTypeBuilder || typeBuilder)(
         generateEnumName(name),
-        addSemicolon(
-          formatEnum(enumValues, generateDocumentation)
-        )
+        formatEnum(enumValues, generateDocumentation)
       ),
       { description, tags: [] }
     );
