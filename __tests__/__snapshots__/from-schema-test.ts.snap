@@ -1955,11 +1955,11 @@ nonNullArrAndContents: Array<Character>;
 nullArrNonNullContents: Array<Character>;
 }
 
-enum Episode {
+const enum Episode {
 NEWHOPE = 'NEWHOPE',
 EMPIRE = 'EMPIRE',
 JEDI = 'JEDI'
-};
+}
 
 interface IHuman {
 __typename: \\"Human\\";
@@ -3706,11 +3706,11 @@ __typename: \\"Query\\";
 colorEnum: Color | null;
 }
 
-enum Color {
+const enum Color {
 RED = 'RED',
 GREEN = 'GREEN',
 BLUE = 'BLUE'
-};"
+}"
 `;
 
 exports[`gql2ts interfaces correctly translates enums with types 1`] = `
@@ -7607,7 +7607,7 @@ declare namespace GQL {
     colorEnum: Color | null;
   }
 
-  enum Color {
+  const enum Color {
     RED = 'RED',
     GREEN = 'GREEN',
     BLUE = 'BLUE'
@@ -11288,11 +11288,11 @@ nonNullArrAndContents: Array<Character>;
 nullArrNonNullContents: Array<Character>;
 }
 
-enum Episode {
+const enum Episode {
 NEWHOPE = 'NEWHOPE',
 EMPIRE = 'EMPIRE',
 JEDI = 'JEDI'
-};
+}
 
 interface IHuman {
 __typename: \\"Human\\";
