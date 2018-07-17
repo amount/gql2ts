@@ -81,7 +81,7 @@ e = 'e'
 
 exports[`language-typescript DEFAULT_ENUM_FORMATTER w/ description 1`] = `
 "{
-
+  
   /**
    * value A
    */
