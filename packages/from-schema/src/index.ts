@@ -147,10 +147,20 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       );
     }
 
+    // Becuase enums when declared do not end in semicolons and types do
+    // the we wrap the format enum function depending on if we are using the
+    // type builder or the enum type number
+    const wrappedEnumFormatFunction: () => string = function (): string {
+      if (!enumTypeBuilder) {
+        return addSemicolon(formatEnum(enumValues, generateDocumentation));
+      }
+      return formatEnum(enumValues, generateDocumentation);
+    };
+
     return wrapWithDocumentation(
       (enumTypeBuilder || typeBuilder)(
         generateEnumName(name),
-        formatEnum(enumValues, generateDocumentation)
+        wrappedEnumFormatFunction()
       ),
       { description, tags: [] }
     );
