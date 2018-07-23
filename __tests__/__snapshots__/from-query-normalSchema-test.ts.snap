@@ -769,7 +769,7 @@ export interface EnumQuery {
   },
   Object {
     "additionalTypes": Array [
-      "export enum Episode {
+      "export const enum Episode {
   NEWHOPE = 'NEWHOPE',
   EMPIRE = 'EMPIRE',
   JEDI = 'JEDI'
@@ -777,7 +777,7 @@ export interface EnumQuery {
 ",
     ],
     "interface": "",
-    "result": "export enum Episode {
+    "result": "export const enum Episode {
   NEWHOPE = 'NEWHOPE',
   EMPIRE = 'EMPIRE',
   JEDI = 'JEDI'
