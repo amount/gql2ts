@@ -31,8 +31,7 @@
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
     "@gql2ts/util": "^1.8.1",
-    "humps": "^2.0.0",
-    "typescript": "^2.2.2"
+    "humps": "^2.0.0"
   },
   "devDependencies": {
     "@gql2ts/types": "^1.8.1",
