@@ -12,7 +12,7 @@
     "@types/jest": "^21.1.2",
     "@types/node": "^10.5.5",
     "coveralls": "^3.0.0",
-    "jest": "^21.2.1",
+    "jest": "^23.4.2",
     "lerna": "2.3.1",
     "ts-jest": "^21.0.1",
     "tslint": "^5.5.0",
@@ -38,6 +38,7 @@
   },
   "perferGlobal": true,
   "jest": {
+    "testEnvironment": "node",
     "globals": {
       "ts-jest": {
         "tsConfigFile": "packages/cli/tsconfig.json"
