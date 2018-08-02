@@ -24,6 +24,7 @@ packages/from-query           # @gql2ts/from-query
 packages/from-schema          # @gql2ts/from-schema
 packages/language-flow        # @gql2ts/language-flow
 packages/language-typescript  # @gql2ts/language-typescript
+packages/loader               # @gql2ts/loader
 packages/types                # @gql2ts/types
 packages/util                 # @gql2ts/util
 ```
