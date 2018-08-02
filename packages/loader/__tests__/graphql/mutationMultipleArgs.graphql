@@ -1,0 +1,8 @@
+mutation CreateMessage ($author: String, $content: String) {
+  createMessage(input: {
+    author: $author,
+    content: $content,
+  }) {
+    id
+  }
+}

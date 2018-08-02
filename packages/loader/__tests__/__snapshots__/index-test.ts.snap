@@ -1,0 +1,418 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader Mutation mutationInputArg loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface CreateMessageInput {
+  input?: {
+    content?: string | null;
+    author?: string | null;
+  } | null;
+}
+
+export interface SelectionOnCreateMessage {
+  id: string;
+}
+
+export interface CreateMessage {
+  createMessage: SelectionOnCreateMessage | null;
+}
+
+"
+`;
+
+exports[`Loader Mutation mutationInputArg loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"mutation\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"CreateMessage\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"}},\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"MessageInput\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"createMessage\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":93}};"`;
+
+exports[`Loader Mutation mutationInputArgNotNull loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface CreateMessageInput {
+  input: {
+    content?: string | null;
+    author?: string | null;
+  };
+}
+
+export interface SelectionOnCreateMessage {
+  id: string;
+}
+
+export interface CreateMessage {
+  createMessage: SelectionOnCreateMessage | null;
+}
+
+"
+`;
+
+exports[`Loader Mutation mutationInputArgNotNull loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"mutation\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"CreateMessage\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"}},\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"MessageInput\\"}}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"createMessage\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":94}};"`;
+
+exports[`Loader Mutation mutationMultipleArgs loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface CreateMessageInput {
+  author?: string | null;
+  content?: string | null;
+}
+
+export interface SelectionOnCreateMessage {
+  id: string;
+}
+
+export interface CreateMessage {
+  createMessage: SelectionOnCreateMessage | null;
+}
+
+"
+`;
+
+exports[`Loader Mutation mutationMultipleArgs loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"mutation\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"CreateMessage\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"author\\"}},\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}}},{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"content\\"}},\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"createMessage\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"},\\"value\\":{\\"kind\\":\\"ObjectValue\\",\\"fields\\":[{\\"kind\\":\\"ObjectField\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"author\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"author\\"}}},{\\"kind\\":\\"ObjectField\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"content\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"content\\"}}}]}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":150}};"`;
+
+exports[`Loader Mutation mutationNoArgs loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface SelectionOnCreateMessage {
+  id: string;
+}
+
+export interface CreateMessage {
+  createMessage: SelectionOnCreateMessage | null;
+}
+
+"
+`;
+
+exports[`Loader Mutation mutationNoArgs loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"mutation\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"CreateMessage\\"},\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"createMessage\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"input\\"},\\"value\\":{\\"kind\\":\\"ObjectValue\\",\\"fields\\":[{\\"kind\\":\\"ObjectField\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"author\\"},\\"value\\":{\\"kind\\":\\"StringValue\\",\\"value\\":\\"andy\\",\\"block\\":false}},{\\"kind\\":\\"ObjectField\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"content\\"},\\"value\\":{\\"kind\\":\\"StringValue\\",\\"value\\":\\"hope is a good thing\\",\\"block\\":false}}]}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":127}};"`;
+
+exports[`Loader Query anonQuery loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface SelectionOnHeroNoParam {
+  id: string;
+  name: string | null;
+}
+
+export interface Anonymous {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}
+
+"
+`;
+
+exports[`Loader Query anonQuery loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"heroNoParam\\"},\\"arguments\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":46}};"`;
+
+exports[`Loader Query nakedQuery loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface SelectionOnHeroNoParam {
+  id: string;
+  name: string | null;
+}
+
+export interface Anonymous {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}
+
+"
+`;
+
+exports[`Loader Query nakedQuery loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"heroNoParam\\"},\\"arguments\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":46}};"`;
+
+exports[`Loader Query query loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface SelectionOnHeroNoParam {
+  id: string;
+  name: string | null;
+}
+
+export interface TestQuery {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}
+
+"
+`;
+
+exports[`Loader Query query loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"TestQuery\\"},\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"heroNoParam\\"},\\"arguments\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":56}};"`;
+
+exports[`Loader Query queryWithArray loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface TestQueryInput {
+  ids: Array<string>;
+}
+
+export interface SelectionOnGetCharacters {
+  id: string;
+  name: string | null;
+}
+
+export interface TestQuery {
+  getCharacters: Array<SelectionOnGetCharacters | null>;
+}
+
+"
+`;
+
+exports[`Loader Query queryWithArray loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"TestQuery\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"ids\\"}},\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"ListType\\",\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"ID\\"}}}}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"getCharacters\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"ids\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"ids\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":85}};"`;
+
+exports[`Loader Query queryWithTypename loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface SelectionOnHeroNoParam {
+  __typename: 'Human' | 'Droid';
+  id: string;
+  name: string | null;
+}
+
+export interface TestQuery {
+  heroNoParam: SelectionOnHeroNoParam | null;
+}
+
+"
+`;
+
+exports[`Loader Query queryWithTypename loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"TestQuery\\"},\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"heroNoParam\\"},\\"arguments\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"__typename\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":71}};"`;
+
+exports[`Loader Query queryWithVariable loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface TestQueryInput {
+  id: string;
+}
+
+export interface SelectionOnHuman {
+  id: string;
+  name: string | null;
+}
+
+export interface TestQuery {
+  human: SelectionOnHuman | null;
+}
+
+"
+`;
+
+exports[`Loader Query queryWithVariable loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"TestQuery\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}},\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"human\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":75}};"`;
+
+exports[`Loader Query queryWithVariable loads graphql file 3`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface TestQueryInput {
+  id: string;
+}
+
+export interface SelectionOnHuman {
+  id: string;
+  name: string | null;
+}
+
+export interface TestQuery {
+  human: SelectionOnHuman | null;
+}
+
+"
+`;
+
+exports[`Loader Query queryWithVariable loads graphql file 4`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"TestQuery\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}},\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"human\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]},{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":75}};"`;
+
+exports[`Loader Query unionQuery loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface UnionQueryInput {
+  id: string;
+}
+
+export interface SelectionOnHumanOrDroid {
+  id: string;
+}
+
+export interface UnionQuery {
+  humanOrDroid: SelectionOnHumanOrDroid | null;
+}
+
+"
+`;
+
+exports[`Loader Query unionQuery loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"UnionQuery\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}},\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"humanOrDroid\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":73}};"`;
+
+exports[`Loader Query unionQueryWithFragment loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface UnionQueryInput {
+  id: string;
+}
+
+export interface IFragmentSpreadOnHuman {
+  id: string;
+}
+
+export interface IFragmentSpreadOnDroid {
+  name: string | null;
+}
+
+export interface UnionQuery {
+  humanOrDroid:
+    | Partial<IFragmentSpreadOnHuman> & Partial<IFragmentSpreadOnDroid>
+    | null;
+}
+
+"
+`;
+
+exports[`Loader Query unionQueryWithFragment loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"UnionQuery\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}},\\"type\\":{\\"kind\\":\\"NonNullType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"humanOrDroid\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"InlineFragment\\",\\"typeCondition\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"Human\\"}},\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"id\\"},\\"arguments\\":[],\\"directives\\":[]}]}},{\\"kind\\":\\"InlineFragment\\",\\"typeCondition\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"Droid\\"}},\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}]}}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":137}};"`;
+
+exports[`Loader Query with custom typeMap and options loads graphql file 1`] = `
+"
+// tslint:disable
+
+/* this is an auto-generated file. do not modify. */
+
+import { DocumentNode } from 'graphql';
+
+declare let GraphQLQuery: DocumentNode;
+
+export default GraphQLQuery;
+
+
+export interface CustomScalarQueryInput {
+  test?: string | null;
+}
+
+export interface CustomScalarQuery {
+  test: string | null;
+}
+
+"
+`;
+
+exports[`Loader Query with custom typeMap and options loads graphql file 2`] = `"export default {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"CustomScalarQuery\\"},\\"variableDefinitions\\":[{\\"kind\\":\\"VariableDefinition\\",\\"variable\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"test\\"}},\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"TestScalar\\"}}}],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"test\\"},\\"arguments\\":[{\\"kind\\":\\"Argument\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"test\\"},\\"value\\":{\\"kind\\":\\"Variable\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"test\\"}}}],\\"directives\\":[]}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":68}};"`;

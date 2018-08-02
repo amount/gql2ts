@@ -1,0 +1,5 @@
+query EnumQuery($episode: Episode) {
+  hero(episode: $episode) {
+    appearsIn
+  }
+}

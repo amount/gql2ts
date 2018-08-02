@@ -1,0 +1,11 @@
+query UnionQuery($id: String!) {
+  humanOrDroid (id: $id) {
+    ... on Human {
+      id
+    }
+
+    ... on Droid {
+      name
+    }
+  }
+}
