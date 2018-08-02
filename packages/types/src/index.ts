@@ -80,6 +80,7 @@ export interface IFromQueryOptions {
   generateInputName: WrapType;
   addExtensionsToInterfaceName: InterfaceNameWithExtensions;
   generateDocumentation: GenerateDocumentation;
+  typeMap: ITypeMap;
 }
 
 export type HandleNamedTypes = (type: NamedTypeNode | GraphQLNamedType, isNonNull: boolean, replacement: string | null) => string;

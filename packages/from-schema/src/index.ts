@@ -46,9 +46,14 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     addSemicolon,
     enumTypeBuilder,
     generateDocumentation,
+    typeMap
   } = optionsInput.formats;
 
-  const TYPE_MAP: ITypeMap = { ...DEFAULT_TYPE_MAP, ...(optionsInput.typeMap || {}) };
+  const TYPE_MAP: ITypeMap = {
+    ...DEFAULT_TYPE_MAP,
+    ...(typeMap || {}),
+    ...(optionsInput.typeMap || {})
+  };
 
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
@@ -114,7 +119,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     (description, name, possibleTypes) => wrapWithDocumentation(
       addSemicolon(typeBuilder(name, possibleTypes)),
       { description, tags: [] }
-    )  + '\n\n';
+    ) + '\n\n';
 
   const typeNameDeclaration: (name: string) => string = name => addSemicolon(`__typename: "${name}"`);
 
@@ -124,7 +129,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   const generateInterfaceDeclaration: GenerateInterfaceDeclaration =
     ({ name, description }, declaration, fields, additionalInfo, isInput) => {
       if (!isInput && !optionsInput.ignoreTypeNameDeclaration) {
-       fields =  [typeNameDeclaration(name), ...fields];
+        fields = [typeNameDeclaration(name), ...fields];
       }
 
       return additionalInfo + wrapWithDocumentation(
@@ -142,12 +147,12 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       );
     }
 
+    const formattedEnum: string = formatEnum(enumValues, generateDocumentation);
     return wrapWithDocumentation(
       (enumTypeBuilder || typeBuilder)(
         generateEnumName(name),
-        addSemicolon(
-          formatEnum(enumValues, generateDocumentation)
-        )
+        // Only add semicolon when not using enum type builder
+        enumTypeBuilder ? formattedEnum : addSemicolon(formattedEnum)
       ),
       { description, tags: [] }
     );

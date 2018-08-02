@@ -5,9 +5,19 @@
 ### Breaking Changes
 - Remove legacy TS 1.x support (without `strictNullChecks`)
 
-## Master
+## 1.8.2
+
+- Remove dependency on Typescript for `@gql2ts/language-typescript` [PR #209](https://github.com/avantcredit/gql2ts/pull/209)
+
+## 1.8.1
+
+- Export enums as consts in `@gql2ts/from-schema` so they are available to the Typescript compiler. [Issue #179](https://github.com/avantcredit/gql2ts/issues/179) [PR #202](https://github.com/avantcredit/gql2ts/pull/202)
+
+- Only append a semicolon to 'enums' when they are declared as union types and not Typescript `enum` types. [Issue #179](https://github.com/avantcredit/gql2ts/issues/179) [PR #202](https://github.com/avantcredit/gql2ts/pull/202)
 
 - Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #169](https://github.com/avantcredit/gql2ts/pull/169)
+
+- Import TypeMap from language packages [PR #175](https://github.com/avantcredit/gql2ts/pull/175) [PR #176](https://github.com/avantcredit/gql2ts/pull/176)
 
 ## 1.7.2
 

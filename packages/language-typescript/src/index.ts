@@ -3,7 +3,6 @@ import {
   WrapType,
   IFromQueryOptions,
   InputFormatter,
-  IDefaultTypeMap,
   QueryNamer,
   EnumFormatter,
   InterfaceAndTypeBuilder,
@@ -14,6 +13,7 @@ import {
   InterfaceNameWithExtensions,
   EnumTypeBuilder,
   GenerateDocumentation,
+  ITypeMap,
 } from '@gql2ts/types';
 import { buildDocumentation, filterAndJoinArray } from '@gql2ts/util';
 import prettify from './typescriptPrettify';
@@ -40,7 +40,7 @@ export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? pascalize(def.na
 
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => ADD_SEMICOLON(`${name}${isOptional ? '?:' : ':' } ${type}`);
 
-export const DEFAULT_TYPE_MAP: IDefaultTypeMap = {
+export const DEFAULT_TYPE_MAP: ITypeMap = {
   ID: 'string',
   String: 'string',
   Boolean: 'boolean',
@@ -67,7 +67,7 @@ export const DEFAULT_ENUM_FORMATTER: EnumFormatter = (values, documentationGener
 }`;
 
 export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) =>
-`enum ${name} ${values}`;
+`const enum ${name} ${values}`;
 
 export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `${pascalize(name)}`;
 export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)}Input`;
@@ -87,10 +87,19 @@ ${interfaces}
 const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
   description ? description.replace(/\n/g, '\n* ') : description;
 
-export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => (description || tags.length) ? `
+export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => {
+  if (!description && !tags.length) {
+    return '';
+  }
+  const arr: Array<string | undefined> = [
+    fixDescriptionDocblock(description),
+    ...tags.map(({ tag, value }) => `@${tag} ${JSON.stringify(value)}`)
+  ];
+  return `
   /**
-   * ${filterAndJoinArray([fixDescriptionDocblock(description), ...tags.map(({ tag, value }) => `@${tag} ${value}`)], '\n* ')}
-   */` : '';
+   * ${filterAndJoinArray(arr, '\n   * ')}
+   */`;
+};
 
 export const DEFAULT_OPTIONS: IFromQueryOptions = {
   wrapList: DEFAULT_WRAP_LIST,
@@ -115,7 +124,8 @@ export const DEFAULT_OPTIONS: IFromQueryOptions = {
   postProcessor: prettify,
   generateInputName: DEFAULT_INPUT_NAME_GENERATOR,
   addExtensionsToInterfaceName: ADD_INTERFACE_EXTENSIONS,
-  generateDocumentation: DEFAULT_DOCUMENTATION_GENERATOR
+  generateDocumentation: DEFAULT_DOCUMENTATION_GENERATOR,
+  typeMap: DEFAULT_TYPE_MAP
 };
 
 export default DEFAULT_OPTIONS;
