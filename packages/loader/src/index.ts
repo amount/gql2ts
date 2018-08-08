@@ -1,43 +1,43 @@
-import gql from 'graphql-tag';
 import * as fs from 'fs';
 import gqlRun from '@gql2ts/from-query';
-import { ITypeMap, IProvidedOptions } from '@gql2ts/types';
 import * as loaderUtils from 'loader-utils';
+import buildDeclaration from './buildDeclaration';
+import { PossibleSchemaInput } from '../node_modules/@gql2ts/util';
+import { ITypeMap, IProvidedOptions } from '../node_modules/@gql2ts/types';
 
-const DeclarationContent: string = `/* this is an auto-generated file. do not modify. */
-
-import { DocumentNode } from 'graphql';
-
-declare let GraphQLQuery: DocumentNode;
-
-export default GraphQLQuery;
-`;
-
-const FileContent: any = (
-  schema: any,
-  source: string,
-  typeMap?: Partial<ITypeMap> | undefined,
-  options?: IProvidedOptions | undefined,
-): string => `
-// tslint:disable
-
-${DeclarationContent}
-
-${gqlRun(schema, source, typeMap, options)
-  .map(({ result }) => result)
-  .join('\n')}
-`;
+interface IOptions {
+  schema: PossibleSchemaInput;
+  typeMap?: Partial<ITypeMap>;
+  options?: Partial<IProvidedOptions>;
+}
 
 // tslint:disable:no-invalid-this
-// tslint:disable-next-line:typedef
-module.exports = function (source: any) {
-  const options: loaderUtils.OptionObject = loaderUtils.getOptions(this);
-
-  if (!options.schema) {
-    throw new Error('options[\'schema\'] must be set for graphql-loader');
+module.exports = function (source: string): void {
+  if (this.cacheable) {
+    this.cacheable();
   }
 
-  fs.writeFileSync(`${this.resourcePath}.d.ts`, FileContent(options.schema, source, options.typeMap, options.options));
-  return `export default ${JSON.stringify(gql(source))};`;
+  const callback: (
+    error: Error | null,
+    content: string | Buffer,
+  ) => void = this.async();
+
+  const { schema, typeMap, options }: IOptions = loaderUtils.getOptions(this) as IOptions;
+
+  if (!schema) {
+    return callback(new Error('Schema must be provided'), source);
+  }
+
+  const declaration: string = gqlRun(schema, source, typeMap, options)
+    .map(({ result }) => result)
+    .join('\n');
+
+  fs.writeFile(
+    `${this.resourcePath}.d.ts`,
+    buildDeclaration(declaration),
+    err => {
+      callback(err, source);
+    },
+  );
 };
 // tslint:enable:no-invalid-this

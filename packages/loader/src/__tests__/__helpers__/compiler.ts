@@ -2,10 +2,10 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 import * as MemoryFileSystem from 'memory-fs';
 
-export default (fixture, options = {}) => {
+export default (fixture, options = {}): Promise<webpack.Stats> => {
   const compiler: webpack.Compiler = webpack({
     context: __dirname,
-    entry: `./${fixture}`,
+    entry: `../${fixture}`,
     output: {
       path: path.resolve(__dirname),
       filename: 'bundle.js',
@@ -13,10 +13,15 @@ export default (fixture, options = {}) => {
     module: {
       rules: [{
         test: /\.graphql$/,
-        use: {
-          loader: path.resolve(__dirname, '../src/index.ts'),
-          options
-        }
+        use: [
+          {
+            loader: path.resolve(__dirname, 'fakeLoader.ts')
+          },
+          {
+            loader: path.resolve(__dirname, '../../index.ts'),
+            options
+          }
+        ]
       }]
     }
   });
@@ -26,9 +31,8 @@ export default (fixture, options = {}) => {
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
-        reject(err);
+        return reject(err || new Error(`Webpack Error: ${stats.toJson().errors.join(', ')}`));
       }
-
       resolve(stats);
     });
   });

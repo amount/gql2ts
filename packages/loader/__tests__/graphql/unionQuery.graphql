@@ -1,5 +1,0 @@
-query UnionQuery($id: String!) {
-  humanOrDroid (id: $id) {
-    id
-  }
-}

@@ -1,7 +1,0 @@
-query TestQuery {
-  heroNoParam {
-    __typename
-    id
-    name
-  }
-}

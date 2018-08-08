@@ -1,6 +1,0 @@
-query TestQuery ($ids: [ID!]!) {
-  getCharacters (ids: $ids) {
-    id
-    name
-  }
-}

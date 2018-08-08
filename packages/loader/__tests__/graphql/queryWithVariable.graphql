@@ -1,6 +1,0 @@
-query TestQuery ($id: String!) {
-  human (id: $id) {
-    id
-    name
-  }
-}

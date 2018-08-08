@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader fails if no schema is provided 1`] = `
+[Error: Webpack Error: ../graphql/query.graphql
+Module build failed (from /Users/bherma55/gql2ts/packages/loader/src/index.ts):
+Error: Schema must be provided
+    at Object.<anonymous>.module.exports (/Users/bherma55/gql2ts/packages/loader/src/index.ts:28:21)]
+`;

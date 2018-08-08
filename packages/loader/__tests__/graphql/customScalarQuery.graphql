@@ -1,3 +1,0 @@
-query CustomScalarQuery($test: TestScalar) {
-  test (test: $test)
-}
