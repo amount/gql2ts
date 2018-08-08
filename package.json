@@ -40,7 +40,7 @@
   "jest": {
     "collectCoverageFrom": [
       "**/src/**/*.ts",
-      "!cli",
+      "!packages/cli",
       "!**/*.d.ts",
       "!**/__tests__/**/*.ts"
     ],

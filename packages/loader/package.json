@@ -19,7 +19,8 @@
   "keywords": [
     "gql2ts",
     "graphql",
-    "typescript"
+    "typescript",
+    "webpack"
   ],
   "author": "Brandon Herman <brandon.herman@avant.com> (https://www.avant.com)",
   "license": "ISC",
@@ -43,6 +44,7 @@
   },
   "dependencies": {
     "@gql2ts/from-query": "^1.8.1",
+    "@gql2ts/util": "^1.8.1",
     "loader-utils": "^1.1.0"
   }
 }

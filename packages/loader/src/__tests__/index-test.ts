@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Stats } from 'webpack';
-import compiler from './__helpers__/compiler';
 import * as fromQuery from '@gql2ts/from-query';
+import { PossibleSchemaInput } from '@gql2ts/util';
+import { ITypeMap, IProvidedOptions } from '@gql2ts/types';
+import compiler from './__helpers__/compiler';
 import buildDeclaration from '../buildDeclaration';
-import { PossibleSchemaInput } from '../../../types/node_modules/@gql2ts/util';
-import { ITypeMap, IProvidedOptions } from '../../../from-query/node_modules/@gql2ts/types';
 
 describe('Loader', () => {
   it('fails if no schema is provided', async () => {

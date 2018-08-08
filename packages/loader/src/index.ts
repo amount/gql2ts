@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import gqlRun from '@gql2ts/from-query';
+import { PossibleSchemaInput } from '@gql2ts/util';
+import { ITypeMap, IProvidedOptions } from '@gql2ts/types';
 import * as loaderUtils from 'loader-utils';
 import buildDeclaration from './buildDeclaration';
-import { PossibleSchemaInput } from '../node_modules/@gql2ts/util';
-import { ITypeMap, IProvidedOptions } from '../node_modules/@gql2ts/types';
 
 interface IOptions {
   schema: PossibleSchemaInput;
@@ -35,9 +35,7 @@ module.exports = function (source: string): void {
   fs.writeFile(
     `${this.resourcePath}.d.ts`,
     buildDeclaration(declaration),
-    err => {
-      callback(err, source);
-    },
+    err => callback(err, source),
   );
 };
 // tslint:enable:no-invalid-this
