@@ -20,7 +20,7 @@
   },
   "scripts": {
     "pretest": "lerna bootstrap --hoist graphql",
-    "test": "jest --coverage --detectOpenHandles",
+    "test": "jest --coverage --forceExit",
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
@@ -40,7 +40,7 @@
   "jest": {
     "collectCoverageFrom": [
       "**/src/**/*.ts",
-      "!packages/cli",
+      "!packages/cli/**",
       "!**/*.d.ts",
       "!**/__tests__/**/*.ts"
     ],

@@ -10,7 +10,7 @@ import buildDeclaration from '../buildDeclaration';
 describe('Loader', () => {
   it('fails if no schema is provided', async () => {
     const stats: Promise<Stats> = compiler(`./graphql/query.graphql`, {});
-    await expect(stats).rejects.toMatchSnapshot();
+    await expect(stats).rejects.toThrow('Schema must be provided');
   });
 
   it('writes a declaration file', async () => {
