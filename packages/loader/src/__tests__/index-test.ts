@@ -8,6 +8,16 @@ import compiler from './__helpers__/compiler';
 import buildDeclaration from '../buildDeclaration';
 
 describe('Loader', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
   it('fails if no schema is provided', async () => {
     const stats: Promise<Stats> = compiler(`./graphql/query.graphql`, {});
     await expect(stats).rejects.toThrow('Schema must be provided');
