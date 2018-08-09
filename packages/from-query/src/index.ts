@@ -48,7 +48,7 @@ import {
   SubtypeNamerAndDedupe,
   ISubtypeMetadata,
 } from './subtype';
-import { isSelectionSetExhaustive } from './fragment';
+import { isSelectionSetExhaustive, expandFragments } from './fragment';
 
 const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
   const enumDeclarations: Map<string, string> = new Map<string, string>();
@@ -250,14 +250,22 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
          * capability)
          */
         if (fragments.length) {
-          if (isSelectionSetExhaustive(selection, parent as any, parsedSchema)) {
-            console.log(fragments);
-            fragments = fragments.reduce((acc, frag) => {
-              if (frag.iface.startsWith('Partial<')) {
-                return [...acc, {...frag, iface: frag.iface.replace('Partial<', '').replace('>', '')}]
-              }
-              return [...acc, frag];
-            }, [])
+          expandFragments(selection, parent as any, parsedSchema);
+
+          fragments = fragments.reduce((acc, frag) => {
+            if (frag.iface.startsWith('Partial<')) {
+              return [...acc, {...frag, iface: frag.iface.replace('Partial<', '').replace('>', '')}];
+            }
+            return [...acc, frag];
+          }, []);
+
+          if (!isSelectionSetExhaustive(selection, parent as any, parsedSchema)) {
+            fragments.push({
+              complexTypes: [],
+              iface: '{}',
+              isFragment: false,
+              isPartial: false
+            });
           }
         }
         const andOps: string[] = [];
@@ -290,7 +298,9 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
           }
         }
 
-        andOps.push(...fragments.map(wrapPossiblePartial));
+        if (fragments.length) {
+          andOps.push(`(${fragments.map(wrapPossiblePartial).join(' | ')})`);
+        }
         childType = typeJoiner(andOps);
         resolvedType = convertToType(field ? field.type : fieldType, false, childType);
       } else {

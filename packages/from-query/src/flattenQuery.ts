@@ -1,3 +1,4 @@
+// tslint:disable
 /**
  * @file This is a work-in-progress attempt to flatten queries, in order to be able to process them easier
  * This could in the future be used for some optimization cases - at least parts of it can
@@ -12,7 +13,7 @@ import { DefinitionNode, SelectionNode, OperationDefinitionNode, FieldNode } fro
 
 const queryDefn = parse(`
   query {
-    ...FragmentTwo
+    # ...FragmentTwo
 
     someField {
       ...FragmentTwo
@@ -20,6 +21,8 @@ const queryDefn = parse(`
         ... on Something {
           ... on Something {
             aField
+
+            ...FragmentOne
           }
         }
       }
@@ -157,7 +160,7 @@ const inlineFragmentsInQuery: (query: OperationDefinitionNode, fragments: Fragme
  * @param document A parsed Query
  */
 export const flattenFragments: (document: DocumentNode) => DocumentNode = document => {
-  const fragments: FragmentDefinitionNode[] = document.definitions.filter(defn => defn.kind === 'FragmentDefinition') as FragmentDefinitionNode[];
+  const fragments: FragmentDefinitionNode[] = document.definitions.filter((defn): defn is FragmentDefinitionNode => defn.kind === 'FragmentDefinition');
   const definitions: DefinitionNode[] = document.definitions.map(defn => {
     if (defn.kind === 'FragmentDefinition') {
       return flattenWrapper(defn, fragments);

@@ -1,3 +1,4 @@
+// tslint:disable
 /**
  * @file This file is an exploration into developing smarter support for fragments.
  * The most important piece of this right now is the piece that checks if a selectionset is exhaustive
@@ -84,10 +85,12 @@ import { schemaFromInputs } from '@gql2ts/util';
  * definitions.
  */
 export const isSelectionSetExhaustive: (originalNode: FieldNode, type: GraphQLNamedType, schema: GraphQLSchema) => boolean = (originalNode, type, schema) => {
+  console.log('isExhaustive?')
   if (!originalNode.selectionSet || !originalNode.selectionSet.selections.length) { return true; }
-
+  console.log('isExhaustive2?')
   // schema.getType(originalNode.)
   if (!isAbstractType(type)) {
+    console.log('isExhaustive3?', type);
     return true;
   }
 
@@ -107,8 +110,21 @@ export const isSelectionSetExhaustive: (originalNode: FieldNode, type: GraphQLNa
   }, { fields: [], inlineFragments: [] });
 
   const selectedOnSet = new Set(inlineFragments.filter(frag => frag.typeCondition).map(frag => frag.typeCondition!.name.value));
-
+  console.log('yo');
+  console.log(possibleTypes.map(t => t.name), [...selectedOnSet])
   return possibleTypes.every(type => selectedOnSet.has(type.name));
+}
+
+export const expandFragments: (originalNode: FieldNode, type: GraphQLNamedType, schema: GraphQLSchema) => void = (oN, t, sch) => {
+  if (!oN.selectionSet) { return []; }
+  if (!isSelectionSetExhaustive(oN, t, sch)) {
+    console.log('not exhaustive');
+  } else {
+    console.log('exhaustive');
+    // console.log(oN.selectionSet);
+    // const fields = oN.selectionSet!.selections.filter(x => x.kind === 'Field');
+    // console.log(fields);
+  }
 }
 
 const flattenFragments: (originalNode: FieldNode, type: GraphQLNamedType, schema: GraphQLSchema) => FieldNode = (originalNode, type, schema) => {
@@ -146,8 +162,6 @@ const flattenFragments: (originalNode: FieldNode, type: GraphQLNamedType, schema
   }
 
   console.log(`it's exhaustive`);
-  // we're exhaustive now
-
 
   return newFieldNode;
 }
@@ -190,8 +204,8 @@ const schema = schemaFromInputs(`
   }
 `);
 
-flattenFragments(
-  (query.definitions[0] as any as FieldNode).selectionSet!.selections[0] as FieldNode,
-  schema.getType('Product'),
-  schema
-);
+// flattenFragments(
+//   (query.definitions[0] as any as FieldNode).selectionSet!.selections[0] as FieldNode,
+//   schema.getType('Product'),
+//   schema
+// );
