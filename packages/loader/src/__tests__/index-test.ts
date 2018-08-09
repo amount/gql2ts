@@ -7,6 +7,10 @@ import { ITypeMap, IProvidedOptions } from '@gql2ts/types';
 import compiler from './__helpers__/compiler';
 import buildDeclaration from '../buildDeclaration';
 
+const SOURCE: string = fs
+  .readFileSync(path.resolve(__dirname, './graphql/query.graphql'))
+  .toString();
+
 describe('Loader', () => {
   beforeEach(() => {
     jest.restoreAllMocks();
@@ -44,9 +48,7 @@ describe('Loader', () => {
     expect(gql2tsSpy).toHaveBeenCalledTimes(1);
     expect(gql2tsSpy).toHaveBeenCalledWith(
       FAKE_SCHEMA,
-      fs
-        .readFileSync(path.resolve(__dirname, './graphql/query.graphql'))
-        .toString(),
+      SOURCE,
       undefined,
       undefined,
     );
@@ -86,9 +88,7 @@ describe('Loader', () => {
     expect(gql2tsSpy).toHaveBeenCalledTimes(1);
     expect(gql2tsSpy).toHaveBeenCalledWith(
       FAKE_SCHEMA,
-      fs
-        .readFileSync(path.resolve(__dirname, './graphql/query.graphql'))
-        .toString(),
+      SOURCE,
       typeMapValue,
       optionsValue,
     );

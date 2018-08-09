@@ -10,12 +10,13 @@ npm install @gql2ts/loader
 
 ## Basic Usage in webpack configuration file:
 
-It is recommended to include the [graphql-tag/loader](https://github.com/apollographql/graphql-tag#webpack-preprocessing-with-graphql-tagloader) in the `use` array.
+> __Note:__ It is recommended to also include [graphql-tag/loader](http://) in your webpack config, see below for an example
 
 ```javascript
 import Schema from './schema';
 
-...
+{
+// ...
   module: {
     rules: {
       {
@@ -31,11 +32,11 @@ import Schema from './schema';
               schema: Schema, // Required
               typeMap: { }, // Optional: Partial<ITypeMap> from @gql2ts/types
               options: { } // Optional: IProvidedOptions from @gql2ts/types
+            }
           }
-        }
-      },
-    ]
-  },
-...
-
-```
+        },
+      ]
+    },
+  }
+// ...
+}
