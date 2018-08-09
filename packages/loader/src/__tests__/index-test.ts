@@ -9,12 +9,10 @@ import buildDeclaration from '../buildDeclaration';
 
 describe('Loader', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
     jest.restoreAllMocks();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
     jest.restoreAllMocks();
   });
 
@@ -52,9 +50,6 @@ describe('Loader', () => {
       undefined,
       undefined,
     );
-
-    fsSpy.mockClear();
-    gql2tsSpy.mockClear();
   });
 
   it('writes a declaration file using typeMap and options', async () => {
@@ -97,8 +92,5 @@ describe('Loader', () => {
       typeMapValue,
       optionsValue,
     );
-
-    fsSpy.mockClear();
-    gql2tsSpy.mockClear();
   });
 });
