@@ -10,6 +10,7 @@
 import { parse, DocumentNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode } from "graphql";
 import { print } from 'graphql/language/printer';
 import { DefinitionNode, SelectionNode, OperationDefinitionNode, FieldNode } from 'graphql/language/ast';
+import { inspect } from 'util';
 
 const queryDefn = parse(`
   query {
@@ -18,9 +19,12 @@ const queryDefn = parse(`
     someField {
       ...FragmentTwo
       ... on Something {
+        fromInline
+      }
+      ... on Something {
         ... on Something {
           ... on Something {
-            aField
+            fromNestedInline
 
             ...FragmentOne
           }
@@ -30,30 +34,46 @@ const queryDefn = parse(`
   }
 
   fragment FragmentOne on Something {
-    something
+    frag1
     ...FragmentTwo
     ... on Something {
-      somethingElseAgain
+      frag1_1
       ... on Something {
-        somethingElseAgainAgain
+        frag1_2
       }
     }
 
     ... on SomethingElse {
-      nope
+      frag1_otherfield_1
       ... on SomethingElse {
-        nope2
+        frag1_otherfield_2
         ... on SomethingElse {
-          nope3
+          frag1_otherfield_3
         }
       }
     }
   }
 
+
   fragment FragmentTwo on Something {
-    somethingElse
+    fromFragmentTwo
   }
 `);
+
+
+// const queryDefn = parse(`
+//   query {
+//     # ...FragmentTwo
+//     someField {
+//       ... on Something {
+//         fieldA
+//       }
+//       ... on Something {
+//         fieldB
+//       }
+//     }
+//   }
+// `);
 
 /**
  * This builds an inline fragment from a FragmentSpread
@@ -62,6 +82,7 @@ const queryDefn = parse(`
  * @param fragments A list of all included fragments (should be a Map in the future)
  */
 const buildInlineFragment: (fragment: FragmentSpreadNode, fragments: FragmentDefinitionNode[]) => InlineFragmentNode = (fragment, otherFragments) => {
+  // can convert this to a map later
   const referencedFragment = otherFragments.find(frag => fragment.name.value === frag.name.value);
 
   if (!referencedFragment) { throw new Error('Invalid Fragment Selection'); }
@@ -119,6 +140,44 @@ const flattenWrapper: (fragment: FragmentDefinitionNode, fragments: FragmentDefi
 }
 
 /**
+ *
+ */
+const flattenAdjacentFragments: (fragment: InlineFragmentNode, precedingFields: SelectionNode[]) => SelectionNode[] = (fragment, precedingFields) => {
+  if (!fragment.typeCondition) {
+    return [fragment, ...precedingFields];
+  }
+
+  const precedingInlineFragments: InlineFragmentNode[] = precedingFields.filter((field): field is InlineFragmentNode => field.kind === 'InlineFragment');
+
+  if (!precedingInlineFragments.length) {
+    return [fragment, ...precedingFields];
+  }
+
+  const targetTypeCondition: string = fragment.typeCondition.name.value;
+
+  // @TODO groupBy instead
+  const matchingFragment: InlineFragmentNode | undefined = precedingInlineFragments.find(({ typeCondition }) => !!typeCondition && typeCondition.name.value === targetTypeCondition);
+  if (!matchingFragment) { return [fragment, ...precedingFields]; }
+
+  const nonMatchingFragments: InlineFragmentNode[] = precedingInlineFragments.filter(({ typeCondition }) => !!typeCondition && typeCondition.name.value !== targetTypeCondition);
+
+  return [
+    {
+      ...fragment,
+      selectionSet: {
+        kind: 'SelectionSet',
+        ...matchingFragment.selectionSet,
+        selections: [
+          ...matchingFragment.selectionSet.selections,
+          ...fragment.selectionSet.selections
+        ]
+      }
+    },
+    ...nonMatchingFragments
+  ]
+}
+
+/**
  * Recursively iterates over selection sets and flattens/inlines fragments
  * @param field Field that we're flattening
  * @param fragments A List of fragments
@@ -130,15 +189,21 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
     ...field,
     selectionSet: {
       ...field.selectionSet,
-      selections: field.selectionSet.selections.map(selection => {
+      selections: field.selectionSet.selections.reduce((selections, selection) => {
         if (selection.kind === 'FragmentSpread') {
-          return buildInlineFragment(selection, fragments);
+          return [...selections, buildInlineFragment(selection, fragments)];
         } else if (selection.kind === 'InlineFragment') {
-          selection = flattenFragment(selection, fragments) as InlineFragmentNode;
+          [selection, ...selections] = flattenAdjacentFragments(
+            flattenFragment(selection, fragments) as InlineFragmentNode,
+            selections
+          );
         }
 
-        return recurseFields(selection, fragments);
-      })
+        return [
+          ...selections,
+          recurseFields(selection as any, fragments)
+        ];
+      }, [] as SelectionNode[])
     }
   };
 }
@@ -160,12 +225,20 @@ const inlineFragmentsInQuery: (query: OperationDefinitionNode, fragments: Fragme
  * @param document A parsed Query
  */
 export const flattenFragments: (document: DocumentNode) => DocumentNode = document => {
-  const fragments: FragmentDefinitionNode[] = document.definitions.filter((defn): defn is FragmentDefinitionNode => defn.kind === 'FragmentDefinition');
-  const definitions: DefinitionNode[] = document.definitions.map(defn => {
-    if (defn.kind === 'FragmentDefinition') {
-      return flattenWrapper(defn, fragments);
-    } else if (defn.kind === 'OperationDefinition') {
-      return inlineFragmentsInQuery(defn, fragments);
+  const [fragments, others] = document.definitions.reduce<[FragmentDefinitionNode[], DefinitionNode[]]>(
+    (acc, defn) => defn.kind === 'FragmentDefinition' ?
+      [acc[0].concat(defn), acc[1]] :
+      [acc[0], acc[1].concat(defn)],
+    [[], []]
+  );
+
+  const flattenedFragments: FragmentDefinitionNode[] = fragments.map(defn => flattenWrapper(defn, fragments));
+
+  const definitions: DefinitionNode[] = others.map(defn => {
+    /*if (defn.kind === 'FragmentDefinition') {
+      return flattenWrapper(defn, flattenedFragments);
+    } else */if (defn.kind === 'OperationDefinition') {
+      return inlineFragmentsInQuery(defn, flattenedFragments);
     }
 
     return defn;
