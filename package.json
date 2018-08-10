@@ -13,7 +13,7 @@
     "@types/node": "^8.0.32",
     "coveralls": "^3.0.0",
     "jest": "^21.2.1",
-    "lerna": "2.3.1",
+    "lerna": "3.0.0",
     "ts-jest": "^21.0.1",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
