@@ -32,35 +32,36 @@ import {
   GraphQLField,
   isAbstractType,
   FragmentSpreadNode,
-  GraphQLInputType
+  GraphQLInputType,
+  GraphQLInterfaceType
 } from 'graphql';
 import * as util from 'util';
 
-interface IDirective {
+export interface IDirective {
   kind: 'Directive';
   name: string;
   arguments: Array<{ name: string; value: string }>;
 }
 
-interface ITypeDefinition {
+export interface ITypeDefinition {
   kind: 'TypeDefinition';
   type: string;
   originalNode: TypeNode;
 }
 
-interface INonNullTypeDefinition {
+export interface INonNullTypeDefinition {
   kind: 'NonNullTypeDefinition';
   of: TypeDefinition;
   originalNode: GraphQLNonNull<any>;
 }
 
-interface IListTypeDefinition {
+export interface IListTypeDefinition {
   kind: 'ListTypeDefinition';
   of: TypeDefinition;
   originalNode: GraphQLList<any>;
 }
 
-interface ITypenameDefinition {
+export interface ITypenameDefinition {
   kind: 'TypenameDefinition';
   /**
    * This is the value of __typename
@@ -68,13 +69,13 @@ interface ITypenameDefinition {
   type: string | string[];
 }
 
-type TypeDefinition =
+export type TypeDefinition =
   | ITypeDefinition
   | INonNullTypeDefinition
   | IListTypeDefinition
   | ITypenameDefinition;
 
-interface IFieldNode {
+export interface IFieldNode {
   kind: 'Field';
   name: string;
   typeDefinition: TypeDefinition;
@@ -83,7 +84,7 @@ interface IFieldNode {
   selections: Selection[];
 }
 
-interface ILeafNode {
+export interface ILeafNode {
   kind: 'LeafNode';
   name: string;
   typeDefinition: TypeDefinition;
@@ -91,14 +92,14 @@ interface ILeafNode {
   originalNode: FieldNode;
 }
 
-interface ITypenameNode {
+export interface ITypenameNode {
   kind: 'TypenameNode';
   typeDefinition: ITypenameDefinition;
 }
 
-type FieldDefinition = IFieldNode | ILeafNode | ITypenameNode;
+export type FieldDefinition = IFieldNode | ILeafNode | ITypenameNode;
 
-interface IFragment {
+export interface IFragment {
   kind: 'Fragment';
   typeDefinition: TypeDefinition;
   directives: IDirective[];
@@ -106,16 +107,26 @@ interface IFragment {
   selections: Selection[];
 }
 
-type Selection = FieldDefinition | IFragment;
+/**
+ * EXPERIMENTAL
+ * @TODO look at unions
+ */
+export interface IInterfaceNode {
+  kind: 'InterfaceNode';
+  name: string;
+  fragments: IFragment[];
+}
 
-interface IVariable {
+export type Selection = FieldDefinition | IInterfaceNode;
+
+export interface IVariable {
   kind: 'Variable';
   name: string;
   type: TypeDefinition;
   originalNode: VariableNode;
 }
 
-interface IInteralRepresentation {
+export interface IInteralRepresentation {
   kind: 'Root';
   operationType: OperationTypeNode;
   name?: string;
@@ -204,6 +215,10 @@ const convertFieldNodeToIR: (
     };
   }
 
+  // if (isInterfaceType(nodeType)) {
+  //   return convertInterfaceToExpandedFragmentIR(fieldNode, nodeType, schema) as any;
+  // }
+
   if (fieldName.startsWith('__')) {
     throw new Error('introspection not supported yet');
   }
@@ -243,17 +258,6 @@ const convertFieldNodeToIR: (
   };
 };
 
-const convertFragmentSpreadToIR: (
-  selection: FragmentSpreadNode,
-  nodeType: GraphQLNamedType,
-  schema: GraphQLSchema
-) => IFragment = (_selection, _nodeType, _schema) => {
-  if (0) {
-    return 'fragmentspread' as any;
-  }
-  return 'fragmentspread' as any;
-};
-
 const convertInlineFragmentToIR: (
   selection: InlineFragmentNode,
   nodeType: GraphQLNamedType,
@@ -282,18 +286,78 @@ const convertInlineFragmentToIR: (
   };
 };
 
+const convertInterfaceToExpandedFragmentIR: (
+  selection: FieldNode,
+  nodeType: GraphQLInterfaceType,
+  schema: GraphQLSchema
+) => IInterfaceNode = (selection, nodeType, schema) => {
+  const possibleTypes: ReadonlyArray<GraphQLObjectType> = schema.getPossibleTypes(nodeType);
+  const possibleTypeMap: { [type: string]: InlineFragmentNode[] } = possibleTypes.reduce((acc, type) => ({ ...acc, [type.name]: [] }), {});
+  if (!selection.selectionSet) {
+    throw new Error('Invalid Selection on Interface');
+  }
+
+  const [commonFields, _fragments] = selection.selectionSet.selections.reduce<[FieldNode[], InlineFragmentNode[]]>(
+    ([fields, inline], sel) => {
+      if (sel.kind === 'Field') { return [fields.concat(sel), inline]; }
+      if (sel.kind === 'InlineFragment') {
+        possibleTypeMap[sel.typeCondition!.name.value].push(sel);
+        return [fields, inline.concat(sel)];
+      }
+
+      throw new Error('Invalid FragmentSpread found encountered!');
+    },
+    [[], []]
+  );
+
+  const collectedTypeMap: {[type: string]: Selection[]} = Object.keys(possibleTypeMap).reduce<{[type: string]: Selection[]}>(
+    (acc, type) => ({
+      ...acc,
+      [type]: collectSelectionsFromNode(
+        [
+          ...commonFields,
+          ...possibleTypeMap[type].reduce<SelectionNode[]>((sels, field) => sels.concat(field.selectionSet.selections), [])
+        ],
+        schema.getType(type)!,
+        schema
+      )
+    }),
+    {}
+  );
+
+  return {
+    kind: 'InterfaceNode',
+    name: selection.name.value,
+    fragments: Object.entries(collectedTypeMap).map<IFragment>(([key, value]) => ({
+      kind: 'Fragment',
+      directives: [],
+      originalNode: null!,
+      selections: value,
+      typeDefinition: convertOutputType(schema.getType(key)!)
+    }))
+  };
+};
+
 const convertSelectionToIR: (
   selection: SelectionNode,
   nodeType: GraphQLNamedType,
-  schema: GraphQLSchema
+  schema: GraphQLSchema,
 ) => Selection = (selection, nodeType, schema) => {
+  if (isObjectType(nodeType) && selection.kind === 'Field') {
+    const possibleInterface: GraphQLField<any, any> | undefined = nodeType.getFields()[selection.name.value];
+    if (possibleInterface && possibleInterface.type && isInterfaceType(possibleInterface.type)) {
+      return convertInterfaceToExpandedFragmentIR(selection, possibleInterface.type, schema);
+    }
+  }
+
   switch (selection.kind) {
     case 'Field':
       return convertFieldNodeToIR(selection, nodeType, schema);
     case 'FragmentSpread':
-      return convertFragmentSpreadToIR(selection, nodeType, schema);
+      throw new Error('Fragment Spreads Must Be Inlined!');
     case 'InlineFragment':
-      return convertInlineFragmentToIR(selection, nodeType, schema);
+      // return convertInterfaceToExpandedFragmentIR(selection, nodeType, schema, parent);
+      // return convertInlineFragmentToIR(selection, nodeType, schema) as any;
     default:
       return null!;
   }
@@ -302,7 +366,7 @@ const convertSelectionToIR: (
 const collectSelectionsFromNode: (
   selections: ReadonlyArray<SelectionNode>,
   nodeType: GraphQLNamedType,
-  schema: GraphQLSchema
+  schema: GraphQLSchema,
 ) => Selection[] = (selections, nodeType, schema) =>
   selections.map(selection =>
     convertSelectionToIR(selection, nodeType, schema)
@@ -327,8 +391,6 @@ const convertToIr: (
   schema: GraphQLSchema,
   query: DocumentNode
 ) => IInteralRepresentation = (schema, query) => {
-  console.log(schema, query);
-
   const def: OperationDefinitionNode = query
     .definitions[0] as OperationDefinitionNode;
 
@@ -336,6 +398,7 @@ const convertToIr: (
     | GraphQLObjectType
     | null
     | undefined = getOperationFields(schema, def.operation);
+
   if (!operationType) {
     throw new Error('unsupported operation');
   }
@@ -348,11 +411,9 @@ const convertToIr: (
     selections: collectSelectionsFromNode(
       def.selectionSet.selections,
       operationType,
-      schema
+      schema,
     )
   };
-
-  console.log(util.inspect(returnVal, undefined, Infinity, true));
 
   return returnVal;
 };

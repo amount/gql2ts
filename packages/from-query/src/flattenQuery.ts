@@ -7,73 +7,8 @@
  * (but it does seem to work without issues)
  */
 
-import { parse, DocumentNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode } from "graphql";
-import { print } from 'graphql/language/printer';
+import { DocumentNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode } from "graphql";
 import { DefinitionNode, SelectionNode, OperationDefinitionNode, FieldNode } from 'graphql/language/ast';
-import { inspect } from 'util';
-
-const queryDefn = parse(`
-  query {
-    # ...FragmentTwo
-
-    someField {
-      ...FragmentTwo
-      ... on Something {
-        fromInline
-      }
-      ... on Something {
-        ... on Something {
-          ... on Something {
-            fromNestedInline
-
-            ...FragmentOne
-          }
-        }
-      }
-    }
-  }
-
-  fragment FragmentOne on Something {
-    frag1
-    ...FragmentTwo
-    ... on Something {
-      frag1_1
-      ... on Something {
-        frag1_2
-      }
-    }
-
-    ... on SomethingElse {
-      frag1_otherfield_1
-      ... on SomethingElse {
-        frag1_otherfield_2
-        ... on SomethingElse {
-          frag1_otherfield_3
-        }
-      }
-    }
-  }
-
-
-  fragment FragmentTwo on Something {
-    fromFragmentTwo
-  }
-`);
-
-
-// const queryDefn = parse(`
-//   query {
-//     # ...FragmentTwo
-//     someField {
-//       ... on Something {
-//         fieldA
-//       }
-//       ... on Something {
-//         fieldB
-//       }
-//     }
-//   }
-// `);
 
 /**
  * This builds an inline fragment from a FragmentSpread
@@ -140,29 +75,30 @@ const flattenWrapper: (fragment: FragmentDefinitionNode, fragments: FragmentDefi
 }
 
 /**
- *
+ * Flattens adjacent fragments of the same type and removes unnecessary fragments
  */
-const flattenAdjacentFragments: (fragment: InlineFragmentNode, precedingFields: SelectionNode[]) => SelectionNode[] = (fragment, precedingFields) => {
+const flattenAdjacentFragments: (fragment: InlineFragmentNode, precedingFields: SelectionNode[]) => { current: SelectionNode[]; preceding: SelectionNode[] } = (fragment, precedingFields) => {
   if (!fragment.typeCondition) {
-    return [fragment, ...precedingFields];
+    // flatten fragments that don't require
+    return { current: [...fragment.selectionSet.selections], preceding: precedingFields };
   }
 
   const precedingInlineFragments: InlineFragmentNode[] = precedingFields.filter((field): field is InlineFragmentNode => field.kind === 'InlineFragment');
 
   if (!precedingInlineFragments.length) {
-    return [fragment, ...precedingFields];
+    return { current: [fragment], preceding: precedingFields };
   }
 
   const targetTypeCondition: string = fragment.typeCondition.name.value;
 
   // @TODO groupBy instead
   const matchingFragment: InlineFragmentNode | undefined = precedingInlineFragments.find(({ typeCondition }) => !!typeCondition && typeCondition.name.value === targetTypeCondition);
-  if (!matchingFragment) { return [fragment, ...precedingFields]; }
+  if (!matchingFragment) { return { current: [fragment], preceding: precedingFields }; }
 
   const nonMatchingFragments: InlineFragmentNode[] = precedingInlineFragments.filter(({ typeCondition }) => !!typeCondition && typeCondition.name.value !== targetTypeCondition);
 
-  return [
-    {
+  return {
+    current: [{
       ...fragment,
       selectionSet: {
         kind: 'SelectionSet',
@@ -172,9 +108,9 @@ const flattenAdjacentFragments: (fragment: InlineFragmentNode, precedingFields: 
           ...fragment.selectionSet.selections
         ]
       }
-    },
-    ...nonMatchingFragments
-  ]
+    }],
+    preceding: [...nonMatchingFragments]
+  };
 }
 
 /**
@@ -193,15 +129,17 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
         if (selection.kind === 'FragmentSpread') {
           return [...selections, buildInlineFragment(selection, fragments)];
         } else if (selection.kind === 'InlineFragment') {
-          [selection, ...selections] = flattenAdjacentFragments(
+          const { current, preceding } = flattenAdjacentFragments(
             flattenFragment(selection, fragments) as InlineFragmentNode,
             selections
           );
+
+          return [...preceding, ...current.map(sel => recurseFields(sel as any, fragments))]
         }
 
         return [
           ...selections,
-          recurseFields(selection as any, fragments)
+          recurseFields(selection, fragments)
         ];
       }, [] as SelectionNode[])
     }
@@ -235,9 +173,7 @@ export const flattenFragments: (document: DocumentNode) => DocumentNode = docume
   const flattenedFragments: FragmentDefinitionNode[] = fragments.map(defn => flattenWrapper(defn, fragments));
 
   const definitions: DefinitionNode[] = others.map(defn => {
-    /*if (defn.kind === 'FragmentDefinition') {
-      return flattenWrapper(defn, flattenedFragments);
-    } else */if (defn.kind === 'OperationDefinition') {
+    if (defn.kind === 'OperationDefinition') {
       return inlineFragmentsInQuery(defn, flattenedFragments);
     }
 
@@ -246,7 +182,3 @@ export const flattenFragments: (document: DocumentNode) => DocumentNode = docume
 
   return { ...document, definitions };
 }
-
-const stuff = flattenFragments(queryDefn);
-
-console.log(print(stuff));
