@@ -1,8 +1,10 @@
 // tslint:disable
 
-import { IInteralRepresentation, Selection, TypeDefinition } from './ir';
+import { IOperation, Selection, TypeDefinition } from './ir';
 
 const printArray: (underlyingType: string) => string = type => `Array<${type}>`;
+const printNullable: (underlyingType: string) => string = type => `${type} | null`;
+const wrapNullable: (type: TypeDefinition) => (nullablePrinter: typeof printNullable) => typeof printNullable = ({ nullable }) => nullablePrinter => str => nullable ? nullablePrinter(str) : str;
 
 const typeUnion: (types: string[]) => string = types => types.join(' | ');
 
@@ -15,8 +17,6 @@ const printType: (type: TypeDefinition | string) => string = type => {
       return Array.isArray(type.type) ? typeUnion(type.type.map(printStringLiteral)) : printStringLiteral(type.type);
     case 'TypeDefinition':
       return type.type;
-    case 'NonNullTypeDefinition':
-      return printType(type.of);
     case 'ListTypeDefinition':
       return printArray(printType(type.of));
     default:
@@ -30,21 +30,19 @@ const getReferenceType: (type: TypeDefinition) => string = type => {
       return Array.isArray(type.type) ? typeUnion(type.type) : type.type;
     case 'TypeDefinition':
       return type.type;
-    case 'NonNullTypeDefinition':
-      return printType(type.of);
     case 'ListTypeDefinition':
-      return printType(type.of);
+      return getReferenceType(type.of);
     default:
       throw new Error('Unsupported TypeDefinition');
   }
-}
+};
 
 const printField: (name: string, type: TypeDefinition | string) => string = (name, type) => `${name}: ${printType(type)};`;
 
 class TypePrinter {
   private _declarations: Map<string, string[]> = new Map();
 
-  constructor (private ir: IInteralRepresentation) { }
+  constructor (private ir: IOperation) { }
 
   printQuery (): string {
     this.buildDeclarations(this.ir.name || 'AnonymousQuery', this.ir.selections);
@@ -66,7 +64,9 @@ class TypePrinter {
           selection.name,
           typeUnion(
             selection.fragments.map(frag => {
-              const name = 'InterfaceNode' + Math.random().toString().replace('.', '');
+              const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
+                frag.directives.gql2ts.arguments.interfaceName :
+                'InterfaceNode' + Math.random().toString().replace('.', '');
               this.buildDeclarations(name, frag.selections)
               return name;
             })
@@ -83,4 +83,4 @@ class TypePrinter {
 }
 
 
-export const generateTypes: (ir: IInteralRepresentation) => string = ir => new TypePrinter(ir).printQuery();
+export const generateTypes: (ir: IOperation) => string = ir => new TypePrinter(ir).printQuery();

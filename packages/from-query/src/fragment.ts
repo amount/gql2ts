@@ -94,7 +94,7 @@ export const isSelectionSetExhaustive: (originalNode: FieldNode, type: GraphQLNa
     return true;
   }
 
-  const possibleTypes: GraphQLObjectType[] = schema.getPossibleTypes(type);
+  const possibleTypes: ReadonlyArray<GraphQLObjectType> = schema.getPossibleTypes(type);
 
   const { inlineFragments } = originalNode.selectionSet.selections.reduce<{ fields: SelectionNode[]; inlineFragments: InlineFragmentNode[] }>((acc, selection) => {
     switch (selection.kind) {
@@ -135,7 +135,7 @@ const flattenFragments: (originalNode: FieldNode, type: GraphQLNamedType, schema
     return originalNode;
   }
 
-  const possibleTypes: GraphQLObjectType[] = schema.getPossibleTypes(type);
+  const possibleTypes: ReadonlyArray<GraphQLObjectType> = schema.getPossibleTypes(type);
 
   const newFieldNode: FieldNode = { ...originalNode };
 
