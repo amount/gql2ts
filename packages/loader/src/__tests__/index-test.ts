@@ -12,14 +12,6 @@ const SOURCE: string = fs
   .toString();
 
 describe('Loader', () => {
-  beforeEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it('fails if no schema is provided', async () => {
     const stats: Promise<Stats> = compiler(`./graphql/query.graphql`, {});
     await expect(stats).rejects.toThrow('Schema must be provided');
@@ -52,6 +44,9 @@ describe('Loader', () => {
       undefined,
       undefined,
     );
+
+    (fsSpy as any).mockRestore();
+    (gql2tsSpy as any).mockRestore();
   });
 
   it('writes a declaration file using typeMap and options', async () => {
@@ -92,5 +87,8 @@ describe('Loader', () => {
       typeMapValue,
       optionsValue,
     );
+
+    (fsSpy as any).mockRestore();
+    (gql2tsSpy as any).mockRestore();
   });
 });
