@@ -36,7 +36,7 @@ describe('Loader', () => {
       schema: FAKE_SCHEMA,
     });
 
-    expect(fsSpy).toHaveBeenCalledTimes(1);
+    expect(fsSpy).toHaveBeenCalled();
     expect(gql2tsSpy).toHaveBeenCalledTimes(1);
     expect(gql2tsSpy).toHaveBeenCalledWith(
       FAKE_SCHEMA,
@@ -73,7 +73,7 @@ describe('Loader', () => {
       options: optionsValue
     });
 
-    expect(fsSpy).toHaveBeenCalledTimes(1);
+    expect(fsSpy).toHaveBeenCalled();
     expect(gql2tsSpy).toHaveBeenCalledTimes(1);
     expect(gql2tsSpy).toHaveBeenCalledWith(
       FAKE_SCHEMA,
