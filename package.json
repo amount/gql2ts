@@ -20,7 +20,7 @@
   },
   "scripts": {
     "pretest": "lerna bootstrap --hoist graphql",
-    "test": "jest --coverage --forceExit",
+    "test": "jest --coverage --forceExit --runInBand",
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
