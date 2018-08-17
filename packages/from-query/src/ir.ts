@@ -21,7 +21,6 @@ import {
   isListType,
   isNonNullType,
   GraphQLList,
-  GraphQLNonNull,
   isInputObjectType,
   isLeafType,
   GraphQLField,

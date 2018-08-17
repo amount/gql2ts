@@ -1,6 +1,6 @@
 // tslint:disable
 
-import { IOperation, Selection, TypeDefinition, IInterfaceTypeDefinition, IInterfaceNode } from './ir';
+import { IOperation, Selection, TypeDefinition, IInterfaceNode, IFieldNode } from './ir';
 
 const printArray: (underlyingType: string) => string = type => `Array<${type}>`;
 const printNullable: (underlyingType: string) => string = type => `${type} | null`;
@@ -14,7 +14,7 @@ const printInterface: (node: IInterfaceNode) => string = selection => typeUnion(
   selection.fragments.map(frag => {
     const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
       frag.directives.gql2ts.arguments.interfaceName :
-      'InterfaceNode' + Math.random().toString().replace('.', '');
+      `FragmentSelectionOn${(frag.typeDefinition as any).type}`
     return name;
   })
 );
@@ -80,7 +80,7 @@ class TypePrinter {
           return name;
         });
         return printField(
-          selection.name,
+          this.generateSelectionName(selection),
           selection.typeDefinition,
           selection
         );
@@ -91,6 +91,17 @@ class TypePrinter {
       default:
         throw new Error('Unsupported Selection');
     }
+  }
+
+  private generateSelectionName (selection: IInterfaceNode | IFieldNode): string {
+    switch (selection.kind) {
+      case 'Field':
+        return selection.name;
+      case 'InterfaceNode':
+        return selection.name;
+    }
+
+    // this._declarations.has(selection.name)
   }
 }
 
