@@ -29,12 +29,7 @@ import {
   GraphQLInputType,
   GraphQLInterfaceType,
   DirectiveNode,
-  getNullableType,
-  GraphQLNullableType,
   GraphQLType,
-  GraphQLLeafType,
-  GraphQLCompositeType,
-  isWrappingType,
   isNamedType
 } from 'graphql';
 
@@ -66,16 +61,6 @@ export interface ITypeDefinition {
 }
 
 /**
- * A type definition for a Non Null declaration
- * @TODO remove this and add `nullable` field to ITypeDefinition & IListTypeDefinition
- */
-interface INonNullTypeDefinition {
-  kind: 'NonNullTypeDefinition';
-  of: TypeDefinition;
-  originalNode: GraphQLNonNull<any>;
-}
-
-/**
  * A type definition for a List
  */
 export interface IListTypeDefinition {
@@ -97,11 +82,18 @@ export interface ITypenameDefinition {
   type: string | string[];
 }
 
+export interface IInterfaceTypeDefinition {
+  kind: 'InterfaceTypeDefinition';
+  nullable: boolean;
+  originalNode: GraphQLInterfaceType;
+}
+
 /**
  * The possible type definitions
  */
 export type TypeDefinition =
   | ITypeDefinition
+  | IInterfaceTypeDefinition
   // | INonNullTypeDefinition
   | IListTypeDefinition
   | ITypenameDefinition;
@@ -168,6 +160,7 @@ export interface IInterfaceNode {
   name: string;
   fragments: IFragment[];
   directives: IDirectiveMap;
+  typeDefinition: TypeDefinition;
 }
 
 /**
@@ -260,10 +253,10 @@ const convertTypeToIR: (
     };
   } else if (isInterfaceType(type)) {
     return {
-      kind: 'TypeDefinition',
+      kind: 'InterfaceTypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
-      type: type.name
+      // type: type.name
     };
   } else if (isUnionType(type)) {
     return {
@@ -434,7 +427,7 @@ const convertFieldNodeToIR: (
  *
  * ```graphql
  *  query GetStuffFromInterface {
- *    interfaceSelection {
+ *    interfaceSelection { *
  *      ... on TypeA {
  *        __typename
  *        id
@@ -517,6 +510,7 @@ const convertInterfaceToInterfaceIR: (
     kind: 'InterfaceNode',
     name: selection.name.value,
     directives: extractDirectives(selection.directives),
+    typeDefinition: convertTypeToIR(nodeType),
     fragments: Object.entries(collectedTypeMap).map<IFragment>(([key, value]) => ({
       kind: 'Fragment',
       directives: extractDirectives(possibleTypeMap[key] ? possibleTypeMap[key]!.directives : undefined),

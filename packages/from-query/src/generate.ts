@@ -1,6 +1,6 @@
 // tslint:disable
 
-import { IOperation, Selection, TypeDefinition } from './ir';
+import { IOperation, Selection, TypeDefinition, IInterfaceTypeDefinition, IInterfaceNode } from './ir';
 
 const printArray: (underlyingType: string) => string = type => `Array<${type}>`;
 const printNullable: (underlyingType: string) => string = type => `${type} | null`;
@@ -10,15 +10,27 @@ const typeUnion: (types: string[]) => string = types => types.join(' | ');
 
 const printStringLiteral: (stringLiteral: string) => string = stringLiteral => `'${stringLiteral}'`;
 
-const printType: (type: TypeDefinition | string) => string = type => {
+const printInterface: (node: IInterfaceNode) => string = selection => typeUnion(
+  selection.fragments.map(frag => {
+    const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
+      frag.directives.gql2ts.arguments.interfaceName :
+      'InterfaceNode' + Math.random().toString().replace('.', '');
+    return name;
+  })
+);
+
+const printType: (type: TypeDefinition | string, node: Selection) => string = (type, node) => {
   if (typeof type === 'string') { return type; }
+  const nullWrapper = wrapNullable(type)(printNullable);
   switch (type.kind) {
     case 'TypenameDefinition':
-      return Array.isArray(type.type) ? typeUnion(type.type.map(printStringLiteral)) : printStringLiteral(type.type);
+      return nullWrapper(Array.isArray(type.type) ? typeUnion(type.type.map(printStringLiteral)) : printStringLiteral(type.type));
     case 'TypeDefinition':
-      return type.type;
+      return nullWrapper(type.type);
     case 'ListTypeDefinition':
-      return printArray(printType(type.of));
+      return nullWrapper(printArray(printType(type.of, node)));
+    case 'InterfaceTypeDefinition':
+      return nullWrapper(printInterface(node as IInterfaceNode));
     default:
       throw new Error('Unsupported TypeDefinition');
   }
@@ -37,7 +49,7 @@ const getReferenceType: (type: TypeDefinition) => string = type => {
   }
 };
 
-const printField: (name: string, type: TypeDefinition | string) => string = (name, type) => `${name}: ${printType(type)};`;
+const printField: (name: string, type: TypeDefinition | string, node: Selection) => string = (name, type, node) => `${name}: ${printType(type, node)};`;
 
 class TypePrinter {
   private _declarations: Map<string, string[]> = new Map();
@@ -58,24 +70,24 @@ class TypePrinter {
     switch (selection.kind) {
       case 'Field':
         this.buildDeclarations(getReferenceType(selection.typeDefinition), selection.selections);
-        return printField(selection.name, selection.typeDefinition);
+        return printField(selection.name, selection.typeDefinition, selection);
       case 'InterfaceNode':
+        selection.fragments.map(frag => {
+          const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
+            frag.directives.gql2ts.arguments.interfaceName :
+            'InterfaceNode' + Math.random().toString().replace('.', '');
+          this.buildDeclarations(name, frag.selections)
+          return name;
+        });
         return printField(
           selection.name,
-          typeUnion(
-            selection.fragments.map(frag => {
-              const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
-                frag.directives.gql2ts.arguments.interfaceName :
-                'InterfaceNode' + Math.random().toString().replace('.', '');
-              this.buildDeclarations(name, frag.selections)
-              return name;
-            })
-          )
+          selection.typeDefinition,
+          selection
         );
       case 'TypenameNode':
-        return printField('__typename', selection.typeDefinition);
+        return printField('__typename', selection.typeDefinition, selection);
       case 'LeafNode':
-        return printField(selection.name, selection.typeDefinition);
+        return printField(selection.name, selection.typeDefinition, selection);
       default:
         throw new Error('Unsupported Selection');
     }

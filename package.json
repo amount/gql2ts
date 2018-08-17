@@ -4,17 +4,18 @@
   "version": "1.0.0",
   "description": "Convert GraphQL Schema to TypeScript defs",
   "dependencies": {
-    "graphql": ">= 0.10 <1.0.0",
+    "graphql": "^0.13.2",
     "prettier": "^1.10.2"
   },
   "devDependencies": {
-    "@types/graphql": "^0.11.4",
+    "@types/graphql": "^0.13.4",
     "@types/jest": "^21.1.2",
     "@types/node": "^8.0.32",
     "coveralls": "^3.0.0",
     "jest": "^21.2.1",
     "lerna": "2.3.1",
     "ts-jest": "^21.0.1",
+    "ts-node": "^7.0.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
   },
