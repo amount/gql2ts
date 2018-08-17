@@ -107,7 +107,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const handleNamedTypeInput: (type: TypeNode, isNonNull: boolean) => string | undefined = (type, isNonNull) => {
     if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
-      const newType: GraphQLType = parsedSchema.getType(type.name.value);
+      const newType: GraphQLType | undefined | null = parsedSchema.getType(type.name.value);
       if (newType instanceof GraphQLEnumType) {
         return handleEnum(newType, isNonNull);
       } else if (newType instanceof GraphQLInputObjectType) {
@@ -147,7 +147,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const UndefinedDirectives: Set<string> = new Set(['include', 'skip']);
 
-  const isUndefinedFromDirective: (directives: DirectiveNode[] | undefined) => boolean = directives => {
+  const isUndefinedFromDirective: (directives: ReadonlyArray<DirectiveNode> | null | undefined) => boolean = directives => {
     if (!directives || !directives.length) { return false; }
 
     const badDirectives: DirectiveNode[] = directives.filter(d => !UndefinedDirectives.has(d.name.value));
@@ -220,7 +220,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
         if (!parent) {
           resolvedType = TypeMap.String;
         } else if (isAbstractType(parent)) {
-          const possibleTypes: GraphQLObjectType[] = parsedSchema.getPossibleTypes(parent);
+          const possibleTypes: ReadonlyArray<GraphQLObjectType> = parsedSchema.getPossibleTypes(parent);
           /**
            * @TODO break this OR logic out of here (and the other places) and put into a printer
            * @TODO break out the string-literal type out of here as it probably isn't supported by other languages
@@ -231,7 +231,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
         }
       } else if (!!selection.selectionSet) {
         let newParent: GraphQLCompositeType | undefined;
-        const fieldType: GraphQLNamedType = rootIntrospectionTypes.has(originalName) ? parsedSchema.getType(
+        const fieldType: GraphQLNamedType | null | undefined = rootIntrospectionTypes.has(originalName) ? parsedSchema.getType(
           rootIntrospectionTypes.get(originalName)!
         ) : getNamedType(field.type);
         if (isCompositeType(fieldType)) {
@@ -302,7 +302,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
           andOps.push(`(${fragments.map(wrapPossiblePartial).join(' | ')})`);
         }
         childType = typeJoiner(andOps);
-        resolvedType = convertToType(field ? field.type : fieldType, false, childType);
+        resolvedType = convertToType(field ? field.type : fieldType!, false, childType);
       } else {
         resolvedType = convertToType(field.type, false, childType);
       }
@@ -317,7 +317,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
       if (!anon && selection.typeCondition) {
         const typeName: string = selection.typeCondition.name.value;
-        parent = parsedSchema.getType(typeName);
+        parent = parsedSchema.getType(typeName)!;
         isFragment = true;
         fragName = generateFragmentName(`SpreadOn${typeName}`);
       }
@@ -374,14 +374,14 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     };
   };
 
-  const getVariables: (variables: VariableDefinitionNode[]) => string[] = variables => (
+  const getVariables: (variables: ReadonlyArray<VariableDefinitionNode>) => string[] = variables => (
     variables.map(v => {
       const optional: boolean = v.type.kind !== 'NonNullType';
       return formatInput(v.variable.name.value, optional, convertVariable(v.type));
     })
   );
 
-  const variablesToInterface: (operationName: string, variables: VariableDefinitionNode[] | undefined) => string = (opName, variables) => {
+  const variablesToInterface: (operationName: string, variables: ReadonlyArray<VariableDefinitionNode> | undefined) => string = (opName, variables) => {
     if (!variables || !variables.length) { return ''; }
     const variableTypeDefs: string[] = getVariables(variables);
     return postProcessor(exportFunction(interfaceBuilder(generateInputName(opName), generateInterfaceDeclaration(variableTypeDefs))));
@@ -435,7 +435,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       const ifaceName: string = generateFragmentName(def.name.value);
       // get the correct type
       const onType: string = def.typeCondition.name.value;
-      const foundType: GraphQLType = parsedSchema.getType(onType);
+      const foundType: GraphQLType = parsedSchema.getType(onType)!;
 
       const ret: IChildSelection[] = def.selectionSet.selections.map(sel => getChildSelections('query', sel, foundType));
       const extensions: string[] = ret.filter(x => x.isFragment).map(x => x.iface);

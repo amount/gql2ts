@@ -5,8 +5,7 @@
  * With this piece we can generate more intelligent typings and greatly simplify the developer's life :)
  */
 
-import { SelectionNode, GraphQLSchema, FieldNode, GraphQLNamedType, isAbstractType, GraphQLObjectType, InlineFragmentNode, parse } from 'graphql';
-import { schemaFromInputs } from '@gql2ts/util';
+import { SelectionNode, GraphQLSchema, FieldNode, GraphQLNamedType, isAbstractType, GraphQLObjectType, InlineFragmentNode } from 'graphql';
 
 /**
  * The goal here is to optimize fragments, in a few ways.
@@ -166,46 +165,48 @@ const flattenFragments: (originalNode: FieldNode, type: GraphQLNamedType, schema
   return newFieldNode;
 }
 
-const query = parse(`
-  query {
-    product {
-      id
-      ... on ProductA {
-        commonField
-      }
+// const query = parse(`
+//   query {
+//     product {
+//       id
+//       ... on ProductA {
+//         commonField
+//       }
 
-      ... on ProductB {
-        commonField
-      }
-    }
-  }
-`);
+//       ... on ProductB {
+//         commonField
+//       }
+//     }
+//   }
+// `);
 
-const schema = schemaFromInputs(`
-  type Query {
-    product: Product
-  }
+// const schema = schemaFromInputs(`
+//   type Query {
+//     product: Product
+//   }
 
-  interface Product {
-    id: ID!
-    commonField: String
-  }
+//   interface Product {
+//     id: ID!
+//     commonField: String
+//   }
 
-  type ProductA implements Product {
-    id: ID!
-    commonField: String
-    fieldA: String
-  }
+//   type ProductA implements Product {
+//     id: ID!
+//     commonField: String
+//     fieldA: String
+//   }
 
-  type ProductB implements Product {
-    id: ID!
-    commonField: String
-    fieldB: String
-  }
-`);
+//   type ProductB implements Product {
+//     id: ID!
+//     commonField: String
+//     fieldB: String
+//   }
+// `);
 
 // flattenFragments(
 //   (query.definitions[0] as any as FieldNode).selectionSet!.selections[0] as FieldNode,
 //   schema.getType('Product'),
 //   schema
 // );
+
+export { flattenFragments };

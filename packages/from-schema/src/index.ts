@@ -57,7 +57,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const generateRootDataName: (schema: GraphQLSchema) => string = schema => {
     let rootNamespaces: string[] = [];
-    const queryType: GraphQLObjectType = schema.getQueryType();
+    const queryType: GraphQLObjectType | undefined | null = schema.getQueryType();
     const mutationType: GraphQLObjectType | undefined | null = schema.getMutationType();
     const subscriptionType: GraphQLObjectType | undefined | null = schema.getSubscriptionType();
 
@@ -262,12 +262,12 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
   type GenerateAbstractTypeDeclaration = (type: GraphQLAbstractType, ignoredTypes: Set<string>) => string;
 
   const generateAbstractTypeDeclaration: GenerateAbstractTypeDeclaration = (type, ignoredTypes) => {
-    const poss: GraphQLObjectType[] = schemaInput.getPossibleTypes(type);
+    const poss: ReadonlyArray<GraphQLObjectType> = schemaInput.getPossibleTypes(type);
     let possibleTypes: string[] = poss
       .filter(t => !ignoredTypes.has(t.name))
       .map(t => generateInterfaceName(t.name));
 
-    return generateTypeDeclaration(type.description, generateTypeName(type.name), possibleTypes.join(' | '));
+    return generateTypeDeclaration(type.description!, generateTypeName(type.name), possibleTypes.join(' | '));
   };
 
   const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability) => {
@@ -280,7 +280,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     }
 
     if (isEnum(type)) {
-      return generateEnumDeclaration(type.description, type.name, type.getValues());
+      return generateEnumDeclaration(type.description!, type.name, type.getValues());
     }
 
     const isInput: boolean = type instanceof GraphQLInputObjectType;

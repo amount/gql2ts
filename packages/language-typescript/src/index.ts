@@ -84,14 +84,14 @@ ${interfaces}
 // tslint:enable
 `;
 
-const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
+const fixDescriptionDocblock: (description?: string | null) => string | null | undefined = description =>
   description ? description.replace(/\n/g, '\n* ') : description;
 
 export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => {
   if (!description && !tags.length) {
     return '';
   }
-  const arr: Array<string | undefined> = [
+  const arr: Array<string | null | undefined> = [
     fixDescriptionDocblock(description),
     ...tags.map(({ tag, value }) => `@${tag} ${JSON.stringify(value)}`)
   ];
