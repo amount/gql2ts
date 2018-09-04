@@ -132,7 +132,7 @@ __typename: \\"FilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmsEdge>;
 
@@ -320,7 +320,7 @@ __typename: \\"FilmSpeciesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmSpeciesEdge>;
 
@@ -387,7 +387,7 @@ designation: string;
 averageHeight: number;
 
 /**
- * The average lifespan of this species in years.
+ * The average lifespan of this species in years, null if unknown.
  */
 averageLifespan: number;
 
@@ -551,7 +551,7 @@ __typename: \\"PlanetResidentsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetResidentsEdge>;
 
@@ -704,7 +704,7 @@ __typename: \\"PersonFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonFilmsEdge>;
 
@@ -756,7 +756,7 @@ __typename: \\"PersonStarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonStarshipsEdge>;
 
@@ -919,7 +919,7 @@ __typename: \\"StarshipPilotsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipPilotsEdge>;
 
@@ -971,7 +971,7 @@ __typename: \\"StarshipFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipFilmsEdge>;
 
@@ -1023,7 +1023,7 @@ __typename: \\"PersonVehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonVehiclesEdge>;
 
@@ -1171,7 +1171,7 @@ __typename: \\"VehiclePilotsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehiclePilotsEdge>;
 
@@ -1223,7 +1223,7 @@ __typename: \\"VehicleFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehicleFilmsEdge>;
 
@@ -1275,7 +1275,7 @@ __typename: \\"PlanetFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetFilmsEdge>;
 
@@ -1327,7 +1327,7 @@ __typename: \\"SpeciesPeopleConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesPeopleEdge>;
 
@@ -1379,7 +1379,7 @@ __typename: \\"SpeciesFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesFilmsEdge>;
 
@@ -1431,7 +1431,7 @@ __typename: \\"FilmStarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmStarshipsEdge>;
 
@@ -1483,7 +1483,7 @@ __typename: \\"FilmVehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmVehiclesEdge>;
 
@@ -1535,7 +1535,7 @@ __typename: \\"FilmCharactersConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmCharactersEdge>;
 
@@ -1587,7 +1587,7 @@ __typename: \\"FilmPlanetsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmPlanetsEdge>;
 
@@ -1639,7 +1639,7 @@ __typename: \\"PeopleConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPeopleEdge>;
 
@@ -1691,7 +1691,7 @@ __typename: \\"PlanetsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetsEdge>;
 
@@ -1743,7 +1743,7 @@ __typename: \\"SpeciesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesEdge>;
 
@@ -1795,7 +1795,7 @@ __typename: \\"StarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipsEdge>;
 
@@ -1847,7 +1847,7 @@ __typename: \\"VehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehiclesEdge>;
 
@@ -2117,7 +2117,7 @@ __typename: \\"FilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmsEdge> | null;
 
@@ -2305,7 +2305,7 @@ __typename: \\"FilmSpeciesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmSpeciesEdge> | null;
 
@@ -2372,7 +2372,7 @@ designation: string | null;
 averageHeight: number | null;
 
 /**
- * The average lifespan of this species in years.
+ * The average lifespan of this species in years, null if unknown.
  */
 averageLifespan: number | null;
 
@@ -2536,7 +2536,7 @@ __typename: \\"PlanetResidentsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetResidentsEdge> | null;
 
@@ -2573,7 +2573,7 @@ __typename: \\"PersonFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonFilmsEdge> | null;
 
@@ -2625,7 +2625,7 @@ __typename: \\"PersonStarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonStarshipsEdge> | null;
 
@@ -2788,7 +2788,7 @@ __typename: \\"StarshipPilotsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipPilotsEdge> | null;
 
@@ -2825,7 +2825,7 @@ __typename: \\"StarshipFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipFilmsEdge> | null;
 
@@ -2877,7 +2877,7 @@ __typename: \\"PersonVehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonVehiclesEdge> | null;
 
@@ -3025,7 +3025,7 @@ __typename: \\"VehiclePilotsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehiclePilotsEdge> | null;
 
@@ -3062,7 +3062,7 @@ __typename: \\"VehicleFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehicleFilmsEdge> | null;
 
@@ -3114,7 +3114,7 @@ __typename: \\"PlanetFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetFilmsEdge> | null;
 
@@ -3166,7 +3166,7 @@ __typename: \\"SpeciesPeopleConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesPeopleEdge> | null;
 
@@ -3203,7 +3203,7 @@ __typename: \\"SpeciesFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesFilmsEdge> | null;
 
@@ -3255,7 +3255,7 @@ __typename: \\"FilmStarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmStarshipsEdge> | null;
 
@@ -3307,7 +3307,7 @@ __typename: \\"FilmVehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmVehiclesEdge> | null;
 
@@ -3359,7 +3359,7 @@ __typename: \\"FilmCharactersConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmCharactersEdge> | null;
 
@@ -3396,7 +3396,7 @@ __typename: \\"FilmPlanetsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmPlanetsEdge> | null;
 
@@ -3448,7 +3448,7 @@ __typename: \\"PeopleConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPeopleEdge> | null;
 
@@ -3485,7 +3485,7 @@ __typename: \\"PlanetsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetsEdge> | null;
 
@@ -3537,7 +3537,7 @@ __typename: \\"SpeciesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesEdge> | null;
 
@@ -3589,7 +3589,7 @@ __typename: \\"StarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipsEdge> | null;
 
@@ -3641,7 +3641,7 @@ __typename: \\"VehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehiclesEdge> | null;
 
@@ -3872,7 +3872,7 @@ __typename: \\"FilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmsEdge> | null;
 
@@ -4060,7 +4060,7 @@ __typename: \\"FilmSpeciesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmSpeciesEdge> | null;
 
@@ -4127,7 +4127,7 @@ designation: string | null;
 averageHeight: number | null;
 
 /**
- * The average lifespan of this species in years.
+ * The average lifespan of this species in years, null if unknown.
  */
 averageLifespan: number | null;
 
@@ -4291,7 +4291,7 @@ __typename: \\"PlanetResidentsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetResidentsEdge> | null;
 
@@ -4444,7 +4444,7 @@ __typename: \\"PersonFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonFilmsEdge> | null;
 
@@ -4496,7 +4496,7 @@ __typename: \\"PersonStarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonStarshipsEdge> | null;
 
@@ -4659,7 +4659,7 @@ __typename: \\"StarshipPilotsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipPilotsEdge> | null;
 
@@ -4711,7 +4711,7 @@ __typename: \\"StarshipFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipFilmsEdge> | null;
 
@@ -4763,7 +4763,7 @@ __typename: \\"PersonVehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPersonVehiclesEdge> | null;
 
@@ -4911,7 +4911,7 @@ __typename: \\"VehiclePilotsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehiclePilotsEdge> | null;
 
@@ -4963,7 +4963,7 @@ __typename: \\"VehicleFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehicleFilmsEdge> | null;
 
@@ -5015,7 +5015,7 @@ __typename: \\"PlanetFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetFilmsEdge> | null;
 
@@ -5067,7 +5067,7 @@ __typename: \\"SpeciesPeopleConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesPeopleEdge> | null;
 
@@ -5119,7 +5119,7 @@ __typename: \\"SpeciesFilmsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesFilmsEdge> | null;
 
@@ -5171,7 +5171,7 @@ __typename: \\"FilmStarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmStarshipsEdge> | null;
 
@@ -5223,7 +5223,7 @@ __typename: \\"FilmVehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmVehiclesEdge> | null;
 
@@ -5275,7 +5275,7 @@ __typename: \\"FilmCharactersConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmCharactersEdge> | null;
 
@@ -5327,7 +5327,7 @@ __typename: \\"FilmPlanetsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IFilmPlanetsEdge> | null;
 
@@ -5379,7 +5379,7 @@ __typename: \\"PeopleConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPeopleEdge> | null;
 
@@ -5431,7 +5431,7 @@ __typename: \\"PlanetsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IPlanetsEdge> | null;
 
@@ -5483,7 +5483,7 @@ __typename: \\"SpeciesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<ISpeciesEdge> | null;
 
@@ -5535,7 +5535,7 @@ __typename: \\"StarshipsConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IStarshipsEdge> | null;
 
@@ -5587,7 +5587,7 @@ __typename: \\"VehiclesConnection\\";
 pageInfo: IPageInfo;
 
 /**
- * Information to aid in pagination.
+ * A list of edges.
  */
 edges: Array<IVehiclesEdge> | null;
 
@@ -5819,7 +5819,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmsEdge> | null;
 
@@ -6007,7 +6007,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmSpeciesEdge> | null;
 
@@ -6074,7 +6074,7 @@ declare namespace GQL {
     averageHeight: number | null;
 
     /**
-     * The average lifespan of this species in years.
+     * The average lifespan of this species in years, null if unknown.
      */
     averageLifespan: number | null;
 
@@ -6238,7 +6238,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetResidentsEdge> | null;
 
@@ -6391,7 +6391,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonFilmsEdge> | null;
 
@@ -6443,7 +6443,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonStarshipsEdge> | null;
 
@@ -6606,7 +6606,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipPilotsEdge> | null;
 
@@ -6658,7 +6658,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipFilmsEdge> | null;
 
@@ -6710,7 +6710,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonVehiclesEdge> | null;
 
@@ -6858,7 +6858,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehiclePilotsEdge> | null;
 
@@ -6910,7 +6910,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehicleFilmsEdge> | null;
 
@@ -6962,7 +6962,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetFilmsEdge> | null;
 
@@ -7014,7 +7014,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesPeopleEdge> | null;
 
@@ -7066,7 +7066,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesFilmsEdge> | null;
 
@@ -7118,7 +7118,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmStarshipsEdge> | null;
 
@@ -7170,7 +7170,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmVehiclesEdge> | null;
 
@@ -7222,7 +7222,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmCharactersEdge> | null;
 
@@ -7274,7 +7274,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmPlanetsEdge> | null;
 
@@ -7326,7 +7326,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPeopleEdge> | null;
 
@@ -7378,7 +7378,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetsEdge> | null;
 
@@ -7430,7 +7430,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesEdge> | null;
 
@@ -7482,7 +7482,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipsEdge> | null;
 
@@ -7534,7 +7534,7 @@ declare namespace GQL {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehiclesEdge> | null;
 
@@ -7753,7 +7753,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmsEdge> | null;
 
@@ -7941,7 +7941,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmSpeciesEdge> | null;
 
@@ -8008,7 +8008,7 @@ declare namespace StarWars {
     averageHeight: number | null;
 
     /**
-     * The average lifespan of this species in years.
+     * The average lifespan of this species in years, null if unknown.
      */
     averageLifespan: number | null;
 
@@ -8172,7 +8172,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetResidentsEdge> | null;
 
@@ -8325,7 +8325,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonFilmsEdge> | null;
 
@@ -8377,7 +8377,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonStarshipsEdge> | null;
 
@@ -8540,7 +8540,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipPilotsEdge> | null;
 
@@ -8592,7 +8592,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipFilmsEdge> | null;
 
@@ -8644,7 +8644,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonVehiclesEdge> | null;
 
@@ -8792,7 +8792,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehiclePilotsEdge> | null;
 
@@ -8844,7 +8844,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehicleFilmsEdge> | null;
 
@@ -8896,7 +8896,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetFilmsEdge> | null;
 
@@ -8948,7 +8948,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesPeopleEdge> | null;
 
@@ -9000,7 +9000,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesFilmsEdge> | null;
 
@@ -9052,7 +9052,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmStarshipsEdge> | null;
 
@@ -9104,7 +9104,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmVehiclesEdge> | null;
 
@@ -9156,7 +9156,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmCharactersEdge> | null;
 
@@ -9208,7 +9208,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmPlanetsEdge> | null;
 
@@ -9260,7 +9260,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPeopleEdge> | null;
 
@@ -9312,7 +9312,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetsEdge> | null;
 
@@ -9364,7 +9364,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesEdge> | null;
 
@@ -9416,7 +9416,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipsEdge> | null;
 
@@ -9468,7 +9468,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehiclesEdge> | null;
 
@@ -9642,7 +9642,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmsEdge> | null;
 
@@ -9830,7 +9830,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmSpeciesEdge> | null;
 
@@ -9897,7 +9897,7 @@ declare namespace StarWars {
     averageHeight: number | null;
 
     /**
-     * The average lifespan of this species in years.
+     * The average lifespan of this species in years, null if unknown.
      */
     averageLifespan: number | null;
 
@@ -10061,7 +10061,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetResidentsEdge> | null;
 
@@ -10098,7 +10098,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonFilmsEdge> | null;
 
@@ -10150,7 +10150,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonStarshipsEdge> | null;
 
@@ -10313,7 +10313,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipPilotsEdge> | null;
 
@@ -10350,7 +10350,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipFilmsEdge> | null;
 
@@ -10402,7 +10402,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPersonVehiclesEdge> | null;
 
@@ -10550,7 +10550,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehiclePilotsEdge> | null;
 
@@ -10587,7 +10587,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehicleFilmsEdge> | null;
 
@@ -10639,7 +10639,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetFilmsEdge> | null;
 
@@ -10691,7 +10691,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesPeopleEdge> | null;
 
@@ -10728,7 +10728,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesFilmsEdge> | null;
 
@@ -10780,7 +10780,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmStarshipsEdge> | null;
 
@@ -10832,7 +10832,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmVehiclesEdge> | null;
 
@@ -10884,7 +10884,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmCharactersEdge> | null;
 
@@ -10921,7 +10921,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IFilmPlanetsEdge> | null;
 
@@ -10973,7 +10973,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPeopleEdge> | null;
 
@@ -11010,7 +11010,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IPlanetsEdge> | null;
 
@@ -11062,7 +11062,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<ISpeciesEdge> | null;
 
@@ -11114,7 +11114,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IStarshipsEdge> | null;
 
@@ -11166,7 +11166,7 @@ declare namespace StarWars {
     pageInfo: IPageInfo;
 
     /**
-     * Information to aid in pagination.
+     * A list of edges.
      */
     edges: Array<IVehiclesEdge> | null;
 
