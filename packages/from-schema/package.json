@@ -30,7 +30,7 @@
   "dependencies": {
     "@gql2ts/language-typescript": "^1.8.2",
     "@gql2ts/util": "^1.8.1",
-    "dedent": "^0.7.0",
+    "dedent": "^0.7.0"
   },
   "devDependencies": {
     "@gql2ts/types": "^1.8.1",
