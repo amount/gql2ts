@@ -33,9 +33,9 @@
   },
   "devDependencies": {
     "@gql2ts/types": "^1.8.1",
-    "graphql": ">= 0.10 <1.0.0"
+    "graphql": ">= 0.10 <15"
   },
   "peerDependencies": {
-    "graphql": ">= 0.10 <1.0.0"
+    "graphql": ">= 0.10 <15"
   }
 }

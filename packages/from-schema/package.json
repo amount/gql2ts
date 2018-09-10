@@ -30,11 +30,14 @@
   "dependencies": {
     "@gql2ts/language-typescript": "^1.8.2",
     "@gql2ts/util": "^1.8.1",
-    "dedent": "^0.7.0",
-    "graphql": ">= 0.10 <1.0.0"
+    "dedent": "^0.7.0"
   },
   "devDependencies": {
     "@gql2ts/types": "^1.8.1",
-    "@types/dedent": "^0.7.0"
+    "@types/dedent": "^0.7.0",
+    "graphql": ">= 0.10 <15"
+  },
+  "peerDependencies": {
+    "graphql": ">= 0.10 <15"
   }
 }

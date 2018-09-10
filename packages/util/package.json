@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "devDependencies": {
-    "graphql": ">= 0.10 <1.0.0"
+    "graphql": ">= 0.10 <15"
   },
   "peerDependencies": {
-    "graphql": ">= 0.10 <1.0.0"
+    "graphql": ">= 0.10 <15"
   }
 }

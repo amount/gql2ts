@@ -718,6 +718,11 @@ export interface IFragmentTypeRef {
   INLINE_FRAGMENT = 'INLINE_FRAGMENT',
 
   /**
+   * Location adjacent to a variable definition.
+   */
+  VARIABLE_DEFINITION = 'VARIABLE_DEFINITION',
+
+  /**
    * Location adjacent to a schema definition.
    */
   SCHEMA = 'SCHEMA',
@@ -852,6 +857,11 @@ export interface IFragmentTypeRef {
    * Location adjacent to an inline fragment.
    */
   INLINE_FRAGMENT = 'INLINE_FRAGMENT',
+
+  /**
+   * Location adjacent to a variable definition.
+   */
+  VARIABLE_DEFINITION = 'VARIABLE_DEFINITION',
 
   /**
    * Location adjacent to a schema definition.
