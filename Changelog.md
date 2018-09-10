@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0
+
+- Support `graphql@^14` [PR #222](https://github.com/avantcredit/gql2ts/pull/222)
+
 ## 1.8.2
 
 - Remove dependency on Typescript for `@gql2ts/language-typescript` [PR #209](https://github.com/avantcredit/gql2ts/pull/209)
