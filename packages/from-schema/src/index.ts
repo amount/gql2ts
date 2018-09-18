@@ -163,21 +163,21 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     description?: string;
     deprecation?: string;
     isList: boolean;
-    isNonNullable: boolean;
+    isNonNull: boolean;
   };
 
-  type ResolveInterfaceName = (type: GraphQLInputType | GraphQLType, nonNullable: boolean) => ResolvedInterfaceValue;
+  type ResolveInterfaceName = (type: GraphQLInputType | GraphQLType, isNonNull: boolean) => ResolvedInterfaceValue;
 
   /**
    * TODO
    * - add support for custom types (via optional json file or something)
    */
-  const resolveInterfaceName: ResolveInterfaceName = (type, nonNullable = false) => {
+  const resolveInterfaceName: ResolveInterfaceName = (type, isNonNull = false) => {
     if (isList(type)) {
       return {
         value: resolveInterfaceName(type.ofType, false),
         isList: true,
-        isNonNullable: nonNullable
+        isNonNull
       };
     }
     if (isNonNullable(type)) {
@@ -187,27 +187,27 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       return {
         value: DEFAULT_TYPE_MAP[type.name] || DEFAULT_TYPE_MAP.__DEFAULT,
         isList: false,
-        isNonNullable: nonNullable
+        isNonNull
       };
     }
     if (isAbstractType(type)) {
       return {
         value: generateTypeName(type.name),
         isList: false,
-        isNonNullable: nonNullable
+        isNonNull
       };
     }
     if (isEnum(type)) {
       return {
         value: generateEnumName(type.name),
         isList: false,
-        isNonNullable: nonNullable
+        isNonNull
       };
     }
     return {
       value: generateInterfaceName(type.name),
       isList: false,
-      isNonNullable: nonNullable
+      isNonNull
     };
   };
 
@@ -217,7 +217,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     if (typeof val === 'string') {
       return val;
     }
-    const isNonNull: boolean = supportsNullability ? val.isNonNullable : true;
+    const isNonNull: boolean = supportsNullability ? val.isNonNull : true;
     if (val.isList) {
       return printType(wrapList(typePrinter(val.value, supportsNullability)), isNonNull);
     }
@@ -231,7 +231,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     return formatInput(
       field.name,
-      isInput && !resolved.isNonNullable,
+      isInput && !resolved.isNonNull,
       typePrinter(resolved, supportsNullability)
     );
   };
@@ -243,7 +243,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
     return filterAndJoinArray([
       generateDocumentation(buildDocumentation(arg)),
-      formatInput(arg.name, !resolved.isNonNullable, typePrinter(resolved, supportsNullability))
+      formatInput(arg.name, !resolved.isNonNull, typePrinter(resolved, supportsNullability))
     ]);
   };
 
