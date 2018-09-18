@@ -30,7 +30,6 @@ import {
 import { IFromQueryOptions, ITypeMap } from '@gql2ts/types';
 import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
 import * as dedent from 'dedent';
-import { isNull } from 'util';
 
 const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => string = (schemaInput, optionsInput) => {
   const {
