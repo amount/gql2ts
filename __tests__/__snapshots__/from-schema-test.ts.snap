@@ -1915,7 +1915,7 @@ human: IHuman | null;
 droid: IDroid | null;
 test: any | null;
 humanOrDroid: HumanOrDroid | null;
-getCharacters: Array<Character>;
+getCharacters: Array<Character | null>;
 }
 
 interface IHeroOnQueryArguments {
@@ -1948,11 +1948,11 @@ interface ICharacter {
 __typename: \\"Character\\";
 id: string;
 name: string | null;
-friends: Array<Character> | null;
-appearsIn: Array<Episode> | null;
-nonNullArr: Array<Character>;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
+nonNullArr: Array<Character | null>;
 nonNullArrAndContents: Array<Character>;
-nullArrNonNullContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
 }
 
 const enum Episode {
@@ -1965,25 +1965,25 @@ interface IHuman {
 __typename: \\"Human\\";
 id: string;
 name: string | null;
-friends: Array<Character> | null;
-appearsIn: Array<Episode> | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
 homePlanet: string | null;
-nonNullArr: Array<Character>;
+nonNullArr: Array<Character | null>;
 nonNullArrAndContents: Array<Character>;
-nullArrNonNullContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
 }
 
 interface IDroid {
 __typename: \\"Droid\\";
 id: string;
 name: string | null;
-friends: Array<Character> | null;
-appearsIn: Array<Episode> | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
 primaryFunction: string | null;
 primaryFunctionNonNull: string;
-nonNullArr: Array<Character>;
+nonNullArr: Array<Character | null>;
 nonNullArrAndContents: Array<Character>;
-nullArrNonNullContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
 }
 
 type HumanOrDroid = IHuman | IDroid;
@@ -2119,7 +2119,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmsEdge> | null;
+edges: Array<IFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2137,7 +2137,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -2213,7 +2213,7 @@ director: string | null;
 /**
  * The name(s) of the producer(s) of this film.
  */
-producers: Array<string> | null;
+producers: Array<string | null> | null;
 
 /**
  * The ISO 8601 date format of film release at original creator country.
@@ -2307,7 +2307,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmSpeciesEdge> | null;
+edges: Array<IFilmSpeciesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2325,7 +2325,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-species: Array<ISpecies> | null;
+species: Array<ISpecies | null> | null;
 }
 
 /**
@@ -2380,19 +2380,19 @@ averageLifespan: number | null;
  * Common eye colors for this species, null if this species does not typically
 * have eyes.
  */
-eyeColors: Array<string> | null;
+eyeColors: Array<string | null> | null;
 
 /**
  * Common hair colors for this species, null if this species does not typically
 * have hair.
  */
-hairColors: Array<string> | null;
+hairColors: Array<string | null> | null;
 
 /**
  * Common skin colors for this species, null if this species does not typically
 * have skin.
  */
-skinColors: Array<string> | null;
+skinColors: Array<string | null> | null;
 
 /**
  * The language commonly spoken by this species.
@@ -2479,12 +2479,12 @@ population: number | null;
 /**
  * The climates of this planet.
  */
-climates: Array<string> | null;
+climates: Array<string | null> | null;
 
 /**
  * The terrains of this planet.
  */
-terrains: Array<string> | null;
+terrains: Array<string | null> | null;
 
 /**
  * The percentage of the planet surface that is naturally occuring water or bodies
@@ -2538,7 +2538,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPlanetResidentsEdge> | null;
+edges: Array<IPlanetResidentsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2575,7 +2575,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPersonFilmsEdge> | null;
+edges: Array<IPersonFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2593,7 +2593,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -2627,7 +2627,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPersonStarshipsEdge> | null;
+edges: Array<IPersonStarshipsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2645,7 +2645,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-starships: Array<IStarship> | null;
+starships: Array<IStarship | null> | null;
 }
 
 /**
@@ -2691,7 +2691,7 @@ starshipClass: string | null;
 /**
  * The manufacturers of this starship.
  */
-manufacturers: Array<string> | null;
+manufacturers: Array<string | null> | null;
 
 /**
  * The cost of this starship new, in galactic credits.
@@ -2790,7 +2790,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IStarshipPilotsEdge> | null;
+edges: Array<IStarshipPilotsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2827,7 +2827,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IStarshipFilmsEdge> | null;
+edges: Array<IStarshipFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2845,7 +2845,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -2879,7 +2879,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPersonVehiclesEdge> | null;
+edges: Array<IPersonVehiclesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -2897,7 +2897,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-vehicles: Array<IVehicle> | null;
+vehicles: Array<IVehicle | null> | null;
 }
 
 /**
@@ -2943,7 +2943,7 @@ vehicleClass: string | null;
 /**
  * The manufacturers of this vehicle.
  */
-manufacturers: Array<string> | null;
+manufacturers: Array<string | null> | null;
 
 /**
  * The cost of this vehicle new, in Galactic Credits.
@@ -3027,7 +3027,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IVehiclePilotsEdge> | null;
+edges: Array<IVehiclePilotsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3064,7 +3064,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IVehicleFilmsEdge> | null;
+edges: Array<IVehicleFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3082,7 +3082,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -3116,7 +3116,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPlanetFilmsEdge> | null;
+edges: Array<IPlanetFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3134,7 +3134,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -3168,7 +3168,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<ISpeciesPeopleEdge> | null;
+edges: Array<ISpeciesPeopleEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3205,7 +3205,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<ISpeciesFilmsEdge> | null;
+edges: Array<ISpeciesFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3223,7 +3223,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -3257,7 +3257,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmStarshipsEdge> | null;
+edges: Array<IFilmStarshipsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3275,7 +3275,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-starships: Array<IStarship> | null;
+starships: Array<IStarship | null> | null;
 }
 
 /**
@@ -3309,7 +3309,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmVehiclesEdge> | null;
+edges: Array<IFilmVehiclesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3327,7 +3327,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-vehicles: Array<IVehicle> | null;
+vehicles: Array<IVehicle | null> | null;
 }
 
 /**
@@ -3361,7 +3361,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmCharactersEdge> | null;
+edges: Array<IFilmCharactersEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3398,7 +3398,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmPlanetsEdge> | null;
+edges: Array<IFilmPlanetsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3416,7 +3416,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-planets: Array<IPlanet> | null;
+planets: Array<IPlanet | null> | null;
 }
 
 /**
@@ -3450,7 +3450,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPeopleEdge> | null;
+edges: Array<IPeopleEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3487,7 +3487,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPlanetsEdge> | null;
+edges: Array<IPlanetsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3505,7 +3505,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-planets: Array<IPlanet> | null;
+planets: Array<IPlanet | null> | null;
 }
 
 /**
@@ -3539,7 +3539,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<ISpeciesEdge> | null;
+edges: Array<ISpeciesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3557,7 +3557,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-species: Array<ISpecies> | null;
+species: Array<ISpecies | null> | null;
 }
 
 /**
@@ -3591,7 +3591,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IStarshipsEdge> | null;
+edges: Array<IStarshipsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3609,7 +3609,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-starships: Array<IStarship> | null;
+starships: Array<IStarship | null> | null;
 }
 
 /**
@@ -3643,7 +3643,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IVehiclesEdge> | null;
+edges: Array<IVehiclesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3661,7 +3661,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-vehicles: Array<IVehicle> | null;
+vehicles: Array<IVehicle | null> | null;
 }
 
 /**
@@ -3874,7 +3874,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmsEdge> | null;
+edges: Array<IFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -3892,7 +3892,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -3968,7 +3968,7 @@ director: string | null;
 /**
  * The name(s) of the producer(s) of this film.
  */
-producers: Array<string> | null;
+producers: Array<string | null> | null;
 
 /**
  * The ISO 8601 date format of film release at original creator country.
@@ -4062,7 +4062,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmSpeciesEdge> | null;
+edges: Array<IFilmSpeciesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4080,7 +4080,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-species: Array<ISpecies> | null;
+species: Array<ISpecies | null> | null;
 }
 
 /**
@@ -4135,19 +4135,19 @@ averageLifespan: number | null;
  * Common eye colors for this species, null if this species does not typically
 * have eyes.
  */
-eyeColors: Array<string> | null;
+eyeColors: Array<string | null> | null;
 
 /**
  * Common hair colors for this species, null if this species does not typically
 * have hair.
  */
-hairColors: Array<string> | null;
+hairColors: Array<string | null> | null;
 
 /**
  * Common skin colors for this species, null if this species does not typically
 * have skin.
  */
-skinColors: Array<string> | null;
+skinColors: Array<string | null> | null;
 
 /**
  * The language commonly spoken by this species.
@@ -4234,12 +4234,12 @@ population: number | null;
 /**
  * The climates of this planet.
  */
-climates: Array<string> | null;
+climates: Array<string | null> | null;
 
 /**
  * The terrains of this planet.
  */
-terrains: Array<string> | null;
+terrains: Array<string | null> | null;
 
 /**
  * The percentage of the planet surface that is naturally occuring water or bodies
@@ -4293,7 +4293,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPlanetResidentsEdge> | null;
+edges: Array<IPlanetResidentsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4311,7 +4311,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-residents: Array<IPerson> | null;
+residents: Array<IPerson | null> | null;
 }
 
 /**
@@ -4446,7 +4446,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPersonFilmsEdge> | null;
+edges: Array<IPersonFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4464,7 +4464,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -4498,7 +4498,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPersonStarshipsEdge> | null;
+edges: Array<IPersonStarshipsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4516,7 +4516,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-starships: Array<IStarship> | null;
+starships: Array<IStarship | null> | null;
 }
 
 /**
@@ -4562,7 +4562,7 @@ starshipClass: string | null;
 /**
  * The manufacturers of this starship.
  */
-manufacturers: Array<string> | null;
+manufacturers: Array<string | null> | null;
 
 /**
  * The cost of this starship new, in galactic credits.
@@ -4661,7 +4661,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IStarshipPilotsEdge> | null;
+edges: Array<IStarshipPilotsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4679,7 +4679,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-pilots: Array<IPerson> | null;
+pilots: Array<IPerson | null> | null;
 }
 
 /**
@@ -4713,7 +4713,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IStarshipFilmsEdge> | null;
+edges: Array<IStarshipFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4731,7 +4731,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -4765,7 +4765,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPersonVehiclesEdge> | null;
+edges: Array<IPersonVehiclesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4783,7 +4783,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-vehicles: Array<IVehicle> | null;
+vehicles: Array<IVehicle | null> | null;
 }
 
 /**
@@ -4829,7 +4829,7 @@ vehicleClass: string | null;
 /**
  * The manufacturers of this vehicle.
  */
-manufacturers: Array<string> | null;
+manufacturers: Array<string | null> | null;
 
 /**
  * The cost of this vehicle new, in Galactic Credits.
@@ -4913,7 +4913,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IVehiclePilotsEdge> | null;
+edges: Array<IVehiclePilotsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4931,7 +4931,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-pilots: Array<IPerson> | null;
+pilots: Array<IPerson | null> | null;
 }
 
 /**
@@ -4965,7 +4965,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IVehicleFilmsEdge> | null;
+edges: Array<IVehicleFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -4983,7 +4983,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -5017,7 +5017,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPlanetFilmsEdge> | null;
+edges: Array<IPlanetFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5035,7 +5035,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -5069,7 +5069,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<ISpeciesPeopleEdge> | null;
+edges: Array<ISpeciesPeopleEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5087,7 +5087,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-people: Array<IPerson> | null;
+people: Array<IPerson | null> | null;
 }
 
 /**
@@ -5121,7 +5121,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<ISpeciesFilmsEdge> | null;
+edges: Array<ISpeciesFilmsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5139,7 +5139,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-films: Array<IFilm> | null;
+films: Array<IFilm | null> | null;
 }
 
 /**
@@ -5173,7 +5173,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmStarshipsEdge> | null;
+edges: Array<IFilmStarshipsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5191,7 +5191,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-starships: Array<IStarship> | null;
+starships: Array<IStarship | null> | null;
 }
 
 /**
@@ -5225,7 +5225,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmVehiclesEdge> | null;
+edges: Array<IFilmVehiclesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5243,7 +5243,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-vehicles: Array<IVehicle> | null;
+vehicles: Array<IVehicle | null> | null;
 }
 
 /**
@@ -5277,7 +5277,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmCharactersEdge> | null;
+edges: Array<IFilmCharactersEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5295,7 +5295,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-characters: Array<IPerson> | null;
+characters: Array<IPerson | null> | null;
 }
 
 /**
@@ -5329,7 +5329,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IFilmPlanetsEdge> | null;
+edges: Array<IFilmPlanetsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5347,7 +5347,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-planets: Array<IPlanet> | null;
+planets: Array<IPlanet | null> | null;
 }
 
 /**
@@ -5381,7 +5381,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPeopleEdge> | null;
+edges: Array<IPeopleEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5399,7 +5399,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-people: Array<IPerson> | null;
+people: Array<IPerson | null> | null;
 }
 
 /**
@@ -5433,7 +5433,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IPlanetsEdge> | null;
+edges: Array<IPlanetsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5451,7 +5451,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-planets: Array<IPlanet> | null;
+planets: Array<IPlanet | null> | null;
 }
 
 /**
@@ -5485,7 +5485,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<ISpeciesEdge> | null;
+edges: Array<ISpeciesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5503,7 +5503,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-species: Array<ISpecies> | null;
+species: Array<ISpecies | null> | null;
 }
 
 /**
@@ -5537,7 +5537,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IStarshipsEdge> | null;
+edges: Array<IStarshipsEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5555,7 +5555,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-starships: Array<IStarship> | null;
+starships: Array<IStarship | null> | null;
 }
 
 /**
@@ -5589,7 +5589,7 @@ pageInfo: IPageInfo;
 /**
  * A list of edges.
  */
-edges: Array<IVehiclesEdge> | null;
+edges: Array<IVehiclesEdge | null> | null;
 
 /**
  * A count of the total number of objects in this connection, ignoring pagination.
@@ -5607,7 +5607,7 @@ totalCount: number | null;
 * the edge to enable efficient pagination, this shortcut cannot be used, and the
 * full \\"{ edges { node } }\\" version should be used instead.
  */
-vehicles: Array<IVehicle> | null;
+vehicles: Array<IVehicle | null> | null;
 }
 
 /**
@@ -5821,7 +5821,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmsEdge> | null;
+    edges: Array<IFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -5839,7 +5839,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -5915,7 +5915,7 @@ declare namespace GQL {
     /**
      * The name(s) of the producer(s) of this film.
      */
-    producers: Array<string> | null;
+    producers: Array<string | null> | null;
 
     /**
      * The ISO 8601 date format of film release at original creator country.
@@ -6009,7 +6009,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmSpeciesEdge> | null;
+    edges: Array<IFilmSpeciesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6027,7 +6027,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    species: Array<ISpecies> | null;
+    species: Array<ISpecies | null> | null;
   }
 
   /**
@@ -6082,19 +6082,19 @@ declare namespace GQL {
      * Common eye colors for this species, null if this species does not typically
      * have eyes.
      */
-    eyeColors: Array<string> | null;
+    eyeColors: Array<string | null> | null;
 
     /**
      * Common hair colors for this species, null if this species does not typically
      * have hair.
      */
-    hairColors: Array<string> | null;
+    hairColors: Array<string | null> | null;
 
     /**
      * Common skin colors for this species, null if this species does not typically
      * have skin.
      */
-    skinColors: Array<string> | null;
+    skinColors: Array<string | null> | null;
 
     /**
      * The language commonly spoken by this species.
@@ -6181,12 +6181,12 @@ declare namespace GQL {
     /**
      * The climates of this planet.
      */
-    climates: Array<string> | null;
+    climates: Array<string | null> | null;
 
     /**
      * The terrains of this planet.
      */
-    terrains: Array<string> | null;
+    terrains: Array<string | null> | null;
 
     /**
      * The percentage of the planet surface that is naturally occuring water or bodies
@@ -6240,7 +6240,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetResidentsEdge> | null;
+    edges: Array<IPlanetResidentsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6258,7 +6258,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    residents: Array<IPerson> | null;
+    residents: Array<IPerson | null> | null;
   }
 
   /**
@@ -6393,7 +6393,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonFilmsEdge> | null;
+    edges: Array<IPersonFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6411,7 +6411,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -6445,7 +6445,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonStarshipsEdge> | null;
+    edges: Array<IPersonStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6463,7 +6463,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -6509,7 +6509,7 @@ declare namespace GQL {
     /**
      * The manufacturers of this starship.
      */
-    manufacturers: Array<string> | null;
+    manufacturers: Array<string | null> | null;
 
     /**
      * The cost of this starship new, in galactic credits.
@@ -6608,7 +6608,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipPilotsEdge> | null;
+    edges: Array<IStarshipPilotsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6626,7 +6626,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    pilots: Array<IPerson> | null;
+    pilots: Array<IPerson | null> | null;
   }
 
   /**
@@ -6660,7 +6660,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipFilmsEdge> | null;
+    edges: Array<IStarshipFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6678,7 +6678,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -6712,7 +6712,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonVehiclesEdge> | null;
+    edges: Array<IPersonVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6730,7 +6730,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -6776,7 +6776,7 @@ declare namespace GQL {
     /**
      * The manufacturers of this vehicle.
      */
-    manufacturers: Array<string> | null;
+    manufacturers: Array<string | null> | null;
 
     /**
      * The cost of this vehicle new, in Galactic Credits.
@@ -6860,7 +6860,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IVehiclePilotsEdge> | null;
+    edges: Array<IVehiclePilotsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6878,7 +6878,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    pilots: Array<IPerson> | null;
+    pilots: Array<IPerson | null> | null;
   }
 
   /**
@@ -6912,7 +6912,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IVehicleFilmsEdge> | null;
+    edges: Array<IVehicleFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6930,7 +6930,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -6964,7 +6964,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetFilmsEdge> | null;
+    edges: Array<IPlanetFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -6982,7 +6982,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -7016,7 +7016,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesPeopleEdge> | null;
+    edges: Array<ISpeciesPeopleEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7034,7 +7034,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    people: Array<IPerson> | null;
+    people: Array<IPerson | null> | null;
   }
 
   /**
@@ -7068,7 +7068,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesFilmsEdge> | null;
+    edges: Array<ISpeciesFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7086,7 +7086,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -7120,7 +7120,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmStarshipsEdge> | null;
+    edges: Array<IFilmStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7138,7 +7138,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -7172,7 +7172,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmVehiclesEdge> | null;
+    edges: Array<IFilmVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7190,7 +7190,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -7224,7 +7224,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmCharactersEdge> | null;
+    edges: Array<IFilmCharactersEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7242,7 +7242,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    characters: Array<IPerson> | null;
+    characters: Array<IPerson | null> | null;
   }
 
   /**
@@ -7276,7 +7276,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmPlanetsEdge> | null;
+    edges: Array<IFilmPlanetsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7294,7 +7294,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    planets: Array<IPlanet> | null;
+    planets: Array<IPlanet | null> | null;
   }
 
   /**
@@ -7328,7 +7328,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPeopleEdge> | null;
+    edges: Array<IPeopleEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7346,7 +7346,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    people: Array<IPerson> | null;
+    people: Array<IPerson | null> | null;
   }
 
   /**
@@ -7380,7 +7380,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetsEdge> | null;
+    edges: Array<IPlanetsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7398,7 +7398,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    planets: Array<IPlanet> | null;
+    planets: Array<IPlanet | null> | null;
   }
 
   /**
@@ -7432,7 +7432,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesEdge> | null;
+    edges: Array<ISpeciesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7450,7 +7450,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    species: Array<ISpecies> | null;
+    species: Array<ISpecies | null> | null;
   }
 
   /**
@@ -7484,7 +7484,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipsEdge> | null;
+    edges: Array<IStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7502,7 +7502,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -7536,7 +7536,7 @@ declare namespace GQL {
     /**
      * A list of edges.
      */
-    edges: Array<IVehiclesEdge> | null;
+    edges: Array<IVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7554,7 +7554,7 @@ declare namespace GQL {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -7755,7 +7755,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmsEdge> | null;
+    edges: Array<IFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7773,7 +7773,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -7849,7 +7849,7 @@ declare namespace StarWars {
     /**
      * The name(s) of the producer(s) of this film.
      */
-    producers: Array<string> | null;
+    producers: Array<string | null> | null;
 
     /**
      * The ISO 8601 date format of film release at original creator country.
@@ -7943,7 +7943,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmSpeciesEdge> | null;
+    edges: Array<IFilmSpeciesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -7961,7 +7961,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    species: Array<ISpecies> | null;
+    species: Array<ISpecies | null> | null;
   }
 
   /**
@@ -8016,19 +8016,19 @@ declare namespace StarWars {
      * Common eye colors for this species, null if this species does not typically
      * have eyes.
      */
-    eyeColors: Array<string> | null;
+    eyeColors: Array<string | null> | null;
 
     /**
      * Common hair colors for this species, null if this species does not typically
      * have hair.
      */
-    hairColors: Array<string> | null;
+    hairColors: Array<string | null> | null;
 
     /**
      * Common skin colors for this species, null if this species does not typically
      * have skin.
      */
-    skinColors: Array<string> | null;
+    skinColors: Array<string | null> | null;
 
     /**
      * The language commonly spoken by this species.
@@ -8115,12 +8115,12 @@ declare namespace StarWars {
     /**
      * The climates of this planet.
      */
-    climates: Array<string> | null;
+    climates: Array<string | null> | null;
 
     /**
      * The terrains of this planet.
      */
-    terrains: Array<string> | null;
+    terrains: Array<string | null> | null;
 
     /**
      * The percentage of the planet surface that is naturally occuring water or bodies
@@ -8174,7 +8174,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetResidentsEdge> | null;
+    edges: Array<IPlanetResidentsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8192,7 +8192,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    residents: Array<IPerson> | null;
+    residents: Array<IPerson | null> | null;
   }
 
   /**
@@ -8327,7 +8327,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonFilmsEdge> | null;
+    edges: Array<IPersonFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8345,7 +8345,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -8379,7 +8379,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonStarshipsEdge> | null;
+    edges: Array<IPersonStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8397,7 +8397,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -8443,7 +8443,7 @@ declare namespace StarWars {
     /**
      * The manufacturers of this starship.
      */
-    manufacturers: Array<string> | null;
+    manufacturers: Array<string | null> | null;
 
     /**
      * The cost of this starship new, in galactic credits.
@@ -8542,7 +8542,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipPilotsEdge> | null;
+    edges: Array<IStarshipPilotsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8560,7 +8560,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    pilots: Array<IPerson> | null;
+    pilots: Array<IPerson | null> | null;
   }
 
   /**
@@ -8594,7 +8594,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipFilmsEdge> | null;
+    edges: Array<IStarshipFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8612,7 +8612,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -8646,7 +8646,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonVehiclesEdge> | null;
+    edges: Array<IPersonVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8664,7 +8664,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -8710,7 +8710,7 @@ declare namespace StarWars {
     /**
      * The manufacturers of this vehicle.
      */
-    manufacturers: Array<string> | null;
+    manufacturers: Array<string | null> | null;
 
     /**
      * The cost of this vehicle new, in Galactic Credits.
@@ -8794,7 +8794,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IVehiclePilotsEdge> | null;
+    edges: Array<IVehiclePilotsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8812,7 +8812,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    pilots: Array<IPerson> | null;
+    pilots: Array<IPerson | null> | null;
   }
 
   /**
@@ -8846,7 +8846,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IVehicleFilmsEdge> | null;
+    edges: Array<IVehicleFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8864,7 +8864,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -8898,7 +8898,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetFilmsEdge> | null;
+    edges: Array<IPlanetFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8916,7 +8916,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -8950,7 +8950,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesPeopleEdge> | null;
+    edges: Array<ISpeciesPeopleEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -8968,7 +8968,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    people: Array<IPerson> | null;
+    people: Array<IPerson | null> | null;
   }
 
   /**
@@ -9002,7 +9002,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesFilmsEdge> | null;
+    edges: Array<ISpeciesFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9020,7 +9020,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -9054,7 +9054,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmStarshipsEdge> | null;
+    edges: Array<IFilmStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9072,7 +9072,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -9106,7 +9106,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmVehiclesEdge> | null;
+    edges: Array<IFilmVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9124,7 +9124,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -9158,7 +9158,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmCharactersEdge> | null;
+    edges: Array<IFilmCharactersEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9176,7 +9176,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    characters: Array<IPerson> | null;
+    characters: Array<IPerson | null> | null;
   }
 
   /**
@@ -9210,7 +9210,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmPlanetsEdge> | null;
+    edges: Array<IFilmPlanetsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9228,7 +9228,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    planets: Array<IPlanet> | null;
+    planets: Array<IPlanet | null> | null;
   }
 
   /**
@@ -9262,7 +9262,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPeopleEdge> | null;
+    edges: Array<IPeopleEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9280,7 +9280,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    people: Array<IPerson> | null;
+    people: Array<IPerson | null> | null;
   }
 
   /**
@@ -9314,7 +9314,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetsEdge> | null;
+    edges: Array<IPlanetsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9332,7 +9332,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    planets: Array<IPlanet> | null;
+    planets: Array<IPlanet | null> | null;
   }
 
   /**
@@ -9366,7 +9366,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesEdge> | null;
+    edges: Array<ISpeciesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9384,7 +9384,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    species: Array<ISpecies> | null;
+    species: Array<ISpecies | null> | null;
   }
 
   /**
@@ -9418,7 +9418,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipsEdge> | null;
+    edges: Array<IStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9436,7 +9436,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -9470,7 +9470,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IVehiclesEdge> | null;
+    edges: Array<IVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9488,7 +9488,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -9644,7 +9644,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmsEdge> | null;
+    edges: Array<IFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9662,7 +9662,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -9738,7 +9738,7 @@ declare namespace StarWars {
     /**
      * The name(s) of the producer(s) of this film.
      */
-    producers: Array<string> | null;
+    producers: Array<string | null> | null;
 
     /**
      * The ISO 8601 date format of film release at original creator country.
@@ -9832,7 +9832,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmSpeciesEdge> | null;
+    edges: Array<IFilmSpeciesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -9850,7 +9850,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    species: Array<ISpecies> | null;
+    species: Array<ISpecies | null> | null;
   }
 
   /**
@@ -9905,19 +9905,19 @@ declare namespace StarWars {
      * Common eye colors for this species, null if this species does not typically
      * have eyes.
      */
-    eyeColors: Array<string> | null;
+    eyeColors: Array<string | null> | null;
 
     /**
      * Common hair colors for this species, null if this species does not typically
      * have hair.
      */
-    hairColors: Array<string> | null;
+    hairColors: Array<string | null> | null;
 
     /**
      * Common skin colors for this species, null if this species does not typically
      * have skin.
      */
-    skinColors: Array<string> | null;
+    skinColors: Array<string | null> | null;
 
     /**
      * The language commonly spoken by this species.
@@ -10004,12 +10004,12 @@ declare namespace StarWars {
     /**
      * The climates of this planet.
      */
-    climates: Array<string> | null;
+    climates: Array<string | null> | null;
 
     /**
      * The terrains of this planet.
      */
-    terrains: Array<string> | null;
+    terrains: Array<string | null> | null;
 
     /**
      * The percentage of the planet surface that is naturally occuring water or bodies
@@ -10063,7 +10063,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetResidentsEdge> | null;
+    edges: Array<IPlanetResidentsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10100,7 +10100,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonFilmsEdge> | null;
+    edges: Array<IPersonFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10118,7 +10118,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -10152,7 +10152,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonStarshipsEdge> | null;
+    edges: Array<IPersonStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10170,7 +10170,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -10216,7 +10216,7 @@ declare namespace StarWars {
     /**
      * The manufacturers of this starship.
      */
-    manufacturers: Array<string> | null;
+    manufacturers: Array<string | null> | null;
 
     /**
      * The cost of this starship new, in galactic credits.
@@ -10315,7 +10315,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipPilotsEdge> | null;
+    edges: Array<IStarshipPilotsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10352,7 +10352,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipFilmsEdge> | null;
+    edges: Array<IStarshipFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10370,7 +10370,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -10404,7 +10404,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPersonVehiclesEdge> | null;
+    edges: Array<IPersonVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10422,7 +10422,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -10468,7 +10468,7 @@ declare namespace StarWars {
     /**
      * The manufacturers of this vehicle.
      */
-    manufacturers: Array<string> | null;
+    manufacturers: Array<string | null> | null;
 
     /**
      * The cost of this vehicle new, in Galactic Credits.
@@ -10552,7 +10552,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IVehiclePilotsEdge> | null;
+    edges: Array<IVehiclePilotsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10589,7 +10589,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IVehicleFilmsEdge> | null;
+    edges: Array<IVehicleFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10607,7 +10607,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -10641,7 +10641,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetFilmsEdge> | null;
+    edges: Array<IPlanetFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10659,7 +10659,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -10693,7 +10693,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesPeopleEdge> | null;
+    edges: Array<ISpeciesPeopleEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10730,7 +10730,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesFilmsEdge> | null;
+    edges: Array<ISpeciesFilmsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10748,7 +10748,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    films: Array<IFilm> | null;
+    films: Array<IFilm | null> | null;
   }
 
   /**
@@ -10782,7 +10782,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmStarshipsEdge> | null;
+    edges: Array<IFilmStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10800,7 +10800,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -10834,7 +10834,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmVehiclesEdge> | null;
+    edges: Array<IFilmVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10852,7 +10852,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -10886,7 +10886,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmCharactersEdge> | null;
+    edges: Array<IFilmCharactersEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10923,7 +10923,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IFilmPlanetsEdge> | null;
+    edges: Array<IFilmPlanetsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -10941,7 +10941,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    planets: Array<IPlanet> | null;
+    planets: Array<IPlanet | null> | null;
   }
 
   /**
@@ -10975,7 +10975,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPeopleEdge> | null;
+    edges: Array<IPeopleEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -11012,7 +11012,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IPlanetsEdge> | null;
+    edges: Array<IPlanetsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -11030,7 +11030,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    planets: Array<IPlanet> | null;
+    planets: Array<IPlanet | null> | null;
   }
 
   /**
@@ -11064,7 +11064,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<ISpeciesEdge> | null;
+    edges: Array<ISpeciesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -11082,7 +11082,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    species: Array<ISpecies> | null;
+    species: Array<ISpecies | null> | null;
   }
 
   /**
@@ -11116,7 +11116,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IStarshipsEdge> | null;
+    edges: Array<IStarshipsEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -11134,7 +11134,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    starships: Array<IStarship> | null;
+    starships: Array<IStarship | null> | null;
   }
 
   /**
@@ -11168,7 +11168,7 @@ declare namespace StarWars {
     /**
      * A list of edges.
      */
-    edges: Array<IVehiclesEdge> | null;
+    edges: Array<IVehiclesEdge | null> | null;
 
     /**
      * A count of the total number of objects in this connection, ignoring pagination.
@@ -11186,7 +11186,7 @@ declare namespace StarWars {
      * the edge to enable efficient pagination, this shortcut cannot be used, and the
      * full \\"{ edges { node } }\\" version should be used instead.
      */
-    vehicles: Array<IVehicle> | null;
+    vehicles: Array<IVehicle | null> | null;
   }
 
   /**
@@ -11238,7 +11238,7 @@ human: IHuman | null;
 droid: IDroid | null;
 test: any | null;
 humanOrDroid: HumanOrDroid | null;
-getCharacters: Array<Character>;
+getCharacters: Array<Character | null>;
 
 /**
  * @deprecated \\"Field No Longer Available.\\"
@@ -11276,16 +11276,16 @@ interface ICharacter {
 __typename: \\"Character\\";
 id: string;
 name: string | null;
-friends: Array<Character> | null;
-appearsIn: Array<Episode> | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
 
 /**
  * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
-nonNullArr: Array<Character>;
+nonNullArr: Array<Character | null>;
 nonNullArrAndContents: Array<Character>;
-nullArrNonNullContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
 }
 
 const enum Episode {
@@ -11298,25 +11298,25 @@ interface IHuman {
 __typename: \\"Human\\";
 id: string;
 name: string | null;
-friends: Array<Character> | null;
-appearsIn: Array<Episode> | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
 homePlanet: string | null;
 
 /**
  * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
-nonNullArr: Array<Character>;
+nonNullArr: Array<Character | null>;
 nonNullArrAndContents: Array<Character>;
-nullArrNonNullContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
 }
 
 interface IDroid {
 __typename: \\"Droid\\";
 id: string;
 name: string | null;
-friends: Array<Character> | null;
-appearsIn: Array<Episode> | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
 primaryFunction: string | null;
 primaryFunctionNonNull: string;
 
@@ -11324,9 +11324,9 @@ primaryFunctionNonNull: string;
  * @deprecated \\"Field No Longer Available.\\"
  */
 anOldField: string | null;
-nonNullArr: Array<Character>;
+nonNullArr: Array<Character | null>;
 nonNullArrAndContents: Array<Character>;
-nullArrNonNullContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
 }
 
 type HumanOrDroid = IHuman | IDroid;
