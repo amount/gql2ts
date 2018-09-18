@@ -30,6 +30,7 @@ import {
 import { IFromQueryOptions, ITypeMap } from '@gql2ts/types';
 import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
 import * as dedent from 'dedent';
+import { isNull } from 'util';
 
 const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => string = (schemaInput, optionsInput) => {
   const {
@@ -158,37 +159,21 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     );
   };
 
-  /**
-   * TODO
-   * - add support for custom types (via optional json file or something)
-   * - allow this to return metadata for Non Null types
-   */
-
-  type ResolvedInterfaceType = {
-    value: ResolvedInterfaceType | string;
-    // value: string
+  type ResolvedInterfaceValue = {
+    value: ResolvedInterfaceValue | string;
     description?: string;
     deprecation?: string;
     isList: boolean;
     isNonNullable: boolean;
   };
 
-  // const resolveInterfaceName: (type: GraphQLInputType | GraphQLType, isNonNull: boolean) => string = (type, isNonNull = false) => {
-  type ResolveInterfaceName = (type: GraphQLInputType | GraphQLType, nonNullable: boolean) => ResolvedInterfaceType;
+  type ResolveInterfaceName = (type: GraphQLInputType | GraphQLType, nonNullable: boolean) => ResolvedInterfaceValue;
+
+  /**
+   * TODO
+   * - add support for custom types (via optional json file or something)
+   */
   const resolveInterfaceName: ResolveInterfaceName = (type, nonNullable = false) => {
-    // if (isList(type)) {
-    //   return wrapList(resolveInterfaceName((type).ofType, nonNullable));
-    // } else if (isNonNullable(type)) {
-    //   return resolveInterfaceName((type).ofType, true);
-    // } else if (isScalar(type)) {
-    //   return TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT;
-    // } else if (isAbstractType(type)) {
-    //   return generateTypeName(type.name);
-    // } else if (isEnum(type)) {
-    //   return generateEnumName(type.name);
-    // } else {
-    //   return generateInterfaceName(type.name);
-    // }
     if (isList(type)) {
       return {
         value: resolveInterfaceName(type.ofType, false),
@@ -227,87 +212,40 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     };
   };
 
-  // interface IInterfaceMetadata {
-  //   name: string;
-  //   showNullabilityAttribute: boolean;
-  //   isNonNull: boolean;
-  // }
+  type TypePrinter = (val: ResolvedInterfaceValue | string, supportsNullability: boolean) => string;
 
-  // type ExtractInterfaceMetadata = (interfaceName: ResolvedInterfaceType | string, supportsNullability: boolean) => IInterfaceMetadata;
-  // const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName, supportsNullability) => {
-  //   // const isNonNull: boolean = interfaceName.includes('!');
-  //   if (typeof interfaceName === 'string') {
-  //     return {
-  //       isNonNull: false,
-  //       name: interfaceName,
-  //       showNullabilityAttribute: false
-  //     };
-  //   }
-  //   const isNonNull: boolean = interfaceName.isNonNullable;
-  //   return {
-  //     isNonNull,
-  //     // name: interfaceName.replace(/\!/g, ''),
-  //     name: interfaceName.value,
-  //     showNullabilityAttribute: !isNonNull && supportsNullability
-  //   };
-  // };
+  const typePrinter: TypePrinter = (val, supportsNullability) => {
+    if (typeof val === 'string') {
+      return val;
+    }
+    const isNonNull: boolean = supportsNullability ? val.isNonNullable : true;
+    if (val.isList) {
+      return printType(wrapList(typePrinter(val.value, supportsNullability)), isNonNull);
+    }
+    return printType(typePrinter(val.value, supportsNullability), isNonNull);
+  };
 
   type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean, supportsNullability: boolean) => string;
+
   const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
-    // const { name, showNullabilityAttribute, isNonNull } = extractInterfaceMetadata(
-    //   resolveInterfaceName(field.type),
-    //   supportsNullability
-    // );
-    const resolved: ResolvedInterfaceType = resolveInterfaceName(field.type, false);
+    const resolved: ResolvedInterfaceValue = resolveInterfaceName(field.type, false);
 
     return formatInput(
       field.name,
       isInput && !resolved.isNonNullable,
-      print(resolved, supportsNullability)
+      typePrinter(resolved, supportsNullability)
     );
-
-    // return formatInput(
-    //   resolved.value,
-    //   isInput && !resolved.isNonNullable,
-    //   printType(resolved.value, !resolved.isNonNullable)
-    // );
-
-    // return formatInput(
-    //   field.name,
-    //   isInput && !isNonNull,
-    //   printType(name, !showNullabilityAttribute)
-    // );
-  };
-
-  const print: any = (val: ResolvedInterfaceType | string, supportsNullability: boolean): string => {
-    if (typeof val === 'string') {
-      return val;
-    }
-    const isNullable: boolean = val.isNonNullable && supportsNullability; //  supportsNullability ? val.isNonNullable : false;
-    if (val.isList) {
-      return printType(wrapList(print(val.value, supportsNullability)), isNullable);
-    }
-    return printType(print(val.value, supportsNullability), isNullable);
   };
 
   type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => string;
 
   const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
-    // const { name, isNonNull, showNullabilityAttribute } = extractInterfaceMetadata(
-    //   resolveInterfaceName(arg.type),
-    //   supportsNullability
-    // );
-    const resolved: ResolvedInterfaceType = resolveInterfaceName(arg.type, false);
+    const resolved: ResolvedInterfaceValue = resolveInterfaceName(arg.type, false);
 
     return filterAndJoinArray([
       generateDocumentation(buildDocumentation(arg)),
-      formatInput(arg.name, !resolved.isNonNullable, print(resolved, supportsNullability))
+      formatInput(arg.name, !resolved.isNonNullable, typePrinter(resolved, supportsNullability))
     ]);
-
-    // return filterAndJoinArray([
-    //   generateDocumentation(buildDocumentation(arg)),
-    //   formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
-    // ]);
   };
 
   type ArgumentsToDefinition = (
