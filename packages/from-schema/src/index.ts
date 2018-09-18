@@ -163,64 +163,151 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
    * - add support for custom types (via optional json file or something)
    * - allow this to return metadata for Non Null types
    */
-  const resolveInterfaceName: (type: GraphQLInputType | GraphQLType) => string = type => {
-    if (isList(type)) {
-      return wrapList(resolveInterfaceName((type).ofType));
-    } else if (isNonNullable(type)) {
-      return `!${resolveInterfaceName((type).ofType)}`;
-    } else if (isScalar(type)) {
-      return TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT;
-    } else if (isAbstractType(type)) {
-      return generateTypeName(type.name);
-    } else if (isEnum(type)) {
-      return generateEnumName(type.name);
-    } else {
-      return generateInterfaceName(type.name);
-    }
+
+  type ResolvedInterfaceType = {
+    value: ResolvedInterfaceType | string;
+    // value: string
+    description?: string;
+    deprecation?: string;
+    isList: boolean;
+    isNonNullable: boolean;
   };
 
-  interface IInterfaceMetadata {
-    name: string;
-    showNullabilityAttribute: boolean;
-    isNonNull: boolean;
-  }
-
-  type ExtractInterfaceMetadata = (interfaceName: string, supportsNullability: boolean) => IInterfaceMetadata;
-  const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName, supportsNullability) => {
-    const isNonNull: boolean = interfaceName.includes('!');
+  // const resolveInterfaceName: (type: GraphQLInputType | GraphQLType, isNonNull: boolean) => string = (type, isNonNull = false) => {
+  type ResolveInterfaceName = (type: GraphQLInputType | GraphQLType, nonNullable: boolean) => ResolvedInterfaceType;
+  const resolveInterfaceName: ResolveInterfaceName = (type, nonNullable = false) => {
+    // if (isList(type)) {
+    //   return wrapList(resolveInterfaceName((type).ofType, nonNullable));
+    // } else if (isNonNullable(type)) {
+    //   return resolveInterfaceName((type).ofType, true);
+    // } else if (isScalar(type)) {
+    //   return TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT;
+    // } else if (isAbstractType(type)) {
+    //   return generateTypeName(type.name);
+    // } else if (isEnum(type)) {
+    //   return generateEnumName(type.name);
+    // } else {
+    //   return generateInterfaceName(type.name);
+    // }
+    if (isList(type)) {
+      return {
+        value: resolveInterfaceName(type.ofType, false),
+        isList: true,
+        isNonNullable: nonNullable
+      };
+    }
+    if (isNonNullable(type)) {
+      return resolveInterfaceName(type.ofType, true);
+    }
+    if (isScalar(type)) {
+      return {
+        value: DEFAULT_TYPE_MAP[type.name] || DEFAULT_TYPE_MAP.__DEFAULT,
+        isList: false,
+        isNonNullable: nonNullable
+      };
+    }
+    if (isAbstractType(type)) {
+      return {
+        value: generateTypeName(type.name),
+        isList: false,
+        isNonNullable: nonNullable
+      };
+    }
+    if (isEnum(type)) {
+      return {
+        value: generateEnumName(type.name),
+        isList: false,
+        isNonNullable: nonNullable
+      };
+    }
     return {
-      isNonNull,
-      name: interfaceName.replace(/\!/g, ''),
-      showNullabilityAttribute: !isNonNull && supportsNullability
+      value: generateInterfaceName(type.name),
+      isList: false,
+      isNonNullable: nonNullable
     };
   };
 
+  // interface IInterfaceMetadata {
+  //   name: string;
+  //   showNullabilityAttribute: boolean;
+  //   isNonNull: boolean;
+  // }
+
+  // type ExtractInterfaceMetadata = (interfaceName: ResolvedInterfaceType | string, supportsNullability: boolean) => IInterfaceMetadata;
+  // const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName, supportsNullability) => {
+  //   // const isNonNull: boolean = interfaceName.includes('!');
+  //   if (typeof interfaceName === 'string') {
+  //     return {
+  //       isNonNull: false,
+  //       name: interfaceName,
+  //       showNullabilityAttribute: false
+  //     };
+  //   }
+  //   const isNonNull: boolean = interfaceName.isNonNullable;
+  //   return {
+  //     isNonNull,
+  //     // name: interfaceName.replace(/\!/g, ''),
+  //     name: interfaceName.value,
+  //     showNullabilityAttribute: !isNonNull && supportsNullability
+  //   };
+  // };
+
   type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean, supportsNullability: boolean) => string;
   const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
-    const { name, showNullabilityAttribute, isNonNull } = extractInterfaceMetadata(
-      resolveInterfaceName(field.type),
-      supportsNullability
-    );
+    // const { name, showNullabilityAttribute, isNonNull } = extractInterfaceMetadata(
+    //   resolveInterfaceName(field.type),
+    //   supportsNullability
+    // );
+    const resolved: ResolvedInterfaceType = resolveInterfaceName(field.type, false);
 
     return formatInput(
       field.name,
-      isInput && !isNonNull,
-      printType(name, !showNullabilityAttribute)
+      isInput && !resolved.isNonNullable,
+      print(resolved, supportsNullability)
     );
+
+    // return formatInput(
+    //   resolved.value,
+    //   isInput && !resolved.isNonNullable,
+    //   printType(resolved.value, !resolved.isNonNullable)
+    // );
+
+    // return formatInput(
+    //   field.name,
+    //   isInput && !isNonNull,
+    //   printType(name, !showNullabilityAttribute)
+    // );
+  };
+
+  const print: any = (val: ResolvedInterfaceType | string, supportsNullability: boolean): string => {
+    if (typeof val === 'string') {
+      return val;
+    }
+    const isNullable: boolean = val.isNonNullable && supportsNullability; //  supportsNullability ? val.isNonNullable : false;
+    if (val.isList) {
+      return printType(wrapList(print(val.value, supportsNullability)), isNullable);
+    }
+    return printType(print(val.value, supportsNullability), isNullable);
   };
 
   type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => string;
 
   const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
-    const { name, isNonNull, showNullabilityAttribute } = extractInterfaceMetadata(
-      resolveInterfaceName(arg.type),
-      supportsNullability
-    );
+    // const { name, isNonNull, showNullabilityAttribute } = extractInterfaceMetadata(
+    //   resolveInterfaceName(arg.type),
+    //   supportsNullability
+    // );
+    const resolved: ResolvedInterfaceType = resolveInterfaceName(arg.type, false);
 
     return filterAndJoinArray([
       generateDocumentation(buildDocumentation(arg)),
-      formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
+      formatInput(arg.name, !resolved.isNonNullable, print(resolved, supportsNullability))
     ]);
+
+    // return filterAndJoinArray([
+    //   generateDocumentation(buildDocumentation(arg)),
+    //   formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
+    // ]);
   };
 
   type ArgumentsToDefinition = (
