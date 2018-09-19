@@ -217,10 +217,11 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     if (typeof val === 'string') {
       return val;
     }
-    const isNonNull: boolean = supportsNullability ? val.isNonNull : true;
+    const isNonNull: boolean = !supportsNullability || val.isNonNull;
     if (val.isList) {
       return printType(wrapList(typePrinter(val.value, supportsNullability)), isNonNull);
     }
+
     return printType(typePrinter(val.value, supportsNullability), isNonNull);
   };
 
