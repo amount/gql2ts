@@ -7,7 +7,7 @@
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/kfa00svxkiqfb4yh/branch/master?svg=true)](https://ci.appveyor.com/project/brettjurgens/gql2ts/branch/master)
 [![Coveralls Coverage](https://coveralls.io/repos/github/avantcredit/gql2ts/badge.svg)](https://coveralls.io/github/avantcredit/gql2ts)
 
-Generate TypeScript interfaces (or Flow) from GraphQL schema and query definitions.
+Generate TypeScript type interfaces from GraphQL types and query definitions.
 
 ```shell
 # for CLI
@@ -26,60 +26,86 @@ This project is a lerna mono repo, consisting of multiple packages.
 
 This project can either:
 
-- Take a schema and generate type definitions from it
-- Take a schema & a query and generate type definitions from it
+- Take a type schema to generate TS interfaces
+- Take a type schema & query and generate TS interfaces
 
-### Generate from schema
+### Generate from type schema
 
-Takes a type schema
+Pass a GraphQL `type` schema to generate a TypeScript interface:
 
-```txt
+Input:
+
+```graphql
 type Query {
   thing: String!
   anotherThing: Boolean!
 }
 ```
 
-Generates TypeScript interface
+Output:
 
-```txt
+```ts
 interface IQuery {
   thing: string;
   anotherThing: boolean;
 }
 ```
 
-## Generate from schema and query
+## Generate from type schema and query
 
-Takes a type schema
+Pass a `type` and `query` to generate a TypeScript interface:
 
-```txt
+Input:
+
+```graphql
 type Query {
   thing: String!
   anotherThing: Boolean!
 }
 ```
 
-and a Query
-
-```txt
+```graphql
 query GetThing {
   thing
 }
 ```
 
-Generates TypeScript interface
+Output
 
-```txt
+```ts
 interface GetThing {
   thing: string;
 }
 ```
 
-Note that both `flow` and `typescript` generator outputs are supported via separate packages:
+## Language output
 
-- `language-flow` - set of defaults for running `gql2ts` with Flow as your target.
-- `language-typescript` - set of defaults for running `gql2ts` with Typescript as your target.
+Note that `flow` and `typescript` generator outputs are supported via separate packages:
+
+- `language-flow` - defaults for running `gql2ts` with Flow as your target
+- `language-typescript` - defaults for running `gql2ts` with Typescript as your target
+
+### Fine control
+
+If you look into the `index.ts` of either `from-query` or `from-schema` packages:
+
+```js
+import {
+  DEFAULT_TYPE_MAP,
+  DEFAULT_OPTIONS,
+} from '@gql2ts/language-typescript';
+```
+
+This can be replaced with mathing `flow` configuration objects:
+
+```js
+import {
+  DEFAULT_TYPE_MAP,
+  DEFAULT_OPTIONS,
+} from '@gql2ts/language-flow';
+```
+
+Note: Flow output support has yet to be packaged and made available for the CLI.
 
 ## Packages
 
