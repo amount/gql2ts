@@ -185,7 +185,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     }
     if (isScalar(type)) {
       return {
-        value: DEFAULT_TYPE_MAP[type.name] || DEFAULT_TYPE_MAP.__DEFAULT,
+        value: TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT,
         isList: false,
         isNonNull
       };
