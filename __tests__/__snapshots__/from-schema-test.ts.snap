@@ -11211,6 +11211,129 @@ declare namespace StarWars {
 "
 `;
 
+exports[`gql2ts scalar supports typemap 1`] = `
+"interface IGraphQLResponseRoot {
+data?: IQuery;
+errors?: Array<IGraphQLResponseError>;
+}
+
+interface IGraphQLResponseError {
+/** Required for all errors */
+message: string;
+locations?: Array<IGraphQLResponseErrorLocation>;
+/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */
+[propName: string]: any;
+}
+
+interface IGraphQLResponseErrorLocation {
+line: number;
+column: number;
+}
+
+interface IQuery {
+__typename: \\"Query\\";
+heroNoParam: Character | null;
+hero: Character | null;
+human: IHuman | null;
+droid: IDroid | null;
+test: TestScalar | null;
+humanOrDroid: HumanOrDroid | null;
+getCharacters: Array<Character | null>;
+
+/**
+ * @deprecated \\"Field No Longer Available.\\"
+ */
+anOldField: string | null;
+}
+
+interface IHeroOnQueryArguments {
+episode?: Episode | null;
+}
+
+interface IHumanOnQueryArguments {
+id: string;
+}
+
+interface IDroidOnQueryArguments {
+id: string;
+}
+
+interface ITestOnQueryArguments {
+test?: TestScalar | null;
+}
+
+interface IHumanOrDroidOnQueryArguments {
+id: string;
+}
+
+interface IGetCharactersOnQueryArguments {
+ids: Array<string>;
+}
+
+type Character = IHuman | IDroid;
+
+interface ICharacter {
+__typename: \\"Character\\";
+id: string;
+name: string | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
+
+/**
+ * @deprecated \\"Field No Longer Available.\\"
+ */
+anOldField: string | null;
+nonNullArr: Array<Character | null>;
+nonNullArrAndContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
+}
+
+const enum Episode {
+NEWHOPE = 'NEWHOPE',
+EMPIRE = 'EMPIRE',
+JEDI = 'JEDI'
+}
+
+interface IHuman {
+__typename: \\"Human\\";
+id: string;
+name: string | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
+homePlanet: string | null;
+
+/**
+ * @deprecated \\"Field No Longer Available.\\"
+ */
+anOldField: string | null;
+nonNullArr: Array<Character | null>;
+nonNullArrAndContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
+}
+
+interface IDroid {
+__typename: \\"Droid\\";
+id: string;
+name: string | null;
+friends: Array<Character | null> | null;
+appearsIn: Array<Episode | null> | null;
+primaryFunction: string | null;
+primaryFunctionNonNull: string;
+
+/**
+ * @deprecated \\"Field No Longer Available.\\"
+ */
+anOldField: string | null;
+nonNullArr: Array<Character | null>;
+nonNullArrAndContents: Array<Character>;
+nullArrNonNullContents: Array<Character> | null;
+}
+
+type HumanOrDroid = IHuman | IDroid;
+
+"
+`;
+
 exports[`gql2ts union types correctly translates the schema into typescript defs 1`] = `
 "interface IGraphQLResponseRoot {
 data?: IQuery;
