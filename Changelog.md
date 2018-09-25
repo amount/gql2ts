@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.10.1
+
+- Fix regression in TypeMap support (thanks [@mikfoo](https://github.com/mikfoo)) [PR #235](https://github.com/avantcredit/gql2ts/pull/235)
+
 ## 1.10.0
 
 - Fix nullable arrays in `@gql2ts/from-schema` (thanks [@mikfoo](https://github.com/mikfoo)) [Issue #197](https://github.com/avantcredit/gql2ts/issues/197) [PR #230](https://github.com/avantcredit/gql2ts/pull/230)
