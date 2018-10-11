@@ -343,7 +343,7 @@ export interface Anonymous {
   },
   Object {
     "additionalTypes": Array [
-      "export enum TypeKind {
+      "export const enum TypeKind {
   /**
    * Indicates this type is a scalar.
    */
@@ -387,7 +387,7 @@ export interface Anonymous {
 ",
     ],
     "interface": "",
-    "result": "export enum TypeKind {
+    "result": "export const enum TypeKind {
   /**
    * Indicates this type is a scalar.
    */
@@ -681,7 +681,7 @@ export interface IFragmentTypeRef {
   },
   Object {
     "additionalTypes": Array [
-      "export enum DirectiveLocation {
+      "export const enum DirectiveLocation {
   /**
    * Location adjacent to a query operation.
    */
@@ -716,6 +716,11 @@ export interface IFragmentTypeRef {
    * Location adjacent to an inline fragment.
    */
   INLINE_FRAGMENT = 'INLINE_FRAGMENT',
+
+  /**
+   * Location adjacent to a variable definition.
+   */
+  VARIABLE_DEFINITION = 'VARIABLE_DEFINITION',
 
   /**
    * Location adjacent to a schema definition.
@@ -773,7 +778,7 @@ export interface IFragmentTypeRef {
   INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION'
 }
 ",
-      "export enum TypeKind {
+      "export const enum TypeKind {
   /**
    * Indicates this type is a scalar.
    */
@@ -817,7 +822,7 @@ export interface IFragmentTypeRef {
 ",
     ],
     "interface": "",
-    "result": "export enum DirectiveLocation {
+    "result": "export const enum DirectiveLocation {
   /**
    * Location adjacent to a query operation.
    */
@@ -852,6 +857,11 @@ export interface IFragmentTypeRef {
    * Location adjacent to an inline fragment.
    */
   INLINE_FRAGMENT = 'INLINE_FRAGMENT',
+
+  /**
+   * Location adjacent to a variable definition.
+   */
+  VARIABLE_DEFINITION = 'VARIABLE_DEFINITION',
 
   /**
    * Location adjacent to a schema definition.
@@ -909,7 +919,7 @@ export interface IFragmentTypeRef {
   INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION'
 }
 
-export enum TypeKind {
+export const enum TypeKind {
   /**
    * Indicates this type is a scalar.
    */
