@@ -2,6 +2,33 @@
 
 This package is used to generate a namespace for a GraphQL Schema with all possible interfaces/types included.
 
+## Objective
+
+Pass a GraphQL `type` schema and `query` to generate a TypeScript interface:
+
+Input:
+
+```graphql
+type Query {
+  thing: String!
+  anotherThing: Boolean!
+}
+```
+
+```graphql
+query GetThing {
+  thing
+}
+```
+
+Output:
+
+```ts
+interface GetThing {
+  thing: string;
+}
+```
+
 ## Basic Usage
 
 ```ts

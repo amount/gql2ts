@@ -7,6 +7,8 @@
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/kfa00svxkiqfb4yh/branch/master?svg=true)](https://ci.appveyor.com/project/brettjurgens/gql2ts/branch/master)
 [![Coveralls Coverage](https://coveralls.io/repos/github/avantcredit/gql2ts/badge.svg)](https://coveralls.io/github/avantcredit/gql2ts)
 
+Generate TypeScript type interfaces from GraphQL types and query definitions.
+
 ```shell
 # for CLI
 npm install -g gql2ts
@@ -15,6 +17,97 @@ npm install -g gql2ts
 npm install @gql2ts/from-query
 npm install @gql2ts/from-schema
 ```
+
+## Structure
+
+This project is a lerna mono repo, consisting of multiple packages.
+
+## Goals and usage
+
+This project can either:
+
+- Take a type schema to generate TS interfaces
+- Take a type schema & query and generate TS interfaces
+
+### Generate from type schema
+
+Pass a GraphQL `type` schema to generate a TypeScript interface:
+
+Input:
+
+```graphql
+type Query {
+  thing: String!
+  anotherThing: Boolean!
+}
+```
+
+Output:
+
+```ts
+interface IQuery {
+  thing: string;
+  anotherThing: boolean;
+}
+```
+
+## Generate from type schema and query
+
+Pass a `type` and `query` to generate a TypeScript interface:
+
+Input:
+
+```graphql
+type Query {
+  thing: String!
+  anotherThing: Boolean!
+}
+```
+
+```graphql
+query GetThing {
+  thing
+}
+```
+
+Output
+
+```ts
+interface GetThing {
+  thing: string;
+}
+```
+
+## Language output
+
+Note that `flow` and `typescript` generator outputs are supported via separate packages:
+
+- `language-flow` - defaults for running `gql2ts` with Flow as your target
+- `language-typescript` - defaults for running `gql2ts` with Typescript as your target
+
+### Fine control
+
+If you look into the `index.ts` of either `from-query` or `from-schema` packages:
+
+```js
+import {
+  DEFAULT_TYPE_MAP,
+  DEFAULT_OPTIONS,
+} from '@gql2ts/language-typescript';
+```
+
+This can be replaced with mathing `flow` configuration objects:
+
+```js
+import {
+  DEFAULT_TYPE_MAP,
+  DEFAULT_OPTIONS,
+} from '@gql2ts/language-flow';
+```
+
+Note: Flow output support has yet to be packaged and made available for the CLI.
+
+## Packages
 
 See the `packages` directory for package Readmes.
 
