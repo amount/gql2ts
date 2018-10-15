@@ -22,7 +22,7 @@ const printInterface: (node: IInterfaceNode) => string = selection => typeUnion(
   })
 );
 
-const printType: (type: TypeDefinition | string, node: Selection) => string = (type, node) => {
+const printType: (type: TypeDefinition | string, node: Selection, nameOverride?: string) => string = (type, node, nameOverride) => {
   if (typeof type === 'string') {
     // @TODO use user input not the default
     return DEFAULT_TYPE_MAP[type] || DEFAULT_TYPE_MAP.__DEFAULT;
@@ -32,7 +32,7 @@ const printType: (type: TypeDefinition | string, node: Selection) => string = (t
     case 'TypenameDefinition':
       return nullWrapper(Array.isArray(type.type) ? typeUnion(type.type.map(printStringLiteral)) : printStringLiteral(type.type));
     case 'TypeDefinition':
-      return nullWrapper(type.isScalar ? DEFAULT_TYPE_MAP[type.type] || DEFAULT_TYPE_MAP.__DEFAULT : type.type);
+      return nullWrapper(type.isScalar ? DEFAULT_TYPE_MAP[type.type] || DEFAULT_TYPE_MAP.__DEFAULT : nameOverride || type.type);
     case 'ListTypeDefinition':
       return nullWrapper(printArray(printType(type.of, node)));
     case 'InterfaceTypeDefinition':
@@ -55,7 +55,7 @@ const getReferenceType: (type: TypeDefinition) => string = type => {
   }
 };
 
-const printField: (name: string, type: TypeDefinition | string, node: Selection) => string = (name, type, node) => `${name}: ${printType(type, node)};`;
+const printField: (name: string, type: TypeDefinition | string, node: Selection, nameOverride?: string) => string = (name, type, node, nameOverride) => `${name}: ${printType(type, node, nameOverride)};`;
 
 class TypePrinter {
   private _declarations: Map<string, string[]> = new Map();
@@ -69,14 +69,31 @@ class TypePrinter {
   }
 
   private buildDeclarations (parent: string, selections: Selection[]) {
-    this._declarations.set(parent, selections.map(selection => this.buildDeclaration(selection)));
+    let currentName = parent;
+    let count = 1;
+    const nextDeclaration = selections.map(selection => this.buildDeclaration(selection));
+    const nextDeclarationSearchKey = nextDeclaration.join('\n');
+
+    while (this._declarations.has(currentName)) {
+      const preExistingDeclaration = this._declarations.get(currentName)!.join('\n');
+
+      if (preExistingDeclaration === nextDeclarationSearchKey) {
+        return currentName;
+      }
+
+      currentName = parent + count++;
+    }
+
+    this._declarations.set(currentName, selections.map(selection => this.buildDeclaration(selection)));
+
+    return currentName;
   }
 
   private buildDeclaration (selection: Selection): string {
     switch (selection.kind) {
       case 'Field':
-        this.buildDeclarations(getReferenceType(selection.typeDefinition), selection.selections);
-        return printField(selection.name, selection.typeDefinition, selection);
+        const fieldName = this.buildDeclarations(getReferenceType(selection.typeDefinition), selection.selections);
+        return printField(selection.name, selection.typeDefinition, selection, fieldName);
       case 'InterfaceNode':
         selection.fragments.map(frag => {
           const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
@@ -93,7 +110,7 @@ class TypePrinter {
           selection
         );
       case 'TypenameNode':
-        return printField('__typename', selection.typeDefinition, selection);
+        return printField(selection.name, selection.typeDefinition, selection);
       case 'LeafNode':
         return printField(selection.name, selection.typeDefinition, selection);
       default:
