@@ -1,10 +1,13 @@
 // tslint:disable
 
 import { IOperation, Selection, TypeDefinition, IInterfaceNode, IFieldNode } from './ir';
+import { DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
 
 const printArray: (underlyingType: string) => string = type => `Array<${type}>`;
 const printNullable: (underlyingType: string) => string = type => `${type} | null`;
-const wrapNullable: (type: TypeDefinition) => (nullablePrinter: typeof printNullable) => typeof printNullable = ({ nullable }) => nullablePrinter => str => nullable ? nullablePrinter(str) : str;
+const wrapNullable: (type: TypeDefinition) => (nullablePrinter: typeof printNullable) => typeof printNullable = ({ nullable }) => nullablePrinter => str => (
+  nullable ? nullablePrinter(str) : str
+);
 
 const typeUnion: (types: string[]) => string = types => types.join(' | ');
 
@@ -20,13 +23,16 @@ const printInterface: (node: IInterfaceNode) => string = selection => typeUnion(
 );
 
 const printType: (type: TypeDefinition | string, node: Selection) => string = (type, node) => {
-  if (typeof type === 'string') { return type; }
+  if (typeof type === 'string') {
+    // @TODO use user input not the default
+    return DEFAULT_TYPE_MAP[type] || DEFAULT_TYPE_MAP.__DEFAULT;
+  }
   const nullWrapper = wrapNullable(type)(printNullable);
   switch (type.kind) {
     case 'TypenameDefinition':
       return nullWrapper(Array.isArray(type.type) ? typeUnion(type.type.map(printStringLiteral)) : printStringLiteral(type.type));
     case 'TypeDefinition':
-      return nullWrapper(type.type);
+      return nullWrapper(type.isScalar ? DEFAULT_TYPE_MAP[type.type] || DEFAULT_TYPE_MAP.__DEFAULT : type.type);
     case 'ListTypeDefinition':
       return nullWrapper(printArray(printType(type.of, node)));
     case 'InterfaceTypeDefinition':
@@ -59,7 +65,7 @@ class TypePrinter {
   printQuery (): string {
     this.buildDeclarations(this.ir.name || 'AnonymousQuery', this.ir.selections);
 
-    return [...this._declarations].map(([key, value]) => `${key}\n=======\n${value.join('\n')}`).join('\n\n');
+    return [...Array.from(this._declarations.entries())].map(([key, value]) => `${key}\n=======\n${value.join('\n')}`).join('\n\n');
   }
 
   private buildDeclarations (parent: string, selections: Selection[]) {
@@ -75,7 +81,9 @@ class TypePrinter {
         selection.fragments.map(frag => {
           const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
             frag.directives.gql2ts.arguments.interfaceName :
-            'InterfaceNode' + Math.random().toString().replace('.', '');
+            frag.typeDefinition.kind === 'TypeDefinition' ?
+              `FragmentSelectionOn${frag.typeDefinition.type}` :
+              'InterfaceNode' + Math.random().toString().replace('.', '');
           this.buildDeclarations(name, frag.selections)
           return name;
         });

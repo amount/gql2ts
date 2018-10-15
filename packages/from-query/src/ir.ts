@@ -57,6 +57,7 @@ export interface ITypeDefinition {
   type: string;
   nullable: boolean;
   originalNode: TypeNode;
+  isScalar: boolean;
 }
 
 /**
@@ -219,7 +220,7 @@ const extractDirectives: (
  * @param type A GraphQLType
  * @returns A GraphQLNamedType (i.e. a type without List or NonNull)
  */
-const unwrapType: (type: GraphQLType) => GraphQLNamedType = type => {
+export const unwrapType: (type: GraphQLType) => GraphQLNamedType = type => {
   if (isNamedType(type)) { return type; }
   return unwrapType(type.ofType);
 };
@@ -241,14 +242,16 @@ const convertTypeToIR: (
       kind: 'TypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
-      type: type.name
+      type: type.name,
+      isScalar: true,
     };
   } else if (isObjectType(type)) {
     return {
       kind: 'TypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
-      type: type.name
+      type: type.name,
+      isScalar: false,
     };
   } else if (isInterfaceType(type)) {
     return {
@@ -262,14 +265,16 @@ const convertTypeToIR: (
       kind: 'TypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
-      type: type.name
+      type: type.name,
+      isScalar: false,
     };
   } else if (isEnumType(type)) {
     return {
       kind: 'TypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
-      type: type.name
+      type: type.name,
+      isScalar: false,
     };
   } else if (isListType(type)) {
     return {
@@ -285,7 +290,8 @@ const convertTypeToIR: (
       kind: 'TypeDefinition',
       originalNode: null!,
       nullable: !nonNull,
-      type: type.name
+      type: type.name,
+      isScalar: false
     };
   } else {
     throw new Error(`Unsupported Type: ${type}`);

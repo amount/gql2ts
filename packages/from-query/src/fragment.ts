@@ -3,6 +3,8 @@
  * @file This file is an exploration into developing smarter support for fragments.
  * The most important piece of this right now is the piece that checks if a selectionset is exhaustive
  * With this piece we can generate more intelligent typings and greatly simplify the developer's life :)
+ *
+ * NOTE: You're probably looking for flattenQuery
  */
 
 import { SelectionNode, GraphQLSchema, FieldNode, GraphQLNamedType, isAbstractType, GraphQLObjectType, InlineFragmentNode } from 'graphql';

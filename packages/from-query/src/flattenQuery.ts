@@ -7,8 +7,9 @@
  * (but it does seem to work without issues)
  */
 
-import { DocumentNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode } from "graphql";
+import { DocumentNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode, GraphQLSchema, GraphQLType } from "graphql";
 import { DefinitionNode, SelectionNode, OperationDefinitionNode, FieldNode } from 'graphql/language/ast';
+import { unwrapType } from './ir';
 
 /**
  * This builds an inline fragment from a FragmentSpread
@@ -118,7 +119,7 @@ const flattenAdjacentFragments: (fragment: InlineFragmentNode, precedingFields: 
  * @param field Field that we're flattening
  * @param fragments A List of fragments
  */
-const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: FragmentDefinitionNode[]) => {
+const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: FragmentDefinitionNode[], schemaNode: GraphQLType): FieldNode | InlineFragmentNode => {
   if (!field.selectionSet) { return field; }
 
   return {
@@ -127,19 +128,22 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
       ...field.selectionSet,
       selections: field.selectionSet.selections.reduce((selections, selection) => {
         if (selection.kind === 'FragmentSpread') {
+          const inlinedFragment = buildInlineFragment(selection, fragments);
+          if (inlinedFragment.typeCondition && inlinedFragment.typeCondition.name.value === unwrapType(schemaNode).name) {
+            return [...selections, ...inlinedFragment.selectionSet.selections];
+          }
           return [...selections, buildInlineFragment(selection, fragments)];
         } else if (selection.kind === 'InlineFragment') {
           const { current, preceding } = flattenAdjacentFragments(
             flattenFragment(selection, fragments) as InlineFragmentNode,
             selections
-          );
-
-          return [...preceding, ...current.map(sel => recurseFields(sel as any, fragments))]
+          )
+          return [...preceding, ...current.map(sel => recurseFields(sel as any, fragments, unwrapType(schemaNode)))]
         }
 
         return [
           ...selections,
-          recurseFields(selection, fragments)
+          recurseFields(selection, fragments, (schemaNode as any).getFields ? unwrapType((schemaNode as any).getFields()[selection.name.value].type) : null!)
         ];
       }, [] as SelectionNode[])
     }
@@ -151,8 +155,8 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
  * @param query The operation definition
  * @param fragments list of fragments
  */
-const inlineFragmentsInQuery: (query: OperationDefinitionNode, fragments: FragmentDefinitionNode[]) => OperationDefinitionNode = (query, fragments) => {
-  return recurseFields(query as any as FieldNode, fragments) as any as OperationDefinitionNode;
+const inlineFragmentsInQuery: (query: OperationDefinitionNode, fragments: FragmentDefinitionNode[], schemaNode: GraphQLType) => OperationDefinitionNode = (query, fragments, schemaNode) => {
+  return recurseFields(query as any as FieldNode, fragments, schemaNode) as any as OperationDefinitionNode;
 }
 
 /**
@@ -161,8 +165,9 @@ const inlineFragmentsInQuery: (query: OperationDefinitionNode, fragments: Fragme
  *  - flattening fragments of the same type
  *
  * @param document A parsed Query
+ * @param schema A parsed Schema
  */
-export const flattenFragments: (document: DocumentNode) => DocumentNode = document => {
+export const flattenFragments: (document: DocumentNode, schema: GraphQLSchema) => DocumentNode = (document, schema) => {
   const [fragments, others] = document.definitions.reduce<[FragmentDefinitionNode[], DefinitionNode[]]>(
     (acc, defn) => defn.kind === 'FragmentDefinition' ?
       [acc[0].concat(defn), acc[1]] :
@@ -174,7 +179,15 @@ export const flattenFragments: (document: DocumentNode) => DocumentNode = docume
 
   const definitions: DefinitionNode[] = others.map(defn => {
     if (defn.kind === 'OperationDefinition') {
-      return inlineFragmentsInQuery(defn, flattenedFragments);
+      // nested ternary, whatever
+      const type: GraphQLType | null | undefined = defn.operation === 'query' ?
+        schema.getQueryType() :
+        defn.operation === 'mutation' ?
+          schema.getMutationType() :
+          schema.getSubscriptionType();
+
+      if (!type) { throw new Error(`Missing Operation ${defn.operation} in Schema`); }
+      return inlineFragmentsInQuery(defn, flattenedFragments, type);
     }
 
     return defn;
