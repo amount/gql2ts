@@ -129,6 +129,7 @@ export interface ILeafNode {
 export interface ITypenameNode {
   kind: 'TypenameNode';
   typeDefinition: ITypenameDefinition;
+  name: string;
 }
 
 /**
@@ -345,7 +346,8 @@ const convertFieldNodeToIR: (
         type: isAbstractType(nodeType)
           ? schema.getPossibleTypes(nodeType).map(x => x.name)
           : nodeType.name
-      }
+      },
+      name: fieldNode.alias ? fieldNode.alias.value : '__typename'
     };
   }
 
