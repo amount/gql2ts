@@ -115,7 +115,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return (!!field.astNode && field.astNode.kind === 'InputValueDefinition') || !({}).hasOwnProperty.call(field, 'args');
   }
 
-  const generateTypeDeclaration: (description: string, name: string, possibleTypes: string) => string =
+  const generateTypeDeclaration: (description: string | null | undefined, name: string, possibleTypes: string) => string =
     (description, name, possibleTypes) => wrapWithDocumentation(
       addSemicolon(typeBuilder(name, possibleTypes)),
       { description, tags: [] }
@@ -138,7 +138,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       );
     };
 
-  type GenerateEnumDeclaration = (description: string, name: string, enumValues: GraphQLEnumValue[]) => string;
+  type GenerateEnumDeclaration = (description: string | null | undefined, name: string, enumValues: GraphQLEnumValue[]) => string;
 
   const generateEnumDeclaration: GenerateEnumDeclaration = (description, name, enumValues) => {
     if (!enumTypeBuilder) {
