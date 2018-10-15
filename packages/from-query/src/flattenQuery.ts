@@ -141,9 +141,11 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
           return [...preceding, ...current.map(sel => recurseFields(sel as any, fragments, unwrapType(schemaNode)))]
         }
 
+        const field = (schemaNode as any).getFields ? (schemaNode as any).getFields()[selection.name.value] : null;
+
         return [
           ...selections,
-          recurseFields(selection, fragments, (schemaNode as any).getFields ? unwrapType((schemaNode as any).getFields()[selection.name.value].type) : null!)
+          recurseFields(selection, fragments, field ? unwrapType(field.type) : null!)
         ];
       }, [] as SelectionNode[])
     }
