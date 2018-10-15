@@ -9,7 +9,7 @@
 
 import { DocumentNode, FragmentDefinitionNode, FragmentSpreadNode, InlineFragmentNode, GraphQLSchema, GraphQLType } from "graphql";
 import { DefinitionNode, SelectionNode, OperationDefinitionNode, FieldNode } from 'graphql/language/ast';
-import { unwrapType, Selection } from './ir';
+import { unwrapType } from './ir';
 
 /**
  * This builds an inline fragment from a FragmentSpread
