@@ -78,9 +78,11 @@ class TypePrinter {
     this.buildDeclarations(this.ir.name || 'AnonymousQuery', this.ir.selections);
 
     return [...Array.from(this._declarations.entries())].map(([key, value]) =>
-      OPTIONS.interfaceBuilder(
-        key,
-        OPTIONS.generateInterfaceDeclaration(value)
+      OPTIONS.exportFunction(
+        OPTIONS.interfaceBuilder(
+          key,
+          OPTIONS.generateInterfaceDeclaration(value)
+        )
       )
     ).join('\n\n');
   }
