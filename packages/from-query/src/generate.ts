@@ -42,7 +42,7 @@ const printType: (type: TypeDefinition | string, node: Selection, nameOverride?:
     case 'TypeDefinition':
       return nullWrapper(type.isScalar ? OPTIONS.typeMap[type.type] || OPTIONS.typeMap.__DEFAULT : nameOverride || type.type);
     case 'ListTypeDefinition':
-      return nullWrapper(printArray(printType(type.of, node)));
+      return nullWrapper(printArray(printType(type.of, node, nameOverride)));
     case 'InterfaceTypeDefinition':
       return nullWrapper(printInterface(node as IInterfaceNode));
     case 'EnumTypeDefinition':
