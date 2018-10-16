@@ -89,10 +89,10 @@ class TypePrinter {
     let currentName = parent;
     let count = 1;
     const nextDeclaration = selections.map(selection => this.buildDeclaration(selection));
-    const nextDeclarationSearchKey = nextDeclaration.sort().join('\n');
+    const nextDeclarationSearchKey = [...nextDeclaration].sort().join('\n');
 
     while (this._declarations.has(currentName)) {
-      const preExistingDeclaration = this._declarations.get(currentName)!.sort().join('\n');
+      const preExistingDeclaration = [...this._declarations.get(currentName)!].sort().join('\n');
 
       if (preExistingDeclaration === nextDeclarationSearchKey) {
         return currentName;
