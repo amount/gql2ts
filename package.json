@@ -8,7 +8,7 @@
     "prettier": "^1.10.2"
   },
   "devDependencies": {
-    "@types/graphql": "^0.11.4",
+    "@types/graphql": "^14.0.3",
     "@types/jest": "^21.1.2",
     "@types/node": "^8.0.32",
     "coveralls": "^3.0.0",
