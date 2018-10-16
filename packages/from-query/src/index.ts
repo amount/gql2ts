@@ -145,11 +145,13 @@ const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
     return variablesToInterface(ifaceName, def.variableDefinitions);
   });
 
-  return filterAndJoinArray([
-    generateTypes(internalRepresentation),
-    '\n',
-    variableInterfaces
-  ]);
+  return postProcessor(
+    filterAndJoinArray([
+      generateTypes(internalRepresentation),
+      '\n',
+      variableInterfaces
+    ])
+  );
 };
 
 export default doIt;
