@@ -1,3 +1,5 @@
+// @ts-ignore
+
 // tslint:disable
 /**
  * @file This is a work-in-progress attempt to flatten queries, in order to be able to process them easier
@@ -42,7 +44,8 @@ const buildInlineFragment: (fragment: FragmentSpreadNode, fragments: FragmentDef
  */
 const flattenFragment: (fragment: FragmentDefinitionNode | FragmentSpreadNode | InlineFragmentNode, fragments: FragmentDefinitionNode[]) => FragmentDefinitionNode | InlineFragmentNode = (fragment, fragments) => {
   if (fragment.kind === 'FragmentSpread') {
-    return buildInlineFragment(fragment, fragments);
+    const inlined = buildInlineFragment(fragment, fragments);
+    return flattenFragment(inlined, fragments);
   };
 
   const selections = fragment.selectionSet.selections.reduce<SelectionNode[]>((selections, selection) => {
@@ -65,15 +68,6 @@ const flattenFragment: (fragment: FragmentDefinitionNode | FragmentSpreadNode | 
     }
   };
 };
-
-/**
- * Wraps the {@link flattenFragment} function due to poor typing on my part
- * @param fragment Fragment to be flattened
- * @param fragments List of fragments
- */
-const flattenWrapper: (fragment: FragmentDefinitionNode, fragments: FragmentDefinitionNode[]) => FragmentDefinitionNode = (fragment, fragments) => {
-  return flattenFragment(fragment, fragments) as any as FragmentDefinitionNode;
-}
 
 /**
  * Flattens adjacent fragments of the same type and removes unnecessary fragments
@@ -136,11 +130,11 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
       ...field.selectionSet,
       selections: field.selectionSet.selections.reduce((selections, selection) => {
         if (selection.kind === 'FragmentSpread') {
-          const inlinedFragment = buildInlineFragment(selection, fragments);
+          const inlinedFragment = flattenFragment(selection, fragments);
           if (inlinedFragment.typeCondition && inlinedFragment.typeCondition.name.value === unwrapType(schemaNode).name) {
             return [...selections, ...inlinedFragment.selectionSet.selections];
           }
-          return [...selections, buildInlineFragment(selection, fragments)];
+          return [...selections, recurseFields(buildInlineFragment(selection, fragments), fragments, schemaNode, schema)];
         } else if (selection.kind === 'InlineFragment') {
           const { current, preceding } = flattenAdjacentFragments(
             flattenFragment(selection, fragments) as InlineFragmentNode,
@@ -171,6 +165,15 @@ const inlineFragmentsInQuery: (query: OperationDefinitionNode, fragments: Fragme
 }
 
 /**
+ * This wraps {@link recurseFields} because the types are messy
+ * @param query The operation definition
+ * @param fragments list of fragments
+ */
+const inlineFragmentsInQueryFragment: (query: FragmentDefinitionNode, fragments: FragmentDefinitionNode[], schemaNode: GraphQLType, schema: GraphQLSchema) => FragmentDefinitionNode = (query, fragments, schemaNode, schema) => {
+  return recurseFields(query as any as FieldNode, fragments, schemaNode, schema) as any as FragmentDefinitionNode;
+}
+
+/**
  * This function flattens queries by:
  *  - inlining FragmentSpreads
  *  - flattening fragments of the same type
@@ -186,8 +189,12 @@ export const flattenFragments: (document: DocumentNode, schema: GraphQLSchema) =
     [[], []]
   );
 
-  const flattenedFragments: FragmentDefinitionNode[] = fragments.map(defn => flattenWrapper(defn, fragments));
+  // First inline the fragments
+  const flattenedFragments: FragmentDefinitionNode[] = fragments.map((frag, _i, frags) =>
+    inlineFragmentsInQueryFragment(frag, frags, schema.getType(frag.typeCondition.name.value)!, schema)
+  );
 
+  // Next, flatten
   const definitions: DefinitionNode[] = others.map(defn => {
     if (defn.kind === 'OperationDefinition') {
       // nested ternary, whatever
@@ -203,6 +210,8 @@ export const flattenFragments: (document: DocumentNode, schema: GraphQLSchema) =
 
     return defn;
   });
+
+  console.log({ ...document, definitions });
 
   return { ...document, definitions };
 }

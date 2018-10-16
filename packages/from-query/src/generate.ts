@@ -1,9 +1,12 @@
 // tslint:disable
 
 import { IOperation, Selection, TypeDefinition, IInterfaceNode, IFieldNode } from './ir';
-import { DEFAULT_TYPE_MAP } from '@gql2ts/language-typescript';
+import { DEFAULT_OPTIONS } from '@gql2ts/language-typescript';
 
-const printArray: (underlyingType: string) => string = type => `Array<${type}>`;
+const OPTIONS = DEFAULT_OPTIONS;
+
+const printArray = OPTIONS.wrapList;
+
 const printNullable: (underlyingType: string) => string = type => `${type} | null`;
 const wrapNullable: (type: TypeDefinition) => (nullablePrinter: typeof printNullable) => typeof printNullable = ({ nullable }) => nullablePrinter => str => (
   nullable ? nullablePrinter(str) : str
@@ -22,21 +25,28 @@ const printInterface: (node: IInterfaceNode) => string = selection => typeUnion(
   })
 );
 
+const quoteValue: (value: string) => string = value => `'${value}'`;
+const printEnum: (values: string[]) => string = values => typeUnion(values.map(quoteValue));
+
 const printType: (type: TypeDefinition | string, node: Selection, nameOverride?: string) => string = (type, node, nameOverride) => {
   if (typeof type === 'string') {
     // @TODO use user input not the default
-    return DEFAULT_TYPE_MAP[type] || DEFAULT_TYPE_MAP.__DEFAULT;
+    return OPTIONS.typeMap[type] || OPTIONS.typeMap.__DEFAULT;
   }
+
   const nullWrapper = wrapNullable(type)(printNullable);
+
   switch (type.kind) {
     case 'TypenameDefinition':
       return nullWrapper(Array.isArray(type.type) ? typeUnion(type.type.map(printStringLiteral)) : printStringLiteral(type.type));
     case 'TypeDefinition':
-      return nullWrapper(type.isScalar ? DEFAULT_TYPE_MAP[type.type] || DEFAULT_TYPE_MAP.__DEFAULT : nameOverride || type.type);
+      return nullWrapper(type.isScalar ? OPTIONS.typeMap[type.type] || OPTIONS.typeMap.__DEFAULT : nameOverride || type.type);
     case 'ListTypeDefinition':
       return nullWrapper(printArray(printType(type.of, node)));
     case 'InterfaceTypeDefinition':
       return nullWrapper(printInterface(node as IInterfaceNode));
+    case 'EnumTypeDefinition':
+      return nullWrapper(printEnum(type.values))
     default:
       throw new Error('Unsupported TypeDefinition');
   }
@@ -47,9 +57,11 @@ const getReferenceType: (type: TypeDefinition) => string = type => {
     case 'TypenameDefinition':
       return Array.isArray(type.type) ? typeUnion(type.type) : type.type;
     case 'TypeDefinition':
-      return type.type;
+      return `SelectionOn${type.type}`;
     case 'ListTypeDefinition':
       return getReferenceType(type.of);
+    case 'EnumTypeDefinition':
+      return type.type;
     default:
       throw new Error('Unsupported TypeDefinition');
   }
@@ -65,17 +77,22 @@ class TypePrinter {
   printQuery (): string {
     this.buildDeclarations(this.ir.name || 'AnonymousQuery', this.ir.selections);
 
-    return [...Array.from(this._declarations.entries())].map(([key, value]) => `${key}\n=======\n${value.join('\n')}`).join('\n\n');
+    return [...Array.from(this._declarations.entries())].map(([key, value]) =>
+      OPTIONS.interfaceBuilder(
+        key,
+        OPTIONS.generateInterfaceDeclaration(value)
+      )
+    ).join('\n\n');
   }
 
   private buildDeclarations (parent: string, selections: Selection[]) {
     let currentName = parent;
     let count = 1;
     const nextDeclaration = selections.map(selection => this.buildDeclaration(selection));
-    const nextDeclarationSearchKey = nextDeclaration.join('\n');
+    const nextDeclarationSearchKey = nextDeclaration.sort().join('\n');
 
     while (this._declarations.has(currentName)) {
-      const preExistingDeclaration = this._declarations.get(currentName)!.join('\n');
+      const preExistingDeclaration = this._declarations.get(currentName)!.sort().join('\n');
 
       if (preExistingDeclaration === nextDeclarationSearchKey) {
         return currentName;
@@ -125,8 +142,6 @@ class TypePrinter {
       case 'InterfaceNode':
         return selection.name;
     }
-
-    // this._declarations.has(selection.name)
   }
 }
 

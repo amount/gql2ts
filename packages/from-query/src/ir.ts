@@ -29,7 +29,9 @@ import {
   GraphQLInterfaceType,
   DirectiveNode,
   GraphQLType,
-  isNamedType
+  isNamedType,
+  GraphQLEnumType,
+  VariableDefinitionNode
 } from 'graphql';
 
 /**
@@ -88,6 +90,14 @@ export interface IInterfaceTypeDefinition {
   originalNode: GraphQLInterfaceType;
 }
 
+export interface IEnumTypeDefinition {
+  kind: 'EnumTypeDefinition';
+  nullable: boolean;
+  originalNode: GraphQLEnumType;
+  type: string;
+  values: string[];
+}
+
 /**
  * The possible type definitions
  */
@@ -96,7 +106,8 @@ export type TypeDefinition =
   | IInterfaceTypeDefinition
   // | INonNullTypeDefinition
   | IListTypeDefinition
-  | ITypenameDefinition;
+  | ITypenameDefinition
+  | IEnumTypeDefinition;
 
 /**
  * An internal representation for a FieldNode. This represents an
@@ -259,7 +270,6 @@ const convertTypeToIR: (
       kind: 'InterfaceTypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
-      // type: type.name
     };
   } else if (isUnionType(type)) {
     return {
@@ -271,11 +281,11 @@ const convertTypeToIR: (
     };
   } else if (isEnumType(type)) {
     return {
-      kind: 'TypeDefinition',
+      kind: 'EnumTypeDefinition',
       nullable: !nonNull,
       originalNode: null!,
       type: type.name,
-      isScalar: false,
+      values: type.getValues().map(value => value.value)
     };
   } else if (isListType(type)) {
     return {
@@ -563,8 +573,11 @@ const convertSelectionToIR: (
   }
 };
 
+// const rootIntrospectionTypes: Map<string, string> = new Map([[ '__schema', '__Schema' ], [ '__type', '__Type' ]]);
+
 /**
  * Iterates over an array of {@link SelectionNode} objects and returns an IR object for them
+ * @TODO support introspection types other than __typename
  * @param selections An array of Selection Nodes from the GraphQL AST
  * @param nodeType The {@link GraphQLNamedType} that the selections belong to
  * @param schema The GraphQL Schema
@@ -601,6 +614,20 @@ const getOperationFields: (
   }
 };
 
+const extractVariables: (vars: ReadonlyArray<VariableDefinitionNode> | undefined, schema: GraphQLSchema) => IVariable[] = (
+  vars,
+  _schema
+) => {
+  if (!vars || !vars.length) { return []; }
+  return [];
+  // return vars.map<IVariable>(v => ({
+  //   kind: 'Variable',
+  //   name: v.variable.name.value,
+  //   originalNode: null!,
+  //   type: convertTypeToIR(v.type as any)
+  // }));
+};
+
 /**
  * Given a schema and a query, return an internal representation of the query
  * @param schema A GraphQL Schema
@@ -628,7 +655,7 @@ const convertToIr: (
     kind: 'Root',
     operationType: def.operation,
     name: def.name ? def.name.value : undefined,
-    variables: [],
+    variables: extractVariables(def.variableDefinitions, schema),
     directives: extractDirectives(def.directives),
     selections: collectSelectionsFromNode(
       def.selectionSet.selections,
