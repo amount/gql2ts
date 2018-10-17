@@ -10,7 +10,6 @@ import {
 } from '@gql2ts/util';
 import { ISchemaToInterfaceOptions, generateNamespace } from '@gql2ts/from-schema';
 import fromQuery from '@gql2ts/from-query';
-import { IFromQueryReturnValue } from '@gql2ts/types';
 
 // tslint:disable-next-line no-require-imports no-var-requires
 const { version } = require('../package.json');
@@ -42,12 +41,11 @@ const run: (schema: PossibleSchemaInput, options: Partial<ICLIOptions>) => void 
   if (program.args[1]) {
     const queryFile: string = program.args[1];
     const query: string = fs.readFileSync(queryFile).toString();
-    const info: IFromQueryReturnValue[] = fromQuery(schema, query, {}, defaultOverrides);
-    const toWrite: string = info.map(inf => inf.result).join('\n\n');
+    const info: string = fromQuery(schema, query, {}, defaultOverrides);
     if (options.outputFile) {
-      writeToFile(options.outputFile, toWrite);
+      writeToFile(options.outputFile, info);
     } else {
-      console.log(toWrite);
+      console.log(info);
     }
     return;
   }

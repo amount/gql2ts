@@ -35,7 +35,7 @@ export const interfaceExtendListToString: (extensions: string[]) => string = ext
 };
 
 export const ADD_INTERFACE_EXTENSIONS: InterfaceNameWithExtensions = (opName, exts) => opName + interfaceExtendListToString(exts);
-export const DEFAULT_NAME_FRAGMENT: WrapType = name => `IFragment${pascalize(name)}`;
+export const DEFAULT_NAME_FRAGMENT: WrapType = name => `FragmentSelectionOn${pascalize(name)}`;
 export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? pascalize(def.name.value) : 'Anonymous';
 
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => ADD_SEMICOLON(`${name}${isOptional ? '?:' : ':' } ${type}`);

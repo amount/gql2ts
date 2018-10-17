@@ -1,7 +1,4 @@
 import {
-  OperationTypeNode,
-  SelectionNode,
-  GraphQLType,
   NamedTypeNode,
   GraphQLNamedType,
   GraphQLOutputType,
@@ -13,33 +10,10 @@ import {
 } from 'graphql';
 import { PossibleSchemaInput, IFieldDocumentation } from '@gql2ts/util';
 
-export type GetChildSelectionsType =
-  (operation: OperationTypeNode, selection: SelectionNode, parent?: GraphQLType, isUndefined?: boolean)
-    => IChildSelection;
-
 export interface IProvidedOptions extends Partial<IFromQueryOptions> { }
 
 export type FromQuerySignature =
-  (schema: PossibleSchemaInput, query: string, typeMap?: Partial<ITypeMap>, options?: IProvidedOptions) => IFromQueryReturnValue[];
-
-export interface IComplexTypeSignature {
-  iface: string;
-  isPartial: boolean;
-  name: string;
-}
-export interface IChildSelection {
-  isFragment: boolean;
-  isPartial: boolean;
-  iface: string;
-  complexTypes: IComplexTypeSignature[];
-}
-
-export interface IFromQueryReturnValue {
-  variables: string;
-  interface: string;
-  additionalTypes: string[];
-  result: string;
-}
+  (schema: PossibleSchemaInput, query: string, typeMap?: Partial<ITypeMap>, options?: IProvidedOptions) => string;
 
 export type InterfaceFormatters = (operationName: string, fields: string[]) => string;
 export type InterfaceNameWithExtensions = (operationName: string, extensions: string[]) => string;

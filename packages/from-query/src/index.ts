@@ -21,7 +21,7 @@ import {
   HandleNamedTypes,
   HandleInputTypes,
   ConvertToTypeSignature,
-  ITypeMap,
+  FromQuerySignature,
 } from '@gql2ts/types';
 import {
   DEFAULT_TYPE_MAP,
@@ -29,10 +29,19 @@ import {
 } from '@gql2ts/language-typescript';
 import { flattenFragments } from './flattenQuery';
 import convertToIr, { IOperation } from './ir';
-import { generateTypes } from './generate';
+import generateTypes from './generate';
 
-const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
-  const enumDeclarations: Map<string, string> = new Map<string, string>();
+const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions = {}) => {
+  const options: IFromQueryOptions = {
+    ...DEFAULT_OPTIONS,
+    ...providedOptions,
+    typeMap: {
+      ...DEFAULT_TYPE_MAP,
+      ...DEFAULT_OPTIONS.typeMap,
+      ...(providedOptions.typeMap ? providedOptions.typeMap : {}),
+      ...typeMap
+    }
+  };
 
   const {
     wrapList,
@@ -44,18 +53,8 @@ const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
     exportFunction,
     postProcessor,
     generateInputName,
-    enumTypeBuilder,
-    formatEnum,
-    generateEnumName,
-    generateDocumentation,
-    typeMap: langTypeMap
-  }: IFromQueryOptions = { ...DEFAULT_OPTIONS, ...providedOptions };
-
-  const TypeMap: ITypeMap = {
-    ...DEFAULT_TYPE_MAP,
-    ...langTypeMap,
-    ...typeMap,
-  };
+    typeMap: TypeMap,
+  }: IFromQueryOptions = options;
 
   const parsedSchema: GraphQLSchema = schemaFromInputs(schema);
   const parsedSelection: DocumentNode = parse(query);
@@ -67,16 +66,14 @@ const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
     return printType(builder, isNonNull);
   };
 
-  const handleEnum: (type: GraphQLEnumType, isNonNull: boolean) => string = (type, isNonNull) => {
-    const enumName: string = generateEnumName(type.name);
+  const typeUnion: (types: string[]) => string = types => types.join(' | ');
 
-    if (!enumDeclarations.has(type.name)) {
-      const enumDeclaration: string = enumTypeBuilder(enumName, formatEnum(type.getValues(), generateDocumentation));
-      enumDeclarations.set(type.name, enumDeclaration);
-    }
-
-    return printType(enumName, isNonNull);
-  };
+  const handleEnum: (type: GraphQLEnumType, isNonNull: boolean) => string = (type, isNonNull) => (
+    printType(
+      typeUnion(type.getValues().map(({ value }) => `'${value}'`)),
+      isNonNull
+    )
+  );
 
   const handleNamedTypeInput: (type: TypeNode, isNonNull: boolean) => string | undefined = (type, isNonNull) => {
     if (type.kind === 'NamedType' && type.name.kind === 'Name' && type.name.value) {
@@ -147,7 +144,7 @@ const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
 
   return postProcessor(
     filterAndJoinArray([
-      generateTypes(internalRepresentation),
+      generateTypes(options)(internalRepresentation),
       '\n',
       ...variableInterfaces
     ])
