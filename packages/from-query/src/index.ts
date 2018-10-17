@@ -61,8 +61,13 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
 
   const handleInputObject: (type: GraphQLInputObjectType, isNonNull: boolean) => string = (type, isNonNull) => {
     const variables: GraphQLInputField[] = Object.keys(type.getFields()).map(k => type.getFields()[k]);
-    const variableDeclarations: string[] = variables.map(v => formatInput(v.name, true, convertToType(v.type)));
-    const builder: string = generateInterfaceDeclaration(variableDeclarations.map(v => v));
+    const variableDeclarations: string[] = variables.map(v => {
+      // TODO fix this
+      const convertedType: string = convertToType(v.type);
+
+      return formatInput(v.name, convertedType.endsWith('null'), convertedType);
+    });
+    const builder: string = generateInterfaceDeclaration(variableDeclarations);
     return printType(builder, isNonNull);
   };
 
@@ -110,6 +115,8 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
       return convertToType(type.ofType, true, replacement);
     } else if (isEnum(type)) {
       return handleEnum(type, isNonNull!);
+    } else if (type instanceof GraphQLInputObjectType) {
+      return handleInputObject(type, isNonNull);
     } else {
       return handleRegularType(type, isNonNull!, replacement!);
     }
