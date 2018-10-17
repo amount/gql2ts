@@ -211,7 +211,5 @@ export const flattenFragments: (document: DocumentNode, schema: GraphQLSchema) =
     return defn;
   });
 
-  console.log({ ...document, definitions });
-
   return { ...document, definitions };
 }
