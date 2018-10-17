@@ -6,7 +6,7 @@ import { IFromQueryOptions } from '@gql2ts/types';
 export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
   const printArray = OPTIONS.wrapList;
 
-  const printNullable: (underlyingType: string) => string = type => OPTIONS.printType(type, true);
+  const printNullable: (underlyingType: string) => string = type => OPTIONS.printType(type, false);
   const wrapNullable: (type: TypeDefinition) => (nullablePrinter: typeof printNullable) => typeof printNullable = ({ nullable }) => nullablePrinter => str => (
     nullable ? nullablePrinter(str) : str
   );
