@@ -132,7 +132,7 @@ const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
     if (!variables || !variables.length) { return ''; }
 
     const variableTypeDefs: string[] = getVariables(variables);
-    return postProcessor(exportFunction(interfaceBuilder(generateInputName(opName), generateInterfaceDeclaration(variableTypeDefs))));
+    return exportFunction(interfaceBuilder(generateInputName(opName), generateInterfaceDeclaration(variableTypeDefs)));
   };
 
   const flattenedQuery: DocumentNode = flattenFragments(parsedSelection, parsedSchema);
@@ -149,7 +149,7 @@ const doIt: any = (schema, query, typeMap = {}, providedOptions = {}) => {
     filterAndJoinArray([
       generateTypes(internalRepresentation),
       '\n',
-      variableInterfaces
+      ...variableInterfaces
     ])
   );
 };
