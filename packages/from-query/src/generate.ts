@@ -114,12 +114,21 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
           return printField(selection.name, selection.typeDefinition, selection, fieldName);
         case 'InterfaceNode':
           selection.fragments.map(frag => {
-            const name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
+            let name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
               frag.directives.gql2ts.arguments.interfaceName :
               frag.typeDefinition.kind === 'TypeDefinition' ?
                 OPTIONS.generateFragmentName(frag.typeDefinition.type) :
                 'InterfaceNode' + Math.random().toString().replace('.', '');
-            this.buildDeclarations(name, frag.selections)
+            name = this.buildDeclarations(name, frag.selections);
+
+            frag.directives = frag.directives || {};
+            frag.directives.gql2ts = {
+              ...(frag.directives.gql2ts || {}),
+              arguments: {
+                ...((frag.directives.gql2ts || { arguments: {} }).arguments),
+                interfaceName: name
+              }
+            }
             return name;
           });
           return printField(
