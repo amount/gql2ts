@@ -52,7 +52,7 @@ export const DEFAULT_TYPE_MAP: ITypeMap = {
 export const DEFAULT_WRAP_LIST: WrapType = type => `Array<${type}>`;
 export const DEFAULT_WRAP_PARTIAL: WrapType = partial => `Partial<${partial}>`;
 
-export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull ? type : `${type} | null`;
+export const DEFAULT_TYPE_PRINTER: TypePrinter = (type, isNonNull) => isNonNull ? type : `${type} | null | undefined`;
 
 export const DEFAULT_GENERATE_SUBTYPE_INTERFACE_NAME: GenerateSubTypeInterface = selectionName => `SelectionOn${pascalize(selectionName)}`;
 
