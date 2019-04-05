@@ -7,7 +7,7 @@
 [![Coveralls Coverage](https://coveralls.io/repos/github/avantcredit/gql2ts/badge.svg)](https://coveralls.io/github/avantcredit/gql2ts)
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
-Generate TypeScript type interfaces from GraphQL types and query definitions.
+Generate TypeScript and Flow type interfaces from GraphQL types and query definitions.
 
 ```shell
 # for CLI
