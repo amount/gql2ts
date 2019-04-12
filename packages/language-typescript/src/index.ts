@@ -74,7 +74,8 @@ export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)
 export const DEFAULT_EXPORT_FUNCTION: WrapType = declaration => `export ${declaration}`;
 export const ADD_SEMICOLON: WrapType = str => `${str};`;
 
-export const DEFAULT_NAMESPACE_GENERATOR: NamespaceGenerator = (namespaceName, interfaces) => `// tslint:disable
+export const DEFAULT_NAMESPACE_GENERATOR: NamespaceGenerator = (namespaceName, interfaces) => `/* eslint-disable */
+// tslint:disable
 // graphql typescript definitions
 
 declare namespace ${namespaceName} {
