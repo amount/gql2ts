@@ -24,9 +24,10 @@
   version "23.3.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.1.tgz#a4319aedb071d478e6f407d1c4578ec8156829cf"
 
-"@types/node@^10.5.5":
-  version "10.5.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"
+"@types/node@^13.7.0":
+  version "13.7.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.7.0.tgz#b417deda18cf8400f278733499ad5547ed1abec4"
+  integrity sha512-GnZbirvmqZUzMgkFn70c74OQpTTUcCzlhQliTzYjQMqg+hVKcDnxdL19Ne3UdYzdMA/+W3eb646FWn/ZaT1NfQ==
 
 JSONStream@^1.0.4:
   version "1.3.1"
