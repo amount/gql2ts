@@ -1,120 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Mutations works with multiple arguments 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
-}
-",
-    "result": "export interface CreateMessageInput {
-  author?: string | null;
-  content?: string | null;
+"export interface SelectionOnMessage {
+  id: string;
 }
 
 export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
+  createMessage: SelectionOnMessage | null;
 }
-",
-    "variables": "export interface CreateMessageInput {
+
+export interface CreateMessageInput {
   author?: string | null;
   content?: string | null;
 }
-",
-  },
-]
+"
 `;
 
 exports[`Mutations works with no arguments 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
+"export interface SelectionOnMessage {
+  id: string;
 }
-",
-    "result": "export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
+
+export interface CreateMessage {
+  createMessage: SelectionOnMessage | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`Mutations works with one input argument (non-null) 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
-}
-",
-    "result": "export interface CreateMessageInput {
-  input: {
-    content?: string | null;
-    author?: string | null;
-  };
+"export interface SelectionOnMessage {
+  id: string;
 }
 
 export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
+  createMessage: SelectionOnMessage | null;
 }
-",
-    "variables": "export interface CreateMessageInput {
+
+export interface CreateMessageInput {
   input: {
     content?: string | null;
     author?: string | null;
   };
 }
-",
-  },
-]
+"
 `;
 
 exports[`Mutations works with one input argument 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
-}
-",
-    "result": "export interface CreateMessageInput {
-  input?: {
-    content?: string | null;
-    author?: string | null;
-  } | null;
+"export interface SelectionOnMessage {
+  id: string;
 }
 
 export interface CreateMessage {
-  createMessage: {
-    id: string;
-  } | null;
+  createMessage: SelectionOnMessage | null;
 }
-",
-    "variables": "export interface CreateMessageInput {
+
+export interface CreateMessageInput {
   input?: {
     content?: string | null;
     author?: string | null;
   } | null;
 }
-",
-  },
-]
+"
 `;
