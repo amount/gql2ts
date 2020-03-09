@@ -124,7 +124,7 @@ Array [
 }
 
 export interface FragmentTest {
-  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
 ",
     "variables": "",
@@ -152,7 +152,7 @@ Array [
 }
 
 export interface FragmentTest {
-  a: Partial<IFragmentSpreadOnDroid> | null;
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
 ",
     "variables": "",
@@ -161,26 +161,20 @@ export interface FragmentTest {
 `;
 
 exports[`directives on fields works with simple fields 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  heroNoParam: {
-    id?: string;
-    name?: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id?: string;
+  name?: string | null;
 }
-",
-    "result": "export interface TestQuery {
-  heroNoParam: {
-    id?: string;
-    name?: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id?: string;
+  name?: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface TestQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`directives outputs bad directives 1`] = `
@@ -1243,9 +1237,8 @@ export interface IFragmentSpreadOnHuman {
   friends: Array<SelectionOnFriends | null> | null;
 }
 
-export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
-  id: string;
+export interface FragmentTest {
+  heroNoParam?: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
 }
 ",
     "variables": "",
