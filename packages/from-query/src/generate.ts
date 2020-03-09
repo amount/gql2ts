@@ -66,7 +66,7 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
     }
   };
 
-  const printField: (name: string, type: TypeDefinition | string, node: Selection, nameOverride?: string) => string = (name, type, node, nameOverride) => `${name}: ${printType(type, node, nameOverride)};`;
+  const printField: (name: string, type: TypeDefinition | string, node: Selection, nameOverride?: string, conditional?: boolean) => string = (name, type, node, nameOverride, conditional = false) => `${name}${conditional ? '?' : ''}: ${printType(type, node, nameOverride)};`;
 
   class TypePrinter {
     private _declarations: Map<string, string[]> = new Map();
@@ -110,8 +110,9 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
     private buildDeclaration (selection: Selection): string {
       switch (selection.kind) {
         case 'Field':
+          const foo = !!selection.directives['include'] || !!selection.directives['skip']
           const fieldName = this.buildDeclarations(getReferenceType(selection.typeDefinition), selection.selections);
-          return printField(selection.name, selection.typeDefinition, selection, fieldName);
+          return printField(selection.name, selection.typeDefinition, selection, fieldName, foo);
         case 'InterfaceNode':
           selection.fragments.map(frag => {
             let name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
@@ -131,15 +132,19 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
             }
             return name;
           });
+          const bar = !!selection.fragments.some(frag => !!frag.directives['include'] || !!frag.directives['skip'])
           return printField(
             this.generateSelectionName(selection),
             selection.typeDefinition,
-            selection
+            selection,
+            undefined,
+            bar
           );
         case 'TypenameNode':
           return printField(selection.name, selection.typeDefinition, selection);
         case 'LeafNode':
-          return printField(selection.name, selection.typeDefinition, selection);
+          const conditional = !!selection.directives['include'] || !!selection.directives['skip']
+          return printField(selection.name, selection.typeDefinition, selection, undefined, conditional);
         default:
           throw new Error('Unsupported Selection');
       }

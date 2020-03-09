@@ -73,7 +73,7 @@ export interface FragmentSelectionOnDroid {
 }
 
 export interface FragmentTest {
-  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
 "
 `;
@@ -87,20 +87,20 @@ export interface FragmentSelectionOnDroid {
 }
 
 export interface FragmentTest {
-  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
 "
 `;
 
 exports[`directives on fields works with simple fields 1`] = `
 "export interface FragmentSelectionOnHuman {
-  id: string;
-  name: string | null;
+  id?: string;
+  name?: string | null;
 }
 
 export interface FragmentSelectionOnDroid {
-  id: string;
-  name: string | null;
+  id?: string;
+  name?: string | null;
 }
 
 export interface TestQuery {
@@ -708,7 +708,7 @@ export interface FragmentSelectionOnDroid1 {
 }
 
 export interface FragmentTest {
-  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
+  heroNoParam?: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
 }
 "
 `;
