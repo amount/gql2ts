@@ -64,6 +64,20 @@ export interface FragmentTest {
 "
 `;
 
+exports[`directives fragments works with inline fragments on base 1`] = `
+"export interface FragmentSelectionOnHuman {}
+
+export interface FragmentSelectionOnDroid {
+  primaryFunction: string | null;
+  primaryFunctionNonNull: string;
+}
+
+export interface FragmentTest {
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
+`;
+
 exports[`directives fragments works with inline fragments on type 1`] = `
 "export interface FragmentSelectionOnHuman {}
 
