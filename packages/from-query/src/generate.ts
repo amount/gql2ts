@@ -66,8 +66,8 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
     }
   };
 
-  const hasDirectives: (directives: IDirectiveMap) => boolean = directives =>
-    !!directives['include'] || !!directives['skip']
+  const hasOptionalDirective: (directives: IDirectiveMap) => boolean = directives =>
+    !!directives.include || !!directives.skip
 
   interface IPrintField {
     name: string
@@ -123,14 +123,13 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
     private buildDeclaration (selection: Selection): string {
       switch (selection.kind) {
         case 'Field':
-          const foo = !!selection.directives['include'] || !!selection.directives['skip']
           const fieldName = this.buildDeclarations(getReferenceType(selection.typeDefinition), selection.selections);
           return printField({
             name: selection.name,
             type: selection.typeDefinition,
             node: selection,
             nameOverride: fieldName,
-            optional: foo
+            optional: hasOptionalDirective(selection.directives)
           });
         case 'InterfaceNode':
           selection.fragments.map(frag => {
@@ -153,8 +152,8 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
             return name;
           });
 
-          const selectionHasDirectives = hasDirectives(selection.directives);
-          const fragmentsHaveDirectives = !!selection.fragments.some(frag => hasDirectives(frag.directives))
+          const selectionHasDirectives = hasOptionalDirective(selection.directives);
+          const fragmentsHaveDirectives = selection.fragments.some(frag => hasOptionalDirective(frag.directives))
 
           return printField({
             name: this.generateSelectionName(selection),
@@ -173,7 +172,7 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
             name: selection.name,
             type: selection.typeDefinition,
             node: selection,
-            optional: hasDirectives(selection.directives)
+            optional: hasOptionalDirective(selection.directives)
           });
         default:
           throw new Error('Unsupported Selection');
