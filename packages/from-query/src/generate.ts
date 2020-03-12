@@ -79,7 +79,7 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
 
   const printField: (props: IPrintField) => string = ({
     name, type, node, nameOverride, optional = false
-  }) => `${name}${optional ? '?' : ''}: ${printType(type, node, nameOverride)};`;
+  }) => OPTIONS.formatInput(name, optional, printType(type, node, nameOverride))
 
   class TypePrinter {
     private _declarations: Map<string, string[]> = new Map();
