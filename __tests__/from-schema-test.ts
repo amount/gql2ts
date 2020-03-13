@@ -86,16 +86,6 @@ describe('gql2ts', () => {
     });
   });
 
-  describe('Supports older TypeScript versions', () => {
-    it('removes Nullability annotations when passed', () => {
-      const interfaces: string = schemaToInterfaces(schemaAsAny, {
-        ignoredTypes: [],
-        legacy: true
-      });
-      expect(interfaces).toMatchSnapshot();
-    });
-  });
-
   describe('mutations', () => {
     it('supports mutations', () => {
       const actual: string = schemaToInterfaces(mutationSchema, {

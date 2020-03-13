@@ -59,7 +59,7 @@ export const Query2: string = `
     orgName:name
   }
 
-  fragment PullRequest on Resource {
+  fragment PullRequest on PullRequest {
     ... on PullRequest {
       id title author { login }
     }

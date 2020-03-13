@@ -81,8 +81,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
       interfaceBuilder(
         generateInterfaceName('GraphQLResponseRoot'),
         gID([
-          formatInput('data', !optionsInput.legacy, generateRootDataName(schema)),
-          formatInput('errors', !optionsInput.legacy, wrapList(generateInterfaceName('GraphQLResponseError')))
+          formatInput('data', true, generateRootDataName(schema)),
+          formatInput('errors', true, wrapList(generateInterfaceName('GraphQLResponseError')))
         ])
       ),
       interfaceBuilder(
@@ -90,7 +90,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
         gID([
           '/** Required for all errors */',
           formatInput('message', false, TYPE_MAP.String),
-          formatInput('locations', !optionsInput.legacy, wrapList(generateInterfaceName('GraphQLResponseErrorLocation'))),
+          formatInput('locations', true, wrapList(generateInterfaceName('GraphQLResponseErrorLocation'))),
           `/** 7.2.2 says 'GraphQL servers may provide additional entries to error' */`,
           formatInput('[propName: string]', false, TYPE_MAP.__DEFAULT),
         ])
@@ -211,55 +211,54 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     };
   };
 
-  type TypePrinter = (val: ResolvedInterfaceValue | string, supportsNullability: boolean) => string;
+  type TypePrinter = (val: ResolvedInterfaceValue | string) => string;
 
-  const typePrinter: TypePrinter = (val, supportsNullability) => {
+  const typePrinter: TypePrinter = (val) => {
     if (typeof val === 'string') {
       return val;
     }
-    const isNonNull: boolean = !supportsNullability || val.isNonNull;
+    const isNonNull: boolean = val.isNonNull;
     if (val.isList) {
-      return printType(wrapList(typePrinter(val.value, supportsNullability)), isNonNull);
+      return printType(wrapList(typePrinter(val.value)), isNonNull);
     }
 
-    return printType(typePrinter(val.value, supportsNullability), isNonNull);
+    return printType(typePrinter(val.value), isNonNull);
   };
 
-  type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean, supportsNullability: boolean) => string;
+  type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean) => string;
 
-  const fieldToDefinition: FieldToDefinition = (field, isInput, supportsNullability) => {
+  const fieldToDefinition: FieldToDefinition = (field, isInput) => {
     const resolved: ResolvedInterfaceValue = resolveInterfaceName(field.type, false);
 
     return formatInput(
       field.name,
       isInput && !resolved.isNonNull,
-      typePrinter(resolved, supportsNullability)
+      typePrinter(resolved)
     );
   };
 
-  type ArgumentToDefinition = (arg: GraphQLArgument, supportsNullability: boolean) => string;
+  type ArgumentToDefinition = (arg: GraphQLArgument) => string;
 
-  const generateArgumentDeclaration: ArgumentToDefinition = (arg, supportsNullability) => {
+  const generateArgumentDeclaration: ArgumentToDefinition = (arg) => {
     const resolved: ResolvedInterfaceValue = resolveInterfaceName(arg.type, false);
 
     return filterAndJoinArray([
       generateDocumentation(buildDocumentation(arg)),
-      formatInput(arg.name, !resolved.isNonNull, typePrinter(resolved, supportsNullability))
+      formatInput(arg.name, !resolved.isNonNull, typePrinter(resolved))
     ]);
   };
 
   type ArgumentsToDefinition = (
     field: GraphQLField<any, any> | GraphQLInputField,
-    parentName: string,
-    supportsNullability: boolean
+    parentName: string
   ) => string | null;
 
-  const generateArgumentsDeclaration: ArgumentsToDefinition = (field, parentName, supportsNullability) => {
+  const generateArgumentsDeclaration: ArgumentsToDefinition = (field, parentName) => {
     if (isInputField(field) || !field.args || !field.args.length) {
       return null;
     }
 
-    const fieldDeclaration: string[] = field.args.map(arg => generateArgumentDeclaration(arg, supportsNullability));
+    const fieldDeclaration: string[] = field.args.map(arg => generateArgumentDeclaration(arg));
     const name: string = generateInterfaceName(`${field.name}_On_${parentName}`) + 'Arguments';
 
     return interfaceBuilder(name, gID(fieldDeclaration));
@@ -280,8 +279,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   type TypeToInterface = (
     type: GraphQLNamedType,
-    ignoredTypes: Set<string>,
-    supportsNullability: boolean
+    ignoredTypes: Set<string>
   ) => string | null;
 
   type GenerateAbstractTypeDeclaration = (type: GraphQLAbstractType, ignoredTypes: Set<string>) => string;
@@ -295,7 +293,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return generateTypeDeclaration(type.description, generateTypeName(type.name), possibleTypes.join(' | '));
   };
 
-  const typeToInterface: TypeToInterface = (type, ignoredTypes, supportsNullability) => {
+  const typeToInterface: TypeToInterface = (type, ignoredTypes) => {
     if (isScalar(type)) {
       return null;
     }
@@ -315,8 +313,8 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     const filteredFields: Array<GraphQLField<any, any> | GraphQLInputField> = f.filter(field => filterField(field, ignoredTypes));
 
     const fields: string[] = filteredFields
-      .map(field => [generateDocumentation(buildDocumentation(field)), fieldToDefinition(field, isInput, supportsNullability)])
-      .reduce((acc, val) => [...acc, ...val], [])
+      .map(field => [generateDocumentation(buildDocumentation(field)), fieldToDefinition(field, isInput)])
+      .reduce((acc, val) => [...acc, ...val] , [])
       .filter(Boolean);
 
     const interfaceDeclaration: string = generateInterfaceName(type.name);
@@ -329,7 +327,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     return filterAndJoinArray(
       [
         generateInterfaceDeclaration(type, interfaceDeclaration, fields, additionalInfo, isInput),
-        ...filteredFields.map(field => generateArgumentsDeclaration(field, type.name, supportsNullability))
+        ...filteredFields.map(field => generateArgumentsDeclaration(field, type.name))
       ],
       '\n\n'
     );
@@ -337,7 +335,6 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
 
   const typesToInterfaces: (schema: GraphQLSchema, options: Partial<IInternalOptions>) => string = (schema, options) => {
     const ignoredTypes: Set<string> = new Set(options.ignoredTypes);
-    const supportsNullability: boolean = !options.legacy;
     const types: { [typeName: string]: GraphQLNamedType } = schema.getTypeMap();
     const typeArr: GraphQLNamedType[] = Object.keys(types).map(k => types[k]);
 
@@ -348,7 +345,7 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
           !ignoredTypes.has(type.name)
         )
         .map(type =>                                  // convert to interface
-          typeToInterface(type, ignoredTypes, supportsNullability)!
+          typeToInterface(type, ignoredTypes)!
         );
 
     return filterAndJoinArray(
@@ -394,7 +391,6 @@ export const generateNamespace: GenerateNamespace = (namespace, schema, options 
 };
 
 export interface ISchemaToInterfaceOptions {
-  legacy?: boolean;
   ignoredTypes: string[];
   ignoreTypeNameDeclaration?: boolean;
   namespace: string;

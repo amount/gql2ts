@@ -144,7 +144,7 @@ const recurseFields = (field: FieldNode | InlineFragmentNode, fragments: Fragmen
           return [...preceding, ...current.map(sel => recurseFields(sel as any, fragments, extractProperType(sel, unwrapType(schemaNode), schema), schema))]
         }
 
-        const field = (schemaNode as any).getFields ? (schemaNode as any).getFields()[selection.name.value] : null;
+        const field = !!schemaNode && (schemaNode as any).getFields ? (schemaNode as any).getFields()[selection.name.value] : null;
 
         return [
           ...selections,
@@ -198,11 +198,11 @@ export const flattenFragments: (document: DocumentNode, schema: GraphQLSchema) =
   const definitions: DefinitionNode[] = others.map(defn => {
     if (defn.kind === 'OperationDefinition') {
       // nested ternary, whatever
-      const type: GraphQLType | null | undefined = defn.operation === 'query' ?
-        schema.getQueryType() :
-        defn.operation === 'mutation' ?
-          schema.getMutationType() :
-          schema.getSubscriptionType();
+      const type: GraphQLType | null | undefined = defn.operation === 'query'
+        ? schema.getQueryType()
+        : defn.operation === 'mutation'
+        ? schema.getMutationType()
+        : schema.getSubscriptionType();
 
       if (!type) { throw new Error(`Missing Operation ${defn.operation} in Schema`); }
       return inlineFragmentsInQuery(defn, flattenedFragments, type, schema);
