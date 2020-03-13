@@ -51,6 +51,7 @@
         "tsConfigFile": "packages/cli/tsconfig.json"
       }
     },
+    "testURL": "http://localhost",
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
