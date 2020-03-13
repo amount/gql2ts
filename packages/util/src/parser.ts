@@ -11,7 +11,7 @@ export interface IJSDocTag {
 }
 
 export interface IFieldDocumentation {
-  description?: string;
+  description?: string | null;
   tags: IJSDocTag[];
 }
 

@@ -35,7 +35,7 @@ export const interfaceExtendListToString: (extensions: string[]) => string = ext
 };
 
 export const ADD_INTERFACE_EXTENSIONS: InterfaceNameWithExtensions = (opName, exts) => opName + interfaceExtendListToString(exts);
-export const DEFAULT_NAME_FRAGMENT: WrapType = name => `IFragment${pascalize(name)}`;
+export const DEFAULT_NAME_FRAGMENT: WrapType = name => `FragmentSelectionOn${pascalize(name)}`;
 export const DEFAULT_NAME_QUERY: QueryNamer = def => def.name ? pascalize(def.name.value) : 'Anonymous';
 
 export const DEFAULT_FORMAT_INPUT: InputFormatter = (name, isOptional, type) => ADD_SEMICOLON(`${name}${isOptional ? '?:' : ':' } ${type}`);
@@ -66,8 +66,7 @@ export const DEFAULT_ENUM_FORMATTER: EnumFormatter = (values, documentationGener
   )}
 }`;
 
-export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) =>
-`const enum ${name} ${values}`;
+export const DEFAULT_ENUM_TYPE_BUILDER: EnumTypeBuilder = (name, values) => `const enum ${name} ${values}`;
 
 export const DEFAULT_ENUM_NAME_GENERATOR: WrapType = name => `${pascalize(name)}`;
 export const DEFAULT_INPUT_NAME_GENERATOR: WrapType = name => `${pascalize(name)}Input`;
@@ -84,14 +83,14 @@ ${interfaces}
 // tslint:enable
 `;
 
-const fixDescriptionDocblock: (description?: string) => string | undefined = description =>
+const fixDescriptionDocblock: (description?: string | null) => string | null | undefined = description =>
   description ? description.replace(/\n/g, '\n* ') : description;
 
 export const DEFAULT_DOCUMENTATION_GENERATOR: GenerateDocumentation = ({ description, tags = [] }) => {
   if (!description && !tags.length) {
     return '';
   }
-  const arr: Array<string | undefined> = [
+  const arr: Array<string | null | undefined> = [
     fixDescriptionDocblock(description),
     ...tags.map(({ tag, value }) => `@${tag} ${JSON.stringify(value)}`)
   ];

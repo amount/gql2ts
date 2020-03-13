@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+### Breaking Changes
+- Remove legacy TS 1.x support (without `strictNullChecks`)
+- Drop support for node v6
+
 ## 1.10.1
 
 - Fix regression in TypeMap support (thanks [@mikfoo](https://github.com/mikfoo)) [PR #235](https://github.com/avantcredit/gql2ts/pull/235)
@@ -22,9 +28,7 @@
 
 - Only append a semicolon to 'enums' when they are declared as union types and not Typescript `enum` types. [Issue #179](https://github.com/avantcredit/gql2ts/issues/179) [PR #202](https://github.com/avantcredit/gql2ts/pull/202)
 
-## 1.8.0
-
-- Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #168](https://github.com/avantcredit/gql2ts/pull/168)
+- Add specific `__typename` value for `@gql2ts/from-query` [Issue #165](https://github.com/avantcredit/gql2ts/issues/165) [PR #169](https://github.com/avantcredit/gql2ts/pull/169)
 
 - Import TypeMap from language packages [PR #175](https://github.com/avantcredit/gql2ts/pull/175) [PR #176](https://github.com/avantcredit/gql2ts/pull/176)
 

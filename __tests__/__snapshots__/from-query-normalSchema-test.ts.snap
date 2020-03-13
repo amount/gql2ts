@@ -1,1254 +1,728 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`directives fragments does anonymous inline fragments 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: Partial<{
-    id: string;
-    name: string | null;
-  }> | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: Partial<{
-    id: string;
-    name: string | null;
-  }> | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`directives fragments does anonymous inline fragments with aliases 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a: Partial<{
-    b: string;
-    c: string | null;
-  }> | null;
+"export interface FragmentSelectionOnHuman {
+  b: string;
+  c: string | null;
 }
-",
-    "result": "export interface FragmentTest {
-  a: Partial<{
-    b: string;
-    c: string | null;
-  }> | null;
+
+export interface FragmentSelectionOnDroid {
+  b: string;
+  c: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`directives fragments works with aliases on fragment spread 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a: Partial<IFragmentCharacterFields> | null;
-}
-",
-    "result": "export interface FragmentTest {
-  a: Partial<IFragmentCharacterFields> | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
   b: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
   b: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`directives fragments works with fragment spread 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: Partial<IFragmentCharacterFields> | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: Partial<IFragmentCharacterFields> | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
+`;
+
+exports[`directives fragments works with inline fragments on base 1`] = `
+"export interface FragmentSelectionOnHuman {}
+
+export interface FragmentSelectionOnDroid {
+  primaryFunction: string | null;
+  primaryFunctionNonNull: string;
+}
+
+export interface FragmentTest {
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`directives fragments works with inline fragments on type 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnDroid {
-  primaryFunction: string | null;
-  primaryFunctionNonNull: string;
-}
-",
-    ],
-    "interface": "export interface FragmentTest {
-  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
-}
-",
-    "result": "export interface IFragmentSpreadOnDroid {
+"export interface FragmentSelectionOnHuman {}
+
+export interface FragmentSelectionOnDroid {
   primaryFunction: string | null;
   primaryFunctionNonNull: string;
 }
 
 export interface FragmentTest {
-  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`directives fragments works with inline fragments on type with aliases 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnDroid {
-  b: string | null;
-  c: string;
-}
-",
-    ],
-    "interface": "export interface FragmentTest {
-  a: Partial<IFragmentSpreadOnDroid> | null;
-}
-",
-    "result": "export interface IFragmentSpreadOnDroid {
+"export interface FragmentSelectionOnHuman {}
+
+export interface FragmentSelectionOnDroid {
   b: string | null;
   c: string;
 }
 
 export interface FragmentTest {
-  a: Partial<IFragmentSpreadOnDroid> | null;
+  heroNoParam?: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`directives on fields works with simple fields 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  heroNoParam: {
-    id?: string;
-    name?: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id?: string;
+  name?: string | null;
 }
-",
-    "result": "export interface TestQuery {
-  heroNoParam: {
-    id?: string;
-    name?: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id?: string;
+  name?: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface TestQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`directives outputs bad directives 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface TestQuery {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface TestQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`fragments does anonymous inline fragments 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`fragments does anonymous inline fragments with aliases 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a: {
-    b: string;
-    c: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  b: string;
+  c: string | null;
 }
-",
-    "result": "export interface FragmentTest {
-  a: {
-    b: string;
-    c: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  b: string;
+  c: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`fragments does inline fragments on type 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnDroid {
-  primaryFunction: string | null;
-  primaryFunctionNonNull: string;
-}
-",
-    ],
-    "interface": "export interface FragmentTest {
-  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
-}
-",
-    "result": "export interface IFragmentSpreadOnDroid {
+"export interface FragmentSelectionOnHuman {}
+
+export interface FragmentSelectionOnDroid {
   primaryFunction: string | null;
   primaryFunctionNonNull: string;
 }
 
 export interface FragmentTest {
-  heroNoParam: Partial<IFragmentSpreadOnDroid> | null;
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`fragments does inline fragments on type with aliases 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnDroid {
-  b: string | null;
-  c: string;
-}
-",
-    ],
-    "interface": "export interface FragmentTest {
-  a: Partial<IFragmentSpreadOnDroid> | null;
-}
-",
-    "result": "export interface IFragmentSpreadOnDroid {
+"export interface FragmentSelectionOnHuman {}
+
+export interface FragmentSelectionOnDroid {
   b: string | null;
   c: string;
 }
 
 export interface FragmentTest {
-  a: Partial<IFragmentSpreadOnDroid> | null;
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`fragments does nested fragments 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
-  friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}
-",
-    "result": "export interface IFragmentCharacterFields {
-  friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFieldsNested {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFieldsNested {
+
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentSelectionOnHuman1 {
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
+}
+
+export interface FragmentSelectionOnDroid1 {
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
+}
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
+}
+"
 `;
 
 exports[`fragments does nested fragments 2 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields
-  extends IFragmentCharacterFieldsNested {
-  friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}
-",
-    "result": "export interface IFragmentCharacterFields
-  extends IFragmentCharacterFieldsNested {
-  friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFieldsNested {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFieldsNested {
+
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentSelectionOnHuman1 {
+  id: string;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
+}
+
+export interface FragmentSelectionOnDroid1 {
+  id: string;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
+}
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
+}
+"
 `;
 
 exports[`fragments does nested fragments 3 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields
-  extends IFragmentCharacterFieldsNested,
-    IFragmentCharacterFieldsNestedAgain {
-  friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}
-",
-    "result": "export interface IFragmentCharacterFields
-  extends IFragmentCharacterFieldsNested,
-    IFragmentCharacterFieldsNestedAgain {
-  friends: Array<IFragmentCharacterFieldsNested | null> | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFieldsNested {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFieldsNested {
+
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFieldsNestedAgain {
+
+export interface FragmentSelectionOnHuman1 {
+  id: string;
   name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
 }
-",
-    "result": "export interface IFragmentCharacterFieldsNestedAgain {
+
+export interface FragmentSelectionOnDroid1 {
+  id: string;
   name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
+}
+"
 `;
 
 exports[`fragments does simple fragments 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`fragments does simple fragments with aliases 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  a: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
   b: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
   b: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`fragments does simple fragments with other selections 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam:
-    | {
-        name: string | null;
-      } & IFragmentCharacterFields
-    | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam:
-    | {
-        name: string | null;
-      } & IFragmentCharacterFields
-    | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
+  name: string | null;
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
+  name: string | null;
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`fragments does simple fragments with other selections and aliases 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  a:
-    | {
-        b: string | null;
-      } & IFragmentCharacterFields
-    | null;
-}
-",
-    "result": "export interface FragmentTest {
-  a:
-    | {
-        b: string | null;
-      } & IFragmentCharacterFields
-    | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
+  b: string | null;
   c: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
+  b: string | null;
   c: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`simple examples does "naked" queries 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface Anonymous {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface Anonymous {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface AnonymousQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`simple examples does a very simple query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface TestQuery {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface TestQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`simple examples does a very simple query with typename 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  heroNoParam: {
-    __typename: 'Human' | 'Droid';
-    id: string;
-    name: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  __typename: 'Human';
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface TestQuery {
-  heroNoParam: {
-    __typename: 'Human' | 'Droid';
-    id: string;
-    name: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  __typename: 'Droid';
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface TestQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`simple examples does unnamed queries 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface Anonymous {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface Anonymous {
-  heroNoParam: {
-    id: string;
-    name: string | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface AnonymousQuery {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`simple examples supports arrays 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface Test {
-  heroNoParam: {
-    nonNullArr: Array<{
-      id: string;
-      name: string | null;
-    } | null>;
-    nonNullArrAndContents: Array<{
-      id: string;
-      name: string | null;
-    }>;
-    nullArrNonNullContents: Array<{
-      id: string;
-      name: string | null;
-    }> | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface Test {
-  heroNoParam: {
-    nonNullArr: Array<{
-      id: string;
-      name: string | null;
-    } | null>;
-    nonNullArrAndContents: Array<{
-      id: string;
-      name: string | null;
-    }>;
-    nullArrNonNullContents: Array<{
-      id: string;
-      name: string | null;
-    }> | null;
-  } | null;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentSelectionOnHuman1 {
+  nonNullArr: Array<FragmentSelectionOnHuman | FragmentSelectionOnDroid | null>;
+  nonNullArrAndContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  >;
+  nullArrNonNullContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  > | null;
+}
+
+export interface FragmentSelectionOnDroid1 {
+  nonNullArr: Array<FragmentSelectionOnHuman | FragmentSelectionOnDroid | null>;
+  nonNullArrAndContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  >;
+  nullArrNonNullContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  > | null;
+}
+
+export interface Test {
+  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
+}
+"
 `;
 
 exports[`simple examples supports custom scalars 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface CustomScalarQuery {
+"export interface CustomScalarQuery {
   test: string | null;
-}
-",
-    "result": "export interface CustomScalarQueryInput {
-  test?: string | null;
 }
 
-export interface CustomScalarQuery {
-  test: string | null;
-}
-",
-    "variables": "export interface CustomScalarQueryInput {
+export interface CustomScalarQueryInput {
   test?: string | null;
 }
-",
-  },
-]
+"
 `;
 
 exports[`simple examples supports enums 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface EnumQuery {
-  hero: {
-    appearsIn: Array<Episode | null> | null;
-  } | null;
+"export interface FragmentSelectionOnHuman {
+  appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
 }
-",
-    "result": "export interface EnumQueryInput {
-  episode?: Episode | null;
+
+export interface FragmentSelectionOnDroid {
+  appearsIn: Array<'NEWHOPE' | 'EMPIRE' | 'JEDI' | null> | null;
 }
 
 export interface EnumQuery {
-  hero: {
-    appearsIn: Array<Episode | null> | null;
-  } | null;
+  hero: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
-",
-    "variables": "export interface EnumQueryInput {
-  episode?: Episode | null;
+
+export interface EnumQueryInput {
+  episode?: 'NEWHOPE' | 'EMPIRE' | 'JEDI' | null;
 }
-",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export const enum Episode {
-  NEWHOPE = 'NEWHOPE',
-  EMPIRE = 'EMPIRE',
-  JEDI = 'JEDI'
-}
-",
-    ],
-    "interface": "",
-    "result": "export const enum Episode {
-  NEWHOPE = 'NEWHOPE',
-  EMPIRE = 'EMPIRE',
-  JEDI = 'JEDI'
-}
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`simple examples supports list variables 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  getCharacters: Array<{
-    id: string;
-    name: string | null;
-  } | null>;
+"export interface FragmentSelectionOnHuman {
+  id: string;
+  name: string | null;
 }
-",
-    "result": "export interface TestQueryInput {
-  ids: Array<string>;
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+  name: string | null;
 }
 
 export interface TestQuery {
-  getCharacters: Array<{
-    id: string;
-    name: string | null;
-  } | null>;
+  getCharacters: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  >;
 }
-",
-    "variables": "export interface TestQueryInput {
+
+export interface TestQueryInput {
   ids: Array<string>;
 }
-",
-  },
-]
-`;
-
-exports[`simple examples supports unions 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface UnionQuery {
-  humanOrDroid: {
-    id: string;
-  } | null;
-}
-",
-    "result": "export interface UnionQueryInput {
-  id: string;
-}
-
-export interface UnionQuery {
-  humanOrDroid: {
-    id: string;
-  } | null;
-}
-",
-    "variables": "export interface UnionQueryInput {
-  id: string;
-}
-",
-  },
-]
-`;
-
-exports[`simple examples supports unions with inline fragment 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnHuman {
-  id: string;
-}
-",
-      "export interface IFragmentSpreadOnDroid {
-  name: string | null;
-}
-",
-    ],
-    "interface": "export interface UnionQuery {
-  humanOrDroid:
-    | Partial<IFragmentSpreadOnHuman> & Partial<IFragmentSpreadOnDroid>
-    | null;
-}
-",
-    "result": "export interface UnionQueryInput {
-  id: string;
-}
-
-export interface IFragmentSpreadOnHuman {
-  id: string;
-}
-
-export interface IFragmentSpreadOnDroid {
-  name: string | null;
-}
-
-export interface UnionQuery {
-  humanOrDroid:
-    | Partial<IFragmentSpreadOnHuman> & Partial<IFragmentSpreadOnDroid>
-    | null;
-}
-",
-    "variables": "export interface UnionQueryInput {
-  id: string;
-}
-",
-  },
-]
+"
 `;
 
 exports[`simple examples supports variables 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface TestQuery {
-  human: {
-    id: string;
-    name: string | null;
-  } | null;
-}
-",
-    "result": "export interface TestQueryInput {
+"export interface SelectionOnHuman {
   id: string;
+  name: string | null;
 }
 
 export interface TestQuery {
-  human: {
-    id: string;
-    name: string | null;
-  } | null;
+  human: SelectionOnHuman | null;
 }
-",
-    "variables": "export interface TestQueryInput {
+
+export interface TestQueryInput {
   id: string;
 }
-",
-  },
-]
+"
 `;
 
 exports[`with subtypes dedupes and enumerates 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnFriends {
-  id: string;
-  name: string | null;
-}
-",
-      "export interface SelectionOnFriends1 {
-  id: string;
-  name: string | null;
-  friends: Array<SelectionOnFriends | null> | null;
-}
-",
-      "export interface SelectionOnFriends2 {
-  id: string;
-  name: string | null;
-  friends: Array<SelectionOnFriends1 | null> | null;
-}
-",
-      "export interface SelectionOnHeroNoParam {
-  friends: Array<SelectionOnFriends2 | null> | null;
-}
-",
-    ],
-    "interface": "export interface Test {
-  hero1: SelectionOnHeroNoParam | null;
-  hero2: SelectionOnHeroNoParam | null;
-}
-",
-    "result": "export interface SelectionOnFriends {
+"export interface FragmentSelectionOnHuman {
   id: string;
   name: string | null;
 }
 
-export interface SelectionOnFriends1 {
+export interface FragmentSelectionOnDroid {
   id: string;
   name: string | null;
-  friends: Array<SelectionOnFriends | null> | null;
 }
 
-export interface SelectionOnFriends2 {
+export interface FragmentSelectionOnHuman1 {
   id: string;
   name: string | null;
-  friends: Array<SelectionOnFriends1 | null> | null;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
 }
 
-export interface SelectionOnHeroNoParam {
-  friends: Array<SelectionOnFriends2 | null> | null;
+export interface FragmentSelectionOnDroid1 {
+  id: string;
+  name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
+}
+
+export interface FragmentSelectionOnHuman2 {
+  id: string;
+  name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null
+  > | null;
+}
+
+export interface FragmentSelectionOnDroid2 {
+  id: string;
+  name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null
+  > | null;
+}
+
+export interface FragmentSelectionOnHuman3 {
+  friends: Array<
+    FragmentSelectionOnHuman2 | FragmentSelectionOnDroid2 | null
+  > | null;
+}
+
+export interface FragmentSelectionOnDroid3 {
+  friends: Array<
+    FragmentSelectionOnHuman2 | FragmentSelectionOnDroid2 | null
+  > | null;
 }
 
 export interface Test {
-  hero1: SelectionOnHeroNoParam | null;
-  hero2: SelectionOnHeroNoParam | null;
+  heroNoParam: FragmentSelectionOnHuman3 | FragmentSelectionOnDroid3 | null;
+  heroNoParam: FragmentSelectionOnHuman3 | FragmentSelectionOnDroid3 | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`with subtypes does a very simple query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnHeroNoParam {
+"export interface FragmentSelectionOnHuman {
   id: string;
   name: string | null;
 }
-",
-    ],
-    "interface": "export interface TestQuery {
-  heroNoParam: SelectionOnHeroNoParam | null;
-}
-",
-    "result": "export interface SelectionOnHeroNoParam {
+
+export interface FragmentSelectionOnDroid {
   id: string;
   name: string | null;
 }
 
 export interface TestQuery {
-  heroNoParam: SelectionOnHeroNoParam | null;
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`with subtypes does array query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnNonNullArr {
-  id: string;
-  name: string | null;
-}
-",
-      "export interface SelectionOnNonNullArrAndContents {
-  id: string;
-  name: string | null;
-}
-",
-      "export interface SelectionOnNullArrNonNullContents {
-  id: string;
-  name: string | null;
-}
-",
-      "export interface SelectionOnHeroNoParam {
-  nonNullArr: Array<SelectionOnNonNullArr | null>;
-  nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
-  nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
-}
-",
-    ],
-    "interface": "export interface Test {
-  heroNoParam: SelectionOnHeroNoParam | null;
-}
-",
-    "result": "export interface SelectionOnNonNullArr {
+"export interface FragmentSelectionOnHuman {
   id: string;
   name: string | null;
 }
 
-export interface SelectionOnNonNullArrAndContents {
+export interface FragmentSelectionOnDroid {
   id: string;
   name: string | null;
 }
 
-export interface SelectionOnNullArrNonNullContents {
-  id: string;
-  name: string | null;
+export interface FragmentSelectionOnHuman1 {
+  nonNullArr: Array<FragmentSelectionOnHuman | FragmentSelectionOnDroid | null>;
+  nonNullArrAndContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  >;
+  nullArrNonNullContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  > | null;
 }
 
-export interface SelectionOnHeroNoParam {
-  nonNullArr: Array<SelectionOnNonNullArr | null>;
-  nonNullArrAndContents: Array<SelectionOnNonNullArrAndContents>;
-  nullArrNonNullContents: Array<SelectionOnNullArrNonNullContents> | null;
+export interface FragmentSelectionOnDroid1 {
+  nonNullArr: Array<FragmentSelectionOnHuman | FragmentSelectionOnDroid | null>;
+  nonNullArrAndContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  >;
+  nullArrNonNullContents: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid
+  > | null;
 }
 
 export interface Test {
-  heroNoParam: SelectionOnHeroNoParam | null;
+  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
 }
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`with subtypes does fragment query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentCharacterFields {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
-",
-    "result": "export interface IFragmentCharacterFields {
+
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`with subtypes does partial fragment query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnHuman {
-  name: string | null;
-}
-",
-    ],
-    "interface": "export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
+"export interface FragmentSelectionOnHuman {
   id: string;
-}
-",
-    "result": "export interface IFragmentSpreadOnHuman {
   name: string | null;
 }
 
-export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`with subtypes does partial fragment query with complex types 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "result": "export interface FragmentTest {
-  heroNoParam: IFragmentCharacterFields | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnFriends {
-  id: string;
-}
-",
-      "export interface IFragmentSpreadOnHuman {
-  name: string | null;
-  friends: Array<SelectionOnFriends | null> | null;
-}
-",
-    ],
-    "interface": "export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
-  id: string;
-}
-",
-    "result": "export interface SelectionOnFriends {
+"export interface FragmentSelectionOnHuman {
   id: string;
 }
 
-export interface IFragmentSpreadOnHuman {
-  name: string | null;
-  friends: Array<SelectionOnFriends | null> | null;
-}
-
-export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
+export interface FragmentSelectionOnDroid {
   id: string;
 }
-",
-    "variables": "",
-  },
-]
+
+export interface FragmentSelectionOnHuman1 {
+  id: string;
+  name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
+}
+
+export interface FragmentTest {
+  heroNoParam: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid | null;
+}
+"
 `;
 
 exports[`with subtypes does partial fragment query with complex types and directives 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnDroid {
+"export interface FragmentSelectionOnHuman {
+  id: string;
+}
+
+export interface FragmentSelectionOnDroid {
+  id: string;
+}
+
+export interface FragmentSelectionOnHuman1 {
+  id: string;
   name: string | null;
+  friends: Array<
+    FragmentSelectionOnHuman | FragmentSelectionOnDroid | null
+  > | null;
 }
-",
-    ],
-    "interface": "export interface FragmentTest {
-  heroNoParam:
-    | IFragmentCharacterFields & Partial<IFragmentSpreadOnDroid>
-    | null;
-}
-",
-    "result": "export interface IFragmentSpreadOnDroid {
+
+export interface FragmentSelectionOnDroid1 {
+  id: string;
   name: string | null;
 }
 
 export interface FragmentTest {
-  heroNoParam:
-    | IFragmentCharacterFields & Partial<IFragmentSpreadOnDroid>
-    | null;
+  heroNoParam?: FragmentSelectionOnHuman1 | FragmentSelectionOnDroid1 | null;
 }
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnFriends {
-  id: string;
-}
-",
-      "export interface IFragmentSpreadOnHuman {
-  name: string | null;
-  friends: Array<SelectionOnFriends | null> | null;
-}
-",
-    ],
-    "interface": "export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
-  id: string;
-}
-",
-    "result": "export interface SelectionOnFriends {
-  id: string;
-}
-
-export interface IFragmentSpreadOnHuman {
-  name: string | null;
-  friends: Array<SelectionOnFriends | null> | null;
-}
-
-export interface IFragmentCharacterFields
-  extends Partial<IFragmentSpreadOnHuman> {
-  id: string;
-}
-",
-    "variables": "",
-  },
-]
+"
 `;
