@@ -158,62 +158,93 @@ const run: (schemaInput: GraphQLSchema, optionsInput: IInternalOptions) => strin
     );
   };
 
+  type ResolvedInterfaceValue = {
+    value: ResolvedInterfaceValue | string;
+    description?: string;
+    deprecation?: string;
+    isList: boolean;
+    isNonNull: boolean;
+  };
+
+  type ResolveInterfaceName = (type: GraphQLInputType | GraphQLType, isNonNull: boolean) => ResolvedInterfaceValue;
+
   /**
    * TODO
    * - add support for custom types (via optional json file or something)
-   * - allow this to return metadata for Non Null types
    */
-  const resolveInterfaceName: (type: GraphQLInputType | GraphQLType) => string = type => {
+  const resolveInterfaceName: ResolveInterfaceName = (type, isNonNull = false) => {
     if (isList(type)) {
-      return wrapList(resolveInterfaceName((type).ofType));
-    } else if (isNonNullable(type)) {
-      return `!${resolveInterfaceName((type).ofType)}`;
-    } else if (isScalar(type)) {
-      return TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT;
-    } else if (isAbstractType(type)) {
-      return generateTypeName(type.name);
-    } else if (isEnum(type)) {
-      return generateEnumName(type.name);
-    } else {
-      return generateInterfaceName(type.name);
+      return {
+        value: resolveInterfaceName(type.ofType, false),
+        isList: true,
+        isNonNull
+      };
     }
-  };
-
-  interface IInterfaceMetadata {
-    name: string;
-    showNullabilityAttribute: boolean;
-    isNonNull: boolean;
-  }
-
-  type ExtractInterfaceMetadata = (interfaceName: string) => IInterfaceMetadata;
-  const extractInterfaceMetadata: ExtractInterfaceMetadata = (interfaceName) => {
-    const isNonNull: boolean = interfaceName.includes('!');
+    if (isNonNullable(type)) {
+      return resolveInterfaceName(type.ofType, true);
+    }
+    if (isScalar(type)) {
+      return {
+        value: TYPE_MAP[type.name] || TYPE_MAP.__DEFAULT,
+        isList: false,
+        isNonNull
+      };
+    }
+    if (isAbstractType(type)) {
+      return {
+        value: generateTypeName(type.name),
+        isList: false,
+        isNonNull
+      };
+    }
+    if (isEnum(type)) {
+      return {
+        value: generateEnumName(type.name),
+        isList: false,
+        isNonNull
+      };
+    }
     return {
-      isNonNull,
-      name: interfaceName.replace(/\!/g, ''),
-      showNullabilityAttribute: !isNonNull
+      value: generateInterfaceName(type.name),
+      isList: false,
+      isNonNull
     };
   };
 
+  type TypePrinter = (val: ResolvedInterfaceValue | string) => string;
+
+  const typePrinter: TypePrinter = (val) => {
+    if (typeof val === 'string') {
+      return val;
+    }
+    const isNonNull: boolean = val.isNonNull;
+    if (val.isList) {
+      return printType(wrapList(typePrinter(val.value)), isNonNull);
+    }
+
+    return printType(typePrinter(val.value), isNonNull);
+  };
+
   type FieldToDefinition = (field: GraphQLField<any, any> | GraphQLInputField, isInput: boolean) => string;
+
   const fieldToDefinition: FieldToDefinition = (field, isInput) => {
-    const { name, showNullabilityAttribute, isNonNull } = extractInterfaceMetadata(resolveInterfaceName(field.type));
+    const resolved: ResolvedInterfaceValue = resolveInterfaceName(field.type, false);
 
     return formatInput(
       field.name,
-      isInput && !isNonNull,
-      printType(name, !showNullabilityAttribute)
+      isInput && !resolved.isNonNull,
+      typePrinter(resolved)
     );
   };
 
   type ArgumentToDefinition = (arg: GraphQLArgument) => string;
 
-  const generateArgumentDeclaration: ArgumentToDefinition = arg => {
-    const { name, isNonNull, showNullabilityAttribute } = extractInterfaceMetadata(resolveInterfaceName(arg.type));
+  const generateArgumentDeclaration: ArgumentToDefinition = (arg) => {
+    const resolved: ResolvedInterfaceValue = resolveInterfaceName(arg.type, false);
 
     return filterAndJoinArray([
       generateDocumentation(buildDocumentation(arg)),
-      formatInput(arg.name, !isNonNull, printType(name, !showNullabilityAttribute))
+      formatInput(arg.name, !resolved.isNonNull, typePrinter(resolved))
     ]);
   };
 

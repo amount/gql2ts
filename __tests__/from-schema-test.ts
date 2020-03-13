@@ -1,5 +1,5 @@
 import { schemaToInterfaces, generateNamespace } from '../packages/from-schema/src';
-import { DEFAULT_OPTIONS } from '../packages/language-typescript/src';
+import { DEFAULT_OPTIONS, DEFAULT_TYPE_MAP } from '../packages/language-typescript/src';
 import schema from './data/starWarsSchema';
 import enumSchema from './data/enumSchema';
 import simpleSchema from './shared/simpleSchema';
@@ -100,6 +100,19 @@ describe('gql2ts', () => {
       const actual: string = schemaToInterfaces(simpleSchema, {
         ignoredTypes: [],
         excludeDeprecatedFields: true
+      });
+      expect(actual).toMatchSnapshot();
+    });
+  });
+
+  describe('scalar', () => {
+    it('supports typemap', () => {
+      const actual: string = schemaToInterfaces(simpleSchema, {
+        ignoredTypes: [],
+        typeMap: {
+          ...DEFAULT_TYPE_MAP,
+          TestScalar: 'TestScalar'
+        }
       });
       expect(actual).toMatchSnapshot();
     });

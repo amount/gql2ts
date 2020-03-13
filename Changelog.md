@@ -5,6 +5,18 @@
 ### Breaking Changes
 - Remove legacy TS 1.x support (without `strictNullChecks`)
 
+## 1.10.1
+
+- Fix regression in TypeMap support (thanks [@mikfoo](https://github.com/mikfoo)) [PR #235](https://github.com/avantcredit/gql2ts/pull/235)
+
+## 1.10.0
+
+- Fix nullable arrays in `@gql2ts/from-schema` (thanks [@mikfoo](https://github.com/mikfoo)) [Issue #197](https://github.com/avantcredit/gql2ts/issues/197) [PR #230](https://github.com/avantcredit/gql2ts/pull/230)
+
+## 1.9.0
+
+- Support `graphql@^14` [PR #222](https://github.com/avantcredit/gql2ts/pull/222)
+
 ## 1.8.2
 
 - Remove dependency on Typescript for `@gql2ts/language-typescript` [PR #209](https://github.com/avantcredit/gql2ts/pull/209)
