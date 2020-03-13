@@ -1,145 +1,107 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`additional fragments works 1 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnOwner {
+"export interface FragmentSelectionOnOrganization {
+  __typename: 'Organization';
+  __typename: 'Organization';
+  orgName: string | null;
+}
+
+export interface FragmentSelectionOnOrganization1 {
   login: string;
 }
-",
-      "export interface IFragmentSpreadOnRepository {
-  id: string;
-  name: string;
-  owner: SelectionOnOwner;
-}
-",
-      "export interface SelectionOnAuthor {
+
+export interface FragmentSelectionOnUser {
   login: string;
 }
-",
-      "export interface IFragmentSpreadOnPullRequest {
+
+export interface FragmentSelectionOnBot {
+  login: string;
+}
+
+export interface FragmentSelectionOnIssue {
+  __typename: 'Issue';
   id: string;
   title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-      "export interface IFragmentSpreadOnOrganization {
-  __typename: 'Organization';
-}
-",
-      "export interface SelectionOnResource {
-  __typename:
-    | 'Organization'
-    | 'Issue'
-    | 'User'
-    | 'Repository'
-    | 'PullRequest'
-    | 'PullRequestCommit'
-    | 'Milestone'
-    | 'MergedEvent'
-    | 'CrossReferencedEvent'
-    | 'ReviewDismissedEvent'
-    | 'Release'
-    | 'RepositoryTopic'
-    | 'Bot';
-}
-",
-    ],
-    "interface": "export interface MyTestQuery {
-  resource:
-    | SelectionOnResource &
-        Partial<IFragmentSpreadOnRepository> &
-        Partial<IFragmentSpreadOnPullRequest> &
-        Partial<IFragmentIssue> &
-        Partial<IFragmentOrganization> &
-        Partial<IFragmentSpreadOnOrganization>
+  author:
+    | FragmentSelectionOnOrganization1
+    | FragmentSelectionOnUser
+    | FragmentSelectionOnBot
     | null;
 }
-",
-    "result": "export interface SelectionOnOwner {
-  login: string;
+
+export interface FragmentSelectionOnUser1 {
+  __typename: 'User';
 }
 
-export interface IFragmentSpreadOnRepository {
+export interface FragmentSelectionOnRepository {
+  __typename: 'Repository';
   id: string;
   name: string;
-  owner: SelectionOnOwner;
+  owner: FragmentSelectionOnOrganization1 | FragmentSelectionOnUser;
 }
 
-export interface SelectionOnAuthor {
-  login: string;
-}
-
-export interface IFragmentSpreadOnPullRequest {
+export interface FragmentSelectionOnPullRequest {
+  __typename: 'PullRequest';
   id: string;
   title: string;
-  author: SelectionOnAuthor | null;
+  author:
+    | FragmentSelectionOnOrganization1
+    | FragmentSelectionOnUser
+    | FragmentSelectionOnBot
+    | null;
 }
 
-export interface IFragmentSpreadOnOrganization {
-  __typename: 'Organization';
+export interface FragmentSelectionOnPullRequestCommit {
+  __typename: 'PullRequestCommit';
 }
 
-export interface SelectionOnResource {
-  __typename:
-    | 'Organization'
-    | 'Issue'
-    | 'User'
-    | 'Repository'
-    | 'PullRequest'
-    | 'PullRequestCommit'
-    | 'Milestone'
-    | 'MergedEvent'
-    | 'CrossReferencedEvent'
-    | 'ReviewDismissedEvent'
-    | 'Release'
-    | 'RepositoryTopic'
-    | 'Bot';
+export interface FragmentSelectionOnMilestone {
+  __typename: 'Milestone';
+}
+
+export interface FragmentSelectionOnMergedEvent {
+  __typename: 'MergedEvent';
+}
+
+export interface FragmentSelectionOnCrossReferencedEvent {
+  __typename: 'CrossReferencedEvent';
+}
+
+export interface FragmentSelectionOnReviewDismissedEvent {
+  __typename: 'ReviewDismissedEvent';
+}
+
+export interface FragmentSelectionOnRelease {
+  __typename: 'Release';
+}
+
+export interface FragmentSelectionOnRepositoryTopic {
+  __typename: 'RepositoryTopic';
+}
+
+export interface FragmentSelectionOnBot1 {
+  __typename: 'Bot';
 }
 
 export interface MyTestQuery {
   resource:
-    | SelectionOnResource &
-        Partial<IFragmentSpreadOnRepository> &
-        Partial<IFragmentSpreadOnPullRequest> &
-        Partial<IFragmentIssue> &
-        Partial<IFragmentOrganization> &
-        Partial<IFragmentSpreadOnOrganization>
+    | FragmentSelectionOnOrganization
+    | FragmentSelectionOnIssue
+    | FragmentSelectionOnUser1
+    | FragmentSelectionOnRepository
+    | FragmentSelectionOnPullRequest
+    | FragmentSelectionOnPullRequestCommit
+    | FragmentSelectionOnMilestone
+    | FragmentSelectionOnMergedEvent
+    | FragmentSelectionOnCrossReferencedEvent
+    | FragmentSelectionOnReviewDismissedEvent
+    | FragmentSelectionOnRelease
+    | FragmentSelectionOnRepositoryTopic
+    | FragmentSelectionOnBot1
     | null;
 }
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentIssue {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    "result": "export interface IFragmentIssue {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentOrganization {
-  orgName: string | null;
-}
-",
-    "result": "export interface IFragmentOrganization {
-  orgName: string | null;
-}
-",
-    "variables": "",
-  },
-]
+"
 `;
 
 exports[`additional fragments works 2 1`] = `
