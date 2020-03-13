@@ -1,967 +1,105 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`additional fragments works 1 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnOwner {
+"export interface FragmentSelectionOnOrganization {
+  __typename: 'Organization';
+  __typename: 'Organization';
+  orgName: string | null;
+}
+
+export interface FragmentSelectionOnOrganization1 {
   login: string;
 }
-",
-      "export interface IFragmentSpreadOnRepository {
-  id: string;
-  name: string;
-  owner: SelectionOnOwner;
-}
-",
-      "export interface SelectionOnAuthor {
+
+export interface FragmentSelectionOnUser {
   login: string;
 }
-",
-      "export interface IFragmentSpreadOnPullRequest {
+
+export interface FragmentSelectionOnBot {
+  login: string;
+}
+
+export interface FragmentSelectionOnIssue {
+  __typename: 'Issue';
   id: string;
   title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-      "export interface IFragmentSpreadOnOrganization {
-  __typename: 'Organization';
-}
-",
-      "export interface SelectionOnResource {
-  __typename:
-    | 'Organization'
-    | 'Issue'
-    | 'User'
-    | 'Repository'
-    | 'PullRequest'
-    | 'PullRequestCommit'
-    | 'Milestone'
-    | 'MergedEvent'
-    | 'CrossReferencedEvent'
-    | 'ReviewDismissedEvent'
-    | 'Release'
-    | 'RepositoryTopic'
-    | 'Bot';
-}
-",
-    ],
-    "interface": "export interface MyTestQuery {
-  resource:
-    | SelectionOnResource &
-        Partial<IFragmentSpreadOnRepository> &
-        Partial<IFragmentSpreadOnPullRequest> &
-        Partial<IFragmentIssue> &
-        Partial<IFragmentOrganization> &
-        Partial<IFragmentSpreadOnOrganization>
+  author:
+    | FragmentSelectionOnOrganization1
+    | FragmentSelectionOnUser
+    | FragmentSelectionOnBot
     | null;
 }
-",
-    "result": "export interface SelectionOnOwner {
-  login: string;
+
+export interface FragmentSelectionOnUser1 {
+  __typename: 'User';
 }
 
-export interface IFragmentSpreadOnRepository {
+export interface FragmentSelectionOnRepository {
+  __typename: 'Repository';
   id: string;
   name: string;
-  owner: SelectionOnOwner;
+  owner: FragmentSelectionOnOrganization1 | FragmentSelectionOnUser;
 }
 
-export interface SelectionOnAuthor {
-  login: string;
-}
-
-export interface IFragmentSpreadOnPullRequest {
+export interface FragmentSelectionOnPullRequest {
+  __typename: 'PullRequest';
   id: string;
   title: string;
-  author: SelectionOnAuthor | null;
+  author:
+    | FragmentSelectionOnOrganization1
+    | FragmentSelectionOnUser
+    | FragmentSelectionOnBot
+    | null;
 }
 
-export interface IFragmentSpreadOnOrganization {
-  __typename: 'Organization';
+export interface FragmentSelectionOnPullRequestCommit {
+  __typename: 'PullRequestCommit';
 }
 
-export interface SelectionOnResource {
-  __typename:
-    | 'Organization'
-    | 'Issue'
-    | 'User'
-    | 'Repository'
-    | 'PullRequest'
-    | 'PullRequestCommit'
-    | 'Milestone'
-    | 'MergedEvent'
-    | 'CrossReferencedEvent'
-    | 'ReviewDismissedEvent'
-    | 'Release'
-    | 'RepositoryTopic'
-    | 'Bot';
+export interface FragmentSelectionOnMilestone {
+  __typename: 'Milestone';
+}
+
+export interface FragmentSelectionOnMergedEvent {
+  __typename: 'MergedEvent';
+}
+
+export interface FragmentSelectionOnCrossReferencedEvent {
+  __typename: 'CrossReferencedEvent';
+}
+
+export interface FragmentSelectionOnReviewDismissedEvent {
+  __typename: 'ReviewDismissedEvent';
+}
+
+export interface FragmentSelectionOnRelease {
+  __typename: 'Release';
+}
+
+export interface FragmentSelectionOnRepositoryTopic {
+  __typename: 'RepositoryTopic';
+}
+
+export interface FragmentSelectionOnBot1 {
+  __typename: 'Bot';
 }
 
 export interface MyTestQuery {
   resource:
-    | SelectionOnResource &
-        Partial<IFragmentSpreadOnRepository> &
-        Partial<IFragmentSpreadOnPullRequest> &
-        Partial<IFragmentIssue> &
-        Partial<IFragmentOrganization> &
-        Partial<IFragmentSpreadOnOrganization>
+    | FragmentSelectionOnOrganization
+    | FragmentSelectionOnIssue
+    | FragmentSelectionOnUser1
+    | FragmentSelectionOnRepository
+    | FragmentSelectionOnPullRequest
+    | FragmentSelectionOnPullRequestCommit
+    | FragmentSelectionOnMilestone
+    | FragmentSelectionOnMergedEvent
+    | FragmentSelectionOnCrossReferencedEvent
+    | FragmentSelectionOnReviewDismissedEvent
+    | FragmentSelectionOnRelease
+    | FragmentSelectionOnRepositoryTopic
+    | FragmentSelectionOnBot1
     | null;
 }
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentIssue {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    "result": "export interface IFragmentIssue {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentOrganization {
-  orgName: string | null;
-}
-",
-    "result": "export interface IFragmentOrganization {
-  orgName: string | null;
-}
-",
-    "variables": "",
-  },
-]
-`;
-
-exports[`additional fragments works 2 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnOwner {
-  login: string;
-}
-",
-      "export interface IFragmentSpreadOnRepository {
-  id: string;
-  name: string;
-  owner: SelectionOnOwner;
-}
-",
-      "export interface IFragmentSpreadOnOrganization {
-  __typename: 'Organization';
-}
-",
-      "export interface SelectionOnResource {
-  __typename:
-    | 'Organization'
-    | 'Issue'
-    | 'User'
-    | 'Repository'
-    | 'PullRequest'
-    | 'PullRequestCommit'
-    | 'Milestone'
-    | 'MergedEvent'
-    | 'CrossReferencedEvent'
-    | 'ReviewDismissedEvent'
-    | 'Release'
-    | 'RepositoryTopic'
-    | 'Bot';
-}
-",
-    ],
-    "interface": "export interface MyTestQuery {
-  resource:
-    | SelectionOnResource &
-        Partial<IFragmentSpreadOnRepository> &
-        IFragmentPullRequest &
-        Partial<IFragmentIssue> &
-        Partial<IFragmentOrganization> &
-        Partial<IFragmentSpreadOnOrganization>
-    | null;
-}
-",
-    "result": "export interface SelectionOnOwner {
-  login: string;
-}
-
-export interface IFragmentSpreadOnRepository {
-  id: string;
-  name: string;
-  owner: SelectionOnOwner;
-}
-
-export interface IFragmentSpreadOnOrganization {
-  __typename: 'Organization';
-}
-
-export interface SelectionOnResource {
-  __typename:
-    | 'Organization'
-    | 'Issue'
-    | 'User'
-    | 'Repository'
-    | 'PullRequest'
-    | 'PullRequestCommit'
-    | 'Milestone'
-    | 'MergedEvent'
-    | 'CrossReferencedEvent'
-    | 'ReviewDismissedEvent'
-    | 'Release'
-    | 'RepositoryTopic'
-    | 'Bot';
-}
-
-export interface MyTestQuery {
-  resource:
-    | SelectionOnResource &
-        Partial<IFragmentSpreadOnRepository> &
-        IFragmentPullRequest &
-        Partial<IFragmentIssue> &
-        Partial<IFragmentOrganization> &
-        Partial<IFragmentSpreadOnOrganization>
-    | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnAuthor {
-  login: string;
-}
-",
-    ],
-    "interface": "export interface IFragmentIssue {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    "result": "export interface SelectionOnAuthor {
-  login: string;
-}
-
-export interface IFragmentIssue {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentOrganization {
-  orgName: string | null;
-}
-",
-    "result": "export interface IFragmentOrganization {
-  orgName: string | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface IFragmentSpreadOnPullRequest {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-",
-    ],
-    "interface": "export interface IFragmentPullRequest
-  extends Partial<IFragmentSpreadOnPullRequest> {}
-",
-    "result": "export interface IFragmentSpreadOnPullRequest {
-  id: string;
-  title: string;
-  author: SelectionOnAuthor | null;
-}
-
-export interface IFragmentPullRequest
-  extends Partial<IFragmentSpreadOnPullRequest> {}
-",
-    "variables": "",
-  },
-]
-`;
-
-exports[`additional fragments works with another introspective query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnType {
-  kind: TypeKind;
-}
-",
-      "export interface SelectionOnType1 {
-  name: string | null;
-}
-",
-      "export interface SelectionOnType2 {
-  kind: TypeKind;
-  name: string | null;
-}
-",
-    ],
-    "interface": "export interface Anonymous {
-  __type: SelectionOnType | null;
-  t1: SelectionOnType1 | null;
-  t2: SelectionOnType2 | null;
-}
-",
-    "result": "export interface SelectionOnType {
-  kind: TypeKind;
-}
-
-export interface SelectionOnType1 {
-  name: string | null;
-}
-
-export interface SelectionOnType2 {
-  kind: TypeKind;
-  name: string | null;
-}
-
-export interface Anonymous {
-  __type: SelectionOnType | null;
-  t1: SelectionOnType1 | null;
-  t2: SelectionOnType2 | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export const enum TypeKind {
-  /**
-   * Indicates this type is a scalar.
-   */
-  SCALAR = 'SCALAR',
-
-  /**
-   * Indicates this type is an object. \`fields\` and \`interfaces\` are valid fields.
-   */
-  OBJECT = 'OBJECT',
-
-  /**
-   * Indicates this type is an interface. \`fields\` and \`possibleTypes\` are valid fields.
-   */
-  INTERFACE = 'INTERFACE',
-
-  /**
-   * Indicates this type is a union. \`possibleTypes\` is a valid field.
-   */
-  UNION = 'UNION',
-
-  /**
-   * Indicates this type is an enum. \`enumValues\` is a valid field.
-   */
-  ENUM = 'ENUM',
-
-  /**
-   * Indicates this type is an input object. \`inputFields\` is a valid field.
-   */
-  INPUT_OBJECT = 'INPUT_OBJECT',
-
-  /**
-   * Indicates this type is a list. \`ofType\` is a valid field.
-   */
-  LIST = 'LIST',
-
-  /**
-   * Indicates this type is a non-null. \`ofType\` is a valid field.
-   */
-  NON_NULL = 'NON_NULL'
-}
-",
-    ],
-    "interface": "",
-    "result": "export const enum TypeKind {
-  /**
-   * Indicates this type is a scalar.
-   */
-  SCALAR = 'SCALAR',
-
-  /**
-   * Indicates this type is an object. \`fields\` and \`interfaces\` are valid fields.
-   */
-  OBJECT = 'OBJECT',
-
-  /**
-   * Indicates this type is an interface. \`fields\` and \`possibleTypes\` are valid fields.
-   */
-  INTERFACE = 'INTERFACE',
-
-  /**
-   * Indicates this type is a union. \`possibleTypes\` is a valid field.
-   */
-  UNION = 'UNION',
-
-  /**
-   * Indicates this type is an enum. \`enumValues\` is a valid field.
-   */
-  ENUM = 'ENUM',
-
-  /**
-   * Indicates this type is an input object. \`inputFields\` is a valid field.
-   */
-  INPUT_OBJECT = 'INPUT_OBJECT',
-
-  /**
-   * Indicates this type is a list. \`ofType\` is a valid field.
-   */
-  LIST = 'LIST',
-
-  /**
-   * Indicates this type is a non-null. \`ofType\` is a valid field.
-   */
-  NON_NULL = 'NON_NULL'
-}
-",
-    "variables": "",
-  },
-]
-`;
-
-exports[`additional fragments works with the introspection query 1`] = `
-Array [
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnQueryType {
-  name: string | null;
-}
-",
-      "export interface SelectionOnMutationType {
-  name: string | null;
-}
-",
-      "export interface SelectionOnSubscriptionType {
-  name: string | null;
-}
-",
-      "export interface SelectionOnDirectives {
-  name: string;
-  description: string | null;
-  locations: Array<DirectiveLocation>;
-  args: Array<IFragmentInputValue>;
-}
-",
-      "export interface SelectionOnSchema {
-  queryType: SelectionOnQueryType;
-  mutationType: SelectionOnMutationType | null;
-  subscriptionType: SelectionOnSubscriptionType | null;
-  types: Array<IFragmentFullType>;
-  directives: Array<SelectionOnDirectives>;
-}
-",
-    ],
-    "interface": "export interface IntrospectionQuery {
-  __schema: SelectionOnSchema | null;
-}
-",
-    "result": "export interface SelectionOnQueryType {
-  name: string | null;
-}
-
-export interface SelectionOnMutationType {
-  name: string | null;
-}
-
-export interface SelectionOnSubscriptionType {
-  name: string | null;
-}
-
-export interface SelectionOnDirectives {
-  name: string;
-  description: string | null;
-  locations: Array<DirectiveLocation>;
-  args: Array<IFragmentInputValue>;
-}
-
-export interface SelectionOnSchema {
-  queryType: SelectionOnQueryType;
-  mutationType: SelectionOnMutationType | null;
-  subscriptionType: SelectionOnSubscriptionType | null;
-  types: Array<IFragmentFullType>;
-  directives: Array<SelectionOnDirectives>;
-}
-
-export interface IntrospectionQuery {
-  __schema: SelectionOnSchema | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnFields {
-  name: string;
-  description: string | null;
-  args: Array<IFragmentInputValue>;
-  type: IFragmentTypeRef;
-  isDeprecated: boolean;
-  deprecationReason: string | null;
-}
-",
-      "export interface SelectionOnEnumValues {
-  name: string;
-  description: string | null;
-  isDeprecated: boolean;
-  deprecationReason: string | null;
-}
-",
-    ],
-    "interface": "export interface IFragmentFullType {
-  kind: TypeKind;
-  name: string | null;
-  description: string | null;
-  fields: Array<SelectionOnFields> | null;
-  inputFields: Array<IFragmentInputValue> | null;
-  interfaces: Array<IFragmentTypeRef> | null;
-  enumValues: Array<SelectionOnEnumValues> | null;
-  possibleTypes: Array<IFragmentTypeRef> | null;
-}
-",
-    "result": "export interface SelectionOnFields {
-  name: string;
-  description: string | null;
-  args: Array<IFragmentInputValue>;
-  type: IFragmentTypeRef;
-  isDeprecated: boolean;
-  deprecationReason: string | null;
-}
-
-export interface SelectionOnEnumValues {
-  name: string;
-  description: string | null;
-  isDeprecated: boolean;
-  deprecationReason: string | null;
-}
-
-export interface IFragmentFullType {
-  kind: TypeKind;
-  name: string | null;
-  description: string | null;
-  fields: Array<SelectionOnFields> | null;
-  inputFields: Array<IFragmentInputValue> | null;
-  interfaces: Array<IFragmentTypeRef> | null;
-  enumValues: Array<SelectionOnEnumValues> | null;
-  possibleTypes: Array<IFragmentTypeRef> | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [],
-    "interface": "export interface IFragmentInputValue {
-  name: string;
-  description: string | null;
-  type: IFragmentTypeRef;
-  defaultValue: string | null;
-}
-",
-    "result": "export interface IFragmentInputValue {
-  name: string;
-  description: string | null;
-  type: IFragmentTypeRef;
-  defaultValue: string | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export interface SelectionOnOfType {
-  kind: TypeKind;
-  name: string | null;
-}
-",
-      "export interface SelectionOnOfType1 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType | null;
-}
-",
-      "export interface SelectionOnOfType2 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType1 | null;
-}
-",
-      "export interface SelectionOnOfType3 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType2 | null;
-}
-",
-      "export interface SelectionOnOfType4 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType3 | null;
-}
-",
-      "export interface SelectionOnOfType5 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType4 | null;
-}
-",
-      "export interface SelectionOnOfType6 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType5 | null;
-}
-",
-    ],
-    "interface": "export interface IFragmentTypeRef {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType6 | null;
-}
-",
-    "result": "export interface SelectionOnOfType {
-  kind: TypeKind;
-  name: string | null;
-}
-
-export interface SelectionOnOfType1 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType | null;
-}
-
-export interface SelectionOnOfType2 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType1 | null;
-}
-
-export interface SelectionOnOfType3 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType2 | null;
-}
-
-export interface SelectionOnOfType4 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType3 | null;
-}
-
-export interface SelectionOnOfType5 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType4 | null;
-}
-
-export interface SelectionOnOfType6 {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType5 | null;
-}
-
-export interface IFragmentTypeRef {
-  kind: TypeKind;
-  name: string | null;
-  ofType: SelectionOnOfType6 | null;
-}
-",
-    "variables": "",
-  },
-  Object {
-    "additionalTypes": Array [
-      "export const enum DirectiveLocation {
-  /**
-   * Location adjacent to a query operation.
-   */
-  QUERY = 'QUERY',
-
-  /**
-   * Location adjacent to a mutation operation.
-   */
-  MUTATION = 'MUTATION',
-
-  /**
-   * Location adjacent to a subscription operation.
-   */
-  SUBSCRIPTION = 'SUBSCRIPTION',
-
-  /**
-   * Location adjacent to a field.
-   */
-  FIELD = 'FIELD',
-
-  /**
-   * Location adjacent to a fragment definition.
-   */
-  FRAGMENT_DEFINITION = 'FRAGMENT_DEFINITION',
-
-  /**
-   * Location adjacent to a fragment spread.
-   */
-  FRAGMENT_SPREAD = 'FRAGMENT_SPREAD',
-
-  /**
-   * Location adjacent to an inline fragment.
-   */
-  INLINE_FRAGMENT = 'INLINE_FRAGMENT',
-
-  /**
-   * Location adjacent to a variable definition.
-   */
-  VARIABLE_DEFINITION = 'VARIABLE_DEFINITION',
-
-  /**
-   * Location adjacent to a schema definition.
-   */
-  SCHEMA = 'SCHEMA',
-
-  /**
-   * Location adjacent to a scalar definition.
-   */
-  SCALAR = 'SCALAR',
-
-  /**
-   * Location adjacent to an object type definition.
-   */
-  OBJECT = 'OBJECT',
-
-  /**
-   * Location adjacent to a field definition.
-   */
-  FIELD_DEFINITION = 'FIELD_DEFINITION',
-
-  /**
-   * Location adjacent to an argument definition.
-   */
-  ARGUMENT_DEFINITION = 'ARGUMENT_DEFINITION',
-
-  /**
-   * Location adjacent to an interface definition.
-   */
-  INTERFACE = 'INTERFACE',
-
-  /**
-   * Location adjacent to a union definition.
-   */
-  UNION = 'UNION',
-
-  /**
-   * Location adjacent to an enum definition.
-   */
-  ENUM = 'ENUM',
-
-  /**
-   * Location adjacent to an enum value definition.
-   */
-  ENUM_VALUE = 'ENUM_VALUE',
-
-  /**
-   * Location adjacent to an input object type definition.
-   */
-  INPUT_OBJECT = 'INPUT_OBJECT',
-
-  /**
-   * Location adjacent to an input object field definition.
-   */
-  INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION'
-}
-",
-      "export const enum TypeKind {
-  /**
-   * Indicates this type is a scalar.
-   */
-  SCALAR = 'SCALAR',
-
-  /**
-   * Indicates this type is an object. \`fields\` and \`interfaces\` are valid fields.
-   */
-  OBJECT = 'OBJECT',
-
-  /**
-   * Indicates this type is an interface. \`fields\` and \`possibleTypes\` are valid fields.
-   */
-  INTERFACE = 'INTERFACE',
-
-  /**
-   * Indicates this type is a union. \`possibleTypes\` is a valid field.
-   */
-  UNION = 'UNION',
-
-  /**
-   * Indicates this type is an enum. \`enumValues\` is a valid field.
-   */
-  ENUM = 'ENUM',
-
-  /**
-   * Indicates this type is an input object. \`inputFields\` is a valid field.
-   */
-  INPUT_OBJECT = 'INPUT_OBJECT',
-
-  /**
-   * Indicates this type is a list. \`ofType\` is a valid field.
-   */
-  LIST = 'LIST',
-
-  /**
-   * Indicates this type is a non-null. \`ofType\` is a valid field.
-   */
-  NON_NULL = 'NON_NULL'
-}
-",
-    ],
-    "interface": "",
-    "result": "export const enum DirectiveLocation {
-  /**
-   * Location adjacent to a query operation.
-   */
-  QUERY = 'QUERY',
-
-  /**
-   * Location adjacent to a mutation operation.
-   */
-  MUTATION = 'MUTATION',
-
-  /**
-   * Location adjacent to a subscription operation.
-   */
-  SUBSCRIPTION = 'SUBSCRIPTION',
-
-  /**
-   * Location adjacent to a field.
-   */
-  FIELD = 'FIELD',
-
-  /**
-   * Location adjacent to a fragment definition.
-   */
-  FRAGMENT_DEFINITION = 'FRAGMENT_DEFINITION',
-
-  /**
-   * Location adjacent to a fragment spread.
-   */
-  FRAGMENT_SPREAD = 'FRAGMENT_SPREAD',
-
-  /**
-   * Location adjacent to an inline fragment.
-   */
-  INLINE_FRAGMENT = 'INLINE_FRAGMENT',
-
-  /**
-   * Location adjacent to a variable definition.
-   */
-  VARIABLE_DEFINITION = 'VARIABLE_DEFINITION',
-
-  /**
-   * Location adjacent to a schema definition.
-   */
-  SCHEMA = 'SCHEMA',
-
-  /**
-   * Location adjacent to a scalar definition.
-   */
-  SCALAR = 'SCALAR',
-
-  /**
-   * Location adjacent to an object type definition.
-   */
-  OBJECT = 'OBJECT',
-
-  /**
-   * Location adjacent to a field definition.
-   */
-  FIELD_DEFINITION = 'FIELD_DEFINITION',
-
-  /**
-   * Location adjacent to an argument definition.
-   */
-  ARGUMENT_DEFINITION = 'ARGUMENT_DEFINITION',
-
-  /**
-   * Location adjacent to an interface definition.
-   */
-  INTERFACE = 'INTERFACE',
-
-  /**
-   * Location adjacent to a union definition.
-   */
-  UNION = 'UNION',
-
-  /**
-   * Location adjacent to an enum definition.
-   */
-  ENUM = 'ENUM',
-
-  /**
-   * Location adjacent to an enum value definition.
-   */
-  ENUM_VALUE = 'ENUM_VALUE',
-
-  /**
-   * Location adjacent to an input object type definition.
-   */
-  INPUT_OBJECT = 'INPUT_OBJECT',
-
-  /**
-   * Location adjacent to an input object field definition.
-   */
-  INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION'
-}
-
-export const enum TypeKind {
-  /**
-   * Indicates this type is a scalar.
-   */
-  SCALAR = 'SCALAR',
-
-  /**
-   * Indicates this type is an object. \`fields\` and \`interfaces\` are valid fields.
-   */
-  OBJECT = 'OBJECT',
-
-  /**
-   * Indicates this type is an interface. \`fields\` and \`possibleTypes\` are valid fields.
-   */
-  INTERFACE = 'INTERFACE',
-
-  /**
-   * Indicates this type is a union. \`possibleTypes\` is a valid field.
-   */
-  UNION = 'UNION',
-
-  /**
-   * Indicates this type is an enum. \`enumValues\` is a valid field.
-   */
-  ENUM = 'ENUM',
-
-  /**
-   * Indicates this type is an input object. \`inputFields\` is a valid field.
-   */
-  INPUT_OBJECT = 'INPUT_OBJECT',
-
-  /**
-   * Indicates this type is a list. \`ofType\` is a valid field.
-   */
-  LIST = 'LIST',
-
-  /**
-   * Indicates this type is a non-null. \`ofType\` is a valid field.
-   */
-  NON_NULL = 'NON_NULL'
-}
-",
-    "variables": "",
-  },
-]
+"
 `;

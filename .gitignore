@@ -94,6 +94,7 @@ jspm_packages
 # files i use to test output
 *.d.ts
 *.json
+/test.ts
 
 ## remove js files
 packages/**/*.js

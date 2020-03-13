@@ -4,6 +4,7 @@
 
 ### Breaking Changes
 - Remove legacy TS 1.x support (without `strictNullChecks`)
+- Drop support for node v6
 
 ## 1.10.1
 

@@ -1,7 +1,7 @@
 {
   "name": "@gql2ts/language-typescript",
   "private": false,
-  "version": "1.9.0",
+  "version": "2.0.0-0",
   "description": "typescript defaults",
   "main": "dist/index.js",
   "files": [
@@ -30,11 +30,11 @@
   },
   "homepage": "https://github.com/avantcredit/gql2ts#readme",
   "dependencies": {
-    "@gql2ts/util": "^1.9.0",
+    "@gql2ts/util": "^2.0.0-0",
     "humps": "^2.0.0"
   },
   "devDependencies": {
-    "@gql2ts/types": "^1.9.0",
+    "@gql2ts/types": "^2.0.0-0",
     "@types/humps": "^1.1.2",
     "@types/prettier": "^1.10.0"
   }
