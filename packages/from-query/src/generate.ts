@@ -1,6 +1,6 @@
 // tslint:disable
 
-import { IOperation, Selection, TypeDefinition, IInterfaceNode, IFieldNode } from './ir';
+import { IOperation, Selection, TypeDefinition, IInterfaceNode, IFieldNode, IDirectiveMap } from './ir';
 import { IFromQueryOptions } from '@gql2ts/types';
 
 export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
@@ -66,7 +66,20 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
     }
   };
 
-  const printField: (name: string, type: TypeDefinition | string, node: Selection, nameOverride?: string) => string = (name, type, node, nameOverride) => `${name}: ${printType(type, node, nameOverride)};`;
+  const hasOptionalDirective: (directives: IDirectiveMap) => boolean = directives =>
+    !!directives.include || !!directives.skip
+
+  interface IPrintField {
+    name: string
+    type: TypeDefinition | string
+    node: Selection
+    nameOverride?: string
+    optional?: boolean
+  }
+
+  const printField: (props: IPrintField) => string = ({
+    name, type, node, nameOverride, optional = false
+  }) => OPTIONS.formatInput(name, optional, printType(type, node, nameOverride))
 
   class TypePrinter {
     private _declarations: Map<string, string[]> = new Map();
@@ -111,7 +124,13 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
       switch (selection.kind) {
         case 'Field':
           const fieldName = this.buildDeclarations(getReferenceType(selection.typeDefinition), selection.selections);
-          return printField(selection.name, selection.typeDefinition, selection, fieldName);
+          return printField({
+            name: selection.name,
+            type: selection.typeDefinition,
+            node: selection,
+            nameOverride: fieldName,
+            optional: hasOptionalDirective(selection.directives)
+          });
         case 'InterfaceNode':
           selection.fragments.map(frag => {
             let name = (frag.directives.gql2ts && frag.directives.gql2ts.arguments.interfaceName) ?
@@ -129,17 +148,32 @@ export default (OPTIONS: IFromQueryOptions): (ir: IOperation) => string => {
                 interfaceName: name
               }
             }
+
             return name;
           });
-          return printField(
-            this.generateSelectionName(selection),
-            selection.typeDefinition,
-            selection
-          );
+
+          const selectionHasDirectives = hasOptionalDirective(selection.directives);
+          const fragmentsHaveDirectives = selection.fragments.some(frag => hasOptionalDirective(frag.directives))
+
+          return printField({
+            name: this.generateSelectionName(selection),
+            type: selection.typeDefinition,
+            node: selection,
+            optional: selectionHasDirectives || fragmentsHaveDirectives
+          });
         case 'TypenameNode':
-          return printField(selection.name, selection.typeDefinition, selection);
+          return printField({
+            name: selection.name,
+            type: selection.typeDefinition,
+            node: selection
+          });
         case 'LeafNode':
-          return printField(selection.name, selection.typeDefinition, selection);
+          return printField({
+            name: selection.name,
+            type: selection.typeDefinition,
+            node: selection,
+            optional: hasOptionalDirective(selection.directives)
+          });
         default:
           throw new Error('Unsupported Selection');
       }

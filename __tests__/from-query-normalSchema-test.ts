@@ -568,6 +568,16 @@ query FragmentTest {
   }
 }`;
 
+const inlineFragmentWithDirectiveOnBaseQuery: string = `
+query FragmentTest {
+  heroNoParam @include(if: true) {
+    ... on Droid {
+    	primaryFunction
+      primaryFunctionNonNull
+    }
+  }
+}`;
+
 const inlineFragmentWithDirectiveWithAliasQuery: string = `
 query FragmentTest {
   a: heroNoParam {
@@ -647,6 +657,16 @@ describe('directives', () => {
       const response: string = runProgram(
         schema,
         inlineFragmentWithDirectiveQuery,
+        undefined,
+        { generateSubTypeInterfaceName }
+      );
+      expect(response).toMatchSnapshot();
+    });
+
+    it('works with inline fragments on base', () => {
+      const response: string = runProgram(
+        schema,
+        inlineFragmentWithDirectiveOnBaseQuery,
         undefined,
         { generateSubTypeInterfaceName }
       );
