@@ -304,7 +304,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
        * @TODO need to handle fragments of fragments better
        * An example of a previously unsupported fragment can be found in the __tests__ directory
        * `fragmentSelections.length` is definitely a hack and a proper solution should be investigated
-       * See: https://github.com/avantcredit/gql2ts/issues/76
+       * See: https://github.com/amount/gql2ts/issues/76
        */
       if (!fragmentSelections.length && anon) {
         let joinSelections: string = filterAndJoinArray(selections.map(s => s.iface), '\n');

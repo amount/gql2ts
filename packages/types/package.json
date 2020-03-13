@@ -14,19 +14,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/avantcredit/gql2ts.git"
+    "url": "git+https://github.com/amount/gql2ts.git"
   },
   "keywords": [
     "gql2ts",
     "graphql",
     "typescript"
   ],
-  "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
+  "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.amount.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/avantcredit/gql2ts/issues"
+    "url": "https://github.com/amount/gql2ts/issues"
   },
-  "homepage": "https://github.com/avantcredit/gql2ts#readme",
+  "homepage": "https://github.com/amount/gql2ts#readme",
   "dependencies": {
     "@gql2ts/util": "^1.9.0"
   }
