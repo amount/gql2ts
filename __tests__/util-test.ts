@@ -105,8 +105,6 @@ describe('IO stuff', () => {
     const spy: jest.MockInstance<{}> = jest.spyOn(fs, 'writeFile').mockImplementation(() => null);
     utils.writeToFile('test', 'test');
     expect(spy).toHaveBeenCalledTimes(1);
-    spy.mockReset();
-    spy.mockClear();
     (spy as any).mockRestore();
   });
 
@@ -122,8 +120,6 @@ describe('IO stuff', () => {
     const spy: jest.MockInstance<{}> = jest.spyOn(fs, 'readFileSync').mockImplementation(() => '{}');
     utils.readFile('test');
     expect(spy).toHaveBeenCalledTimes(1);
-    spy.mockReset();
-    spy.mockClear();
     (spy as any).mockRestore();
   });
 
@@ -131,16 +127,12 @@ describe('IO stuff', () => {
     it ('reads json', () => {
       const spy: jest.MockInstance<{}> = jest.spyOn(fs, 'readFileSync').mockImplementation(() => '{ "test": true }');
       expect(readFile('test.json')).toEqual({ test: true });
-      spy.mockReset();
-      spy.mockClear();
       (spy as any).mockRestore();
     });
 
     it ('reads strings', () => {
       const spy: jest.MockInstance<{}> = jest.spyOn(fs, 'readFileSync').mockImplementation(() => 'test');
       expect(readFile('test.gql')).toEqual('test');
-      spy.mockReset();
-      spy.mockClear();
       (spy as any).mockRestore();
     });
   });
