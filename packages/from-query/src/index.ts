@@ -153,7 +153,7 @@ const doIt: FromQuerySignature = (schema, query, typeMap = {}, providedOptions =
     filterAndJoinArray([
       generateTypes(options)(internalRepresentation),
       '\n',
-      ...variableInterfaces // Query / Mutation variable interfaces
+      ...variableInterfaces // Query / Mutation variable interfaces. TODO: Move into IR.extractVariables
     ])
   );
 };

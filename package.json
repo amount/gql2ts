@@ -35,7 +35,7 @@
     "gql2ts": "./index.js"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "perferGlobal": true,
   "jest": {
