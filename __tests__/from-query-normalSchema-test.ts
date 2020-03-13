@@ -1,5 +1,4 @@
 import runProgram from '../packages/from-query/src';
-import { IFromQueryReturnValue } from '../packages/types/src';
 import schema from './shared/simpleSchema';
 
 const simplestQuery: string = `
@@ -112,7 +111,7 @@ const generateSubTypeInterfaceName: () => null = () => null;
 
 describe('simple examples', () => {
   it('does a very simple query', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       simplestQuery,
       undefined,
@@ -123,7 +122,7 @@ describe('simple examples', () => {
     expect(response).toMatchSnapshot();
   });
   it('does a very simple query with typename', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       simpleQueryWithTypename,
       undefined,
@@ -134,7 +133,7 @@ describe('simple examples', () => {
     expect(response).toMatchSnapshot();
   });
   it('does unnamed queries', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       anonQuery,
       undefined,
@@ -146,7 +145,7 @@ describe('simple examples', () => {
   });
 
   it('does "naked" queries', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       nakedQuery,
       undefined,
@@ -158,7 +157,7 @@ describe('simple examples', () => {
   });
 
   it('supports variables', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       variableQuery,
       undefined,
@@ -170,7 +169,7 @@ describe('simple examples', () => {
   });
 
   it('supports list variables', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       variableArrayQuery,
       undefined,
@@ -182,7 +181,7 @@ describe('simple examples', () => {
   });
 
   it('supports arrays', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       arrTest,
       undefined,
@@ -194,7 +193,7 @@ describe('simple examples', () => {
   });
 
   it('supports enums', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       enumQuery,
       undefined,
@@ -206,7 +205,7 @@ describe('simple examples', () => {
   });
 
   it('supports custom scalars', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       customScalarQuery,
       { TestScalar: 'string' },
@@ -216,7 +215,7 @@ describe('simple examples', () => {
   });
 
   it('supports unions', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       UnionQuery,
       undefined,
@@ -228,7 +227,7 @@ describe('simple examples', () => {
   });
 
   it('supports unions with inline fragment', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       UnionQueryWithFragment,
       undefined,
@@ -392,7 +391,7 @@ query FragmentTest {
 
 describe('fragments', () => {
   it('does simple fragments', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentQuery,
       undefined,
@@ -404,7 +403,7 @@ describe('fragments', () => {
   });
 
   it('does simple fragments with other selections', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentWithOtherSelectionQuery,
       undefined,
@@ -414,7 +413,7 @@ describe('fragments', () => {
   });
 
   it('does simple fragments with aliases', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentWithAliasQuery,
       undefined,
@@ -426,7 +425,7 @@ describe('fragments', () => {
   });
 
   it('does simple fragments with other selections and aliases', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentWithOtherSelectionAndAliasQuery,
       undefined,
@@ -436,7 +435,7 @@ describe('fragments', () => {
   });
 
   it('does nested fragments', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       nestedFragmentQuery,
       undefined,
@@ -448,7 +447,7 @@ describe('fragments', () => {
   });
 
   it('does nested fragments 2', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       nestedFragment2Query,
       undefined,
@@ -460,7 +459,7 @@ describe('fragments', () => {
   });
 
   it('does nested fragments 3', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       nestedFragment3Query,
       undefined,
@@ -472,7 +471,7 @@ describe('fragments', () => {
   });
 
   it('does inline fragments on type', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       inlineFragmentQuery,
       undefined,
@@ -484,7 +483,7 @@ describe('fragments', () => {
   });
 
   it('does inline fragments on type with aliases', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       inlineFragmentWithAliasQuery,
       undefined,
@@ -494,7 +493,7 @@ describe('fragments', () => {
   });
 
   it('does anonymous inline fragments', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       anonInlineFragmentQuery,
       undefined,
@@ -506,7 +505,7 @@ describe('fragments', () => {
   });
 
   it('does anonymous inline fragments with aliases', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       anonInlineFragmentWithAliasQuery,
       undefined,
@@ -568,6 +567,16 @@ query FragmentTest {
   }
 }`;
 
+const inlineFragmentWithDirectiveOnBaseQuery: string = `
+query FragmentTest {
+  heroNoParam @include(if: true) {
+    ... on Droid {
+    	primaryFunction
+      primaryFunctionNonNull
+    }
+  }
+}`;
+
 const inlineFragmentWithDirectiveWithAliasQuery: string = `
 query FragmentTest {
   a: heroNoParam {
@@ -600,7 +609,7 @@ query FragmentTest {
 
 describe('directives', () => {
   it('outputs bad directives', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       simpleQueryBadDirectives,
       undefined,
@@ -612,7 +621,7 @@ describe('directives', () => {
   });
   describe('on fields', () => {
     it('works with simple fields', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         simplestQueryWithDirectives,
         undefined,
@@ -624,7 +633,7 @@ describe('directives', () => {
 
   describe('fragments', () => {
     it('works with fragment spread', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         fragmentWithDirectivesQuery,
         undefined,
@@ -634,7 +643,7 @@ describe('directives', () => {
     });
 
     it('works with aliases on fragment spread', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         fragmentWithDirectiveWithAliasQuery,
         undefined,
@@ -644,7 +653,7 @@ describe('directives', () => {
     });
 
     it('works with inline fragments on type', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         inlineFragmentWithDirectiveQuery,
         undefined,
@@ -653,8 +662,18 @@ describe('directives', () => {
       expect(response).toMatchSnapshot();
     });
 
+    it('works with inline fragments on base', () => {
+      const response: string = runProgram(
+        schema,
+        inlineFragmentWithDirectiveOnBaseQuery,
+        undefined,
+        { generateSubTypeInterfaceName }
+      );
+      expect(response).toMatchSnapshot();
+    });
+
     it('works with inline fragments on type with aliases', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         inlineFragmentWithDirectiveWithAliasQuery,
         undefined,
@@ -664,7 +683,7 @@ describe('directives', () => {
     });
 
     it('does anonymous inline fragments', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         anonInlineFragmentWithDirectiveQuery,
         undefined,
@@ -674,7 +693,7 @@ describe('directives', () => {
     });
 
     it('does anonymous inline fragments with aliases', () => {
-      const response: IFromQueryReturnValue[] = runProgram(
+      const response: string = runProgram(
         schema,
         anonInlineFragmentWithDirectiveWithAliasQuery,
         undefined,
@@ -774,7 +793,7 @@ query Test {
 
 describe('with subtypes', () => {
   it('does a very simple query', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       simplestQuery,
       undefined
@@ -783,7 +802,7 @@ describe('with subtypes', () => {
   });
 
   it('does array query', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       arrTest,
       undefined
@@ -792,12 +811,12 @@ describe('with subtypes', () => {
   });
 
   it('does fragment query', () => {
-    const response: IFromQueryReturnValue[] = runProgram(schema, fragmentQuery);
+    const response: string = runProgram(schema, fragmentQuery);
     expect(response).toMatchSnapshot();
   });
 
   it('does partial fragment query', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentPartialQuery
     );
@@ -805,7 +824,7 @@ describe('with subtypes', () => {
   });
 
   it('does partial fragment query with complex types', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentPartialComplexQuery
     );
@@ -813,7 +832,7 @@ describe('with subtypes', () => {
   });
 
   it('does partial fragment query with complex types and directives', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       fragmentPartialComplexWithDirectiveQuery
     );
@@ -821,7 +840,7 @@ describe('with subtypes', () => {
   });
 
   it('dedupes and enumerates', () => {
-    const response: IFromQueryReturnValue[] = runProgram(
+    const response: string = runProgram(
       schema,
       dedupeQuery,
       undefined
