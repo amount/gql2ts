@@ -28,8 +28,11 @@
     "graphql"
   ],
   "author": "Brett Jurgens <brett.jurgens@avant.com> (https://www.avant.com)",
+  "contributors": [
+    "Brandon Herman <brandon.herman@amount.com> (https://www.amount.com)"
+  ],
   "license": "MIT",
-  "repository": "avantcredit/gql2ts",
+  "repository": "amount/gql2ts",
   "bin": {
     "gql2ts": "./index.js"
   },
